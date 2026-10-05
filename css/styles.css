@@ -157,11 +157,15 @@ footer{font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px}
 
 
 .plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.pitem{font:inherit;color:var(--ink);width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;gap:10px;align-items:center}
+.pitem{font:inherit;color:var(--ink);width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:center}
 .pitem .num{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+@media (max-width:360px){.pitem{grid-template-columns:1.6em minmax(0,1fr);gap:8px}}
 .ptxt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .ptxt b{font-weight:700;font-size:1.02rem}
 .ptxt span{font-size:.82rem;color:var(--muted)}
+.ptxt .status{font-size:.66rem;text-align:left;margin-top:2px}
+.ptxt .status.go{color:var(--red)}
+.ptxt .status.done{color:var(--blue)}
 .ptxt .dur,.dur{font-family:var(--f-mono);font-size:.72rem;color:var(--red);margin:0}
 .srclink{color:var(--blue);font-size:.85rem;align-self:flex-start}
 details.mini,details.guide{border-top:0;padding-top:0}

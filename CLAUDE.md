@@ -30,6 +30,7 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 - Chaque carte affiche sa source (« D'après … ») à partir de `sources.json`.
 - « Pour plus tard » : les cartes d'un paquet se suivent dans l'ordre, avec Précédente / Carte suivante et une progression. Le guide de conversation est affiché sur la liste des paquets et dans chaque paquet.
 - Aucun défi ne demande de dépenser de l'argent ou de se faire livrer.
+- L'app est un support pour jouer, pas un journal du couple : ce que le couple écrit pendant le jeu (par exemple les réponses d'une carte interactive) ne sert que pendant la partie et peut être effacé.
 
 ## Design
 - Cartes verticales façon carte à jouer (ratio 5:7), bordure rayée rouge, blanc, bleu « par avion », coins avec lettre (V bleu, A rouge), numéro et petit nœud.

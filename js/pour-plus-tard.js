@@ -55,8 +55,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       const fini = d && d.max >= tot - 1, commence = d && d.i >= 0;
       const st = fini ? 'Terminé' : (commence ? (d.i + 1) + ' / ' + tot : tot + ' cartes · ' + pq.dur);
       const li = el('li'); const b = el('button', 'pitem'); b.type = 'button';
-      const txt = el('span', 'ptxt'); txt.append(el('b', null, pq.name), el('span', null, pq.study));
-      b.append(el('span', 'num', String(n + 1).padStart(2, '0')), txt, el('span', 'status' + (fini ? ' done' : (commence ? ' go' : '')), st));
+      const txt = el('span', 'ptxt');
+      txt.append(el('b', null, pq.name), el('span', null, pq.study), el('span', 'status' + (fini ? ' done' : (commence ? ' go' : '')), st));
+      b.append(el('span', 'num', String(n + 1).padStart(2, '0')), txt);
       b.onclick = () => { setOpen(pq.id); render(); window.scrollTo(0, 0); };
       li.append(b); ul.append(li);
     });

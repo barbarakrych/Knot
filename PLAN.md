@@ -70,6 +70,14 @@ Test : chacun ouvre l'app, l'un tire une carte, elle apparaît chez l'autre.
 
 ---
 
+## Idée après l'étape 4 · Carte interactive « Nos valeurs »
+
+Objectif : la première carte du paquet Nos valeurs devient interactive. Chacun écrit ses 5 valeurs sur son téléphone ; quand les deux ont fini, la carte se retourne et on voit les valeurs de l'autre.
+
+À respecter : les réponses ne servent que pendant le jeu et peuvent être effacées. L'app reste un support, pas un journal du couple.
+
+---
+
 ## Étape 5 · Cartes personnelles privées
 
 Objectif : les cartes que j'ajoute, moi seule les vois dans ma liste ; pareil pour lui.
