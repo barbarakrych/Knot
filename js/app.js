@@ -1,14 +1,19 @@
-/* Point de départ : charge le contenu, démarre les deux onglets et gère le passage de l'un à l'autre. */
+/* Point de départ : charge le contenu, démarre les deux onglets et gère le passage d'un écran à l'autre
+   (accueil, Action ou Vérité, Pour plus tard, Réglages). */
 import { $ } from './commun.js';
-import { CLES, lire, ecrire } from './stockage.js';
+import { CLES, lire, ecrire, effacer } from './stockage.js';
 import { chargerContenu } from './contenu.js';
 import { demarrerActionVerite } from './action-verite.js';
 import { demarrerPourPlusTard } from './pour-plus-tard.js';
+import { coupleLocal, actualiser, nomsDuCouple } from './couple.js';
+import { preparerAccueil } from './accueil.js';
+import { preparerReglages } from './reglages.js';
 
 const FOOTER = {
   av: '',
   topics: 'Un sujet quand vous voulez, à votre rythme.'
 };
+const ECRANS_DE_JEU = ['av', 'topics'];
 
 // Montre la page d'un coup, déjà dans son bon état. La classe « chargement » (voir index.html) la gardait invisible
 // et sans animation. On attend les polices (au plus 1,5 s) pour que le texte ne change pas de forme sous nos yeux.
@@ -35,20 +40,62 @@ async function demarrer() {
   demarrerActionVerite(contenu);
   const plusTard = demarrerPourPlusTard(contenu);
 
+  // v : 'av', 'topics' (les deux onglets du jeu), 'reglages' ou 'accueil'
   function setView(v) {
+    const jeu = ECRANS_DE_JEU.includes(v);
     $('tab-av').setAttribute('aria-selected', String(v === 'av'));
     $('tab-topics').setAttribute('aria-selected', String(v === 'topics'));
+    document.querySelector('.tabs').hidden = !jeu;
     $('view-av').hidden = v !== 'av';
     $('view-topics').hidden = v !== 'topics';
-    $('footer').textContent = FOOTER[v];
+    $('view-reglages').hidden = v !== 'reglages';
+    $('view-accueil').hidden = v !== 'accueil';
+    $('footer').textContent = FOOTER[v] || '';
     $('footer').hidden = !FOOTER[v];
-    ecrire(CLES.ecran, { ...lire(CLES.ecran, {}), view: v });
+    if (jeu) ecrire(CLES.ecran, { ...lire(CLES.ecran, {}), view: v });
+    if (v !== 'reglages') reglages.fermer();
     plusTard.montrer(v === 'topics');
+    scrollTo(0, 0);
   }
+  const ongletDuJeu = () => (lire(CLES.ecran, {}).view === 'topics' ? 'topics' : 'av');
+
+  // Sous le titre : « ♥ [l'autre] et [moi] », et l'engrenage. Rien tant que le couple n'existe pas.
+  function afficherCouple(c) {
+    $('couple').hidden = !c;
+    $('ouvrir-reglages').hidden = !c;
+    if (c) $('couple-noms').textContent = nomsDuCouple(c);
+  }
+
+  // Ce téléphone n'a pas (ou plus) de couple → accueil
+  function versAccueil() {
+    effacer(CLES.couple);
+    afficherCouple(null);
+    accueil.ouvrir();
+    setView('accueil');
+  }
+
+  const accueil = preparerAccueil(c => { afficherCouple(c); setView(ongletDuJeu()); });
+  const reglages = preparerReglages(versAccueil);
+
   $('tab-av').onclick = () => setView('av');
   $('tab-topics').onclick = () => setView('topics');
+  $('ouvrir-reglages').onclick = () => {
+    if ($('view-reglages').hidden) { reglages.ouvrir(coupleLocal()); setView('reglages'); }
+    else setView(ongletDuJeu());
+  };
+  $('fermer-reglages').onclick = () => setView(ongletDuJeu());
 
-  setView(lire(CLES.ecran, {}).view === 'topics' ? 'topics' : 'av');
+  // Démarrage : le couple gardé sur l'appareil s'affiche tout de suite (même hors ligne),
+  // puis on vérifie discrètement auprès de Supabase (prénoms changés, téléphone détaché…).
+  const couple = coupleLocal();
+  if (couple) {
+    afficherCouple(couple);
+    setView(ongletDuJeu());
+    actualiser().then(c => { if (c) afficherCouple(c); else versAccueil(); })
+      .catch(e => console.info('Couple non vérifié (hors ligne ?) :', e.message));
+  } else {
+    versAccueil();
+  }
   montrerPage();
 }
 

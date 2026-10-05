@@ -7,7 +7,8 @@ export const CLES = {
   pioche: 'knot-pioche',      // cartes tirées, carte affichée, cartes ajoutées
   distance: 'knot-distance',  // interrupteur « À distance » (true ou false)
   paquets: 'knot-paquets',    // progression dans chaque paquet « Pour plus tard »
-  ecran: 'knot-ecran'         // onglet et paquet ouverts
+  ecran: 'knot-ecran',        // onglet et paquet ouverts
+  couple: 'knot-couple'       // prénoms, place de ce téléphone et codes, copiés depuis Supabase
 };
 
 export function lire(cle, parDefaut) {
@@ -23,4 +24,8 @@ export function lire(cle, parDefaut) {
 
 export function ecrire(cle, valeur) {
   try { localStorage.setItem(cle, JSON.stringify(valeur)); } catch (e) {}
+}
+
+export function effacer(cle) {
+  try { localStorage.removeItem(cle); } catch (e) {}
 }

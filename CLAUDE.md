@@ -17,7 +17,7 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 ## Choix techniques
 - HTML, CSS et JavaScript simples, sans framework ni étape de build, tant que c'est possible.
 - PWA : manifest, icône, service worker pour fonctionner hors ligne.
-- Supabase (offre gratuite) pour les comptes et le partage, à partir de l'étape 3 seulement. Connexion par lien envoyé par e-mail, sans mot de passe.
+- Supabase (offre gratuite) pour le couple et le partage, à partir de l'étape 3. Pas d'e-mail ni de mot de passe : connexion anonyme (chaque téléphone a automatiquement un compte invisible et reste connecté), sans écran de connexion. La base est décrite dans `supabase/schema.sql` ; `supabase/test-rls.sql` vérifie les règles de sécurité (RLS). L'adresse du projet et la clé publique sont dans `js/config.js`. La bibliothèque Supabase est copiée dans `js/vendor/supabase.js` (hors ligne).
 - Hébergement gratuit sur GitHub Pages (dépôt public, branche main, dossier racine). Chaque mise à jour en ligne = commit + `git push`.
 
 ## Règles du jeu à respecter
@@ -31,6 +31,17 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 - « Pour plus tard » : les cartes d'un paquet se suivent dans l'ordre, avec Précédente / Carte suivante et une progression. Le guide de conversation est affiché sur la liste des paquets et dans chaque paquet.
 - Aucun défi ne demande de dépenser de l'argent ou de se faire livrer.
 - L'app est un support pour jouer, pas un journal du couple : ce que le couple écrit pendant le jeu (par exemple les réponses d'une carte interactive) ne sert que pendant la partie et peut être effacé.
+
+## Couple
+- Première ouverture : écran d'accueil obligatoire, « Créer notre couple » ou « J'ai un code ». Internet est nécessaire cette fois-là seulement.
+- « Créer notre couple » : « Je suis… » et « Je joue avec… ». La personne qui crée est la personne 1, l'autre la personne 2. Les deux prénoms sont enregistrés dans Supabase, et chaque téléphone sait s'il est la personne 1 ou 2.
+- Les prénoms sont des variables : jamais écrits dans le code, ni affichés par défaut, ni pré-remplis. L'app marche pour n'importe quel couple, quel que soit le genre : pas de « il / elle », on écrit le prénom ou « l'autre ».
+- Sous le titre : « ♥ [prénom de l'autre] et [mon prénom] ». Le prénom de l'autre d'abord, partout dans l'app. Rien tant que le couple n'existe pas. Aucun texte sur l'état du partage (« Sur cet appareil seulement », « Paquet partagé à deux »…).
+- Codes : `KNOT-` + initiales (personne 1 puis 2) + `-` + 4 caractères tirés au hasard par la base, sans 0, O, 1, I (ex. KNOT-VB-7K3Q). Saisie tolérante (minuscules, espaces). Plus de 10 codes faux en une heure : bloqué une heure.
+- « J'ai un code » : on tape le code, puis « Tu es bien [prénom] ? » (« Oui, c'est moi » ou « Corriger mon prénom »). Un couple a au plus 2 téléphones : une fois complet, son code ne permet plus de rejoindre.
+- Réglages (engrenage en haut à droite) : tant que l'autre n'a pas rejoint, « Code du couple · en attente de [l'autre] » avec Copier. Ensuite, « Relier le téléphone de [l'autre] » (« Si [l'autre] a supprimé l'app ou changé de téléphone. ») : code à usage unique, sans expiration, qui ne sert qu'à l'autre pour reprendre sa propre place, jamais la mienne. Recliquer redonne le même code tant qu'il n'a pas servi (« Code en cours de validité · en attente de [l'autre] »). Une fois utilisé, l'ancien téléphone est détaché et revient à l'accueil.
+- Si les deux téléphones perdent l'app, on recrée un couple : pas de sauvegarde.
+- Sécurité : une personne ne voit que les données de son couple, garanti par les règles RLS de la base. Aucune écriture directe dans les tables : tout passe par les fonctions de `supabase/schema.sql`.
 
 ## Design
 - Cartes verticales façon carte à jouer (ratio 5:7), bordure rayée rouge, blanc, bleu « par avion », coins avec lettre (V bleu, A rouge), numéro et petit nœud.

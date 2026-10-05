@@ -57,6 +57,17 @@ export function cornerNodes(letter, num) {
   return nodes;
 }
 
+// Bouton « Copier » : met le texte dans le presse-papiers et affiche « Copié ✓ » un instant.
+export function copier(texte, bouton) {
+  const libelle = bouton.textContent;
+  const fini = ok => {
+    bouton.textContent = ok ? 'Copié ✓' : 'Copie impossible';
+    setTimeout(() => { bouton.textContent = libelle; }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texte).then(() => fini(true), () => fini(false));
+  else fini(false);
+}
+
 // « D'après … » à partir d'une liste de clés de sources.json
 export function srcLine(SOURCES, keys) {
   const labels = keys.map(k => SOURCES[k] && SOURCES[k].label).filter(Boolean);

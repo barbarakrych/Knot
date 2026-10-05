@@ -40,17 +40,18 @@ Test : ouvrir le lien sur ton téléphone et celui de ton copain, l'ajouter à l
 
 ---
 
-## Étape 3 · Comptes et couple
+## Étape 3 · Le couple (sans e-mail)
 
-Objectif : chacun se connecte avec son e-mail (lien magique, sans mot de passe), puis vous vous reliez avec un code d'invitation.
+Objectif : relier vos deux téléphones avec un code, sans e-mail ni mot de passe. Chaque téléphone a automatiquement un compte invisible dans Supabase (connexion anonyme) et reste connecté.
 
-Prompt :
-> Étape 3 du PLAN. Je veux ajouter des comptes avec Supabase : connexion par lien envoyé par e-mail, puis création d'un « couple » avec un code d'invitation que l'autre saisit. Interviewe-moi d'abord sur les cas particuliers (perte du téléphone, changement d'e-mail, quitter un couple…), puis propose un plan. Guide-moi pas à pas pour créer le projet Supabase. Mets en place des règles de sécurité (RLS) pour qu'un couple ne voie jamais les données d'un autre, et montre-moi comment les tester.
+Ce qui a été fait (détails dans CLAUDE.md, partie « Couple ») :
+- Écran d'accueil à la première ouverture : « Créer notre couple » (« Je suis… », « Je joue avec… », puis le code KNOT-XX-XXXX à donner à l'autre) ou « J'ai un code » (« Tu es bien [prénom] ? »). Un couple = 2 téléphones au plus.
+- Sous le titre : « ♥ [l'autre] et [moi] ». Plus aucun texte sur l'état du partage.
+- Écran Réglages (engrenage en haut à droite) : code du couple tant que l'autre n'a pas rejoint, puis « Relier le téléphone de [l'autre] » (code à usage unique).
+- Règles de sécurité (RLS) : chacun ne voit que son couple. Vérification : `supabase/test-rls.sql` dans l'éditeur SQL de Supabase.
+- Le jeu (cartes tirées, progression) reste encore sur chaque téléphone : il sera partagé à l'étape 4. Un téléphone relié reprend donc sa place dans le couple, mais pas encore sa progression.
 
-Test : te connecter sur ton téléphone, créer le couple, ton copain rejoint avec le code.
-
-À inclure dans cette étape :
-- Écran d'accueil à la première ouverture : « Je suis… » (mon prénom), « Je joue avec… » (le prénom de l'autre), puis le code pour relier nos deux téléphones. Ensuite, nos deux prénoms s'affichent en haut de l'app (par exemple « Victor et Barbara ») à la place du texte sur le partage. Ça doit marcher pour n'importe quel couple.
+Test : sur ton téléphone, depuis l'icône Knot (sur iPhone, pas depuis Safari : ce sont deux mémoires séparées), crée le couple ; ton copain choisit « J'ai un code » sur le sien.
 
 ---
 
@@ -94,7 +95,7 @@ Prompt :
 Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
 - Mode sombre et réglages
-  - Une icône réglages en haut à droite, à côté du logo, qui ouvre un écran Réglages contenant : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut), le son de fin du minuteur (activé ou non), et l'interrupteur À distance, qui quitte l'écran de jeu. Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
+  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). Y ajouter : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut), le son de fin du minuteur (activé ou non), et l'interrupteur À distance, qui quitte l'écran de jeu. Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
   - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
 - Pouvoir balayer la carte du doigt pour en tirer une nouvelle.
 - Bandeau « Nouvelle version disponible, toucher pour l'afficher » : aujourd'hui, une mise à jour n'apparaît qu'à la 2ᵉ ouverture de l'app (le service worker montre d'abord la copie en réserve). Le bandeau proposerait la nouveauté dès la 1ʳᵉ ouverture, sans couper une partie en cours.
