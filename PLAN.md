@@ -49,6 +49,9 @@ Prompt :
 
 Test : te connecter sur ton téléphone, créer le couple, ton copain rejoint avec le code.
 
+À inclure dans cette étape :
+- Écran d'accueil à la première ouverture : « Je suis… » (mon prénom), « Je joue avec… » (le prénom de l'autre), puis le code pour relier nos deux téléphones. Ensuite, nos deux prénoms s'affichent en haut de l'app (par exemple « Victor et Barbara ») à la place du texte sur le partage. Ça doit marcher pour n'importe quel couple.
+
 ---
 
 ## Étape 4 · Le paquet partagé
@@ -59,6 +62,9 @@ Prompt :
 > Étape 4 du PLAN. Partage le jeu entre les deux membres du couple avec Supabase : cartes déjà tirées, carte affichée en direct chez les deux, remélange, progression des paquets Pour plus tard. Garde le fonctionnement hors ligne : si on n'est pas connecté, l'app marche sur l'appareil et se synchronise ensuite. Propose un plan et explique-moi comment fonctionne le temps réel.
 
 Test : chacun ouvre l'app, l'un tire une carte, elle apparaît chez l'autre.
+
+À inclure dans cette étape :
+- Chacun son tour : l'app indique à qui c'est le tour de tirer, et sous chaque carte qui l'a tirée.
 
 ---
 
@@ -78,6 +84,8 @@ Prompt :
 Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
 - Mode sombre et réglages
+  - Une icône réglages en haut à droite, à côté du logo, qui ouvre un écran Réglages contenant : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut), le son de fin du minuteur (activé ou non), et l'interrupteur À distance, qui quitte l'écran de jeu. Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
+  - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper).
 - Exporter ses notes ou ses cartes
 - Faire relire le projet : « Utilise un sous-agent pour relire tout le code et me dire ce qui pourrait poser problème. Ne signale que ce qui compte vraiment. »
 
