@@ -2,7 +2,7 @@
    Il range une copie des fichiers dans une réserve sur le téléphone, pour que Knot s'ouvre même sans réseau.
    Stratégie « réserve d'abord, mise à jour en arrière-plan » : on montre tout de suite la copie en réserve,
    et si le réseau répond, on remplace la copie pour la prochaine fois.
-   → Après une mise en ligne, la nouvelle version apparaît à la 2ᵉ ouverture de l'app. */
+   → Après une mise en ligne, la nouvelle version apparaît à la 2ᵉ ouverture de l'app (bien fermée entre les deux). */
 const RESERVE = 'knot';
 
 // Fichiers mis en réserve dès l'installation. Un fichier oublié ici sera quand même gardé dès sa première utilisation.
@@ -38,7 +38,9 @@ self.addEventListener('fetch', evenement => {
   evenement.respondWith(caches.open(RESERVE).then(async reserve => {
     // ignoreSearch : « index.html?x=1 » utilise la même copie que « index.html »
     const copie = await reserve.match(demande, { ignoreSearch: true });
-    const reseau = fetch(demande).then(reponse => {
+    // cache: 'no-cache' : on redemande toujours au serveur. Sinon le navigateur ressort sa propre copie
+    // (GitHub Pages l'autorise à la garder 10 minutes) et la réserve garderait l'ancienne version.
+    const reseau = fetch(demande, { cache: 'no-cache' }).then(reponse => {
       // « opaque » : réponse d'un autre site (la feuille de style Google Fonts) que le code ne peut pas lire, mais qu'on peut garder
       if (reponse.ok || reponse.type === 'opaque') reserve.put(demande, reponse.clone());
       return reponse;
