@@ -153,8 +153,12 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       const n = Object.values(S.drawn).filter(v => v && v.pile === p).length;
       $('reshuffle-' + p).disabled = n === 0;
     }
+    const total = Object.values(S.drawn).filter(v => v).length;
+    $('reshuffle-tout').disabled = total === 0;
     $('confirm').hidden = !S.confirming;
-    if (S.confirming) {
+    if (S.confirming === 'tout') {
+      $('confirmtext').textContent = 'Les ' + total + ' carte' + (total > 1 ? 's' : '') + ' déjà tirée' + (total > 1 ? 's' : '') + ' (vérités et actions) reviendront dans leur pile, pour vous deux.';
+    } else if (S.confirming) {
       const n = Object.values(S.drawn).filter(v => v && v.pile === S.confirming).length;
       $('confirmtext').textContent = 'Les ' + n + ' carte' + (n > 1 ? 's' : '') + ' « ' + PILES[S.confirming].name + ' » déjà tirée' + (n > 1 ? 's' : '') + ' reviendront dans la pile, pour vous deux.';
     }
@@ -203,13 +207,14 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     note('Le défi est retourné dans la pile.', true);
   }
 
+  // pile = 'verite', 'action' ou 'tout' (les deux piles). Le défi en cours n'est pas touché.
   function reshuffle(pile) {
     S.confirming = null;
     const d = { ...S.drawn };
-    Object.keys(d).forEach(id => { if (d[id] && d[id].pile === pile) delete d[id]; });
+    Object.keys(d).forEach(id => { if (d[id] && (pile === 'tout' || d[id].pile === pile)) delete d[id]; });
     S.drawn = d;
     const cur = cardById(S.current);
-    if (cur && cur.pile === pile) S.current = null;
+    if (cur && (pile === 'tout' || cur.pile === pile)) S.current = null;
     render(); sauver();
   }
 
@@ -353,6 +358,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('defiback').onclick = defiBack;
   $('reshuffle-verite').onclick = () => { S.confirming = 'verite'; render(); };
   $('reshuffle-action').onclick = () => { S.confirming = 'action'; render(); };
+  $('reshuffle-tout').onclick = () => { S.confirming = 'tout'; render(); };
   $('confirmno').onclick = () => { S.confirming = null; render(); };
   $('confirmyes').onclick = () => { if (S.confirming) reshuffle(S.confirming); };
   $('addform').addEventListener('submit', e => {

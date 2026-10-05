@@ -6,7 +6,7 @@ import { demarrerActionVerite } from './action-verite.js';
 import { demarrerPourPlusTard } from './pour-plus-tard.js';
 
 const FOOTER = {
-  av: 'Rien à écrire ici : parlez-en, et gardez le reste dans votre carnet.',
+  av: '',
   topics: 'Un sujet quand vous voulez, à votre rythme.'
 };
 
@@ -32,6 +32,7 @@ async function demarrer() {
     $('view-av').hidden = v !== 'av';
     $('view-topics').hidden = v !== 'topics';
     $('footer').textContent = FOOTER[v];
+    $('footer').hidden = !FOOTER[v];
     ecrire(CLES.ecran, { ...lire(CLES.ecran, {}), view: v });
     plusTard.montrer(v === 'topics');
   }
