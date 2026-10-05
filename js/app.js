@@ -42,3 +42,8 @@ async function demarrer() {
 }
 
 demarrer();
+
+// Service worker (sw.js) : garde une copie de l'app sur l'appareil pour qu'elle marche hors ligne.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(e => console.warn('Hors ligne indisponible :', e));
+}

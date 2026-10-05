@@ -18,7 +18,7 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 - HTML, CSS et JavaScript simples, sans framework ni étape de build, tant que c'est possible.
 - PWA : manifest, icône, service worker pour fonctionner hors ligne.
 - Supabase (offre gratuite) pour les comptes et le partage, à partir de l'étape 3 seulement. Connexion par lien envoyé par e-mail, sans mot de passe.
-- Hébergement gratuit (Netlify ou GitHub Pages), relié au dépôt GitHub.
+- Hébergement gratuit sur GitHub Pages (dépôt public, branche main, dossier racine). Chaque mise à jour en ligne = commit + `git push`.
 
 ## Règles du jeu à respecter
 - Une carte tirée ne ressort pas tant qu'on ne remélange pas la pile. « Passer » remet la carte dans la pile.
@@ -36,6 +36,7 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 - Couleurs : papier #EEF1F6, carte #FFFFFF, encre #1C2740, gris #5B6782, rouge #C8323A, bleu #2A4A98, or du logo #C9A646, vert interrupteur #34C759. Mode sombre : reprendre les valeurs du prototype.
 - Polices : Bricolage Grotesque (titres, interface), Newsreader (texte des cartes), DM Mono (petites étiquettes).
 - L'interrupteur « À distance » ressemble à celui des réveils d'iPhone.
+- Icône de l'app : le nœud (bleu bordé d'or) au centre d'un panneau blanc, sur un fond entièrement rayé rouge, blanc, bleu « par avion ». Fabriquée par `node outils/generer-icones.js` à partir du logo : écrit `design/icone.svg` (et la version Android `icone-maskable.svg`) puis les PNG de `icones/`.
 
 ## Habitudes de travail
 - Git : sauvegarde (commit) après chaque étape qui marche, avec un message clair en français.
