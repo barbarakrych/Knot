@@ -89,6 +89,7 @@ Idées à piocher, une par session :
   - Une icône réglages en haut à droite, à côté du logo, qui ouvre un écran Réglages contenant : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut), le son de fin du minuteur (activé ou non), et l'interrupteur À distance, qui quitte l'écran de jeu. Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
   - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
 - Pouvoir balayer la carte du doigt pour en tirer une nouvelle.
+- Bandeau « Nouvelle version disponible, toucher pour l'afficher » : aujourd'hui, une mise à jour n'apparaît qu'à la 2ᵉ ouverture de l'app (le service worker montre d'abord la copie en réserve). Le bandeau proposerait la nouveauté dès la 1ʳᵉ ouverture, sans couper une partie en cours.
 - Exporter ses notes ou ses cartes
 - Faire relire le projet : « Utilise un sous-agent pour relire tout le code et me dire ce qui pourrait poser problème. Ne signale que ce qui compte vraiment. »
 
