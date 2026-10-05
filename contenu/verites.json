@@ -1,0 +1,2444 @@
+[
+ {
+  "id": "v-1j2a9tq",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Selon toi, quel est le trait principal de ton caractère ?"
+ },
+ {
+  "id": "v-1gcswwq",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quelle qualité préfères-tu chez une personne ?"
+ },
+ {
+  "id": "v-15o4pwt",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Qu’est-ce que tu apprécies le plus chez tes amis ?"
+ },
+ {
+  "id": "v-bouzky",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel est ton principal défaut, d’après toi ? Et d’après moi ?"
+ },
+ {
+  "id": "v-1ldqbwz",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quelle serait ton idée du bonheur parfait ?"
+ },
+ {
+  "id": "v-f7ikkr",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel serait, pour toi, le plus grand des malheurs ?"
+ },
+ {
+  "id": "v-13zfnv",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Si tu n’étais pas toi, qui aimerais-tu être ?"
+ },
+ {
+  "id": "v-1ll2zky",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "À quelle époque, ou dans quel pays, aimerais-tu vivre ?"
+ },
+ {
+  "id": "v-zghat5",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel personnage de fiction t’a le plus marqué·e, et pourquoi ?"
+ },
+ {
+  "id": "v-1jh7j3n",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Qui sont tes héros ou tes héroïnes dans la vie réelle ?"
+ },
+ {
+  "id": "v-atljg3",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel don aimerais-tu avoir reçu à la naissance ?"
+ },
+ {
+  "id": "v-1c9em2m",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quelle faute te paraît la plus facile à pardonner ?"
+ },
+ {
+  "id": "v-1oefps",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Qu’est-ce que tu détestes par-dessus tout ?"
+ },
+ {
+  "id": "v-1bacr8d",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Comment aimerais-tu qu’on se souvienne de toi ?"
+ },
+ {
+  "id": "v-uegef3",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel est ton état d’esprit en ce moment, honnêtement ?"
+ },
+ {
+  "id": "v-1s02f5z",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "As-tu une devise, ou une phrase qui te guide ?"
+ },
+ {
+  "id": "v-s1h5le",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Dans quelles situations t’arrive-t-il de mentir, et pourquoi ?"
+ },
+ {
+  "id": "v-1p8bmk1",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel est ton plus grand regret ?"
+ },
+ {
+  "id": "v-yvc059",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Qu’est-ce que tu considères comme ta plus grande réussite ?"
+ },
+ {
+  "id": "v-nn2e45",
+  "theme": "toi",
+  "source": "proust",
+  "texte": "Quel est le changement de l’histoire que tu admires le plus ?"
+ },
+ {
+  "id": "v-1r09m1z",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quel est ton mot préféré ? Et celui que tu ne supportes pas ?"
+ },
+ {
+  "id": "v-1lv1fwm",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quel son ou quel bruit aimes-tu entendre ?"
+ },
+ {
+  "id": "v-ajkmjt",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quel métier n’aimerais-tu jamais faire ?"
+ },
+ {
+  "id": "v-1xenxr",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quel autre métier aurais-tu aimé exercer ?"
+ },
+ {
+  "id": "v-2c1fpu",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Qu’est-ce qui te met vraiment en joie ?"
+ },
+ {
+  "id": "v-1nmksp8",
+  "theme": "toi",
+  "source": null,
+  "texte": "Quelle est ta saison préférée, et quel souvenir y est accroché ?"
+ },
+ {
+  "id": "v-1k5crlx",
+  "theme": "toi",
+  "source": null,
+  "texte": "Si tu devais choisir ton dernier repas, ce serait quoi ?"
+ },
+ {
+  "id": "v-19gi9hr",
+  "theme": "toi",
+  "source": null,
+  "texte": "Qu’est-ce qui t’a fait découvrir le sentiment d’injustice ?"
+ },
+ {
+  "id": "v-1mi2l1w",
+  "theme": "toi",
+  "source": null,
+  "texte": "Raconte-moi quelque chose que tu n’as jamais dit à personne."
+ },
+ {
+  "id": "v-qwgwrt",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "À quoi ressemblerait pour toi une journée ordinaire, mais parfaite ?"
+ },
+ {
+  "id": "v-116d6xn",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Quel souvenir d’enfance revient le plus souvent dans ta tête ?"
+ },
+ {
+  "id": "v-1fzzvmu",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Qu’est-ce que tu rêves de faire depuis longtemps ? Qu’est-ce qui t’a retenu·e jusqu’ici ?"
+ },
+ {
+  "id": "v-2ybecc",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Comment décrirais-tu ta relation avec les personnes qui t’ont élevé·e ?"
+ },
+ {
+  "id": "v-1ibi30n",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Si tu pouvais changer une chose dans la façon dont tu as été élevé·e, ce serait quoi ?"
+ },
+ {
+  "id": "v-miu6b",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Y a-t-il un sujet sur lequel tu ne supportes pas qu’on plaisante ?"
+ },
+ {
+  "id": "v-1xruuh2",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Si ta vie devait changer complètement dans un an, que changerais-tu dès maintenant ?"
+ },
+ {
+  "id": "v-1ao5xhw",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Quand as-tu laissé quelqu’un te voir vraiment triste pour la dernière fois ?"
+ },
+ {
+  "id": "v-9v7vw9",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Si tu pouvais connaître une seule vérité sur ton avenir, laquelle demanderais-tu ?"
+ },
+ {
+  "id": "v-xx2agh",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Quel est ton souvenir le plus précieux ?"
+ },
+ {
+  "id": "v-w15t33",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Raconte un moment gênant dont tu peux rire aujourd’hui."
+ },
+ {
+  "id": "v-13tila2",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Si tu devais tout quitter en cinq minutes, quel objet emporterais-tu ?"
+ },
+ {
+  "id": "v-1t2qn2",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Quelle place l’amitié tient-elle dans ta vie aujourd’hui ?"
+ },
+ {
+  "id": "v-tdxm4p",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Dans quelles situations te sens-tu le plus vulnérable ?"
+ },
+ {
+  "id": "v-142ot4x",
+  "theme": "toi",
+  "source": "aron",
+  "texte": "Qu’est-ce que tu as du mal à demander aux autres ?"
+ },
+ {
+  "id": "v-l4t5as",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qui sont les trois personnes qui comptent le plus pour toi en ce moment ?"
+ },
+ {
+  "id": "v-hzbj8i",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce qui te stresse en ce moment, même un peu ?"
+ },
+ {
+  "id": "v-f3te7r",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel est ton rêve le plus secret, même s’il te paraît irréaliste ?"
+ },
+ {
+  "id": "v-17sjewv",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce qui t’a fait plaisir cette semaine, même un détail ?"
+ },
+ {
+  "id": "v-isazob",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quelle période de ta vie t’a le plus façonné·e ?"
+ },
+ {
+  "id": "v-1qebhnw",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce que tu as envie d’apprendre en ce moment ?"
+ },
+ {
+  "id": "v-tqjr9",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Dans quelles situations te sens-tu vraiment en sécurité ?"
+ },
+ {
+  "id": "v-yvuvjo",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel est ton meilleur souvenir d’école ? Et le pire ?"
+ },
+ {
+  "id": "v-1yuu09q",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qui t’a appris le plus de choses sur la vie ?"
+ },
+ {
+  "id": "v-poapvl",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel compliment t’a le plus marqué·e ?"
+ },
+ {
+  "id": "v-3offvt",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "De quoi avais-tu peur quand tu étais enfant ?"
+ },
+ {
+  "id": "v-1fckwbl",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce qui te rend nostalgique ?"
+ },
+ {
+  "id": "v-dq9j2v",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel petit plaisir du quotidien te rend heureux·se ?"
+ },
+ {
+  "id": "v-rhiz0c",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Que voulais-tu faire « plus tard » quand tu étais enfant ?"
+ },
+ {
+  "id": "v-xayr3o",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quelle est la meilleure décision que tu aies prise ?"
+ },
+ {
+  "id": "v-1l1oew6",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel conseil donnerais-tu à toi d’il y a cinq ans ?"
+ },
+ {
+  "id": "v-eikxkh",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce qui te donne de l’énergie ? Et qu’est-ce qui t’en prend ?"
+ },
+ {
+  "id": "v-4c4t70",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Comment sais-tu que tu as besoin d’être seul·e ?"
+ },
+ {
+  "id": "v-dwp6i5",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce que les gens comprennent souvent mal chez toi ?"
+ },
+ {
+  "id": "v-jlljea",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel livre, quel film ou quelle chanson t’a changé·e ?"
+ },
+ {
+  "id": "v-139k24s",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quel est ton souvenir préféré de nous deux ?"
+ },
+ {
+  "id": "v-elu3oj",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quel moment avec moi aurais-tu voulu figer pour toujours ?"
+ },
+ {
+  "id": "v-1263hew",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quelle est la chose la plus drôle qui nous soit arrivée ?"
+ },
+ {
+  "id": "v-epxx6x",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "À quel moment t’es-tu senti·e le plus proche de moi ?"
+ },
+ {
+  "id": "v-1xu3plu",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Qu’est-ce que tu as remarqué chez moi au tout début, et qui compte toujours ?"
+ },
+ {
+  "id": "v-1o7dz53",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Raconte un moment où tu as été fier·ère de moi."
+ },
+ {
+  "id": "v-1n4g2ez",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Qu’est-ce que tu aimes chez moi et que je ne remarque sûrement pas ?"
+ },
+ {
+  "id": "v-gy23bq",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quelle qualité de l’autre aimerais-tu avoir ?"
+ },
+ {
+  "id": "v-uau5gi",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quel petit geste de ma part te fait fondre ?"
+ },
+ {
+  "id": "v-y8fs8a",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quel lieu associes-tu le plus à nous deux ?"
+ },
+ {
+  "id": "v-1wzr1a8",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quelle habitude de moi te manque le plus en ce moment ?"
+ },
+ {
+  "id": "v-lqmnhj",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quand t’es-tu dit que c’était sérieux entre nous ?"
+ },
+ {
+  "id": "v-9a3sa9",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Qu’est-ce qui te fait rire chez moi ?"
+ },
+ {
+  "id": "v-qb31gs",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Si notre histoire était un film, quel en serait le titre ?"
+ },
+ {
+  "id": "v-1l8jns2",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quelle est la plus belle attention que je t’aie faite ?"
+ },
+ {
+  "id": "v-18x9inf",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quel souvenir de nous aimerais-tu raconter un jour à nos petits-enfants ?"
+ },
+ {
+  "id": "v-xyhrsq",
+  "theme": "nous",
+  "source": "expansion",
+  "texte": "Qu’est-ce qui a changé en toi depuis qu’on est ensemble ?"
+ },
+ {
+  "id": "v-8hz6aq",
+  "theme": "nous",
+  "source": "expansion",
+  "texte": "Qu’as-tu appris de moi, ou grâce à moi ?"
+ },
+ {
+  "id": "v-1vr8zan",
+  "theme": "nous",
+  "source": "perel",
+  "texte": "Dans quels moments me trouves-tu le plus attirant·e ?"
+ },
+ {
+  "id": "v-dds3r1",
+  "theme": "nous",
+  "source": "perel",
+  "texte": "Quand me vois-tu le plus dans mon élément ?"
+ },
+ {
+  "id": "v-xqq8fd",
+  "theme": "nous",
+  "source": "perel",
+  "texte": "Qu’est-ce que tu aimes encore découvrir chez moi ?"
+ },
+ {
+  "id": "v-18z48gc",
+  "theme": "nous",
+  "source": "perel",
+  "texte": "Est-ce que la distance change quelque chose à ton désir de moi ? En quoi ?"
+ },
+ {
+  "id": "v-138vuqh",
+  "theme": "nous",
+  "source": "perel",
+  "texte": "Qu’est-ce qui, dans ta vie, n’appartient qu’à toi et que tu tiens à garder ?"
+ },
+ {
+  "id": "v-13o3k96",
+  "theme": "nous",
+  "source": "johnson",
+  "texte": "Sens-tu que tu peux me joindre quand tu as besoin de moi ?"
+ },
+ {
+  "id": "v-hsfnfc",
+  "theme": "nous",
+  "source": "johnson",
+  "texte": "Te sens-tu écouté·e quand tu me parles de ce que tu ressens ?"
+ },
+ {
+  "id": "v-1g5a499",
+  "theme": "nous",
+  "source": "johnson",
+  "texte": "Sens-tu que tu comptes pour moi, même à distance ?"
+ },
+ {
+  "id": "v-11dac",
+  "theme": "nous",
+  "source": "johnson",
+  "texte": "Dans quels moments as-tu le plus besoin de moi ?"
+ },
+ {
+  "id": "v-1igtny5",
+  "theme": "nous",
+  "source": null,
+  "texte": "Qu’est-ce que notre relation t’apporte ?"
+ },
+ {
+  "id": "v-v68fuz",
+  "theme": "nous",
+  "source": null,
+  "texte": "Qu’est-ce qui manque à notre relation en ce moment ?"
+ },
+ {
+  "id": "v-1chm2qg",
+  "theme": "nous",
+  "source": null,
+  "texte": "Pourquoi as-tu envie de te battre pour nous ?"
+ },
+ {
+  "id": "v-12hkdn2",
+  "theme": "nous",
+  "source": null,
+  "texte": "Qu’est-ce que tu serais prêt·e à faire pour notre relation ?"
+ },
+ {
+  "id": "v-1vn81ew",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Quelle petite attention de ma part t’a fait du bien récemment ?"
+ },
+ {
+  "id": "v-1vozarg",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "De quelle façon aimes-tu que je te rassure sur nous ?"
+ },
+ {
+  "id": "v-87c4t4",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Est-ce qu’on se parle assez, trop, ou juste bien ? De quoi aimerais-tu qu’on parle plus ?"
+ },
+ {
+  "id": "v-1wv7ezi",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Est-ce que nos proches connaissent assez notre relation ? Aimerais-tu que ça change ?"
+ },
+ {
+  "id": "v-1wauwqw",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Comment pourrait-on partager plus de petites choses du quotidien, malgré la distance ?"
+ },
+ {
+  "id": "v-15lyl5t",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Note de 1 à 10 comment tu te sens dans notre relation ce mois-ci. Qu’est-ce qui ferait gagner un point ?"
+ },
+ {
+  "id": "v-14hq67j",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Qu’est-ce qui est le plus dur pour toi dans la distance ?"
+ },
+ {
+  "id": "v-tdr537",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Qu’est-ce que la distance nous a appris de bien ?"
+ },
+ {
+  "id": "v-kv309h",
+  "theme": "nous",
+  "source": "maint",
+  "texte": "Quel moment de ta journée aimerais-tu le plus partager avec moi ?"
+ },
+ {
+  "id": "v-lftb3o",
+  "theme": "nous",
+  "source": "gable",
+  "texte": "Quand je t’annonce une bonne nouvelle, comment aimes-tu que je réagisse ?"
+ },
+ {
+  "id": "v-mci44m",
+  "theme": "nous",
+  "source": "gable",
+  "texte": "Quelle bonne nouvelle n’as-tu pas encore eu le temps de me raconter ?"
+ },
+ {
+  "id": "v-1wdxqn",
+  "theme": "nous",
+  "source": "bids",
+  "texte": "Quels petits signes de ma part te montrent que je pense à toi ?"
+ },
+ {
+  "id": "v-40b2q6",
+  "theme": "nous",
+  "source": "bids",
+  "texte": "Y a-t-il des moments où tu as cherché mon attention sans que je le voie ?"
+ },
+ {
+  "id": "v-g1ey8i",
+  "theme": "nous",
+  "source": "rusbult",
+  "texte": "Qu’avons-nous déjà construit ensemble qui compte pour toi ?"
+ },
+ {
+  "id": "v-1jew9fr",
+  "theme": "nous",
+  "source": "rusbult",
+  "texte": "Quelle promesse aimerais-tu qu’on se fasse pour les mois à venir ?"
+ },
+ {
+  "id": "v-j6jn8u",
+  "theme": "nous",
+  "source": "fromm",
+  "texte": "Qu’est-ce que tu choisis en moi, au-delà de ce que tu ressens ?"
+ },
+ {
+  "id": "v-ubezpp",
+  "theme": "nous",
+  "source": "fromm",
+  "texte": "Concrètement, comment choisis-tu notre relation un jour où c’est difficile ?"
+ },
+ {
+  "id": "v-1go0nej",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Quand on n’est pas d’accord, qu’est-ce qui t’aide à sentir qu’on est dans la même équipe ?"
+ },
+ {
+  "id": "v-1nbtfuz",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Comment se passaient les disputes chez toi, enfant ? Qu’est-ce que tu en as gardé ?"
+ },
+ {
+  "id": "v-wc044o",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Quand tu es contrarié·e, de quoi as-tu besoin d’abord : d’espace, d’être écouté·e, ou d’une solution ?"
+ },
+ {
+  "id": "v-rwn6fw",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Comment peut-on me dire quelque chose de difficile sans que je me braque ? Et pour toi ?"
+ },
+ {
+  "id": "v-19m68r0",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Inventez un mot ou un geste qui veut dire « pause, on reprend dans 20 minutes » quand ça chauffe."
+ },
+ {
+  "id": "v-1nesp65",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Repensez à un désaccord passé. Chacun dit la part dont il se sent responsable."
+ },
+ {
+  "id": "v-ec1okk",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Quel reproche de ma part te touche le plus ? Comment pourrais-je le dire autrement ?"
+ },
+ {
+  "id": "v-gevzpn",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Que voudrais-tu que je fasse quand tu te fermes pendant une dispute ?"
+ },
+ {
+  "id": "v-178d1c2",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Racontez un désaccord que vous avez bien géré. Qu’est-ce qui a marché ?"
+ },
+ {
+  "id": "v-aaitsy",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Que fais-tu quand tu sens la colère monter ?"
+ },
+ {
+  "id": "v-1ynckmk",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Préfères-tu régler un conflit tout de suite, ou laisser passer une nuit ?"
+ },
+ {
+  "id": "v-1f13x7t",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Qu’est-ce qui te fait te sentir jugé·e ?"
+ },
+ {
+  "id": "v-xdlali",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Quelle règle aimerais-tu qu’on se fixe pour nos disputes ?"
+ },
+ {
+  "id": "v-17x0y3b",
+  "theme": "conflit",
+  "source": "conflict",
+  "texte": "Quelle différence entre nous crée le plus de frictions ? Et laquelle aimes-tu le plus ?"
+ },
+ {
+  "id": "v-1g8kjja",
+  "theme": "conflit",
+  "source": "repair",
+  "texte": "Qu’est-ce qui te montre que je cherche à réparer après une dispute ?"
+ },
+ {
+  "id": "v-otrl1y",
+  "theme": "conflit",
+  "source": "repair",
+  "texte": "Quelle phrase, dite au bon moment, t’aide à redescendre ?"
+ },
+ {
+  "id": "v-19xnwzf",
+  "theme": "conflit",
+  "source": "repair",
+  "texte": "Qu’est-ce qui rend des excuses vraiment sincères, pour toi ?"
+ },
+ {
+  "id": "v-1oja8jo",
+  "theme": "conflit",
+  "source": "repair",
+  "texte": "Après une dispute, de quoi as-tu besoin pour te sentir de nouveau en sécurité ?"
+ },
+ {
+  "id": "v-d7vv19",
+  "theme": "conflit",
+  "source": "repair",
+  "texte": "Y a-t-il quelque chose que tu as laissé passer et qui te pèse encore ?"
+ },
+ {
+  "id": "v-4zb10y",
+  "theme": "conflit",
+  "source": "dreams",
+  "texte": "Y a-t-il un sujet sur lequel on revient souvent ? Quel rêve ou quel besoin se cache derrière ta position ?"
+ },
+ {
+  "id": "v-191mx3b",
+  "theme": "conflit",
+  "source": "johnson",
+  "texte": "Dans une dispute, quelle est ta peur la plus profonde : être rejeté·e, ne pas compter, perdre ta liberté, autre chose ?"
+ },
+ {
+  "id": "v-14q7wre",
+  "theme": "conflit",
+  "source": "johnson",
+  "texte": "Quand je réponds tard ou peu, qu’est-ce que tu te racontes ? Qu’est-ce qui t’aiderait ?"
+ },
+ {
+  "id": "v-1txr2ml",
+  "theme": "conflit",
+  "source": "maint",
+  "texte": "Qu’est-ce qui, dans la distance, crée le plus de malentendus entre nous ?"
+ },
+ {
+  "id": "v-11oq60x",
+  "theme": "conflit",
+  "source": "maint",
+  "texte": "Pour un sujet sensible, que préfères-tu : un appel, une visio, un message écrit, ou attendre de se voir ?"
+ },
+ {
+  "id": "v-1d1muzi",
+  "theme": "conflit",
+  "source": "epictete",
+  "texte": "Dans ce qui nous fait souffrir de la distance, qu’est-ce qui dépend de nous, et qu’est-ce qui n’en dépend pas ?"
+ },
+ {
+  "id": "v-1ekjz5j",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Qu’est-ce qui donne du sens à ta vie, aujourd’hui ?"
+ },
+ {
+  "id": "v-xak8f5",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quelles valeurs ta famille t’a-t-elle transmises ? Lesquelles gardes-tu ?"
+ },
+ {
+  "id": "v-huck1n",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Comment imagines-tu un dimanche ordinaire chez nous, dans dix ans ?"
+ },
+ {
+  "id": "v-1juxmhk",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Que veut dire « réussir sa vie » pour toi ?"
+ },
+ {
+  "id": "v-ee4scv",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Qu’est-ce que l’argent représente pour toi : la sécurité, la liberté, le plaisir, autre chose ?"
+ },
+ {
+  "id": "v-1mmk349",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Qu’est-ce qu’un foyer, pour toi ?"
+ },
+ {
+  "id": "v-1rjkbko",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quel rôle aimerais-tu jouer dans la vie de tes proches ?"
+ },
+ {
+  "id": "v-176wui4",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quelle valeur de ton éducation voudrais-tu transmettre à des enfants ? Et laquelle laisserais-tu de côté ?"
+ },
+ {
+  "id": "v-edli2v",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Où nos convictions se rejoignent-elles, même si on ne les exprime pas de la même façon ?"
+ },
+ {
+  "id": "v-gtd10m",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Comment aimerais-tu qu’on parle de nos différences de convictions à des enfants ?"
+ },
+ {
+  "id": "v-1mz3psc",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quelle place la foi, la spiritualité ou l’absence de croyance tient-elle dans ta vie de tous les jours ?"
+ },
+ {
+  "id": "v-a1p86d",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quelle place veux-tu que le travail prenne dans ta vie ?"
+ },
+ {
+  "id": "v-1f5ppu3",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Où te vois-tu vivre plus tard ? Qu’est-ce qui compte le plus dans ce choix ?"
+ },
+ {
+  "id": "v-t81neh",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quel genre de vieux couple aimerais-tu qu’on devienne ?"
+ },
+ {
+  "id": "v-18ayn4c",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Que voudrais-tu que nos enfants disent de nous, plus tard ?"
+ },
+ {
+  "id": "v-7j76lp",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Comment imagines-tu le partage des tâches quand on vivra ensemble ?"
+ },
+ {
+  "id": "v-125whbi",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quelle relation aimerais-tu qu’on ait avec nos familles respectives ?"
+ },
+ {
+  "id": "v-2hdvb4",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Comment aimerais-tu qu’on célèbre les fêtes, et avec qui ?"
+ },
+ {
+  "id": "v-d4gkeo",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Quel est le prochain grand projet que tu aimerais qu’on réalise ?"
+ },
+ {
+  "id": "v-1hg5ira",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Comment voudrais-tu qu’on se soutienne quand l’un de nous traverse une période difficile ?"
+ },
+ {
+  "id": "v-1rvlugr",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "À quoi ressemblera la fin de la distance ? Qu’est-ce qu’on doit décider pour y arriver ?"
+ },
+ {
+  "id": "v-xkqslv",
+  "theme": "avenir",
+  "source": "meaning",
+  "texte": "Que ferait-on si l’un de nous recevait une belle opportunité loin de l’autre ?"
+ },
+ {
+  "id": "v-1mg6tem",
+  "theme": "avenir",
+  "source": "rituals",
+  "texte": "Quelle tradition de ton enfance aimerais-tu garder ? Laquelle aimerais-tu inventer avec moi ?"
+ },
+ {
+  "id": "v-1qx0ycq",
+  "theme": "avenir",
+  "source": "fondness",
+  "texte": "Qu’admires-tu dans les convictions de l’autre, même sans les partager ?"
+ },
+ {
+  "id": "v-19tno5r",
+  "theme": "avenir",
+  "source": "dreams",
+  "texte": "Quel rêve as-tu mis de côté ? Comment pourrais-je t’aider à le reprendre ?"
+ },
+ {
+  "id": "v-1mt0fw9",
+  "theme": "avenir",
+  "source": "dreams",
+  "texte": "Si tu avais une année entière sans contrainte, qu’en ferais-tu ?"
+ },
+ {
+  "id": "v-1b2m9dg",
+  "theme": "avenir",
+  "source": "dreams",
+  "texte": "Sur quoi es-tu prêt·e à faire des compromis, et sur quoi jamais ?"
+ },
+ {
+  "id": "v-1lfni7r",
+  "theme": "avenir",
+  "source": "dreams",
+  "texte": "Quel voyage aimerais-tu qu’on fasse un jour ensemble, et pourquoi celui-là ?"
+ },
+ {
+  "id": "v-6t7xad",
+  "theme": "avenir",
+  "source": "rusbult",
+  "texte": "Qu’est-ce qui pourrait nous rendre plus forts dans dix ans qu’aujourd’hui ?"
+ },
+ {
+  "id": "v-umf5y6",
+  "theme": "philo",
+  "source": "platon",
+  "texte": "Dans Le Banquet, Aristophane raconte que chacun cherche sa moitié perdue. Crois-tu qu’on cherche une moitié, ou qu’on se construit à deux ?"
+ },
+ {
+  "id": "v-1kv0dc",
+  "theme": "philo",
+  "source": "aristote",
+  "texte": "Aristote distingue les liens fondés sur l’utilité, sur le plaisir, et sur ce que l’autre est vraiment. Qu’est-ce qui, entre nous, relève du troisième ?"
+ },
+ {
+  "id": "v-1mch5hx",
+  "theme": "philo",
+  "source": "montaigne",
+  "texte": "Montaigne expliquait son amitié par un simple « parce que c’était lui, parce que c’était moi ». Peut-on vraiment expliquer pourquoi on aime quelqu’un ?"
+ },
+ {
+  "id": "v-1xtiimr",
+  "theme": "philo",
+  "source": "pascal",
+  "texte": "Pascal disait que le cœur a ses raisons que la raison ne connaît pas. Ton cœur et ta raison ont-ils déjà été en désaccord à mon sujet ?"
+ },
+ {
+  "id": "v-l4snai",
+  "theme": "philo",
+  "source": "rilke",
+  "texte": "Rilke voyait l’amour comme deux solitudes qui se protègent l’une l’autre. Qu’est-ce que ça t’évoque pour nous ?"
+ },
+ {
+  "id": "v-1n88g58",
+  "theme": "philo",
+  "source": "beauvoir",
+  "texte": "Pour Beauvoir, un amour authentique unit deux libertés. Comment rester libres tout en étant ensemble ?"
+ },
+ {
+  "id": "v-mg2c9t",
+  "theme": "philo",
+  "source": "badiou",
+  "texte": "Pour Badiou, aimer, c’est apprendre à voir le monde à deux. Qu’est-ce que tu vois différemment depuis qu’on est ensemble ?"
+ },
+ {
+  "id": "v-n1rfr1",
+  "theme": "philo",
+  "source": "weil",
+  "texte": "Simone Weil voyait l’attention comme la forme la plus rare de la générosité. Quand t’es-tu senti·e vraiment regardé·e par quelqu’un ?"
+ },
+ {
+  "id": "v-28ttjt",
+  "theme": "philo",
+  "source": "fromm",
+  "texte": "Pour Fromm, aimer est un art qui s’apprend. Qu’est-ce que tu travailles, toi, pour aimer mieux ?"
+ },
+ {
+  "id": "v-xck0ej",
+  "theme": "philo",
+  "source": "fromm",
+  "texte": "L’amour, est-ce un sentiment qui nous arrive, ou une capacité qu’on développe ?"
+ },
+ {
+  "id": "v-1xeze6p",
+  "theme": "philo",
+  "source": "fromm",
+  "texte": "Pour toi, aimer, c’est surtout un sentiment, ou une décision qu’on reprend chaque jour ?"
+ },
+ {
+  "id": "v-y7wby2",
+  "theme": "philo",
+  "source": "frankl",
+  "texte": "Viktor Frankl pensait qu’on peut trouver du sens même dans l’épreuve. Quel sens donnes-tu à notre distance ?"
+ },
+ {
+  "id": "v-yo3bz0",
+  "theme": "philo",
+  "source": "stex",
+  "texte": "Saint-Exupéry disait qu’aimer, c’est regarder ensemble dans la même direction. Vers quoi regardons-nous ?"
+ },
+ {
+  "id": "v-1tgzzqu",
+  "theme": "philo",
+  "source": "perel",
+  "texte": "Esther Perel dit que le désir a besoin d’un peu d’espace. La distance peut-elle aussi nous apporter quelque chose ?"
+ },
+ {
+  "id": "v-5msusm",
+  "theme": "philo",
+  "source": null,
+  "texte": "Est-ce que les gens peuvent vraiment changer ?"
+ },
+ {
+  "id": "v-1hi2pp3",
+  "theme": "philo",
+  "source": null,
+  "texte": "Le bonheur, est-ce un état, un chemin, ou une décision ?"
+ },
+ {
+  "id": "v-1ou7yxp",
+  "theme": "philo",
+  "source": null,
+  "texte": "Vaut-il mieux être aimé·e, ou être compris·e ?"
+ },
+ {
+  "id": "v-1c7kmci",
+  "theme": "philo",
+  "source": null,
+  "texte": "Qu’est-ce qui donne de la valeur à une promesse ?"
+ },
+ {
+  "id": "v-1s5lr2c",
+  "theme": "philo",
+  "source": null,
+  "texte": "Peut-on aimer quelqu’un sans le connaître entièrement ?"
+ },
+ {
+  "id": "v-1jjlxu6",
+  "theme": "philo",
+  "source": null,
+  "texte": "La fidélité, c’est quoi pour toi, au-delà de l’exclusivité ?"
+ },
+ {
+  "id": "v-sklof",
+  "theme": "philo",
+  "source": null,
+  "texte": "Peut-on être heureux sans être libre ?"
+ },
+ {
+  "id": "v-191n1o1",
+  "theme": "philo",
+  "source": null,
+  "texte": "Qu’est-ce que tu crois, sans pouvoir le prouver ?"
+ },
+ {
+  "id": "v-rod3jm",
+  "theme": "philo",
+  "source": null,
+  "texte": "Qu’est-ce qui te fait te sentir vivant·e ?"
+ },
+ {
+  "id": "v-1dlpwcp",
+  "theme": "philo",
+  "source": null,
+  "texte": "Si tu pouvais poser une seule question à l’univers, laquelle ?"
+ },
+ {
+  "id": "v-jqc8ye",
+  "theme": "philo",
+  "source": null,
+  "texte": "Le temps passé loin l’un de l’autre, est-ce du temps perdu ?"
+ },
+ {
+  "id": "v-yh5yeo",
+  "theme": "philo",
+  "source": null,
+  "texte": "Qu’est-ce que la confiance ? Comment se reconstruit-elle quand elle est abîmée ?"
+ },
+ {
+  "id": "v-kdldr8",
+  "theme": "philo",
+  "source": null,
+  "texte": "La routine te fait-elle peur ? Peut-elle être belle ?"
+ },
+ {
+  "id": "v-1hn185u",
+  "theme": "philo",
+  "source": null,
+  "texte": "Qu’est-ce qui est plus important : avoir raison, ou être en paix ?"
+ },
+ {
+  "id": "v-hisrg",
+  "theme": "philo",
+  "source": null,
+  "texte": "Si tu pouvais revivre une seule journée de ta vie, laquelle choisirais-tu ?"
+ },
+ {
+  "id": "v-k9t34c",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Quel espoir as-tu abandonné en grandissant ? Est-ce que tu le regrettes ?"
+ },
+ {
+  "id": "v-1rkg2ep",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Qu’est-ce que tu possèdes qui te possède un peu aussi ?"
+ },
+ {
+  "id": "v-zfmr46",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Où te sens-tu chez toi : dans un lieu, avec des gens, dans une langue ?"
+ },
+ {
+  "id": "v-ruw07x",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Aimerais-tu savoir comment tu vas mourir ?"
+ },
+ {
+  "id": "v-16eqjws",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Qu’est-ce qui te rend ridicule à tes propres yeux ? Est-ce que ça te dérange que je le voie ?"
+ },
+ {
+  "id": "v-yim186",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Combien de vrais amis as-tu ? Combien d’entre eux remarqueraient que tu as disparu pendant un mois ?"
+ },
+ {
+  "id": "v-1hj6pzu",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Quand as-tu été heureux·se sans t’en rendre compte sur le moment ?"
+ },
+ {
+  "id": "v-1m4aj9m",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "As-tu déjà ri à un moment où il ne fallait surtout pas ?"
+ },
+ {
+  "id": "v-yk0tpp",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Qu’est-ce que tu sais de l’amour aujourd’hui que tu ne savais pas à 15 ans ?"
+ },
+ {
+  "id": "v-wi8g8l",
+  "theme": "toi",
+  "source": "frisch",
+  "texte": "Qu’est-ce qui te fait honte chez les autres ? Pourquoi est-ce que ça te touche autant ?"
+ },
+ {
+  "id": "v-6q5lay",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Est-ce qu’il t’arrive d’espérer quelque chose pour moi sans oser me le dire ?"
+ },
+ {
+  "id": "v-1l46kga",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Te souviens-tu de la première fois où tu as eu peur de me perdre ?"
+ },
+ {
+  "id": "v-1dcsyzt",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Qu’est-ce que tu ne me pardonnerais pas ? En es-tu vraiment sûr·e ?"
+ },
+ {
+  "id": "v-gbhu6z",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Préférerais-tu connaître toutes mes pensées pendant une journée, ou que je connaisse toutes les tiennes ?"
+ },
+ {
+  "id": "v-16qqwv9",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Est-ce que tu te sens plus libre avec moi, ou moins libre ?"
+ },
+ {
+  "id": "v-2wt6xz",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Si l’argent n’existait pas, qu’est-ce que tu m’offrirais ?"
+ },
+ {
+  "id": "v-1fs9r71",
+  "theme": "nous",
+  "source": "frisch",
+  "texte": "Quand tu dis « nous », à quoi penses-tu exactement ?"
+ },
+ {
+  "id": "v-k37sus",
+  "theme": "philo",
+  "source": "frisch",
+  "texte": "Une promesse t’a-t-elle déjà libéré·e plutôt qu’enfermé·e ?"
+ },
+ {
+  "id": "v-1ml2fpq",
+  "theme": "philo",
+  "source": "frisch",
+  "texte": "Si tu devais oublier demain tout ce qui s’est passé aujourd’hui, que voudrais-tu me dire ce soir ?"
+ },
+ {
+  "id": "v-xcu14t",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Raconte notre rencontre comme à quelqu’un qui ne nous connaît pas."
+ },
+ {
+  "id": "v-2w3rx1",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quelle a été ta toute première impression de moi ? Qu’est-ce qui s’est révélé faux ?"
+ },
+ {
+  "id": "v-1ev8mna",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Qu’est-ce qui t’a donné envie de me revoir, après la première fois ?"
+ },
+ {
+  "id": "v-1clkkgh",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Y a-t-il eu un moment où tu as hésité sur nous ? Qu’est-ce qui t’a fait rester ?"
+ },
+ {
+  "id": "v-4hpyn1",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quel a été notre premier vrai moment difficile ? Comment on s’en est sortis ?"
+ },
+ {
+  "id": "v-z9tbcf",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "De quoi te souviens-tu de nos débuts que j’ai sûrement oublié ?"
+ },
+ {
+  "id": "v-17pache",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Comment as-tu parlé de moi à tes proches la toute première fois ?"
+ },
+ {
+  "id": "v-vb61ob",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Qu’est-ce qui a changé entre nous depuis le début, en mieux ?"
+ },
+ {
+  "id": "v-wufhzx",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quel couple admires-tu le plus autour de toi ? Qu’est-ce qu’il fait bien ?"
+ },
+ {
+  "id": "v-1535reh",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Comment était le couple de tes parents ? Qu’est-ce que tu veux garder, ou faire autrement ?"
+ },
+ {
+  "id": "v-gxmwy",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Y a-t-il un couple que tu ne voudrais jamais qu’on devienne ? Pourquoi ?"
+ },
+ {
+  "id": "v-6u8co4",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "D’après toi, qu’est-ce qui fait qu’un couple dure ?"
+ },
+ {
+  "id": "v-9szi7f",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Pourquoi, à ton avis, certains couples se séparent-ils ?"
+ },
+ {
+  "id": "v-pe19nb",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quel moment de notre histoire mériterait un chapitre entier ?"
+ },
+ {
+  "id": "v-1zv76q",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quand as-tu décidé de tenter la distance avec moi ? Est-ce que ça a été facile ?"
+ },
+ {
+  "id": "v-51sln3",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Qu’est-ce qui t’a le plus surpris·e chez moi en apprenant à me connaître ?"
+ },
+ {
+  "id": "v-is4msm",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quelle est la première chose que tu as aimée dans ma façon de parler, de rire ou de bouger ?"
+ },
+ {
+  "id": "v-1w4jxtm",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Te souviens-tu de ton premier message pour moi ? Que voulais-tu vraiment dire ?"
+ },
+ {
+  "id": "v-1c851en",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quel bon moment de notre histoire te repasses-tu quand je te manque ?"
+ },
+ {
+  "id": "v-1bid1ns",
+  "theme": "histoire",
+  "source": "oral",
+  "texte": "Quelle épreuve nous a rendus plus forts, d’après toi ?"
+ },
+ {
+  "id": "v-3scccm",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Si ta vie était un livre, quels seraient les titres de ses chapitres jusqu’ici ?"
+ },
+ {
+  "id": "v-yc7tyt",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel a été le sommet de ta vie, le moment où tu t’es senti·e le plus vivant·e ?"
+ },
+ {
+  "id": "v-1f8kvj9",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel a été le point le plus bas de ta vie ? Qu’est-ce qui t’a aidé·e à remonter ?"
+ },
+ {
+  "id": "v-zvlkwf",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel moment a été un tournant dans ta vie, même si tu ne l’as compris qu’après ?"
+ },
+ {
+  "id": "v-11bxu29",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel est ton plus vieux souvenir ? Qu’est-ce qu’il dit de toi ?"
+ },
+ {
+  "id": "v-bg3pk7",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Raconte un moment où tu as fait preuve de sagesse, ou où quelqu’un t’en a appris."
+ },
+ {
+  "id": "v-1d7jl3v",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "As-tu déjà vécu un moment qui t’a paru plus grand que toi : spirituel, mystique, ou simplement bouleversant ?"
+ },
+ {
+  "id": "v-5wvurk",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel sera le prochain chapitre de ta vie ? Comment voudrais-tu l’appeler ?"
+ },
+ {
+  "id": "v-1iqthx8",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel fil rouge traverse ta vie depuis l’enfance ?"
+ },
+ {
+  "id": "v-llbasp",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel échec t’a le plus appris ?"
+ },
+ {
+  "id": "v-1b3602d",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quelle perte t’a le plus changé·e ?"
+ },
+ {
+  "id": "v-1rhjc3x",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Comment tes convictions ont-elles changé depuis tes 15 ans ?"
+ },
+ {
+  "id": "v-1p5f3kc",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Quel est le plus grand défi de ta vie jusqu’ici ?"
+ },
+ {
+  "id": "v-pdscq4",
+  "theme": "toi",
+  "source": "mcadams",
+  "texte": "Raconte un souvenir d’adulte que tu revois avec une précision étonnante."
+ },
+ {
+  "id": "v-1vepzrt",
+  "theme": "nous",
+  "source": "sternberg",
+  "texte": "Entre la complicité, le désir et l’engagement, lequel est le plus fort entre nous en ce moment ? Lequel la distance met-elle le plus à l’épreuve ?"
+ },
+ {
+  "id": "v-yd4cbf",
+  "theme": "nous",
+  "source": "sternberg",
+  "texte": "Qu’est-ce qui nourrit notre complicité, même à distance ?"
+ },
+ {
+  "id": "v-ahnpb2",
+  "theme": "nous",
+  "source": "sternberg",
+  "texte": "Qu’est-ce qui entretient le désir quand on ne peut pas se toucher ?"
+ },
+ {
+  "id": "v-kojpki",
+  "theme": "nous",
+  "source": "sternberg",
+  "texte": "Quel geste concret prouve l’engagement mieux qu’une parole, pour toi ?"
+ },
+ {
+  "id": "v-1bc0et3",
+  "theme": "nous",
+  "source": "lee",
+  "texte": "Certains aiment comme une passion, d’autres comme une amitié qui grandit, d’autres de façon réfléchie. Comment aimes-tu, toi ? Et moi ?"
+ },
+ {
+  "id": "v-1y71ki1",
+  "theme": "nous",
+  "source": "lee",
+  "texte": "Notre histoire a-t-elle commencé comme un coup de foudre, ou comme une amitié qui a glissé ?"
+ },
+ {
+  "id": "v-yhtlir",
+  "theme": "nous",
+  "source": "lee",
+  "texte": "La jalousie, pour toi, c’est une preuve d’amour ou un signal d’alarme ?"
+ },
+ {
+  "id": "v-lxo71f",
+  "theme": "nous",
+  "source": "lee",
+  "texte": "Est-ce qu’aimer, pour toi, ça peut aussi être un jeu ?"
+ },
+ {
+  "id": "v-157wjo5",
+  "theme": "toi",
+  "source": "attach",
+  "texte": "Quand quelqu’un que tu aimes s’éloigne, as-tu tendance à t’accrocher, à prendre de la distance, ou à attendre calmement ?"
+ },
+ {
+  "id": "v-1uzwxy3",
+  "theme": "toi",
+  "source": "attach",
+  "texte": "Est-ce facile pour toi de dépendre de quelqu’un ? Et que quelqu’un dépende de toi ?"
+ },
+ {
+  "id": "v-b2nmbc",
+  "theme": "toi",
+  "source": "attach",
+  "texte": "Qu’est-ce qui te faisait te sentir en sécurité quand tu étais petit·e ?"
+ },
+ {
+  "id": "v-qyn8rd",
+  "theme": "nous",
+  "source": "attach",
+  "texte": "Quand tu es inquiet·e pour nous, que se passe-t-il dans ton corps ? Qu’est-ce qui te calme ?"
+ },
+ {
+  "id": "v-zte4tu",
+  "theme": "nous",
+  "source": "attach",
+  "texte": "Qu’est-ce qui t’aide à te sentir en sécurité avec moi, malgré les kilomètres ?"
+ },
+ {
+  "id": "v-1qpp3d",
+  "theme": "nous",
+  "source": "michel",
+  "texte": "Qui aimerais-tu devenir dans cinq ans ? Comment puis-je t’aider à y arriver ?"
+ },
+ {
+  "id": "v-1huww26",
+  "theme": "nous",
+  "source": "michel",
+  "texte": "Y a-t-il un trait de toi que tu sens grandir depuis qu’on est ensemble ?"
+ },
+ {
+  "id": "v-3d1g9m",
+  "theme": "nous",
+  "source": "michel",
+  "texte": "Est-ce que je t’aide à devenir la personne que tu veux être ? En quoi, concrètement ?"
+ },
+ {
+  "id": "v-k8gj9s",
+  "theme": "nous",
+  "source": "michel",
+  "texte": "Y a-t-il des moments où je te pousse vers quelqu’un que tu ne veux pas être ?"
+ },
+ {
+  "id": "v-vciw8w",
+  "theme": "nous",
+  "source": "michel",
+  "texte": "Quelle part de toi aimerais-tu que je remarque davantage ?"
+ },
+ {
+  "id": "v-1aqt06j",
+  "theme": "toi",
+  "source": "via",
+  "texte": "Choisis tes trois plus grandes forces : curiosité, courage, gentillesse, humour, persévérance, sens de la justice, gratitude, créativité… Lesquelles, et pourquoi ?"
+ },
+ {
+  "id": "v-sdy4s9",
+  "theme": "nous",
+  "source": "via",
+  "texte": "Laquelle de mes forces admires-tu le plus ? Et laquelle m’envies-tu un peu ?"
+ },
+ {
+  "id": "v-f6r12u",
+  "theme": "toi",
+  "source": "via",
+  "texte": "Quelle force aimerais-tu développer cette année ?"
+ },
+ {
+  "id": "v-14zp3qm",
+  "theme": "toi",
+  "source": "via",
+  "texte": "Dans quelle situation récente as-tu été courageux·se ?"
+ },
+ {
+  "id": "v-mnust5",
+  "theme": "toi",
+  "source": "via",
+  "texte": "Jusqu’où ta curiosité t’a-t-elle déjà emmené·e ?"
+ },
+ {
+  "id": "v-1qztbek",
+  "theme": "avenir",
+  "source": "schwartz",
+  "texte": "Liberté, sécurité, tradition, aventure, réussite, bienveillance : classe-les pour toi. Je fais pareil."
+ },
+ {
+  "id": "v-h3lm4p",
+  "theme": "avenir",
+  "source": "schwartz",
+  "texte": "Quelle valeur de tes parents as-tu gardée sans même t’en rendre compte ?"
+ },
+ {
+  "id": "v-131payx",
+  "theme": "avenir",
+  "source": "schwartz",
+  "texte": "Préfères-tu une vie prévisible et sûre, ou pleine d’imprévus ?"
+ },
+ {
+  "id": "v-1r00aq7",
+  "theme": "avenir",
+  "source": "schwartz",
+  "texte": "Qu’est-ce qui compte le plus pour toi : être reconnu·e, ou être utile ?"
+ },
+ {
+  "id": "v-nrxmog",
+  "theme": "avenir",
+  "source": "schwartz",
+  "texte": "Quelle personne admires-tu sans réserve ? Qu’est-ce que ça dit de tes valeurs ?"
+ },
+ {
+  "id": "v-e8b7op",
+  "theme": "nous",
+  "source": "sfbt",
+  "texte": "Si un miracle se produisait cette nuit et que notre relation devenait exactement ce que tu souhaites, quel serait le premier petit signe que tu remarquerais demain ?"
+ },
+ {
+  "id": "v-xmaesx",
+  "theme": "conflit",
+  "source": "sfbt",
+  "texte": "De 1 à 10, où en est notre façon de communiquer à distance ? Qu’est-ce qui nous ferait passer au chiffre au-dessus ?"
+ },
+ {
+  "id": "v-ou3uf2",
+  "theme": "conflit",
+  "source": "sfbt",
+  "texte": "Pense à une fois où on a évité une dispute de justesse. Qu’est-ce qu’on a fait de bien ?"
+ },
+ {
+  "id": "v-1z9hpz",
+  "theme": "nous",
+  "source": "sfbt",
+  "texte": "Qu’est-ce qui marche déjà entre nous et qu’il faut surtout continuer ?"
+ },
+ {
+  "id": "v-1k6ae8a",
+  "theme": "conflit",
+  "source": "sfbt",
+  "texte": "Quand ça va mieux entre nous, qu’est-ce que je fais différemment ?"
+ },
+ {
+  "id": "v-o1uns0",
+  "theme": "nous",
+  "source": "fred",
+  "texte": "Raconte un tout petit moment de connexion entre nous cette semaine, même de deux secondes."
+ },
+ {
+  "id": "v-1qc2xky",
+  "theme": "nous",
+  "source": "fred",
+  "texte": "Quand t’es-tu senti·e sur la même longueur d’onde que moi récemment, sans rien dire ?"
+ },
+ {
+  "id": "v-99omyp",
+  "theme": "toi",
+  "source": "fred",
+  "texte": "Avec qui, à part moi, as-tu partagé un vrai moment de chaleur cette semaine ?"
+ },
+ {
+  "id": "v-1rk3rsa",
+  "theme": "nous",
+  "source": "reis",
+  "texte": "Quand tu me racontes quelque chose d’important, qu’est-ce qui te montre que j’ai vraiment compris ?"
+ },
+ {
+  "id": "v-lgav78",
+  "theme": "nous",
+  "source": "reis",
+  "texte": "Y a-t-il un sujet sur lequel tu ne te sens pas tout à fait compris·e par moi ?"
+ },
+ {
+  "id": "v-yfnucy",
+  "theme": "nous",
+  "source": "reis",
+  "texte": "Qu’est-ce que je fais qui te donne l’impression d’être aimé·e tel·le que tu es ?"
+ },
+ {
+  "id": "v-10v4g1q",
+  "theme": "nous",
+  "source": "impett",
+  "texte": "Mots doux, temps ensemble, petits services, contact, surprises, soutien à tes projets, simple compagnie : de quoi as-tu le plus besoin en ce moment ?"
+ },
+ {
+  "id": "v-zmp776",
+  "theme": "nous",
+  "source": "impett",
+  "texte": "À distance, quelle forme d’amour te manque le plus ?"
+ },
+ {
+  "id": "v-fybhd0",
+  "theme": "nous",
+  "source": "impett",
+  "texte": "Quelle forme d’amour est-ce que je te donne sans m’en rendre compte ?"
+ },
+ {
+  "id": "v-iyp691",
+  "theme": "toi",
+  "source": "ware",
+  "texte": "Vis-tu la vie que tu veux vraiment, ou celle qu’on attend de toi ?"
+ },
+ {
+  "id": "v-792d5z",
+  "theme": "toi",
+  "source": "ware",
+  "texte": "Si tu reprenais un peu de temps à ton travail ou tes études, à quoi le donnerais-tu ?"
+ },
+ {
+  "id": "v-1vn6wio",
+  "theme": "toi",
+  "source": "ware",
+  "texte": "Quel sentiment as-tu gardé pour toi alors qu’il méritait d’être dit ?"
+ },
+ {
+  "id": "v-5lap7h",
+  "theme": "toi",
+  "source": "ware",
+  "texte": "Quel ami as-tu perdu de vue et aimerais-tu retrouver ?"
+ },
+ {
+  "id": "v-nj58f2",
+  "theme": "toi",
+  "source": "ware",
+  "texte": "Qu’est-ce qui t’empêche de t’autoriser à être plus heureux·se ?"
+ },
+ {
+  "id": "v-hrbsjf",
+  "theme": "avenir",
+  "source": "eightdates",
+  "texte": "Qu’est-ce qu’une aventure, pour toi ? Quelle est la prochaine que tu aimerais vivre avec moi ?"
+ },
+ {
+  "id": "v-1h5fy3f",
+  "theme": "nous",
+  "source": "eightdates",
+  "texte": "Comment aimes-tu qu’on s’amuse ? Qu’est-ce qu’on ne fait plus assez ?"
+ },
+ {
+  "id": "v-1nd2lh1",
+  "theme": "avenir",
+  "source": "eightdates",
+  "texte": "Qu’est-ce qu’on t’a appris sur l’argent sans jamais te le dire ?"
+ },
+ {
+  "id": "v-1qkndli",
+  "theme": "avenir",
+  "source": "eightdates",
+  "texte": "Le travail, pour toi, c’est d’abord un gagne-pain, une vocation ou une identité ?"
+ },
+ {
+  "id": "v-3ulpvi",
+  "theme": "nous",
+  "source": "eightdates",
+  "texte": "Qu’est-ce qui te fait te sentir désiré·e ?"
+ },
+ {
+  "id": "v-s2vjox",
+  "theme": "nous",
+  "source": "eightdates",
+  "texte": "Comment veux-tu qu’on parle de nos envies et de notre intimité, même quand c’est gênant ?"
+ },
+ {
+  "id": "v-190sfk",
+  "theme": "avenir",
+  "source": "eightdates",
+  "texte": "Comment veux-tu grandir, spirituellement ou intérieurement, dans les années qui viennent ?"
+ },
+ {
+  "id": "v-awggdm",
+  "theme": "avenir",
+  "source": "nyt",
+  "texte": "Quelle place l’indépendance doit-elle garder dans un couple qui vit ensemble ?"
+ },
+ {
+  "id": "v-1ilt6ew",
+  "theme": "avenir",
+  "source": "nyt",
+  "texte": "Comment tes parents se partageaient-ils l’argent et les décisions ? Qu’en penses-tu aujourd’hui ?"
+ },
+ {
+  "id": "v-1qwx6fl",
+  "theme": "avenir",
+  "source": "prepare",
+  "texte": "Sur quel sujet de vie commune penses-tu qu’on sera le plus vite d’accord ? Et le moins ?"
+ },
+ {
+  "id": "v-bb3ycc",
+  "theme": "toi",
+  "source": "pospsy",
+  "texte": "Imagine ta vie dans dix ans, si tout s’était passé au mieux. Décris une journée."
+ },
+ {
+  "id": "v-engbq4",
+  "theme": "toi",
+  "source": "pospsy",
+  "texte": "À qui aimerais-tu dire merci sans l’avoir jamais fait ?"
+ },
+ {
+  "id": "v-jl6kqo",
+  "theme": "conflit",
+  "source": "cnv",
+  "texte": "Quand tu es agacé·e par moi, quel besoin se cache derrière, en général ?"
+ },
+ {
+  "id": "v-lb9a9d",
+  "theme": "conflit",
+  "source": "cnv",
+  "texte": "Quelle différence fais-tu entre une demande et une exigence ?"
+ },
+ {
+  "id": "v-8bbudz",
+  "theme": "conflit",
+  "source": "cnv",
+  "texte": "Quelle phrase de reproche t’a le plus blessé·e dans ta vie ? Comment aurait-elle pu être dite ?"
+ },
+ {
+  "id": "v-csk3qm",
+  "theme": "philo",
+  "source": "stendhal",
+  "texte": "Stendhal compare l’amour à un rameau qui se couvre de cristaux de sel : on pare l’autre de mille perfections. Lesquelles m’as-tu prêtées au début ? Lesquelles étaient vraies ?"
+ },
+ {
+  "id": "v-11vejr5",
+  "theme": "philo",
+  "source": "stendhal",
+  "texte": "Pour Stendhal, un petit doute relance l’amour. Est-ce que la distance fait cet effet-là chez toi ?"
+ },
+ {
+  "id": "v-a01pkl",
+  "theme": "philo",
+  "source": "lewis",
+  "texte": "C. S. Lewis distingue l’affection, l’amitié, l’éros et la charité. Lequel est le plus fort entre nous ? Lequel aimerais-tu qu’on cultive ?"
+ },
+ {
+  "id": "v-ptojih",
+  "theme": "philo",
+  "source": "lewis",
+  "texte": "Pour Lewis, les amis sont côte à côte, les amants face à face. Qu’est-ce qu’on regarde côte à côte, nous deux ?"
+ },
+ {
+  "id": "v-8a0bec",
+  "theme": "philo",
+  "source": "comte",
+  "texte": "Comte-Sponville distingue l’amour qui manque, l’amour qui se réjouit et l’amour qui donne. En ce moment, le nôtre est surtout lequel ?"
+ },
+ {
+  "id": "v-1xw9bou",
+  "theme": "philo",
+  "source": "comte",
+  "texte": "Peut-on aimer quelqu’un sans le désirer ? Et le désirer sans l’aimer ?"
+ },
+ {
+  "id": "v-nrbnjs",
+  "theme": "philo",
+  "source": "hooks",
+  "texte": "bell hooks définit l’amour comme la volonté de faire grandir l’autre et soi-même. Est-ce que je te fais grandir ? Et toi, moi ?"
+ },
+ {
+  "id": "v-16xh1t5",
+  "theme": "philo",
+  "source": "hooks",
+  "texte": "Pour bell hooks, on ne peut pas à la fois aimer et blesser volontairement. Qu’est-ce qui, pour toi, est incompatible avec l’amour ?"
+ },
+ {
+  "id": "v-1cq1xyt",
+  "theme": "philo",
+  "source": "hooks",
+  "texte": "bell hooks dit qu’on apprend à aimer en apprenant d’abord à s’aimer soi-même. Est-ce que tu t’aimes assez, toi ?"
+ },
+ {
+  "id": "v-1qdou32",
+  "theme": "philo",
+  "source": "kierk",
+  "texte": "Kierkegaard voyait dans l’amour un devoir, plus solide que l’humeur du jour. Est-ce que cette idée te choque ou te rassure ?"
+ },
+ {
+  "id": "v-pv0szg",
+  "theme": "philo",
+  "source": "levinas",
+  "texte": "Pour Levinas, le visage de l’autre nous oblige. Qu’est-ce que tu lis sur mon visage que je ne dis pas ?"
+ },
+ {
+  "id": "v-3eb4og",
+  "theme": "philo",
+  "source": "buber",
+  "texte": "Buber distingue la rencontre vraie, « Je-Tu », de la relation utile, « Je-Cela ». Quand t’es-tu senti·e vraiment rencontré·e par moi ?"
+ },
+ {
+  "id": "v-1l2zyri",
+  "theme": "philo",
+  "source": "han",
+  "texte": "Byung-Chul Han craint qu’on ne cherche plus chez l’autre qu’un miroir de soi. Qu’est-ce qui, chez moi, te reste étranger ? Est-ce que ça te plaît ?"
+ },
+ {
+  "id": "v-n0mlsl",
+  "theme": "philo",
+  "source": "illouz",
+  "texte": "Eva Illouz montre que le choix infini des applis rend l’engagement plus difficile. As-tu déjà eu l’impression qu’on pouvait toujours trouver mieux ? Comment fait-on pour choisir ?"
+ },
+ {
+  "id": "v-105bo8i",
+  "theme": "philo",
+  "source": "bauman",
+  "texte": "Bauman parle d’« amour liquide », des liens qu’on veut pouvoir défaire facilement. Qu’est-ce qui rend un lien solide, pour toi ?"
+ },
+ {
+  "id": "v-1917w1f",
+  "theme": "philo",
+  "source": "botton",
+  "texte": "Alain de Botton dit qu’on n’épouse jamais la bonne personne : on apprend à aimer celle qu’on a choisie. D’accord ou pas ?"
+ },
+ {
+  "id": "v-1eszahf",
+  "theme": "philo",
+  "source": "botton",
+  "texte": "Pour de Botton, chacun est un peu difficile à vivre. En quoi l’es-tu, honnêtement ?"
+ },
+ {
+  "id": "v-hm663v",
+  "theme": "philo",
+  "source": "barthes",
+  "texte": "Barthes écrit que dans l’absence, il y a toujours celui qui part et celui qui attend. Entre nous, qui a le plus l’impression d’attendre ?"
+ },
+ {
+  "id": "v-16phjf4",
+  "theme": "philo",
+  "source": "barthes",
+  "texte": "Barthes décrit l’attente amoureuse comme un petit théâtre intérieur. Que se passe-t-il dans ta tête quand tu attends un message de moi ?"
+ },
+ {
+  "id": "v-1tzul8",
+  "theme": "philo",
+  "source": "rochef",
+  "texte": "La Rochefoucauld écrit que certains ne seraient jamais tombés amoureux s’ils n’avaient entendu parler de l’amour. Quelle part de ton idée de l’amour vient des films, des livres, des chansons ?"
+ },
+ {
+  "id": "v-1cku65d",
+  "theme": "philo",
+  "source": "rochef",
+  "texte": "« L’absence diminue les médiocres passions et augmente les grandes, comme le vent éteint les bougies et allume le feu. » Qu’est-ce que la distance a éteint, et qu’a-t-elle allumé ?"
+ },
+ {
+  "id": "v-1nr44be",
+  "theme": "philo",
+  "source": "paul",
+  "texte": "Saint Paul écrit que l’amour est patient, qu’il rend service, qu’il ne jalouse pas, qu’il ne cherche pas son intérêt. Laquelle de ces qualités te semble la plus difficile ?"
+ },
+ {
+  "id": "v-1qk68lx",
+  "theme": "philo",
+  "source": "augustin",
+  "texte": "Saint Augustin : « Aime, et fais ce que tu veux. » Comment comprends-tu cette phrase ?"
+ },
+ {
+  "id": "v-13evyuq",
+  "theme": "philo",
+  "source": "aquin",
+  "texte": "Pour Thomas d’Aquin, aimer, c’est vouloir le bien de l’autre. T’arrive-t-il de vouloir pour moi un bien que je ne veux pas ?"
+ },
+ {
+  "id": "v-nx32xx",
+  "theme": "philo",
+  "source": "spinoza",
+  "texte": "Pour Spinoza, l’amour est une joie accompagnée de l’idée de sa cause. Quelle joie précise te vient de moi ?"
+ },
+ {
+  "id": "v-zurro7",
+  "theme": "philo",
+  "source": "nietzsche",
+  "texte": "Nietzsche conseillait de se demander, avant de s’engager, si l’on aura encore plaisir à parler avec l’autre jusque dans la vieillesse. De quoi parlerons-nous à 80 ans ?"
+ },
+ {
+  "id": "v-1mtjih9",
+  "theme": "philo",
+  "source": "gibran",
+  "texte": "Gibran conseille aux amants de laisser des espaces dans leur union, comme les piliers d’un temple. Quels espaces sont importants pour toi ?"
+ },
+ {
+  "id": "v-1mb4xgn",
+  "theme": "philo",
+  "source": "ovide",
+  "texte": "Ovide traite l’amour comme un art qui s’apprend. Qu’as-tu appris sur l’amour, comme on apprend un métier ?"
+ },
+ {
+  "id": "v-1aigrnz",
+  "theme": "philo",
+  "source": "seneque",
+  "texte": "Sénèque : « Si tu veux être aimé, aime. » Est-ce vrai dans ton expérience ?"
+ },
+ {
+  "id": "v-1cnvk9j",
+  "theme": "philo",
+  "source": "epicure",
+  "texte": "Épicure mettait l’amitié au sommet des biens. Sommes-nous aussi des amis, tous les deux ? Qu’est-ce qui le prouve ?"
+ },
+ {
+  "id": "v-wfzmok",
+  "theme": "philo",
+  "source": "sartre",
+  "texte": "Pour Sartre, l’amoureux veut être tout pour l’autre. As-tu besoin d’être tout pour moi ?"
+ },
+ {
+  "id": "v-i6do0z",
+  "theme": "philo",
+  "source": "rougemont",
+  "texte": "Pour Denis de Rougemont, la passion se nourrit d’obstacles. Quand la distance disparaîtra, qu’est-ce qui nourrira la nôtre ?"
+ },
+ {
+  "id": "v-12ansvc",
+  "theme": "philo",
+  "source": "platon",
+  "texte": "Dans Le Banquet, Diotime décrit l’amour comme une échelle : de la beauté d’un corps à celle d’une âme, puis des idées. Qu’est-ce qui t’a attiré·e chez moi d’abord, et qu’est-ce qui te retient aujourd’hui ?"
+ },
+ {
+  "id": "v-1jnw1pd",
+  "theme": "philo",
+  "source": "platon",
+  "texte": "Dans Phèdre, Platon voit l’amour comme une folie venue des dieux. As-tu déjà fait une folie par amour ?"
+ },
+ {
+  "id": "v-4b0cbd",
+  "theme": "philo",
+  "source": "aristote",
+  "texte": "Pour Aristote, l’ami est un autre soi-même. Suis-je un autre toi, ou vraiment quelqu’un d’autre ?"
+ },
+ {
+  "id": "v-1shf6na",
+  "theme": "philo",
+  "source": "montaigne",
+  "texte": "Montaigne conseille de garder une « arrière-boutique » toute à soi. Quelle est la tienne ?"
+ },
+ {
+  "id": "v-1k25td6",
+  "theme": "philo",
+  "source": "rilke",
+  "texte": "Rilke écrit qu’aimer est peut-être la tâche la plus difficile, celle pour laquelle tout le reste n’est que préparation. Es-tu d’accord ?"
+ },
+ {
+  "id": "v-1jznhfw",
+  "theme": "philo",
+  "source": "beauvoir",
+  "texte": "Beauvoir et Sartre ont écrit leur propre pacte amoureux. Si on écrivait le nôtre, quelle serait la première clause ?"
+ },
+ {
+  "id": "v-dkem4",
+  "theme": "philo",
+  "source": "weil",
+  "texte": "Simone Weil écrit : « Aimer purement, c’est consentir à la distance. » Qu’est-ce que cette phrase t’évoque pour nous ?"
+ },
+ {
+  "id": "v-3y7nwa",
+  "theme": "philo",
+  "source": "frankl",
+  "texte": "Au camp, Viktor Frankl tenait en pensant à sa femme, sans savoir si elle vivait encore. L’amour peut-il exister sans la présence de l’autre ?"
+ },
+ {
+  "id": "v-16awzsq",
+  "theme": "philo",
+  "source": "fromm",
+  "texte": "Fromm oppose « je t’aime parce que j’ai besoin de toi » à « j’ai besoin de toi parce que je t’aime ». Laquelle te ressemble le plus ?"
+ },
+ {
+  "id": "v-awu462",
+  "theme": "philo",
+  "source": "badiou",
+  "texte": "Pour Badiou, l’amour commence par un hasard qu’on transforme en destin. Notre rencontre, hasard ou destin ?"
+ },
+ {
+  "id": "v-ewvjvn",
+  "theme": "philo",
+  "source": "proustr",
+  "texte": "Swann tombe amoureux d’une femme « qui n’était pas son genre ». Étais-je ton genre, au début ?"
+ },
+ {
+  "id": "v-16tm9mi",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quel objet de ta chambre d’enfant aurais-tu sauvé d’un incendie ?"
+ },
+ {
+  "id": "v-b4zzr9",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quelle odeur te ramène immédiatement chez tes grands-parents ?"
+ },
+ {
+  "id": "v-107w3ak",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quelle phrase tes parents répétaient-ils tout le temps ?"
+ },
+ {
+  "id": "v-1wfvmdw",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel est le mensonge d’enfant dont tu es le plus fier·ère ?"
+ },
+ {
+  "id": "v-1ucgnh5",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel prof t’a marqué·e, en bien ou en mal ?"
+ },
+ {
+  "id": "v-5jdmvq",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle bêtise as-tu faite que tes parents ignorent encore ?"
+ },
+ {
+  "id": "v-1qozly9",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel plat sais-tu cuisiner pour impressionner quelqu’un ?"
+ },
+ {
+  "id": "v-fjod6t",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle chanson chantes-tu quand personne n’écoute ?"
+ },
+ {
+  "id": "v-190coi0",
+  "theme": "leger",
+  "source": null,
+  "texte": "À quoi ressemblait ton style à 14 ans ? Sois honnête."
+ },
+ {
+  "id": "v-1vs2mhq",
+  "theme": "leger",
+  "source": null,
+  "texte": "À quel métier jouais-tu quand tu étais enfant ?"
+ },
+ {
+  "id": "v-v17r9g",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel est le plus beau paysage que tu aies vu de tes yeux ?"
+ },
+ {
+  "id": "v-1252u2z",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quelle règle de ta famille trouvais-tu injuste ?"
+ },
+ {
+  "id": "v-1cqe01s",
+  "theme": "leger",
+  "source": null,
+  "texte": "Si tu ouvrais un petit commerce, ce serait quoi ?"
+ },
+ {
+  "id": "v-1m123ou",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel est le meilleur conseil qu’on t’ait donné, et qui te l’a donné ?"
+ },
+ {
+  "id": "v-k8h6lc",
+  "theme": "leger",
+  "source": null,
+  "texte": "As-tu une superstition, même toute petite ?"
+ },
+ {
+  "id": "v-yz8vxb",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel film peux-tu revoir sans jamais te lasser ?"
+ },
+ {
+  "id": "v-9fhizj",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle est ta façon préférée de perdre du temps ?"
+ },
+ {
+  "id": "v-4uzqw",
+  "theme": "toi",
+  "source": "expansion",
+  "texte": "Quelle est la chose la plus spontanée que tu aies faite ?"
+ },
+ {
+  "id": "v-1068a72",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel est le cadeau le plus réussi que tu aies jamais fait ?"
+ },
+ {
+  "id": "v-ipa1pv",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle expression de ta région ou de ta famille personne ne comprend ?"
+ },
+ {
+  "id": "v-1ymns0l",
+  "theme": "leger",
+  "source": null,
+  "texte": "Qu’est-ce qui te met de bonne humeur en moins de cinq minutes ?"
+ },
+ {
+  "id": "v-176klks",
+  "theme": "leger",
+  "source": null,
+  "texte": "Raconte ton plus grand fou rire."
+ },
+ {
+  "id": "v-1gjk0gl",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel surnom as-tu eu, et d’où vient-il ?"
+ },
+ {
+  "id": "v-12p8jhq",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "De quoi étais-tu convaincu·e enfant, à tort ?"
+ },
+ {
+  "id": "v-1g2izb6",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Si tu pouvais dîner avec quelqu’un de ton arbre généalogique, qui choisirais-tu ?"
+ },
+ {
+  "id": "v-sbc5ce",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quel livre t’a fait pleurer ?"
+ },
+ {
+  "id": "v-1j1rw8",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Quelle habitude de quelqu’un d’autre as-tu adoptée sans le vouloir ?"
+ },
+ {
+  "id": "v-1ecit7w",
+  "theme": "leger",
+  "source": null,
+  "texte": "Qu’est-ce que tout le monde croit que tu sais faire, alors que pas du tout ?"
+ },
+ {
+  "id": "v-1rnbio4",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Qu’as-tu appris tout·e seul·e, sans personne ?"
+ },
+ {
+  "id": "v-evk5xa",
+  "theme": "toi",
+  "source": "lovemaps",
+  "texte": "Dans quelle pièce de chez toi te sens-tu le mieux ? Pourquoi ?"
+ },
+ {
+  "id": "v-fsoaiq",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle est la meilleure chose que tu aies mangée cette année ?"
+ },
+ {
+  "id": "v-kj6lrf",
+  "theme": "toi",
+  "source": "fondness",
+  "texte": "Quel compliment aimerais-tu recevoir plus souvent ?"
+ },
+ {
+  "id": "v-zu5xsk",
+  "theme": "leger",
+  "source": null,
+  "texte": "Qu’est-ce que tu collectionnes sans le dire ?"
+ },
+ {
+  "id": "v-15k8znp",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel âge as-tu dans ta tête ?"
+ },
+ {
+  "id": "v-1h5ctqw",
+  "theme": "leger",
+  "source": null,
+  "texte": "Si tu passais une journée entière sans téléphone, que ferais-tu ?"
+ },
+ {
+  "id": "v-16ms7qv",
+  "theme": "toi",
+  "source": "rituals",
+  "texte": "Quel petit rituel du matin ne négocies-tu jamais ?"
+ },
+ {
+  "id": "v-c03ag",
+  "theme": "toi",
+  "source": "pivot",
+  "texte": "Quelle question te pose-t-on trop souvent ? Et laquelle ne te pose-t-on jamais ?"
+ },
+ {
+  "id": "v-lyzsgq",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle odeur te fait penser à moi ?"
+ },
+ {
+  "id": "v-3ux7qa",
+  "theme": "nous",
+  "source": "lovemaps",
+  "texte": "Quel détail de moi reconnaîtrais-tu les yeux fermés ?"
+ },
+ {
+  "id": "v-iwy5yo",
+  "theme": "nous",
+  "source": "lovemaps",
+  "texte": "Quelle habitude de moi as-tu adoptée ?"
+ },
+ {
+  "id": "v-1lzwa3p",
+  "theme": "nous",
+  "source": "rituals",
+  "texte": "Quel mot ou quelle expression est devenu « à nous » ?"
+ },
+ {
+  "id": "v-65wpx",
+  "theme": "leger",
+  "source": null,
+  "texte": "Si on avait un chien, comment s’appellerait-il, et pourquoi ?"
+ },
+ {
+  "id": "v-qsbpn9",
+  "theme": "nous",
+  "source": "rituals",
+  "texte": "Quelle chanson est la nôtre, ou devrait l’être ?"
+ },
+ {
+  "id": "v-14zs1pq",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quel est le plus beau message que je t’aie envoyé ?"
+ },
+ {
+  "id": "v-729sqe",
+  "theme": "leger",
+  "source": null,
+  "texte": "Qu’est-ce que je fais mieux que toi, honnêtement ?"
+ },
+ {
+  "id": "v-1u4skdo",
+  "theme": "leger",
+  "source": null,
+  "texte": "Dans un film sur nous, qui jouerait nos rôles ?"
+ },
+ {
+  "id": "v-avyzt",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quelle est la chose la plus bizarre que tu aimes chez moi ?"
+ },
+ {
+  "id": "v-ga6ry6",
+  "theme": "nous",
+  "source": "fondness",
+  "texte": "Quelle photo de moi préfères-tu ? Pourquoi celle-là ?"
+ },
+ {
+  "id": "v-t71j4j",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle dispute ridicule risque-t-on d’avoir un jour, d’après toi ?"
+ },
+ {
+  "id": "v-6fxxck",
+  "theme": "nous",
+  "source": "lovemaps",
+  "texte": "Qu’est-ce que tu as le plus envie de me montrer de ta ville ?"
+ },
+ {
+  "id": "v-vztpkg",
+  "theme": "leger",
+  "source": null,
+  "texte": "Si on écrivait un livre de cuisine à deux, quel serait le titre ?"
+ },
+ {
+  "id": "v-izcbkw",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel serait ton nom de scène si tu étais chanteur·se ?"
+ },
+ {
+  "id": "v-3vx40l",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quelle est l’application de ton téléphone qui en dit le plus sur toi ?"
+ },
+ {
+  "id": "v-6c05iq",
+  "theme": "leger",
+  "source": null,
+  "texte": "Quel est ton plus grand talent pour procrastiner ?"
+ }
+]

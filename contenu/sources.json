@@ -1,0 +1,476 @@
+{
+ "proust": {
+  "etiquette": "Questionnaire de Proust",
+  "nom": "Questionnaire de Proust (vers 1890)",
+  "resume": "Un jeu de salon victorien auquel Marcel Proust a répondu deux fois, jeune. Ses questions dessinent un portrait intime : qualités, bonheur, peurs, idéaux.",
+  "lien": "https://en.wikipedia.org/wiki/Proust_Questionnaire"
+ },
+ "pivot": {
+  "etiquette": "Questionnaire de Pivot",
+  "nom": "Questionnaire de Bernard Pivot",
+  "resume": "Une version courte et ludique du questionnaire de Proust, posée aux invités de l’émission Apostrophes.",
+  "lien": "https://en.wikipedia.org/wiki/Proust_Questionnaire"
+ },
+ "aron": {
+  "etiquette": "Aron et al. (1997) · confidences réciproques",
+  "nom": "Arthur Aron et al. (1997) · les 36 questions",
+  "resume": "Des confidences réciproques, de plus en plus personnelles, créent un sentiment de proximité fort, même entre inconnus.",
+  "lien": "https://ggia.berkeley.edu/practice/36_questions_for_increasing_closeness"
+ },
+ "lovemaps": {
+  "etiquette": "Gottman · cartes d’amour",
+  "nom": "John et Julie Gottman · cartes d’amour",
+  "resume": "Bien connaître le monde intérieur de l’autre (ses soucis, ses espoirs, son histoire) est la base d’un couple solide.",
+  "lien": "https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/"
+ },
+ "fondness": {
+  "etiquette": "Gottman · tendresse et admiration",
+  "nom": "Gottman · tendresse et admiration",
+  "resume": "Exprimer régulièrement appréciation et respect protège du mépris, le comportement qui prédit le plus les ruptures.",
+  "lien": "https://www.gottman.com/blog/the-four-horsemen-the-antidotes/"
+ },
+ "bids": {
+  "etiquette": "Gottman · se tourner vers l’autre",
+  "nom": "Gottman · se tourner vers l’autre",
+  "resume": "Les petites demandes d’attention du quotidien, et la façon d’y répondre, nourrissent la confiance.",
+  "lien": "https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/"
+ },
+ "meaning": {
+  "etiquette": "Gottman · sens partagé",
+  "nom": "Gottman · créer du sens ensemble",
+  "resume": "Le dernier étage de la « maison du couple » : valeurs, rôles, rituels et projets construits à deux.",
+  "lien": "https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/"
+ },
+ "rituals": {
+  "etiquette": "Gottman · rituels de connexion",
+  "nom": "Gottman · rituels de connexion",
+  "resume": "Les petits rituels réguliers entretiennent le sentiment d’être ensemble.",
+  "lien": "https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/"
+ },
+ "dreams": {
+  "etiquette": "Gottman · les rêves derrière les conflits",
+  "nom": "Gottman · problèmes permanents et rêves cachés",
+  "resume": "Beaucoup de désaccords de couple ne se résolvent jamais complètement. Comprendre le rêve ou le besoin derrière la position de l’autre permet d’en parler sans s’enliser.",
+  "lien": "https://couplestherapyinc.com/gottman-perpetual-problems/"
+ },
+ "conflict": {
+  "etiquette": "Gottman · gérer les conflits",
+  "nom": "Gottman · les quatre cavaliers et leurs antidotes",
+  "resume": "Critique, mépris, défensive et mur du silence abîment le couple. Antidotes : aborder le sujet en douceur, cultiver l’appréciation, prendre sa part de responsabilité, faire une pause pour se calmer.",
+  "lien": "https://www.gottman.com/blog/the-four-horsemen-the-antidotes/"
+ },
+ "repair": {
+  "etiquette": "Gottman · tentatives de réparation",
+  "nom": "Gottman · tentatives de réparation",
+  "resume": "Les couples solides se disputent aussi ; ils savent surtout réparer, pendant et après.",
+  "lien": "https://www.gottman.com/blog/the-four-horsemen-the-antidotes/"
+ },
+ "johnson": {
+  "etiquette": "Johnson · thérapie centrée sur l’émotion",
+  "nom": "Sue Johnson · Hold Me Tight",
+  "resume": "Issue de la théorie de l’attachement : derrière beaucoup de disputes, une même question. Es-tu là pour moi ? Être disponible, réceptif et engagé émotionnellement.",
+  "lien": "https://iceeft.com/hold-me-tight-for-therapists/"
+ },
+ "perel": {
+  "etiquette": "Esther Perel · désir et distance",
+  "nom": "Esther Perel · l’intimité et le désir",
+  "resume": "La sécurité nourrit l’amour, un peu de mystère et d’altérité nourrit le désir. Voir l’autre comme une personne entière, avec sa propre vie, garde l’attirance vivante.",
+  "lien": "https://questionconnection.com/articles/esther-perel-desire-intimacy-paradox"
+ },
+ "maint": {
+  "etiquette": "Stafford & Canary · maintien relationnel",
+  "nom": "Laura Stafford et Daniel Canary · maintien relationnel",
+  "resume": "Positivité, ouverture, réassurance, réseau de proches et partage des tâches entretiennent un couple. À distance, la qualité des échanges compte plus que leur quantité.",
+  "lien": "https://en.wikipedia.org/wiki/Relationship_maintenance"
+ },
+ "gable": {
+  "etiquette": "Gable · réagir aux bonnes nouvelles",
+  "nom": "Shelly Gable · réponse active et constructive",
+  "resume": "La façon dont on accueille les bonnes nouvelles de l’autre compte autant que le soutien dans les moments durs.",
+  "lien": "https://nobaproject.com/modules/positive-relationships"
+ },
+ "expansion": {
+  "etiquette": "Aron · expansion de soi",
+  "nom": "Arthur et Elaine Aron · expansion de soi",
+  "resume": "Vivre ensemble des expériences nouvelles et stimulantes ravive la relation.",
+  "lien": "https://compass.onlinelibrary.wiley.com/doi/full/10.1111/spc3.70082"
+ },
+ "rusbult": {
+  "etiquette": "Rusbult · modèle d’engagement",
+  "nom": "Caryl Rusbult · modèle de l’investissement",
+  "resume": "L’engagement grandit avec la satisfaction et avec tout ce qu’on a investi ensemble : temps, souvenirs, projets.",
+  "lien": null
+ },
+ "fromm": {
+  "etiquette": "Fromm · L’art d’aimer (1956)",
+  "nom": "Erich Fromm · L’art d’aimer (1956)",
+  "resume": "Aimer n’est pas seulement un sentiment qui nous arrive : c’est un art, une décision et un engagement qui s’exercent.",
+  "lien": "https://philosophybreak.com/articles/erich-fromm-on-why-love-is-not-about-finding-the-one/"
+ },
+ "platon": {
+  "etiquette": "Platon · Le Banquet",
+  "nom": "Platon · Le Banquet",
+  "resume": "Un dialogue sur la nature de l’amour, avec le célèbre mythe d’Aristophane sur les moitiés qui se cherchent.",
+  "lien": null
+ },
+ "aristote": {
+  "etiquette": "Aristote · Éthique à Nicomaque",
+  "nom": "Aristote · Éthique à Nicomaque",
+  "resume": "Aristote distingue l’amitié fondée sur l’utilité, sur le plaisir, et celle qui aime l’autre pour ce qu’il est.",
+  "lien": null
+ },
+ "montaigne": {
+  "etiquette": "Montaigne · De l’amitié",
+  "nom": "Montaigne · Essais, « De l’amitié »",
+  "resume": "Sur son lien avec La Boétie, qu’il renonce à expliquer autrement que par qui ils étaient l’un et l’autre.",
+  "lien": null
+ },
+ "pascal": {
+  "etiquette": "Pascal · Pensées",
+  "nom": "Blaise Pascal · Pensées",
+  "resume": "Sur les raisons du cœur, que la raison ne connaît pas.",
+  "lien": null
+ },
+ "rilke": {
+  "etiquette": "Rilke · Lettres à un jeune poète",
+  "nom": "Rainer Maria Rilke · Lettres à un jeune poète",
+  "resume": "Rilke décrit l’amour comme deux solitudes qui se protègent, se touchent et se saluent.",
+  "lien": null
+ },
+ "beauvoir": {
+  "etiquette": "Beauvoir · Le Deuxième Sexe",
+  "nom": "Simone de Beauvoir · Le Deuxième Sexe",
+  "resume": "Pour Beauvoir, l’amour authentique repose sur la reconnaissance de deux libertés, sans que l’une se perde dans l’autre.",
+  "lien": null
+ },
+ "badiou": {
+  "etiquette": "Badiou · Éloge de l’amour",
+  "nom": "Alain Badiou · Éloge de l’amour (2009)",
+  "resume": "L’amour comme construction : apprendre à voir le monde depuis le point de vue du Deux, et non plus de l’Un.",
+  "lien": null
+ },
+ "weil": {
+  "etiquette": "Simone Weil · l’attention",
+  "nom": "Simone Weil · l’attention",
+  "resume": "Pour Simone Weil, l’attention portée à l’autre est la forme la plus rare de la générosité.",
+  "lien": null
+ },
+ "frankl": {
+  "etiquette": "Frankl · le sens",
+  "nom": "Viktor Frankl · Découvrir un sens à sa vie",
+  "resume": "Psychiatre et survivant des camps, Frankl soutient qu’on peut trouver du sens même dans l’épreuve.",
+  "lien": null
+ },
+ "epictete": {
+  "etiquette": "Épictète · Manuel",
+  "nom": "Épictète · Manuel",
+  "resume": "Le stoïcisme distingue ce qui dépend de nous de ce qui n’en dépend pas, pour concentrer son énergie sur le premier.",
+  "lien": null
+ },
+ "prep": {
+  "etiquette": "Markman & Stanley · technique orateur-auditeur",
+  "nom": "Howard Markman et Scott Stanley · programme PREP",
+  "resume": "Un programme de prévention pour les couples. Sa technique orateur-auditeur : l’un parle, l’autre reformule avant de répondre, pour comprendre avant de chercher à résoudre.",
+  "lien": "https://link.springer.com/rwe/10.1007/978-3-319-49425-8_97"
+ },
+ "stex": {
+  "etiquette": "Saint-Exupéry · Terre des hommes",
+  "nom": "Antoine de Saint-Exupéry · Terre des hommes",
+  "resume": "Pour lui, aimer, c’est moins se regarder l’un l’autre que regarder ensemble dans la même direction.",
+  "lien": null
+ },
+ "frisch": {
+  "etiquette": "Max Frisch · Questionnaires",
+  "nom": "Max Frisch · Questionnaires (1966-1971)",
+  "resume": "L’écrivain suisse a publié des séries de questions sur l’espoir, le mariage, l’amitié, l’argent, la patrie ou la mort. Elles sont directes, parfois dérangeantes, et ne cherchent pas la bonne réponse.",
+  "lien": "https://en.wikipedia.org/wiki/Max_Frisch"
+ },
+ "oral": {
+  "etiquette": "Gottman · entretien sur l’histoire du couple",
+  "nom": "Buehlman, Gottman et Katz (1992) · Oral History Interview",
+  "resume": "Un entretien où le couple raconte son histoire : la rencontre, les premières impressions, les bons et les mauvais moments, le modèle de ses parents. La façon dont un couple raconte son passé en dit long sur son avenir.",
+  "lien": "https://www.johngottman.net/wp-content/uploads/2011/05/How-a-couple-views-their-past-predicts-their-future-predicting-divorce-from-an-oral-history-interview.pdf"
+ },
+ "mcadams": {
+  "etiquette": "McAdams · récit de vie",
+  "nom": "Dan McAdams · The Life Story Interview",
+  "resume": "Ce psychologue étudie l’identité comme une histoire qu’on se raconte : chapitres de vie, scènes clés (sommet, point bas, tournant), défis, convictions et projets.",
+  "lien": "https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/4/3901/files/2020/11/The-Life-Story-Interview-II-2007.pdf"
+ },
+ "sternberg": {
+  "etiquette": "Sternberg · triangle de l’amour",
+  "nom": "Robert Sternberg · théorie triangulaire de l’amour",
+  "resume": "L’amour combine trois ingrédients : l’intimité (la complicité), la passion (le désir) et l’engagement (la décision de durer). Leurs proportions changent avec le temps.",
+  "lien": "https://socialsci.libretexts.org/Bookshelves/Gender_Studies/Sexuality_the_Self_and_Society_(Ruhman_Bowman_Jackson_Lushtak_Newman_and_Sunder)/08:_Attraction_Love_and_Relationship_Formation/8.04:_Love_Styles"
+ },
+ "lee": {
+  "etiquette": "John Alan Lee · styles d’amour",
+  "nom": "John Alan Lee · les couleurs de l’amour",
+  "resume": "Six façons d’aimer : la passion (éros), le jeu (ludus), l’amitié qui grandit (storgè), le choix réfléchi (pragma), l’amour anxieux (mania) et le don (agapè).",
+  "lien": "https://socialsci.libretexts.org/Bookshelves/Gender_Studies/Sexuality_the_Self_and_Society_(Ruhman_Bowman_Jackson_Lushtak_Newman_and_Sunder)/08:_Attraction_Love_and_Relationship_Formation/8.04:_Love_Styles"
+ },
+ "attach": {
+  "etiquette": "Hazan & Shaver · attachement",
+  "nom": "Cindy Hazan et Phillip Shaver (1987) · l’amour comme attachement",
+  "resume": "Notre façon d’aimer adulte prolonge en partie la façon dont on s’est attaché enfant : sécurité, anxiété ou besoin de distance.",
+  "lien": "https://www.psychologywizard.net/uploads/2/6/6/4/26640833/hazanshaver1987.pdf"
+ },
+ "michel": {
+  "etiquette": "Rusbult · phénomène Michel-Ange",
+  "nom": "Caryl Rusbult et Eli Finkel · le phénomène Michel-Ange",
+  "resume": "Comme un sculpteur révèle la statue dans le bloc, un bon partenaire aide l’autre à devenir la personne qu’il rêve d’être.",
+  "lien": "https://journals.sagepub.com/doi/10.1111/j.1467-8721.2009.01657.x"
+ },
+ "via": {
+  "etiquette": "Peterson & Seligman · forces de caractère",
+  "nom": "Christopher Peterson et Martin Seligman · les 24 forces de caractère",
+  "resume": "Une classification issue de la psychologie positive : curiosité, courage, gentillesse, humour, persévérance, gratitude… Reconnaître ses forces et celles de l’autre nourrit le bien-être.",
+  "lien": "https://en.wikipedia.org/wiki/Values_in_Action_Inventory_of_Strengths"
+ },
+ "schwartz": {
+  "etiquette": "Schwartz · valeurs fondamentales",
+  "nom": "Shalom Schwartz · théorie des valeurs fondamentales",
+  "resume": "Dix valeurs universelles, présentes partout mais classées différemment par chacun : autonomie, stimulation, plaisir, réussite, pouvoir, sécurité, conformité, tradition, bienveillance, universalisme.",
+  "lien": "https://uranos.ch/research/references/Schwartz_2006/Schwartzpaper.pdf"
+ },
+ "sfbt": {
+  "etiquette": "Thérapie brève orientée solutions",
+  "nom": "Steve de Shazer et Insoo Kim Berg · thérapie brève orientée solutions",
+  "resume": "Plutôt que de disséquer le problème, on cherche ce qui marche déjà : la « question miracle », les échelles de 1 à 10, les exceptions.",
+  "lien": "https://link.springer.com/rwe/10.1007/978-3-319-49425-8_1072"
+ },
+ "fred": {
+  "etiquette": "Fredrickson · micro-moments d’amour",
+  "nom": "Barbara Fredrickson · Love 2.0",
+  "resume": "L’amour se vit aussi en micro-moments de connexion partagée, une chaleur commune de quelques secondes qu’on peut cultiver.",
+  "lien": "https://www.positivityresonance.com/"
+ },
+ "reis": {
+  "etiquette": "Reis · se sentir compris",
+  "nom": "Harry Reis · la réceptivité perçue",
+  "resume": "Se sentir compris, accepté et soutenu par l’autre est l’un des piliers les plus solides de l’intimité.",
+  "lien": "https://anthonyongphd.wordpress.com/wp-content/uploads/2018/01/reis-clark-2013.pdf"
+ },
+ "impett": {
+  "etiquette": "Impett et al. (2024) · régime équilibré de l’amour",
+  "nom": "Emily Impett et al. (2024) · au-delà des langages de l’amour",
+  "resume": "Les « 5 langages de l’amour » ne sont pas confirmés par la recherche. Les chercheurs proposent plutôt l’idée d’un régime équilibré : on a besoin de toutes les formes d’amour, en proportions qui varient.",
+  "lien": "https://www.utoronto.ca/news/little-evidence-linking-five-love-languages-healthy-relationships-researchers-say"
+ },
+ "ware": {
+  "etiquette": "Bronnie Ware · regrets de fin de vie",
+  "nom": "Bronnie Ware · Les cinq regrets des mourants",
+  "resume": "Une infirmière en soins palliatifs a recueilli les regrets les plus fréquents : ne pas avoir vécu selon soi, avoir trop travaillé, ne pas avoir exprimé ses sentiments, avoir perdu ses amis, ne pas s’être autorisé à être heureux.",
+  "lien": "https://www.caringchoices.org/wp-content/uploads/2013/08/Bronnie-Ware-Article-Top-Five-Regrets-of-the-Dying.pdf"
+ },
+ "eightdates": {
+  "etiquette": "Gottman · Eight Dates",
+  "nom": "John et Julie Gottman · Eight Dates (2018)",
+  "resume": "Huit conversations essentielles pour un couple : confiance, conflits, intimité, travail et argent, famille, aventure, croissance et spiritualité, rêves.",
+  "lien": "https://www.goodreads.com/book/show/37588679-eight-dates"
+ },
+ "prepare": {
+  "etiquette": "PREPARE/ENRICH · questionnaire prénuptial",
+  "nom": "David Olson · PREPARE/ENRICH",
+  "resume": "Un questionnaire utilisé par des conseillers conjugaux pour faire le point avant de s’engager : communication, conflits, rôles, intimité, finances, spiritualité…",
+  "lien": "https://www.healthymarriageinfo.org/wp-content/uploads/2017/12/PREPAREENRICH-Program-Version.pdf"
+ },
+ "nyt": {
+  "etiquette": "New York Times · 13 questions avant le mariage",
+  "nom": "Eleanor Stanford · 13 Questions to Ask Before Getting Married (New York Times, 2016)",
+  "resume": "Un article célèbre, écrit avec des thérapeutes, sur les sujets à aborder avant de s’engager : conflits, intimité, foi, indépendance, enfants, argent.",
+  "lien": "https://www.today.com/health/what-know-getting-married-13-difficult-questions-couples-need-ask-t82516"
+ },
+ "pospsy": {
+  "etiquette": "Psychologie positive · exercices",
+  "nom": "Psychologie positive · lettre de gratitude, meilleur soi possible, trois bonnes choses",
+  "resume": "Des exercices courts et étudiés : écrire une lettre de remerciement, imaginer sa meilleure vie possible, noter chaque soir trois bonnes choses.",
+  "lien": "https://sites.hofstra.edu/jeffrey-froh/wp-content/uploads/sites/86/2019/11/Gratitude-Interventions-chapter_final.pdf"
+ },
+ "cnv": {
+  "etiquette": "Rosenberg · communication non violente",
+  "nom": "Marshall Rosenberg · la communication non violente",
+  "resume": "Exprimer un désaccord en quatre temps : ce que j’observe, ce que je ressens, ce dont j’ai besoin, ce que je demande.",
+  "lien": null
+ },
+ "surreal": {
+  "etiquette": "Les surréalistes · cadavre exquis",
+  "nom": "Les surréalistes · le cadavre exquis",
+  "resume": "Un jeu inventé par Breton, Prévert et leurs amis : on écrit ou dessine à plusieurs sans voir ce que l’autre a fait.",
+  "lien": null
+ },
+ "oulipo": {
+  "etiquette": "Oulipo · écriture sous contrainte",
+  "nom": "L’Oulipo (Queneau, Perec…)",
+  "resume": "Un groupe d’écrivains qui invente des contraintes pour stimuler l’imagination, comme écrire sans la lettre e.",
+  "lien": null
+ },
+ "stendhal": {
+  "etiquette": "Stendhal · De l’amour (1822)",
+  "nom": "Stendhal · De l’amour (1822)",
+  "resume": "Sa théorie de la « cristallisation » : comme un rameau plongé dans une mine de sel se couvre de cristaux, l’amoureux pare l’autre de mille perfections.",
+  "lien": "https://fr.wikipedia.org/wiki/Cristallisation_(Stendhal)"
+ },
+ "lewis": {
+  "etiquette": "C. S. Lewis · Les quatre amours",
+  "nom": "C. S. Lewis · Les quatre amours (1960)",
+  "resume": "L’auteur chrétien distingue l’affection, l’amitié, l’éros et la charité. Les amis sont côte à côte, tournés vers un intérêt commun ; les amants sont face à face.",
+  "lien": "https://en.wikipedia.org/wiki/The_Four_Loves"
+ },
+ "comte": {
+  "etiquette": "Comte-Sponville · éros, philia, agapè",
+  "nom": "André Comte-Sponville · Petit traité des grandes vertus",
+  "resume": "Trois amours : celui qui manque (éros), celui qui se réjouit de l’autre (philia), celui qui donne (agapè).",
+  "lien": "https://www.cairn.info/petit-traite-des-grandes-vertus--9782130466710-page-291.htm"
+ },
+ "hooks": {
+  "etiquette": "bell hooks · À propos d’amour",
+  "nom": "bell hooks · À propos d’amour (2000)",
+  "resume": "Reprenant le psychiatre Scott Peck, elle définit l’amour comme la volonté de nourrir sa propre croissance et celle de l’autre. Pour elle, l’amour est une pratique, faite de soin, de respect, de confiance et d’honnêteté.",
+  "lien": null
+ },
+ "kierk": {
+  "etiquette": "Kierkegaard · Les Œuvres de l’amour",
+  "nom": "Søren Kierkegaard · Les Œuvres de l’amour (1847)",
+  "resume": "Le philosophe danois voit dans l’amour un devoir, ce qui le protège des humeurs et le rend plus solide que l’inclination.",
+  "lien": "https://en.wikipedia.org/wiki/Works_of_Love"
+ },
+ "levinas": {
+  "etiquette": "Levinas · le visage",
+  "nom": "Emmanuel Levinas · le visage d’autrui",
+  "resume": "Pour Levinas, le visage de l’autre nous appelle et nous rend responsables de lui avant toute réflexion.",
+  "lien": null
+ },
+ "buber": {
+  "etiquette": "Buber · Je et Tu",
+  "nom": "Martin Buber · Je et Tu (1923)",
+  "resume": "Buber oppose la relation « Je-Tu », rencontre vraie et entière, à la relation « Je-Cela », où l’autre devient un objet ou un moyen.",
+  "lien": null
+ },
+ "han": {
+  "etiquette": "Byung-Chul Han · Agonie de l’Éros",
+  "nom": "Byung-Chul Han · Agonie de l’Éros (2012)",
+  "resume": "Le philosophe craint que notre époque, tournée vers soi et vers le choix infini, fasse disparaître l’Autre, alors que le désir a besoin de différence.",
+  "lien": "https://mitpress.mit.edu/9780262533379/the-agony-of-eros/"
+ },
+ "illouz": {
+  "etiquette": "Eva Illouz · Pourquoi l’amour fait mal",
+  "nom": "Eva Illouz · Pourquoi l’amour fait mal (2012)",
+  "resume": "La sociologue montre comment le choix illimité et la peur de s’engager transforment l’expérience amoureuse moderne.",
+  "lien": "https://www.seuil.com/ouvrage/pourquoi-l-amour-fait-mal-eva-illouz/9782021081527"
+ },
+ "bauman": {
+  "etiquette": "Bauman · L’amour liquide",
+  "nom": "Zygmunt Bauman · L’amour liquide (2003)",
+  "resume": "Le sociologue décrit des liens qu’on veut pouvoir défaire facilement, et le besoin, pourtant, de liens solides.",
+  "lien": null
+ },
+ "botton": {
+  "etiquette": "Alain de Botton · Du mariage",
+  "nom": "Alain de Botton · Du mariage (2016)",
+  "resume": "Un roman-essai sur l’amour qui dure : on ne trouve pas la personne parfaite, on apprend à aimer celle qu’on a choisie, avec ses difficultés et les siennes.",
+  "lien": "https://lareviewofbooks.org/article/course-love-crash-course-long-term-relationship/"
+ },
+ "barthes": {
+  "etiquette": "Barthes · Fragments d’un discours amoureux",
+  "nom": "Roland Barthes · Fragments d’un discours amoureux (1977)",
+  "resume": "Un abécédaire des états amoureux. Dans « l’absence », il y a toujours celui qui part et celui qui reste et attend.",
+  "lien": "https://compagnieaffable.wordpress.com/2017/05/11/fragments-dun-discours-amoureux-de-roland-barthes-a-comme-absence/"
+ },
+ "rochef": {
+  "etiquette": "La Rochefoucauld · Maximes (1665)",
+  "nom": "François de La Rochefoucauld · Maximes (1665)",
+  "resume": "Des phrases courtes et lucides sur l’amour-propre, la jalousie et la passion. Dont celle-ci : l’absence diminue les médiocres passions et augmente les grandes, comme le vent éteint les bougies et allume le feu.",
+  "lien": null
+ },
+ "paul": {
+  "etiquette": "Saint Paul · Première lettre aux Corinthiens",
+  "nom": "Saint Paul · Première lettre aux Corinthiens, chapitre 13",
+  "resume": "Le célèbre « hymne à l’amour » de la Bible : l’amour est patient, il rend service, il ne jalouse pas, il ne cherche pas son intérêt, il excuse tout, espère tout, endure tout.",
+  "lien": null
+ },
+ "augustin": {
+  "etiquette": "Saint Augustin",
+  "nom": "Saint Augustin (IVe-Ve siècle)",
+  "resume": "Le théologien résume la morale chrétienne en une phrase : « Aime, et fais ce que tu veux. »",
+  "lien": null
+ },
+ "aquin": {
+  "etiquette": "Thomas d’Aquin",
+  "nom": "Thomas d’Aquin (XIIIe siècle)",
+  "resume": "Pour lui, aimer, c’est vouloir le bien de l’autre.",
+  "lien": null
+ },
+ "spinoza": {
+  "etiquette": "Spinoza · Éthique",
+  "nom": "Baruch Spinoza · Éthique (1677)",
+  "resume": "Spinoza définit l’amour comme une joie accompagnée de l’idée de ce qui la cause.",
+  "lien": null
+ },
+ "nietzsche": {
+  "etiquette": "Nietzsche · Humain, trop humain",
+  "nom": "Friedrich Nietzsche · Humain, trop humain (1878)",
+  "resume": "Il voit le mariage comme une longue conversation : avant de s’engager, il conseille de se demander si l’on aura encore plaisir à parler avec l’autre jusque dans la vieillesse.",
+  "lien": null
+ },
+ "gibran": {
+  "etiquette": "Khalil Gibran · Le Prophète",
+  "nom": "Khalil Gibran · Le Prophète (1923)",
+  "resume": "Il conseille aux amants de laisser des espaces dans leur union, comme les piliers d’un temple qui se tiennent à distance pour porter le même toit.",
+  "lien": null
+ },
+ "ovide": {
+  "etiquette": "Ovide · L’Art d’aimer",
+  "nom": "Ovide · L’Art d’aimer (vers l’an 1)",
+  "resume": "Le poète latin traite l’amour comme un art qui s’apprend, avec humour.",
+  "lien": null
+ },
+ "seneque": {
+  "etiquette": "Sénèque · Lettres à Lucilius",
+  "nom": "Sénèque · Lettres à Lucilius",
+  "resume": "Le stoïcien rapporte cette formule : « Si tu veux être aimé, aime. »",
+  "lien": null
+ },
+ "epicure": {
+  "etiquette": "Épicure · l’amitié",
+  "nom": "Épicure",
+  "resume": "Pour Épicure, l’amitié est le plus grand des biens que la sagesse procure pour une vie heureuse.",
+  "lien": null
+ },
+ "sartre": {
+  "etiquette": "Sartre · L’Être et le Néant",
+  "nom": "Jean-Paul Sartre · L’Être et le Néant (1943)",
+  "resume": "Pour Sartre, l’amoureux veut être tout pour l’autre, le centre de son monde, ce qui rend l’amour à la fois exigeant et fragile.",
+  "lien": null
+ },
+ "rougemont": {
+  "etiquette": "Denis de Rougemont · L’Amour et l’Occident",
+  "nom": "Denis de Rougemont · L’Amour et l’Occident (1939)",
+  "resume": "À partir de Tristan et Iseut, il oppose la passion, qui se nourrit d’obstacles, à l’amour fidèle, qui se construit dans la durée.",
+  "lien": null
+ },
+ "proustr": {
+  "etiquette": "Proust · Un amour de Swann",
+  "nom": "Marcel Proust · Un amour de Swann (1913)",
+  "resume": "Swann gâche des années pour une femme « qui n’était pas son genre ». Proust y décrit la jalousie et l’imagination amoureuse.",
+  "lien": null
+ },
+ "scudery": {
+  "etiquette": "Madeleine de Scudéry · la Carte du Tendre",
+  "nom": "Madeleine de Scudéry · la Carte du Tendre (1654)",
+  "resume": "Dans son roman Clélie, Madeleine de Scudéry dessine une carte imaginaire du sentiment amoureux, avec ses villages (Billet-Doux, Petits-Soins), son lac d’Indifférence et sa mer Dangereuse.",
+  "lien": "https://fr.wikipedia.org/wiki/Carte_de_Tendre"
+ },
+ "touch": {
+  "etiquette": "Recherche sur le toucher affectueux",
+  "nom": "Le toucher affectueux",
+  "resume": "Les études sur le couple associent les gestes de tendresse (mains, câlins, massages) à moins de stress et à plus de satisfaction. Gottman conseille aussi un baiser d’au moins six secondes par jour.",
+  "lien": null
+ },
+ "johnson7": {
+  "etiquette": "Sue Johnson · Hold Me Tight",
+  "nom": "Sue Johnson · Hold Me Tight : sept conversations (2008)",
+  "resume": "La fondatrice de la thérapie centrée sur l’émotion propose sept conversations pour sortir des cercles vicieux, comprendre les blessures de chacun et se sentir de nouveau en sécurité ensemble.",
+  "lien": "https://catdir.loc.gov/catdir/toc/ecip081/2007041109.html"
+ }
+}

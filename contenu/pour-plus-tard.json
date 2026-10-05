@@ -1,0 +1,1186 @@
+[
+ {
+  "id": "aron",
+  "nom": "Les 36 questions",
+  "etude": "Arthur Aron et al. (1997)",
+  "duree": "45 min",
+  "sources": [
+   "aron"
+  ],
+  "lien": "https://ggia.berkeley.edu/practice/36_questions_for_increasing_closeness",
+  "intro": "En 1997, le psychologue Arthur Aron a montré que des confidences réciproques, de plus en plus personnelles, créent un vrai sentiment de proximité, même entre inconnus. Le protocole compte trois séries de questions qui montent en intensité, puis quatre minutes à se regarder dans les yeux. Ces cartes sont écrites dans l’esprit de ses trois séries ; la liste originale, en anglais, est accessible par le lien.",
+  "conseil": "Répondez tous les deux à chaque carte, en alternant qui commence. Comptez environ 15 minutes par série.",
+  "cartes": [
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Si tu pouvais inviter n’importe qui à dîner, vivant ou disparu, qui choisirais-tu ? De quoi parleriez-vous ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Aimerais-tu être connu·e du grand public ? Pour quoi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Avant un coup de fil important, t’arrive-t-il de répéter dans ta tête ce que tu vas dire ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Décris une journée ordinaire, mais parfaite.",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "À quand remonte la dernière fois que tu as chanté seul·e ? Et pour quelqu’un ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Si tu pouvais garder pour toujours l’esprit ou le corps de tes 30 ans, lequel choisirais-tu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "exercice",
+    "texte": "Trouvez trois choses que vous avez en commun et que vous ne saviez pas encore.",
+    "minutes": 5
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Pour quoi te sens-tu le plus reconnaissant·e dans ta vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "question",
+    "texte": "Si tu pouvais changer une chose dans la façon dont on t’a élevé·e, ce serait quoi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 1 · Faire connaissance",
+    "type": "exercice",
+    "texte": "Racontez chacun votre vie en 4 minutes, avec le plus de détails possible.",
+    "minutes": 8
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Si tu pouvais connaître une seule vérité sur ton avenir, laquelle demanderais-tu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Qu’est-ce que tu rêves de faire depuis longtemps ? Qu’est-ce qui t’en empêche ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Quelle est la réussite dont tu es le plus fier·ère ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Qu’est-ce qui compte le plus pour toi dans une amitié ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Quel est ton souvenir le plus précieux ? Et le plus douloureux ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Si tu savais qu’il te reste un an à vivre, que changerais-tu dès demain ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Quelle place la tendresse et l’affection ont-elles dans ta vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "exercice",
+    "texte": "Dites-vous à tour de rôle une qualité de l’autre, jusqu’à cinq chacun.",
+    "minutes": 5
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Ta famille était-elle chaleureuse ? Penses-tu avoir eu une enfance plus heureuse que la plupart des gens ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 2 · Aller plus loin",
+    "type": "question",
+    "texte": "Comment décrirais-tu ta relation avec ta mère, ou la personne qui t’a élevé·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "exercice",
+    "texte": "Dites chacun trois phrases vraies qui commencent par « Nous… », sur ce que vous vivez là, maintenant.",
+    "minutes": 4
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Complète : « J’aimerais avoir quelqu’un avec qui partager… »",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Qu’est-ce que l’autre doit savoir sur toi pour être vraiment proche de toi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Dis à l’autre ce que tu aimes chez lui ou chez elle, avec une honnêteté qu’on n’ose pas d’habitude.",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Raconte un moment vraiment gênant de ta vie.",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Quand as-tu pleuré devant quelqu’un pour la dernière fois ? Et seul·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Y a-t-il un sujet trop grave pour qu’on en plaisante ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Si tu partais ce soir sans pouvoir parler à personne, que regretterais-tu de ne pas avoir dit ? Pourquoi ne l’as-tu pas encore dit ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "question",
+    "texte": "Ta maison brûle, tout le monde est sauf. Tu peux sauver un seul objet. Lequel, et pourquoi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Série 3 · Se livrer",
+    "type": "exercice",
+    "texte": "Confie à l’autre un souci personnel et demande-lui comment il ou elle ferait. Puis demande-lui comment il t’a senti·e en en parlant.",
+    "minutes": 10
+   },
+   {
+    "partie": "Pour finir",
+    "type": "exercice",
+    "texte": "Regardez-vous dans les yeux, sans parler (en visio si vous êtes loin), pendant 4 minutes. Puis dites ce que vous avez ressenti.",
+    "minutes": 4
+   }
+  ]
+ },
+ {
+  "id": "histoire",
+  "nom": "Notre histoire",
+  "etude": "Gottman · entretien sur l’histoire du couple",
+  "duree": "1 h",
+  "sources": [
+   "oral"
+  ],
+  "lien": null,
+  "intro": "Dans les années 1990, l’équipe de John Gottman a demandé à des couples de raconter leur histoire. La façon dont ils en parlaient, avec tendresse ou avec amertume, en disant « nous » ou « je », permettait de prédire en grande partie l’avenir du couple. Ce paquet vous fait raconter la vôtre, à deux voix.",
+  "conseil": "Racontez à deux voix : l’un commence, l’autre complète ou corrige. Les désaccords sur les souvenirs font partie du jeu.",
+  "cartes": [
+   {
+    "partie": "La rencontre",
+    "type": "question",
+    "texte": "Comment vous êtes-vous rencontrés ? Racontez-le comme à quelqu’un qui ne vous connaît pas.",
+    "minutes": null
+   },
+   {
+    "partie": "La rencontre",
+    "type": "question",
+    "texte": "Quelle a été ta première impression de l’autre ? Qu’est-ce qui t’a attiré·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "La rencontre",
+    "type": "question",
+    "texte": "Qu’est-ce qui se passait dans ta vie à ce moment-là ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les débuts",
+    "type": "question",
+    "texte": "Qu’est-ce que vous faisiez ensemble au début ? Quel est ton souvenir préféré de cette période ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les débuts",
+    "type": "question",
+    "texte": "Qu’est-ce qui t’a donné envie de continuer après les premiers rendez-vous ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les débuts",
+    "type": "question",
+    "texte": "Comment tes proches ont-ils réagi quand tu leur as parlé de l’autre ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le choix",
+    "type": "question",
+    "texte": "À quel moment as-tu su que c’était sérieux ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le choix",
+    "type": "question",
+    "texte": "Quelle a été la plus grande décision prise ensemble jusqu’ici ? Était-ce une évidence ou un choix difficile ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le choix",
+    "type": "question",
+    "texte": "Qu’est-ce qui t’a fait choisir cette personne-là, et pas une autre ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les bons moments",
+    "type": "question",
+    "texte": "Quels ont été vos meilleurs moments ensemble jusqu’ici ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les bons moments",
+    "type": "question",
+    "texte": "Qu’est-ce qui a été plus facile que prévu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les épreuves",
+    "type": "question",
+    "texte": "Quels ont été les moments les plus difficiles ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les épreuves",
+    "type": "question",
+    "texte": "Comment vous en êtes-vous sortis ? Qu’est-ce qui vous a fait tenir ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les épreuves",
+    "type": "question",
+    "texte": "Qu’est-ce que ces moments difficiles vous ont appris l’un sur l’autre ?",
+    "minutes": null
+   },
+   {
+    "partie": "Nos modèles",
+    "type": "question",
+    "texte": "Comment était le couple de tes parents ? En quoi le nôtre lui ressemble-t-il, et en quoi est-il différent ?",
+    "minutes": null
+   },
+   {
+    "partie": "Nos modèles",
+    "type": "question",
+    "texte": "Quel couple autour de vous admirez-vous ? Lequel ne voudriez-vous pas devenir ?",
+    "minutes": null
+   },
+   {
+    "partie": "Notre philosophie",
+    "type": "question",
+    "texte": "D’après vous, qu’est-ce qui fait qu’un couple tient dans la durée ?",
+    "minutes": null
+   },
+   {
+    "partie": "Notre philosophie",
+    "type": "question",
+    "texte": "Pourquoi pensez-vous que certains couples se séparent ?",
+    "minutes": null
+   },
+   {
+    "partie": "Notre philosophie",
+    "type": "question",
+    "texte": "Qu’est-ce qui a le plus changé entre vous depuis le début ?",
+    "minutes": null
+   },
+   {
+    "partie": "Pour finir",
+    "type": "exercice",
+    "texte": "Donnez ensemble un titre à chaque chapitre de votre histoire jusqu’ici, puis au chapitre qui commence.",
+    "minutes": 10
+   }
+  ]
+ },
+ {
+  "id": "huit",
+  "nom": "Huit rendez-vous",
+  "etude": "John et Julie Gottman · Eight Dates (2018)",
+  "duree": "8 × 30 min",
+  "sources": [
+   "eightdates"
+  ],
+  "lien": "https://www.goodreads.com/book/show/37588679-eight-dates",
+  "intro": "Après quarante ans de recherche sur les couples, les Gottman ont choisi huit conversations à avoir absolument : confiance, conflits, intimité, travail et argent, famille, aventure, croissance et spiritualité, rêves. Ils les conçoivent comme de vrais rendez-vous, un par thème.",
+  "conseil": "Gardez un thème par soirée, comme un vrai rendez-vous. Commencez chaque thème par la question la plus légère.",
+  "cartes": [
+   {
+    "partie": "1 · Confiance et engagement",
+    "type": "question",
+    "texte": "Qu’est-ce qui te fait confiance en moi, concrètement ?",
+    "minutes": null
+   },
+   {
+    "partie": "1 · Confiance et engagement",
+    "type": "question",
+    "texte": "Qu’est-ce que t’engager envers moi veut dire, pour toi, aujourd’hui ?",
+    "minutes": null
+   },
+   {
+    "partie": "1 · Confiance et engagement",
+    "type": "question",
+    "texte": "Y a-t-il quelque chose qui a abîmé ta confiance dans le passé, avec moi ou avec d’autres ?",
+    "minutes": null
+   },
+   {
+    "partie": "2 · Les conflits",
+    "type": "question",
+    "texte": "Comment ta famille gérait-elle les disputes ?",
+    "minutes": null
+   },
+   {
+    "partie": "2 · Les conflits",
+    "type": "question",
+    "texte": "Quand on n’est pas d’accord, qu’est-ce qui t’aide à te sentir écouté·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "2 · Les conflits",
+    "type": "question",
+    "texte": "Quel désaccord revient souvent entre nous ? Quel besoin se cache derrière ta position ?",
+    "minutes": null
+   },
+   {
+    "partie": "3 · L’intimité",
+    "type": "question",
+    "texte": "Qu’est-ce qui te fait te sentir désiré·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "3 · L’intimité",
+    "type": "question",
+    "texte": "Comment aimerais-tu qu’on parle de notre intimité, même quand c’est gênant ?",
+    "minutes": null
+   },
+   {
+    "partie": "3 · L’intimité",
+    "type": "question",
+    "texte": "Qu’est-ce qui entretient le lien physique entre nous, même quand on est loin ?",
+    "minutes": null
+   },
+   {
+    "partie": "4 · Travail et argent",
+    "type": "question",
+    "texte": "Qu’est-ce que l’argent représente pour toi : sécurité, liberté, plaisir ?",
+    "minutes": null
+   },
+   {
+    "partie": "4 · Travail et argent",
+    "type": "question",
+    "texte": "Quelle place veux-tu que le travail prenne dans ta vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "4 · Travail et argent",
+    "type": "question",
+    "texte": "Comment aimerais-tu qu’on gère l’argent quand on vivra ensemble ?",
+    "minutes": null
+   },
+   {
+    "partie": "5 · La famille",
+    "type": "question",
+    "texte": "Quelle relation aimerais-tu qu’on ait avec nos familles ?",
+    "minutes": null
+   },
+   {
+    "partie": "5 · La famille",
+    "type": "question",
+    "texte": "Qu’est-ce qu’une famille, pour toi ?",
+    "minutes": null
+   },
+   {
+    "partie": "5 · La famille",
+    "type": "question",
+    "texte": "Qu’as-tu reçu de ta famille que tu veux transmettre ?",
+    "minutes": null
+   },
+   {
+    "partie": "6 · Le jeu et l’aventure",
+    "type": "question",
+    "texte": "Quand t’es-tu senti·e le plus vivant·e avec moi ?",
+    "minutes": null
+   },
+   {
+    "partie": "6 · Le jeu et l’aventure",
+    "type": "question",
+    "texte": "Quelle aventure aimerais-tu qu’on vive ensemble ?",
+    "minutes": null
+   },
+   {
+    "partie": "6 · Le jeu et l’aventure",
+    "type": "exercice",
+    "texte": "Écrivez chacun cinq aventures que vous aimeriez vivre à deux, puis comparez vos listes.",
+    "minutes": 10
+   },
+   {
+    "partie": "7 · Croissance et spiritualité",
+    "type": "question",
+    "texte": "Comment veux-tu grandir, intérieurement, dans les années qui viennent ?",
+    "minutes": null
+   },
+   {
+    "partie": "7 · Croissance et spiritualité",
+    "type": "question",
+    "texte": "Qu’est-ce qui est sacré pour toi, avec ou sans religion ?",
+    "minutes": null
+   },
+   {
+    "partie": "7 · Croissance et spiritualité",
+    "type": "question",
+    "texte": "Comment peut-on respecter et nourrir la vie intérieure de l’autre, même si elle est différente ?",
+    "minutes": null
+   },
+   {
+    "partie": "8 · Les rêves",
+    "type": "question",
+    "texte": "Quel est ton plus grand rêve ?",
+    "minutes": null
+   },
+   {
+    "partie": "8 · Les rêves",
+    "type": "question",
+    "texte": "Quel rêve as-tu mis de côté ?",
+    "minutes": null
+   },
+   {
+    "partie": "8 · Les rêves",
+    "type": "question",
+    "texte": "Comment puis-je t’aider à réaliser tes rêves ?",
+    "minutes": null
+   }
+  ]
+ },
+ {
+  "id": "johnson",
+  "nom": "Tiens-moi fort",
+  "etude": "Sue Johnson · Hold Me Tight (2008)",
+  "duree": "3 h",
+  "sources": [
+   "johnson7"
+  ],
+  "lien": "https://catdir.loc.gov/catdir/toc/ecip081/2007041109.html",
+  "intro": "Pour Sue Johnson, fondatrice de la thérapie centrée sur l’émotion, beaucoup de disputes cachent une même question : « Es-tu là pour moi ? » Elle propose sept conversations pour comprendre vos réactions, apaiser les blessures et vous sentir en sécurité ensemble. Ce paquet les adapte, avec douceur.",
+  "conseil": "Ce paquet est le plus intime. Prenez-le dans l’ordre, en plusieurs fois, et seulement quand vous êtes tous les deux disponibles.",
+  "cartes": [
+   {
+    "partie": "1 · Nos cercles vicieux",
+    "type": "question",
+    "texte": "Quand on se dispute, qui a tendance à insister, et qui à se retirer ?",
+    "minutes": null
+   },
+   {
+    "partie": "1 · Nos cercles vicieux",
+    "type": "question",
+    "texte": "Quand je me ferme ou quand j’insiste, qu’est-ce que tu ressens ?",
+    "minutes": null
+   },
+   {
+    "partie": "1 · Nos cercles vicieux",
+    "type": "exercice",
+    "texte": "Décrivez ensemble votre « danse » quand ça coince : « Plus tu…, plus je… ». Donnez-lui un nom, pour pouvoir dire « Attention, c’est notre danse ».",
+    "minutes": 10
+   },
+   {
+    "partie": "2 · Nos points sensibles",
+    "type": "question",
+    "texte": "Quels mots ou quelles attitudes te touchent plus fort que les autres ?",
+    "minutes": null
+   },
+   {
+    "partie": "2 · Nos points sensibles",
+    "type": "question",
+    "texte": "D’où vient cette sensibilité, d’après toi ?",
+    "minutes": null
+   },
+   {
+    "partie": "2 · Nos points sensibles",
+    "type": "question",
+    "texte": "Quand ce point sensible est touché, de quoi as-tu besoin de ma part ?",
+    "minutes": null
+   },
+   {
+    "partie": "3 · Revenir sur un moment difficile",
+    "type": "exercice",
+    "texte": "Choisissez une petite dispute passée. Racontez-la chacun de votre côté, en parlant de ce que vous ressentiez, pas de ce que l’autre a fait.",
+    "minutes": 15
+   },
+   {
+    "partie": "3 · Revenir sur un moment difficile",
+    "type": "question",
+    "texte": "Qu’est-ce que tu aurais eu besoin que je dise ou fasse, à ce moment-là ?",
+    "minutes": null
+   },
+   {
+    "partie": "4 · Se rejoindre",
+    "type": "question",
+    "texte": "De quoi as-tu le plus peur dans notre relation ?",
+    "minutes": null
+   },
+   {
+    "partie": "4 · Se rejoindre",
+    "type": "question",
+    "texte": "De quoi as-tu le plus besoin de ma part, en ce moment ?",
+    "minutes": null
+   },
+   {
+    "partie": "4 · Se rejoindre",
+    "type": "exercice",
+    "texte": "Finissez chacun la phrase : « J’ai besoin de savoir que… » Puis l’autre répond simplement à ce besoin.",
+    "minutes": 5
+   },
+   {
+    "partie": "5 · Pardonner les blessures",
+    "type": "question",
+    "texte": "Y a-t-il une blessure entre nous qui n’est pas tout à fait refermée ?",
+    "minutes": null
+   },
+   {
+    "partie": "5 · Pardonner les blessures",
+    "type": "question",
+    "texte": "De quoi aurais-tu besoin pour la laisser derrière toi ?",
+    "minutes": null
+   },
+   {
+    "partie": "6 · Tendresse et toucher",
+    "type": "question",
+    "texte": "Comment est-ce que je te fais sentir aimé·e physiquement, de près comme de loin ?",
+    "minutes": null
+   },
+   {
+    "partie": "6 · Tendresse et toucher",
+    "type": "question",
+    "texte": "Qu’est-ce qui te manque le plus dans la tendresse quand on est séparés, même quelques jours ?",
+    "minutes": null
+   },
+   {
+    "partie": "7 · Faire vivre notre amour",
+    "type": "question",
+    "texte": "Quels rituels nous rapprochent ? Lequel aimerais-tu ajouter ?",
+    "minutes": null
+   },
+   {
+    "partie": "7 · Faire vivre notre amour",
+    "type": "exercice",
+    "texte": "Racontez ensemble l’histoire de votre couple dans cinq ans, comme si elle s’était très bien passée.",
+    "minutes": 10
+   }
+  ]
+ },
+ {
+  "id": "recit",
+  "nom": "Le récit de vie",
+  "etude": "Dan McAdams · The Life Story Interview",
+  "duree": "1 h 30 par personne",
+  "sources": [
+   "mcadams"
+  ],
+  "lien": "https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/4/3901/files/2020/11/The-Life-Story-Interview-II-2007.pdf",
+  "intro": "Le psychologue Dan McAdams étudie l’identité comme une histoire qu’on se raconte. Son entretien suit une structure précise : les chapitres de la vie, quelques scènes clés, l’avenir, les défis, les convictions et le fil rouge. Ici, vous vous écoutez raconter votre vie.",
+  "conseil": "Une personne raconte tout le paquet pendant que l’autre écoute et pose des questions, puis on inverse la fois suivante. Ou bien répondez chacun à chaque carte.",
+  "cartes": [
+   {
+    "partie": "Les chapitres",
+    "type": "exercice",
+    "texte": "Découpe ta vie en deux à sept chapitres, comme un livre. Donne un titre à chacun et résume-les.",
+    "minutes": 15
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Le sommet : le moment où tu t’es senti·e le plus heureux·se ou le plus vivant·e.",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Le point bas : un moment très dur. Qu’est-ce qui t’a aidé·e à le traverser ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Le tournant : un moment qui a changé la direction de ta vie.",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Un souvenir d’enfance heureux.",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Un souvenir d’enfance difficile.",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Un souvenir d’adulte très net, que tu revois comme un film.",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Un moment spirituel, mystique, ou simplement plus grand que toi.",
+    "minutes": null
+   },
+   {
+    "partie": "Les scènes clés",
+    "type": "question",
+    "texte": "Un moment où tu as fait preuve de sagesse, ou où quelqu’un t’en a appris.",
+    "minutes": null
+   },
+   {
+    "partie": "L’avenir",
+    "type": "question",
+    "texte": "À quoi ressemble le prochain chapitre de ta vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’avenir",
+    "type": "question",
+    "texte": "Quels sont tes rêves et tes espoirs pour la suite ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’avenir",
+    "type": "question",
+    "texte": "Quel projet porte ta vie en ce moment ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les défis",
+    "type": "question",
+    "texte": "Quel est le plus grand défi de ta vie jusqu’ici ? Comment l’as-tu affronté ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les défis",
+    "type": "question",
+    "texte": "Quelle perte t’a le plus marqué·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les défis",
+    "type": "question",
+    "texte": "Quel échec ou quel regret portes-tu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les convictions",
+    "type": "question",
+    "texte": "En quoi crois-tu ? Comment cette conviction a-t-elle évolué ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les convictions",
+    "type": "question",
+    "texte": "Quelle est la valeur la plus importante de ta vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le fil rouge",
+    "type": "question",
+    "texte": "En regardant toute ton histoire, quel thème revient ? Quel message ta vie raconte-t-elle ?",
+    "minutes": null
+   },
+   {
+    "partie": "Pour finir",
+    "type": "question",
+    "texte": "À l’écoute : qu’est-ce qui t’a le plus touché·e ou surpris·e dans l’histoire de l’autre ?",
+    "minutes": null
+   }
+  ]
+ },
+ {
+  "id": "valeurs",
+  "nom": "Nos valeurs",
+  "etude": "Shalom Schwartz · théorie des valeurs fondamentales",
+  "duree": "1 h",
+  "sources": [
+   "schwartz",
+   "prep"
+  ],
+  "lien": "https://uranos.ch/research/references/Schwartz_2006/Schwartzpaper.pdf",
+  "intro": "Le psychologue Shalom Schwartz a montré, dans des dizaines de pays, que dix valeurs fondamentales existent partout. Chacun les classe à sa façon, et deux personnes qui s’aiment peuvent les classer très différemment. Ce paquet commence par vos propres valeurs, puis passe les dix en revue.",
+  "conseil": "Gardez le guide de conversation ouvert pour ce paquet : l’objectif est de comprendre l’autre, pas de le convaincre.",
+  "cartes": [
+   {
+    "partie": "Vos 5 valeurs",
+    "type": "exercice",
+    "texte": "Écrivez chacun, sur un papier, 5 valeurs ou convictions qui comptent pour vous, sans les montrer.",
+    "minutes": 5
+   },
+   {
+    "partie": "Vos 5 valeurs",
+    "type": "exercice",
+    "texte": "Lisez-vous vos listes chacun votre tour. Pour chaque valeur de l’autre, dites où vous la placez : « Je partage », « Je respecte sans partager », ou « J’ai du mal avec ».",
+    "minutes": 10
+   },
+   {
+    "partie": "Vos 5 valeurs",
+    "type": "question",
+    "texte": "Reprenez les valeurs placées dans « J’ai du mal avec ». Celui qui les a écrites explique ce qu’il y met, l’autre reformule avant de répondre.",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Autonomie : penser et choisir par soi-même. Quelle place a-t-elle dans ta vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Stimulation : la nouveauté, le défi, l’excitation. En as-tu besoin, ou t’épuise-t-elle ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Plaisir : profiter de la vie. Est-ce que tu t’autorises assez à en profiter ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Réussite : être compétent et reconnu. Qu’est-ce que réussir veut dire pour toi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Pouvoir : avoir de l’influence, des ressources. Est-ce important pour toi ? Pourquoi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Sécurité : la stabilité, pour soi et pour les siens. De quoi as-tu besoin pour te sentir en sécurité ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Conformité : respecter les règles et ne pas blesser les autres. Quelles règles te paraissent sacrées ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Tradition : respecter ce qu’on a reçu, religion ou coutumes. Que veux-tu garder de ce que tu as reçu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Bienveillance : prendre soin des proches. Comment le montres-tu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les dix valeurs",
+    "type": "question",
+    "texte": "Universalisme : la justice, la nature, le bien de tous. Qu’est-ce qui te révolte dans le monde ?",
+    "minutes": null
+   },
+   {
+    "partie": "Pour finir",
+    "type": "exercice",
+    "texte": "Classez chacun les dix valeurs de la plus importante à la moins importante. Comparez vos trois premières et vos trois dernières.",
+    "minutes": 10
+   },
+   {
+    "partie": "Pour finir",
+    "type": "question",
+    "texte": "Où nos valeurs se rejoignent-elles, même quand on ne les exprime pas de la même façon ?",
+    "minutes": null
+   }
+  ]
+ },
+ {
+  "id": "engager",
+  "nom": "Avant de s’engager",
+  "etude": "New York Times (2016) et PREPARE/ENRICH",
+  "duree": "2 h",
+  "sources": [
+   "nyt",
+   "prepare"
+  ],
+  "lien": "https://www.today.com/health/what-know-getting-married-13-difficult-questions-couples-need-ask-t82516",
+  "intro": "Les conseillers conjugaux utilisent des questionnaires comme PREPARE/ENRICH pour faire le point avant un engagement, et un article du New York Times écrit avec des thérapeutes a rendu célèbres « 13 questions à se poser avant de se marier ». Ce paquet en reprend les thèmes, du quotidien jusqu’au plus lointain.",
+  "conseil": "Avancez dans l’ordre : on commence par le quotidien et on finit par le plus lointain. Rien ne presse pour les dernières cartes.",
+  "cartes": [
+   {
+    "partie": "Communiquer",
+    "type": "question",
+    "texte": "Qu’est-ce qui te donne envie de te confier ? Et qu’est-ce qui te fait te refermer ?",
+    "minutes": null
+   },
+   {
+    "partie": "Communiquer",
+    "type": "question",
+    "texte": "Y a-t-il des sujets dont tu as du mal à parler avec moi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les conflits",
+    "type": "question",
+    "texte": "Comment tes parents se disputaient-ils, et se réconciliaient-ils ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les conflits",
+    "type": "question",
+    "texte": "Quelles règles voudrais-tu qu’on se fixe pour nos disputes ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le quotidien",
+    "type": "question",
+    "texte": "Comment imagines-tu le partage des tâches à la maison ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le quotidien",
+    "type": "question",
+    "texte": "De combien de temps seul·e as-tu besoin, et comment me le diras-tu ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les loisirs",
+    "type": "question",
+    "texte": "Quels loisirs veux-tu garder pour toi, et lesquels aimerais-tu partager ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les autres",
+    "type": "question",
+    "texte": "Quelle place veux-tu que nos amis aient dans notre vie ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les autres",
+    "type": "question",
+    "texte": "Comment partagera-t-on les fêtes entre nos deux familles ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les autres",
+    "type": "question",
+    "texte": "Jusqu’où nos parents peuvent-ils donner leur avis sur nos choix ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’argent",
+    "type": "question",
+    "texte": "Es-tu plutôt dépensier·ère ou économe ? Et moi ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’argent",
+    "type": "question",
+    "texte": "Compte commun, comptes séparés, un mélange ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’argent",
+    "type": "question",
+    "texte": "As-tu des dettes, des projets d’épargne, des peurs liées à l’argent ?",
+    "minutes": null
+   },
+   {
+    "partie": "Intimité et fidélité",
+    "type": "question",
+    "texte": "Qu’est-ce que la fidélité veut dire pour toi ? Où places-tu la limite ?",
+    "minutes": null
+   },
+   {
+    "partie": "Intimité et fidélité",
+    "type": "question",
+    "texte": "Qu’attends-tu de notre vie intime dans la durée ?",
+    "minutes": null
+   },
+   {
+    "partie": "La foi",
+    "type": "question",
+    "texte": "Quelle place la foi, ou son absence, aura-t-elle dans notre maison ?",
+    "minutes": null
+   },
+   {
+    "partie": "La foi",
+    "type": "question",
+    "texte": "Comment voudrais-tu qu’on célèbre les fêtes religieuses ou laïques ?",
+    "minutes": null
+   },
+   {
+    "partie": "Où vivre",
+    "type": "question",
+    "texte": "Où imagines-tu qu’on vivra ? Qu’est-ce qui compte le plus dans ce choix ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les enfants",
+    "type": "question",
+    "texte": "Veux-tu des enfants ? Quand, combien, et pourquoi ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les enfants",
+    "type": "question",
+    "texte": "Que voudrais-tu leur transmettre, et que ne voudrais-tu surtout pas reproduire ?",
+    "minutes": null
+   },
+   {
+    "partie": "Les enfants",
+    "type": "question",
+    "texte": "Comment parlera-t-on de foi et de convictions à des enfants, nous qui voyons les choses différemment ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’avenir",
+    "type": "question",
+    "texte": "Que fait-on si l’un de nous reçoit une belle opportunité loin de l’autre ?",
+    "minutes": null
+   },
+   {
+    "partie": "L’avenir",
+    "type": "question",
+    "texte": "Comment veux-tu qu’on se soutienne si l’un de nous tombe malade ou traverse une période très dure ?",
+    "minutes": null
+   },
+   {
+    "partie": "Pour finir",
+    "type": "question",
+    "texte": "Quelle est la question que tu n’as jamais osé me poser sur notre avenir ?",
+    "minutes": null
+   }
+  ]
+ },
+ {
+  "id": "ecrivains",
+  "nom": "Questionnaires d’écrivains",
+  "etude": "Proust, Pivot et Frisch",
+  "duree": "45 min",
+  "sources": [
+   "proust",
+   "pivot",
+   "frisch"
+  ],
+  "lien": "https://en.wikipedia.org/wiki/Proust_Questionnaire",
+  "intro": "Le questionnaire de Proust était un jeu de salon de l’époque victorienne, auquel Marcel Proust a répondu jeune ; on le pose encore aujourd’hui aux célébrités. Bernard Pivot en a tiré une version courte pour son émission. L’écrivain Max Frisch a écrit des questions plus dérangeantes sur l’espoir, l’amitié ou le mariage. Ce paquet suit ces trois questionnaires.",
+  "conseil": "Répondez vite, sans trop réfléchir, puis revenez sur les réponses qui vous surprennent.",
+  "cartes": [
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Le principal trait de ton caractère ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "La qualité que tu préfères chez quelqu’un ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ce que tu apprécies le plus chez tes amis ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ton principal défaut ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ton occupation préférée ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ton rêve de bonheur ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Quel serait ton plus grand malheur ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ce que tu voudrais être ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Le pays où tu désirerais vivre ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ta couleur, ta fleur et ton oiseau préférés ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Tes auteurs, tes musiciens et tes peintres préférés ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Tes héros dans la fiction ? Et dans la vie réelle ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ce que tu détestes par-dessus tout ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Le don de la nature que tu voudrais avoir ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Les fautes qui t’inspirent le plus d’indulgence ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ton état d’esprit actuel ?",
+    "minutes": null
+   },
+   {
+    "partie": "Le questionnaire de Proust",
+    "type": "question",
+    "texte": "Ta devise ?",
+    "minutes": null
+   },
+   {
+    "partie": "La version de Pivot",
+    "type": "question",
+    "texte": "Ton mot préféré ? Et celui que tu détestes ?",
+    "minutes": null
+   },
+   {
+    "partie": "La version de Pivot",
+    "type": "question",
+    "texte": "Ce qui t’enthousiasme ? Et ce qui te met en colère ?",
+    "minutes": null
+   },
+   {
+    "partie": "La version de Pivot",
+    "type": "question",
+    "texte": "Le son et le bruit que tu préfères ? Et celui que tu détestes ?",
+    "minutes": null
+   },
+   {
+    "partie": "La version de Pivot",
+    "type": "question",
+    "texte": "Le métier que tu aurais aimé faire ? Et celui que tu ne ferais pour rien au monde ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Quel espoir as-tu abandonné ? Est-ce que tu le regrettes ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Qu’est-ce que tu possèdes qui te possède un peu aussi ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Combien de vrais amis as-tu ? Qu’est-ce qui fait qu’ils le sont ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Te sens-tu plus libre avec moi, ou moins ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Une promesse t’a-t-elle déjà libéré·e plutôt qu’enfermé·e ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Où te sens-tu chez toi : un lieu, des gens, une langue ?",
+    "minutes": null
+   },
+   {
+    "partie": "À la manière de Frisch",
+    "type": "question",
+    "texte": "Qu’est-ce que tu sais de l’amour aujourd’hui que tu ne savais pas à 15 ans ?",
+    "minutes": null
+   }
+  ]
+ }
+]

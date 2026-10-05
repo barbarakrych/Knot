@@ -1,0 +1,1986 @@
+[
+ {
+  "id": "a-1hp4pd4",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez-vous l’un l’autre sans montrer la feuille. Révélation à la fin."
+ },
+ {
+  "id": "a-1nanh7q",
+  "source": "aron",
+  "minutes": 8,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Raconte-moi ta vie en 4 minutes, avec le plus de détails possible. Puis c’est à moi."
+ },
+ {
+  "id": "a-1wjpbsp",
+  "source": "aron",
+  "minutes": 4,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Regardez-vous dans les yeux en silence pendant 4 minutes (en visio si vous êtes loin). Puis dites ce que vous avez ressenti."
+ },
+ {
+  "id": "a-o11hp2",
+  "source": "aron",
+  "minutes": 45,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites les 36 questions d’Aron en entier. Le lien est dans « D’où viennent ces cartes »."
+ },
+ {
+  "id": "a-9nwy8l",
+  "source": "aron",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Deux vérités, un mensonge : chacun raconte trois anecdotes d’enfance, l’autre trouve la fausse."
+ },
+ {
+  "id": "a-wx9cxe",
+  "source": "fondness",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dites chacun trois choses que vous avez appréciées chez l’autre cette semaine."
+ },
+ {
+  "id": "a-1qno26g",
+  "source": "fondness",
+  "minutes": 8,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun écrit en 3 minutes 10 choses qu’il aime chez l’autre, puis les lit à voix haute."
+ },
+ {
+  "id": "a-1pcszwy",
+  "source": "fondness",
+  "minutes": 4,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Deux minutes de compliments sans répétition, pendant que l’autre écoute sans répondre. Puis on inverse."
+ },
+ {
+  "id": "a-1pfk3rz",
+  "source": "fondness",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez chacun une mini lettre d’amour en 5 minutes, puis lisez-la à voix haute."
+ },
+ {
+  "id": "a-shg9qz",
+  "source": "gable",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun raconte une bonne nouvelle de sa semaine. L’autre pose trois questions dessus et s’en réjouit franchement."
+ },
+ {
+  "id": "a-qmme1g",
+  "source": "gable",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun dit une chose dont il est fier cette semaine. L’autre le félicite comme s’il avait gagné un prix."
+ },
+ {
+  "id": "a-r6t46n",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Montre trois objets qui comptent pour toi et raconte leur histoire."
+ },
+ {
+  "id": "a-4nfpd0",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Dessinez de mémoire le plan du logement de l’autre. Vérification en visio."
+ },
+ {
+  "id": "a-giv2g6",
+  "source": "lovemaps",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun prépare 5 questions sur lui-même. On compte les points."
+ },
+ {
+  "id": "a-ex583t",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Montre une photo de toi enfant et raconte ce que tu pensais à cet âge."
+ },
+ {
+  "id": "a-1qtkvkp",
+  "source": "lovemaps",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Ouvrez votre galerie photo à la même date il y a un an. Montrez la photo et racontez."
+ },
+ {
+  "id": "a-17uac9d",
+  "source": "lovemaps",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez votre semaine en trois photos de votre téléphone."
+ },
+ {
+  "id": "a-9w4xy5",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Portrait chinois : si l’autre était un animal, une couleur, une saison, un plat, une ville…"
+ },
+ {
+  "id": "a-p720pw",
+  "source": "fondness",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez votre rencontre du point de vue de l’autre."
+ },
+ {
+  "id": "a-25eyjl",
+  "source": "fondness",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Fermez les yeux. L’un décrit un souvenir commun, l’autre ajoute les détails qu’il a oubliés."
+ },
+ {
+  "id": "a-1gbav3d",
+  "source": "meaning",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Écrivez ensemble la liste de tout ce que vous voulez faire quand vous vous retrouverez."
+ },
+ {
+  "id": "a-jkplaq",
+  "source": "meaning",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Imaginez chacun votre journée idéale à deux, heure par heure, puis comparez."
+ },
+ {
+  "id": "a-1i1aery",
+  "source": "meaning",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez chacun votre vie à deux dans cinq ans, puis montrez-vous vos dessins."
+ },
+ {
+  "id": "a-1l347p0",
+  "source": "meaning",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez ensemble le « règlement officiel » de votre couple, en dix articles."
+ },
+ {
+  "id": "a-11b8116",
+  "source": "meaning",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Écrivez chacun une lettre à ouvrir le jour où la distance prendra fin."
+ },
+ {
+  "id": "a-jojqyl",
+  "source": "dreams",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez chacun cinq rêves de vie, puis comparez vos listes."
+ },
+ {
+  "id": "a-ze8d7f",
+  "source": "rituals",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Inventez un rituel pour vous dire bonne nuit, que vous garderez même une fois réunis."
+ },
+ {
+  "id": "a-1415e26",
+  "source": "rituals",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Préparez-vous chacun une boisson chaude et buvez-la ensemble en racontant votre journée."
+ },
+ {
+  "id": "a-1czz86w",
+  "source": "rituals",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Lisez ou travaillez chacun de votre côté en visio, sans parler. Juste être ensemble."
+ },
+ {
+  "id": "a-1ewp2ye",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Endormez-vous en appel."
+ },
+ {
+  "id": "a-1779zj9",
+  "source": "rituals",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Regardez le ciel ou la lune au même moment, chacun chez soi, et décrivez-le à l’autre."
+ },
+ {
+  "id": "a-1fe7vv9",
+  "source": "maint",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Bilan de la semaine : un moment fort, un moment dur, et une envie pour la semaine prochaine."
+ },
+ {
+  "id": "a-18wrzwu",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Inventez une histoire à deux, une phrase chacun votre tour."
+ },
+ {
+  "id": "a-1me4kig",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessin à l’aveugle : l’un décrit un dessin, l’autre le reproduit sans le voir."
+ },
+ {
+  "id": "a-11tuslx",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Mime : faites deviner un film, un lieu ou un souvenir sans dire un mot."
+ },
+ {
+  "id": "a-1el75cl",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Pensez à un souvenir commun. L’autre le devine en posant seulement des questions par oui ou non."
+ },
+ {
+  "id": "a-1mc6sr6",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Défendez très sérieusement pendant 2 minutes une opinion absurde choisie par l’autre."
+ },
+ {
+  "id": "a-thozwj",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Imitez-vous l’un l’autre pendant une minute chacun."
+ },
+ {
+  "id": "a-1igdd6s",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Fredonnez une chanson chacun votre tour. L’autre doit la trouver."
+ },
+ {
+  "id": "a-14qdoko",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Visite guidée : fais-moi visiter ton logement comme un agent immobilier très enthousiaste."
+ },
+ {
+  "id": "a-aoonnb",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Montre la vue depuis ta fenêtre et décris-la comme un poète."
+ },
+ {
+  "id": "a-1yo6h7m",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Ouvrez une carte du monde, choisissez un endroit au hasard et imaginez votre vie là-bas."
+ },
+ {
+  "id": "a-183t2fg",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Lisez à voix haute un poème ou une page d’un livre que vous aimez."
+ },
+ {
+  "id": "a-1gbj81l",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Construisez ensemble une playlist en direct, une chanson chacun votre tour."
+ },
+ {
+  "id": "a-1oq5a1y",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites une séance d’étirements ou de yoga ensemble, avec une vidéo gratuite."
+ },
+ {
+  "id": "a-13glkg1",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Méditez 5 minutes ensemble en silence, puis dites ce qui vous est passé par la tête."
+ },
+ {
+  "id": "a-1pciydr",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Fabriquez chacun un petit objet en papier, sans modèle. Présentez-le à l’autre."
+ },
+ {
+  "id": "a-1vf2jht",
+  "source": "expansion",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Cuisinez chacun un plat avec ce que vous avez déjà dans vos placards, puis mangez ensemble."
+ },
+ {
+  "id": "a-tivn3v",
+  "source": "expansion",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Promenez-vous en appel vidéo et faites visiter votre quartier à l’autre."
+ },
+ {
+  "id": "a-qy2b60",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Apprenez à dire une phrase tendre dans une langue que vous ne parlez ni l’un ni l’autre."
+ },
+ {
+  "id": "a-1taa9ib",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Écris-moi une lettre à la main, prends-la en photo et envoie-la-moi."
+ },
+ {
+  "id": "a-1jkmeb",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie-moi un message vocal pour mon réveil, un matin de la semaine."
+ },
+ {
+  "id": "a-1r22h8h",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie-moi une photo d’un détail de ta journée qui t’a fait penser à moi."
+ },
+ {
+  "id": "a-1edxz7m",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Enregistre une courte vidéo de ta routine du matin pour me la montrer."
+ },
+ {
+  "id": "a-1c7dmvq",
+  "source": "bids",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Note trois moments de la semaine où tu as pensé à moi. Raconte-les-moi en fin de semaine."
+ },
+ {
+  "id": "a-14ehks",
+  "source": "bids",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie-moi un message à une heure inattendue pour me dire pourquoi tu m’aimes aujourd’hui."
+ },
+ {
+  "id": "a-l71wyn",
+  "source": "johnson",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Repère un moment difficile de ma semaine et envoie-moi un mot pour ce moment-là."
+ },
+ {
+  "id": "a-1f4obsm",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Fais une chose nouvelle cette semaine (un lieu, un plat, une activité) et raconte-la-moi."
+ },
+ {
+  "id": "a-1pci78r",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Apprends une petite chose cette semaine (un mot, un tour, une astuce) pour me la montrer ensuite."
+ },
+ {
+  "id": "a-1lu6aia",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Prenez chacun une photo à 7h, 12h, 18h et 22h le même jour. Faites ensuite un montage côte à côte."
+ },
+ {
+  "id": "a-1mzd2x9",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Lisez le même chapitre ou le même article cette semaine, et parlez-en ensuite."
+ },
+ {
+  "id": "a-nnyxqx",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Regardez séparément le même film cette semaine, puis débriefez au prochain appel."
+ },
+ {
+  "id": "a-1p8eto0",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Prends une photo de ton ciel chaque soir pendant une semaine."
+ },
+ {
+  "id": "a-3sw7qb",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Fais-moi un petit dessin chaque jour de la semaine, même un gribouillis."
+ },
+ {
+  "id": "a-12wc1vv",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Écris cinq choses que j’ai faites pour toi cette année et dont tu me remercies."
+ },
+ {
+  "id": "a-u8g62u",
+  "source": "lovemaps",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Choisis une photo de nous et écris trois lignes sur ce jour-là."
+ },
+ {
+  "id": "a-11cnqe7",
+  "source": "lovemaps",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Prépare trois questions que tu ne m’as jamais posées, pour notre prochain moment à deux."
+ },
+ {
+  "id": "a-1y5fo8m",
+  "source": "lovemaps",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Raconte-moi par message un rêve que tu as fait cette semaine."
+ },
+ {
+  "id": "a-19x3geo",
+  "source": "lovemaps",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie-moi chaque jour, pendant trois jours, un souvenir de ton enfance."
+ },
+ {
+  "id": "a-1b8akkr",
+  "source": "pospsy",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Lettre de gratitude : écris en 5 minutes un merci précis pour une chose que l’autre a faite, puis lis-le à voix haute. Ensuite c’est son tour."
+ },
+ {
+  "id": "a-1j9kt2p",
+  "source": "pospsy",
+  "minutes": 12,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Meilleur soi possible : écrivez chacun 5 minutes sur votre vie dans dix ans si tout se passait au mieux, puis lisez-vous vos textes."
+ },
+ {
+  "id": "a-d7y4h",
+  "source": "pospsy",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Trois bonnes choses : chaque soir de la semaine, envoyez-vous trois bonnes choses de votre journée, et pourquoi elles sont arrivées."
+ },
+ {
+  "id": "a-82kr2t",
+  "source": "pospsy",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Chaque soir de la semaine, envoie une chose pour laquelle tu remercies l’autre ce jour-là."
+ },
+ {
+  "id": "a-1j8yiu0",
+  "source": "fred",
+  "minutes": 6,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Fermez les yeux 3 minutes et pensez à l’autre en lui souhaitant du bien, en silence. Puis dites ce que vous avez ressenti."
+ },
+ {
+  "id": "a-dwecff",
+  "source": "fred",
+  "minutes": 6,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez chacun un souvenir commun au présent, avec tous les sens : ce que vous voyez, entendez, sentez."
+ },
+ {
+  "id": "a-13ts4p7",
+  "source": "surreal",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Cadavre exquis : chacun écrit à tour de rôle un morceau de phrase (sujet, verbe, complément) sans voir ceux de l’autre. Lisez le résultat."
+ },
+ {
+  "id": "a-6z9p3",
+  "source": "surreal",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Cadavre exquis dessiné : l’un dessine une tête, plie la feuille, l’autre dessine un corps sur la sienne sans voir. Assemblez à l’écran."
+ },
+ {
+  "id": "a-3de8zp",
+  "source": "oulipo",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez-vous chacun un petit mot doux de quatre lignes, sans utiliser la lettre e."
+ },
+ {
+  "id": "a-4o765k",
+  "source": "oulipo",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez chacun un poème dont chaque vers commence par une lettre du prénom de l’autre."
+ },
+ {
+  "id": "a-o0rnio",
+  "source": "proust",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Questionnaire de Proust express : posez-vous 10 questions du questionnaire à tour de rôle, réponses en une phrase maximum."
+ },
+ {
+  "id": "a-1lbds0x",
+  "source": "frisch",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun pose la question la plus difficile qu’il oserait poser à l’autre. On a le droit de passer."
+ },
+ {
+  "id": "a-1ncrh88",
+  "source": "mcadams",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez chacun votre vie en chapitres, avec un titre pour chaque chapitre."
+ },
+ {
+  "id": "a-xbo3ga",
+  "source": "mcadams",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez chacun la courbe de votre vie, avec ses hauts et ses bas, puis présentez-la à l’autre."
+ },
+ {
+  "id": "a-mxgw09",
+  "source": "sfbt",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Question miracle : décrivez ensemble, minute par minute, votre premier matin quand vous vivrez au même endroit."
+ },
+ {
+  "id": "a-1cc7iee",
+  "source": "michel",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun décrit la personne qu’il voudrait devenir. L’autre propose une chose concrète pour l’aider."
+ },
+ {
+  "id": "a-1d5488j",
+  "source": "via",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun nomme trois forces de l’autre, avec un exemple précis à chaque fois."
+ },
+ {
+  "id": "a-12hqjv6",
+  "source": "oral",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez votre rencontre à deux voix, phrase par phrase, comme dans une interview."
+ },
+ {
+  "id": "a-1faaz5d",
+  "source": "oral",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Retrouvez vos tout premiers messages et relisez-les à voix haute."
+ },
+ {
+  "id": "a-18h89v1",
+  "source": "stendhal",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites chacun la liste des « cristaux » : 5 qualités que vous avez prêtées à l’autre au début. Lesquelles se sont révélées vraies ?"
+ },
+ {
+  "id": "a-1lo3wgd",
+  "source": "sternberg",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez chacun un triangle complicité, désir, engagement, tel que vous voyez notre couple aujourd’hui. Comparez vos dessins."
+ },
+ {
+  "id": "a-1u768dy",
+  "source": "schwartz",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Classez chacun ces valeurs : liberté, sécurité, aventure, tradition, réussite, plaisir, bienveillance, justice, spiritualité, reconnaissance. Comparez vos trois premières."
+ },
+ {
+  "id": "a-19868td",
+  "source": "ware",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun dit une chose qu’il regretterait de ne pas avoir faite avec l’autre dans un an. Choisissez-en une à planifier."
+ },
+ {
+  "id": "a-1viit9x",
+  "source": "johnson",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Finissez chacun trois fois la phrase : « Quand tu me manques, j’ai besoin que tu… »"
+ },
+ {
+  "id": "a-1uq3f7d",
+  "source": "johnson",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Dites-vous à tour de rôle une peur liée à la distance. L’autre répond seulement : « Je suis là, je t’entends. »"
+ },
+ {
+  "id": "a-11pgrum",
+  "source": "cnv",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Communication non violente : chacun formule une petite frustration en quatre temps : ce que j’ai vu, ce que j’ai ressenti, mon besoin, ma demande."
+ },
+ {
+  "id": "a-11085in",
+  "source": "prep",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Entraînez-vous à la technique orateur-auditeur sur un sujet léger, comme vos vacances idéales : l’un parle, l’autre reformule."
+ },
+ {
+  "id": "a-18on07w",
+  "source": "repair",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez ensemble votre liste de phrases de réparation, celles qui vous calment vraiment après une tension."
+ },
+ {
+  "id": "a-hut84k",
+  "source": "lovemaps",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez chacun votre « mode d’emploi » : ce qui me fait du bien, ce qui m’agace, comment me consoler. Échangez."
+ },
+ {
+  "id": "a-1jpme77",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites-vous deviner : chacun prépare 5 phrases « Je préfère… », l’autre complète la fin."
+ },
+ {
+  "id": "a-1fae7v3",
+  "source": "lewis",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Côte à côte : choisissez une activité à faire en même temps sans vous regarder (un puzzle en ligne, un dessin, une lecture), juste ensemble."
+ },
+ {
+  "id": "a-1yxidty",
+  "source": "rituals",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Choisissez une chanson qui voudra dire « je pense à toi » quand vous vous l’enverrez, sans un mot."
+ },
+ {
+  "id": "a-3ctd72",
+  "source": "rituals",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Inventez un geste secret à faire devant la caméra pour vous dire au revoir."
+ },
+ {
+  "id": "a-137dfwo",
+  "source": "rituals",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Choisissez un rendez-vous fixe dans la semaine juste pour vous deux, et donnez-lui un nom."
+ },
+ {
+  "id": "a-isvix9",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Apprenez ensemble le début d’une chorégraphie avec une vidéo gratuite."
+ },
+ {
+  "id": "a-pz5381",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Suivez la même vidéo d’origami gratuite et comparez vos résultats."
+ },
+ {
+  "id": "a-160cyvk",
+  "source": "expansion",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Visitez ensemble un musée en ligne gratuit. Chacun choisit son œuvre préférée et explique pourquoi."
+ },
+ {
+  "id": "a-bv9ere",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Promenez-vous ensemble sur Street View dans une ville où vous n’êtes jamais allés."
+ },
+ {
+  "id": "a-rlvkqb",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Blind test : chacun prépare 10 extraits de chansons qu’il aime, l’autre devine."
+ },
+ {
+  "id": "a-p1apvs",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Jeu du dictionnaire : choisissez un mot rare, chacun invente une fausse définition, l’autre devine la vraie."
+ },
+ {
+  "id": "a-1gox1ie",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Tirez une lettre au hasard. En 60 secondes, trouvez chez vous l’objet le plus drôle qui commence par cette lettre."
+ },
+ {
+  "id": "a-1yn8vwk",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Inventez la carte du restaurant que vous ouvririez à deux : nom, plats, prix."
+ },
+ {
+  "id": "a-gpbaf9",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Raconte un souvenir d’enfance en plaçant trois mots imposés par l’autre."
+ },
+ {
+  "id": "a-20zqah",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez ensemble votre blason de couple : couleurs, animal, devise."
+ },
+ {
+  "id": "a-d2wmsp",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez chacun un rêve de la nuit et inventez ensemble la suite."
+ },
+ {
+  "id": "a-yt9jek",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez l’autre avec la main que vous n’utilisez jamais."
+ },
+ {
+  "id": "a-16capal",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites chacun la « bande-annonce » de votre semaine, avec la voix des films."
+ },
+ {
+  "id": "a-zq8n64",
+  "source": "aron",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites seulement le premier tiers des 36 questions d’Aron, les plus légères."
+ },
+ {
+  "id": "a-zu8w90",
+  "source": null,
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Choisissez une phrase d’un philosophe dans « D’où viennent ces cartes » et débattez 10 minutes : d’accord ou pas ?"
+ },
+ {
+  "id": "a-qc2nkh",
+  "source": "maint",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "distance",
+  "texte": "Présentez-vous mutuellement à un ami ou un proche en visio."
+ },
+ {
+  "id": "a-clgeyt",
+  "source": "maint",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Préparez ensemble votre prochain rendez-vous « spécial » avec un thème : années 90, voyage, pyjamas…"
+ },
+ {
+  "id": "a-1fkc2pf",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie une photo de ton repas ce soir, avec la note que tu lui donnes sur 10."
+ },
+ {
+  "id": "a-m2vzie",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Filme 30 secondes de ton trajet de tous les jours."
+ },
+ {
+  "id": "a-cf5vu1",
+  "source": "maint",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Lis un chapitre de ton livre à voix haute et envoie-moi l’enregistrement."
+ },
+ {
+  "id": "a-r2t7gr",
+  "source": "oulipo",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Écris-moi un haïku par jour pendant trois jours."
+ },
+ {
+  "id": "a-1yja2d1",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Choisis un mot rare par jour et glisse-le dans nos conversations. L’autre doit le repérer."
+ },
+ {
+  "id": "a-13gn0wc",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie une photo de quelque chose de rouge, puis de bleu, puis de jaune, un par jour."
+ },
+ {
+  "id": "a-moompn",
+  "source": "meaning",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Écris trois souvenirs que tu veux qu’on crée ensemble l’année prochaine."
+ },
+ {
+  "id": "a-1j8ognc",
+  "source": "johnson",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Enregistre un message vocal que je pourrai écouter un jour où je serai triste."
+ },
+ {
+  "id": "a-1umefev",
+  "source": "fred",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Note chaque fois que tu ris cette semaine. Raconte-moi la meilleure."
+ },
+ {
+  "id": "a-d0702m",
+  "source": "hooks",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Écris dix choses que tu aimes chez toi, et envoie-les-moi."
+ },
+ {
+  "id": "a-13a1l89",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Fais une chose qui te fait un peu peur cette semaine, et raconte-la-moi."
+ },
+ {
+  "id": "a-1bto6vw",
+  "source": "nietzsche",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Écris une lettre à toi à 80 ans, sur nous deux."
+ },
+ {
+  "id": "a-n5k3n6",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Écoute en entier un album que l’autre adore, puis débriefez ensemble."
+ },
+ {
+  "id": "a-1lrdkkf",
+  "source": "lovemaps",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "distance",
+  "texte": "Envoie-moi chaque jour une chose que je ne sais pas encore sur toi."
+ },
+ {
+  "id": "a-1cbpitc",
+  "source": "touch",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Massez-vous les mains cinq minutes chacun, en silence."
+ },
+ {
+  "id": "a-uo13lj",
+  "source": "touch",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Chaque jour de la semaine, embrassez-vous au moins six secondes, sans être pressés."
+ },
+ {
+  "id": "a-12tltqx",
+  "source": "touch",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Dansez un slow dans le salon, sur une chanson choisie par l’autre."
+ },
+ {
+  "id": "a-1wu60jn",
+  "source": "touch",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Restez enlacés trois minutes sans parler, téléphones dans une autre pièce."
+ },
+ {
+  "id": "a-1tgjha5",
+  "source": "fred",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Regardez un lever ou un coucher de soleil ensemble, sans rien dire, puis racontez ce que vous avez ressenti."
+ },
+ {
+  "id": "a-161dvfz",
+  "source": "expansion",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Promenade sans téléphone : chacun montre à l’autre trois détails qu’il n’aurait pas remarqués."
+ },
+ {
+  "id": "a-6ivq02",
+  "source": "expansion",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Marchez au hasard : à chaque carrefour, pile ou face décide de la direction."
+ },
+ {
+  "id": "a-50tv6i",
+  "source": "expansion",
+  "minutes": 45,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Cuisinez à quatre mains un plat inventé avec ce qu’il y a dans le frigo, puis donnez-lui un nom."
+ },
+ {
+  "id": "a-o4k2p0",
+  "source": "expansion",
+  "minutes": 60,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Construisez une cabane de couvertures et passez-y une heure."
+ },
+ {
+  "id": "a-6vvbsi",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Je te guide : l’un ferme les yeux, l’autre le guide dans la maison uniquement à la voix."
+ },
+ {
+  "id": "a-4vuzvw",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Jeu des cinq sens : l’un ferme les yeux, l’autre lui fait sentir, toucher ou goûter cinq choses de la maison à deviner."
+ },
+ {
+  "id": "a-uae5p3",
+  "source": "expansion",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Apprenez-vous mutuellement une chose que vous savez faire : un nœud, un pas de danse, un tour de cartes."
+ },
+ {
+  "id": "a-jd3h7j",
+  "source": "expansion",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Séance photo dans votre quartier : photographiez-vous comme pour un magazine de mode."
+ },
+ {
+  "id": "a-1npselm",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Concours de châteaux de cartes : le plus haut gagne."
+ },
+ {
+  "id": "a-6l8dx1",
+  "source": "expansion",
+  "minutes": 60,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Pique-nique dans un endroit où vous n’êtes jamais allés, avec ce que vous avez à la maison."
+ },
+ {
+  "id": "a-1qahagp",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Dessin à l’aveugle : dessinez le visage de l’autre en le regardant, sans jamais regarder votre feuille."
+ },
+ {
+  "id": "a-1smedtv",
+  "source": "rituals",
+  "minutes": 60,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Dîner aux chandelles avec ce que vous avez, téléphones dans une autre pièce."
+ },
+ {
+  "id": "a-bow1wa",
+  "source": "rituals",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Rangez une pièce ensemble en musique, en dansant."
+ },
+ {
+  "id": "a-1fuzlr3",
+  "source": "rituals",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Plantez une graine ensemble et donnez un nom à la plante."
+ },
+ {
+  "id": "a-1641mw8",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Prenez une photo de vous deux au même endroit chaque jour de la semaine."
+ },
+ {
+  "id": "a-112pxav",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Écris un mot doux et cache-le chez l’autre. Il a une semaine pour le trouver."
+ },
+ {
+  "id": "a-1i932ln",
+  "source": "lovemaps",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Lisez-vous à voix haute un chapitre d’un livre, allongés."
+ },
+ {
+  "id": "a-r5di6t",
+  "source": "oral",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Rejouez votre premier rendez-vous en version accélérée, en deux minutes."
+ },
+ {
+  "id": "a-1cj4v5u",
+  "source": "meaning",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Réorganisez ensemble un coin de votre chez-vous pour qu’il vous ressemble à tous les deux."
+ },
+ {
+  "id": "a-1ek1of8",
+  "source": "scudery",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez ensemble la carte imaginaire de votre relation, comme la Carte du Tendre : ses villes, ses fleuves, ses tempêtes, ses territoires encore inexplorés."
+ },
+ {
+  "id": "a-1wra95d",
+  "source": "oulipo",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez chacun un haïku sur l’autre, en trois minutes."
+ },
+ {
+  "id": "a-1aa551s",
+  "source": "oulipo",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Poème à quatre mains : écrivez un vers chacun votre tour, en voyant ce que l’autre a écrit."
+ },
+ {
+  "id": "a-v9vu3h",
+  "source": "oulipo",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez une chanson de quatre lignes sur l’air d’une comptine."
+ },
+ {
+  "id": "a-19q9su3",
+  "source": "oulipo",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez votre histoire d’amour en six mots, pas un de plus."
+ },
+ {
+  "id": "a-194aeiq",
+  "source": "oulipo",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Inventez un mot qui n’existe pas pour une émotion que vous ressentez souvent ensemble. Donnez-en la définition."
+ },
+ {
+  "id": "a-agw6lm",
+  "source": "surreal",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Racontez chacun une histoire inventée à partir d’un objet choisi par l’autre."
+ },
+ {
+  "id": "a-wd456p",
+  "source": "surreal",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Décrivez un objet banal de chez vous comme un poète romantique."
+ },
+ {
+  "id": "a-t5ri7h",
+  "source": "expansion",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Créez la une d’un journal daté de dans dix ans, consacrée à vous deux : titre, photo dessinée, articles."
+ },
+ {
+  "id": "a-1c30u4l",
+  "source": "expansion",
+  "minutes": 30,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites chacun un collage de votre année avec de vieux magazines ou des papiers récupérés."
+ },
+ {
+  "id": "a-1el1p38",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Inventez une boisson sans alcool avec ce que vous avez, et donnez-lui un nom qui vous ressemble."
+ },
+ {
+  "id": "a-34k4e4",
+  "source": "expansion",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Composez la bande-son de votre histoire : une chanson pour chaque période."
+ },
+ {
+  "id": "a-jrqlhy",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Inventez une fête qui n’existe que pour vous deux : sa date, son nom, son rituel."
+ },
+ {
+  "id": "a-10vk16w",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez chacun le plan de votre chez-vous idéal, puis fusionnez les deux en un seul plan."
+ },
+ {
+  "id": "a-18ckyhe",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Portrait chinois de votre couple : si vous étiez un film, une ville, un plat, une saison…"
+ },
+ {
+  "id": "a-7ec1s0",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez ensemble le scénario de la bande-annonce du film de votre vie."
+ },
+ {
+  "id": "a-di96sx",
+  "source": "expansion",
+  "minutes": 20,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Apprenez un tour de magie avec une vidéo gratuite et faites-le à l’autre."
+ },
+ {
+  "id": "a-10wun5z",
+  "source": "expansion",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Dessinez ou peignez le même sujet pendant 15 minutes, puis comparez vos versions."
+ },
+ {
+  "id": "a-1bbmks8",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites chacun une présentation de trois minutes sur un sujet que vous adorez. L’autre pose une question."
+ },
+ {
+  "id": "a-12y5yzv",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez une critique gastronomique très élogieuse du dernier plat que l’autre a cuisiné."
+ },
+ {
+  "id": "a-xi3xy6",
+  "source": "expansion",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Origami : apprenez à plier une grue en papier, puis offrez-la à l’autre."
+ },
+ {
+  "id": "a-gj1vex",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Défi photo de la semaine : un thème par jour (lumière, ombre, rouge, fenêtre, mains). Comparez vos photos à la fin."
+ },
+ {
+  "id": "a-1hs4a5m",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Apprenez chacun une chanson, un poème ou une tirade par cœur, et récitez-la à l’autre à la fin de la semaine."
+ },
+ {
+  "id": "a-gec2oj",
+  "source": "pospsy",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites ensemble la liste de 50 petites choses qui vous rendent heureux, en alternant."
+ },
+ {
+  "id": "a-1mzyyeo",
+  "source": "pospsy",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Bocal à souvenirs : écrivez chacun dix souvenirs communs sur des petits papiers, puis lisez-les au hasard."
+ },
+ {
+  "id": "a-3vg0z5",
+  "source": "pospsy",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez une lettre à la personne que l’autre était à dix ans."
+ },
+ {
+  "id": "a-1hnw1in",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Photographiez chacun cinq choses de votre quotidien qui vous font penser à l’autre, et montrez-les."
+ },
+ {
+  "id": "a-n2e81r",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Faites deviner à l’autre votre réponse à cinq questions sur vous. Un point par bonne réponse."
+ },
+ {
+  "id": "a-lxl7s9",
+  "source": "fondness",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez ensemble une lettre à vous deux dans un an. Gardez-la jusqu’à la date prévue."
+ },
+ {
+  "id": "a-kjqo0s",
+  "source": "fondness",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Chacun termine la phrase « Je t’aime parce que… » cinq fois, sans réfléchir."
+ },
+ {
+  "id": "a-yhrdsf",
+  "source": "meaning",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "les-deux",
+  "texte": "Écrivez ensemble la liste des dix choses que vous voulez vivre avant vos 40 ans."
+ },
+ {
+  "id": "a-dm9dit",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un bisou sur l’oreille de l’autre."
+ },
+ {
+  "id": "a-rb5ji",
+  "source": "touch",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Masse les pieds de l’autre pendant cinq minutes."
+ },
+ {
+  "id": "a-1y81pci",
+  "source": "touch",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Masse les épaules de l’autre pendant trois minutes."
+ },
+ {
+  "id": "a-136l0og",
+  "source": "touch",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Masse le cuir chevelu de l’autre pendant deux minutes."
+ },
+ {
+  "id": "a-1uhwtk8",
+  "source": "touch",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Mets de la crème sur les mains de l’autre en les massant doucement."
+ },
+ {
+  "id": "a-adegre",
+  "source": "touch",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Câlin de vingt secondes : interdit de lâcher avant la fin."
+ },
+ {
+  "id": "a-1m25y2",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un câlin à l’autre et ne le lâche pas avant qu’il ou elle rie."
+ },
+ {
+  "id": "a-cgnnw2",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un câlin par derrière à l’autre, là, maintenant."
+ },
+ {
+  "id": "a-1eg1xzq",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un bisou esquimau, nez contre nez."
+ },
+ {
+  "id": "a-zuqk08",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un bisou dans le cou de l’autre."
+ },
+ {
+  "id": "a-1efdl1p",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un bisou sur chaque doigt de la main de l’autre."
+ },
+ {
+  "id": "a-cw41ez",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un bisou à l’autre sur la joue, le front ou la main : c’est lui ou elle qui choisit."
+ },
+ {
+  "id": "a-pd29d2",
+  "source": "touch",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Écris un mot du bout du doigt dans le dos de l’autre. Il ou elle doit le deviner."
+ },
+ {
+  "id": "a-114kcqb",
+  "source": "touch",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Dessine une forme dans la paume de l’autre, qui doit la deviner les yeux fermés."
+ },
+ {
+  "id": "a-1mgxzo",
+  "source": "touch",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Pose ta tête sur les genoux de l’autre, qui te caresse les cheveux pendant deux minutes."
+ },
+ {
+  "id": "a-1ligs7v",
+  "source": "touch",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Faites la cuillère pendant cinq minutes, sans téléphone."
+ },
+ {
+  "id": "a-8gvp6",
+  "source": "touch",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Mets-toi dans le dos de l’autre et respirez au même rythme pendant une minute."
+ },
+ {
+  "id": "a-gx6780",
+  "source": "touch",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Tiens la main de l’autre pendant tout le prochain épisode ou le prochain film."
+ },
+ {
+  "id": "a-tnl8aa",
+  "source": "touch",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Prépare un bain de pieds chaud pour l’autre."
+ },
+ {
+  "id": "a-mepukp",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Chuchote à l’oreille de l’autre ce que tu préfères chez lui ou chez elle."
+ },
+ {
+  "id": "a-14t82kp",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais trois compliments à l’autre en le regardant dans les yeux."
+ },
+ {
+  "id": "a-l4gssp",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Prends l’autre dans tes bras et dis-lui une chose que tu n’oses pas dire d’habitude."
+ },
+ {
+  "id": "a-1hjvk60",
+  "source": "fondness",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Récite à l’oreille de l’autre un poème ou les paroles d’une chanson qui te font penser à lui ou à elle."
+ },
+ {
+  "id": "a-1cq568o",
+  "source": "fondness",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Prends une photo de l’autre là, maintenant, comme si c’était la plus belle photo de ta vie."
+ },
+ {
+  "id": "a-1d2e2uu",
+  "source": "fondness",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Écris trois post-it doux et colle-les là où l’autre les trouvera aujourd’hui."
+ },
+ {
+  "id": "a-14murxk",
+  "source": "bids",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Prépare une boisson chaude pour l’autre, exactement comme il ou elle l’aime."
+ },
+ {
+  "id": "a-2fr2dz",
+  "source": "bids",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Prépare un goûter surprise pour l’autre avec ce que vous avez dans les placards."
+ },
+ {
+  "id": "a-q4x532",
+  "source": "bids",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Installe un coin cosy pour l’autre : plaid, coussins, lumière douce."
+ },
+ {
+  "id": "a-1xpjgrm",
+  "source": "bids",
+  "minutes": 15,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Prépare une soirée film : choisis le film, installe le canapé, prépare de quoi grignoter."
+ },
+ {
+  "id": "a-1giji35",
+  "source": "bids",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais tout de suite une tâche ménagère que l’autre déteste."
+ },
+ {
+  "id": "a-13zt7as",
+  "source": "expansion",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Faites une photo de vous deux avec la grimace la plus ridicule possible."
+ },
+ {
+  "id": "a-p7a0pz",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais un playback sur une chanson devant l’autre, à fond."
+ },
+ {
+  "id": "a-ctqi2",
+  "source": "expansion",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais une danse ridicule pendant trente secondes."
+ },
+ {
+  "id": "a-x1w984",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Pierre-feuille-ciseaux en trois manches : le perdant fait un massage de deux minutes."
+ },
+ {
+  "id": "a-1mqvwh8",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Bataille de pouces en trois manches."
+ },
+ {
+  "id": "a-1xaghzw",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Concours de regard : le premier qui rit doit faire un bisou à l’autre."
+ },
+ {
+  "id": "a-1psnevy",
+  "source": "expansion",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Jouez à « Je te tiens par la barbichette »."
+ },
+ {
+  "id": "a-ku9xz8",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Jacques a dit : pendant deux minutes, l’autre doit t’obéir."
+ },
+ {
+  "id": "a-ztvjf2",
+  "source": "expansion",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Bataille d’oreillers de trente secondes."
+ },
+ {
+  "id": "a-d5wfqj",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Lis les lignes de la main de l’autre comme une voyante, en inventant votre avenir à deux."
+ },
+ {
+  "id": "a-5h9c32",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Lis l’horoscope de l’autre à voix haute, en inventant une prédiction sur vous deux."
+ },
+ {
+  "id": "a-1g8ufq9",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Fais le portrait de l’autre avec des objets de la pièce, en trois minutes."
+ },
+ {
+  "id": "a-1trcyf6",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Dessine un petit tatouage au stylo sur le poignet de l’autre."
+ },
+ {
+  "id": "a-np5ozv",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Enfile un vêtement de l’autre et défile comme un mannequin."
+ },
+ {
+  "id": "a-dvggqx",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Choisissez mutuellement la tenue de l’autre pour demain."
+ },
+ {
+  "id": "a-19nt7lg",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Dos à dos : décrivez chacun l’autre de mémoire, couleur des yeux et vêtements compris."
+ },
+ {
+  "id": "a-1wk1282",
+  "source": "expansion",
+  "minutes": 3,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Faites un selfie dans chaque pièce de votre chez-vous, en trois minutes."
+ },
+ {
+  "id": "a-1ppw14e",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Recréez une vieille photo de vous deux, dans la même pose."
+ },
+ {
+  "id": "a-3n4csm",
+  "source": "expansion",
+  "minutes": 2,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Faites la course jusqu’au bout de l’appartement, à cloche-pied."
+ },
+ {
+  "id": "a-1segh1",
+  "source": "expansion",
+  "minutes": 5,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Mini-spectacle : chante, récite ou improvise quelque chose devant l’autre, qui doit applaudir."
+ },
+ {
+  "id": "a-v60o4l",
+  "source": "lovemaps",
+  "minutes": 10,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Allongez-vous par terre, regardez le plafond ou le ciel, et racontez-vous un souvenir d’enfance."
+ },
+ {
+  "id": "a-2x6dy2",
+  "source": "rituals",
+  "minutes": 1,
+  "quand": "maintenant",
+  "mode": "ensemble",
+  "texte": "Pacte du petit doigt : promets à l’autre une petite chose pour la semaine."
+ },
+ {
+  "id": "a-1ecmzct",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Demain matin, apporte un petit-déjeuner au lit à l’autre, même tout simple."
+ },
+ {
+  "id": "a-22iznw",
+  "source": "rituals",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Cette semaine, cuisine le plat préféré de l’autre."
+ },
+ {
+  "id": "a-ytkkdc",
+  "source": "bids",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Cette semaine, cache un petit mot dans la poche ou le sac de l’autre."
+ },
+ {
+  "id": "a-aqs774",
+  "source": "bids",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Cette semaine, rends un service que l’autre repousse depuis longtemps."
+ },
+ {
+  "id": "a-g8svl7",
+  "source": "expansion",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Cette semaine, organise une petite sortie surprise et gratuite : balade, marché, coucher de soleil."
+ },
+ {
+  "id": "a-160tqdz",
+  "source": "fondness",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "ensemble",
+  "texte": "Cette semaine, prends l’autre en photo sans qu’il ou elle le sache, dans un moment que tu trouves beau."
+ },
+ {
+  "id": "a-a6ft98",
+  "source": "pospsy",
+  "minutes": null,
+  "quand": "semaine",
+  "mode": "les-deux",
+  "texte": "Cette semaine, fais une petite attention surprise à l’autre chaque jour."
+ }
+]

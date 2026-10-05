@@ -1,0 +1,1931 @@
+<title>Knot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column; two airmail piles on top, the drawn card below. */
+:root{
+  --paper:#EEF1F6; --card:#FFFFFF; --ink:#1C2740; --muted:#5B6782; --line:#D3D9E4;
+  --red:#C8323A; --blue:#2A4A98; --chip:#E2E7F0; --ok:#34C759;
+  --f-display:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --f-card:"Newsreader", Georgia, "Times New Roman", serif;
+  --f-mono:"DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1420; --card:#19202F; --ink:#E7EBF3; --muted:#9AA5BC; --line:#2B3446;
+  --red:#E35A61; --blue:#86A2EA; --chip:#232B3C; --ok:#30D158; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0F1420; --card:#19202F; --ink:#E7EBF3; --muted:#9AA5BC; --line:#2B3446;
+  --red:#E35A61; --blue:#86A2EA; --chip:#232B3C; --ok:#30D158; color-scheme:dark }
+
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-display);font-size:16px;line-height:1.45}
+.app{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:20px 40px;display:flex;flex-direction:column;gap:18px}
+
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:6px}
+.stripe{display:block;width:72px;height:6px;border-radius:2px;
+  background:repeating-linear-gradient(-45deg,var(--red) 0 7px,transparent 7px 11px,var(--blue) 11px 18px,transparent 18px 22px)}
+h1{margin:0;font-weight:800;font-size:2rem;letter-spacing:-.02em;line-height:1;display:flex;align-items:center;gap:10px}
+h1 .knot{width:76px;height:auto;color:var(--blue);--knot-edge:#C9A646}
+.sync{margin:0;font-family:var(--f-mono);font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.sync::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.sync[data-mode="shared"]::before{background:var(--blue)}
+.sync[data-mode="readonly"]::before{background:var(--red)}
+.intro{margin:-6px 0 0;color:var(--muted);font-size:.95rem;max-width:62ch}
+
+.piles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pile{font:inherit;color:var(--ink);background:var(--card);border:0;border-radius:14px;padding:6px;cursor:pointer;text-align:left;
+  box-shadow:0 1px 2px rgba(20,30,60,.08),4px 4px 0 -1px var(--card),4px 4px 0 0 var(--line),8px 8px 0 -1px var(--card),8px 8px 0 0 var(--line)}
+.pile-in{border-radius:10px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:6px;min-height:92px;justify-content:space-between;
+  border:1.5px solid var(--line)}
+.pile b{font-weight:800;font-size:1.5rem;letter-spacing:-.01em;line-height:1}
+.pile span{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.pile em{font-style:normal;font-size:.8rem;color:var(--muted)}
+.pile[data-pile="verite"] .pile-in{border-color:var(--blue)}
+.pile[data-pile="action"] .pile-in{border-color:var(--red)}
+.pile[data-pile="verite"] b{color:var(--blue)}
+.pile[data-pile="action"] b{color:var(--red)}
+.pile:disabled{opacity:.45;cursor:default}
+.pile:not(:disabled):active{transform:translate(2px,2px)}
+.pile:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+.card{width:100%;max-width:340px;margin-inline:auto;aspect-ratio:5/7;box-sizing:border-box;display:flex;border-radius:18px;padding:9px;
+  background:repeating-linear-gradient(-45deg,var(--red) 0 16px,var(--card) 16px 24px,var(--blue) 24px 40px,var(--card) 40px 48px);
+  box-shadow:0 1px 2px rgba(20,30,60,.08),0 14px 34px -14px rgba(20,30,60,.35)}
+.card-in{flex:1;min-width:0;position:relative;background:var(--card);border-radius:11px;padding:52px 24px 50px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.card.enter .card-in{animation:enter .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes enter{from{transform:translateY(10px) rotate(-1.2deg);opacity:.2}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){.card.enter .card-in{animation:none}}
+.corner{position:absolute;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1;color:var(--blue)}
+.corner.tl{top:12px;left:13px}
+.corner.br{bottom:12px;right:13px;transform:rotate(180deg)}
+.corner b{font-family:var(--f-display);font-weight:800;font-size:1.25rem}
+.corner span{font-family:var(--f-mono);font-size:.62rem;font-variant-numeric:tabular-nums}
+.corner .knot{width:30px;height:auto;margin-top:2px;--halo:var(--card)}
+.card.action .corner{color:var(--red)}
+.card.cover .corner{color:var(--ink)}
+.kicker{margin:0;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.q{margin:0;font-family:var(--f-card);font-size:1.5rem;line-height:1.3;text-wrap:balance;flex:1;display:flex;align-items:center;justify-content:center}
+.q.long{font-size:1.28rem}
+.q.xlong{font-size:1.12rem}
+.q.cover{font-style:italic;color:var(--muted);font-size:1.25rem}
+.meta{align-self:stretch;display:flex;flex-direction:column;gap:4px;font-family:var(--f-mono);font-size:.68rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.meta .src{color:var(--blue)}
+
+.timer{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.clock{font-family:var(--f-mono);font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--red);min-width:4.5ch}
+.clock.done{font-family:var(--f-display);font-size:1rem;font-weight:600}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;font-size:.95rem;border-radius:12px;padding:12px 16px;cursor:pointer;border:1.5px solid var(--ink);background:transparent;color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.small{padding:8px 14px;font-size:.88rem}
+.btn:disabled{opacity:.4;cursor:default}
+.note{margin:0;font-size:.88rem;color:var(--red)}
+.note.ok{color:var(--blue)}
+
+details{border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:600;font-size:.95rem;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--muted)}
+details[open] summary::after{content:"–"}
+.hlist{margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.hlist li{font-family:var(--f-card);font-size:1.02rem;line-height:1.35;display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:8px}
+.hlist li span{font-family:var(--f-mono);font-size:.66rem;color:var(--muted);padding-top:.3em;text-transform:uppercase;letter-spacing:.04em}
+.hlist li span.a{color:var(--red)}
+.hlist li span.v{color:var(--blue)}
+.hlist li.empty{display:block;color:var(--muted);font-family:var(--f-display);font-size:.9rem}
+
+.about{margin-top:12px;display:flex;flex-direction:column;gap:12px;font-size:.92rem}
+.about p{margin:0;max-width:62ch}
+.refs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.refs li{display:flex;flex-direction:column;gap:2px;min-width:0}
+.refs b{font-weight:600}
+.refs span{color:var(--muted)}
+.refs a{color:var(--blue);font-size:.85rem;overflow-wrap:anywhere}
+
+form{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+textarea{font:inherit;font-family:var(--f-card);font-size:1.05rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box;min-height:84px;resize:vertical}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.row label{display:flex;gap:6px;align-items:center;font-size:.92rem}
+#addmin,.editmin{width:5.5em;font:inherit;font-size:.92rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+.mine{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.mine .muted{margin:0}
+.minelist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.minelist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.minelist .txt{display:flex;flex-direction:column;gap:2px;min-width:0;font-family:var(--f-card);font-size:1rem;line-height:1.3}
+.minelist .txt span{font-family:var(--f-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;color:var(--blue)}
+.minelist .txt span.a{color:var(--red)}
+.minelist .del{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.minelist li.editing{display:block}
+.dup{margin:0;font-size:.88rem;color:var(--red);display:flex;flex-direction:column;gap:2px}
+.dup q{font-family:var(--f-card);font-size:1rem;color:var(--ink);quotes:"« " " »"}
+.editbox{display:flex;flex-direction:column;gap:8px}
+.editbox textarea{min-height:64px}
+.editbox input[type=number]{width:5.5em;font:inherit;font-size:.92rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+.minelist .btn{padding:6px 10px;font-size:.82rem;border-radius:9px}
+
+.reshuffle{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.links{display:flex;gap:16px;flex-wrap:wrap}
+.link{font:inherit;font-size:.9rem;color:var(--muted);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.link:disabled{opacity:.5;cursor:default}
+.confirm{background:var(--chip);border-radius:10px;padding:12px;font-size:.9rem;display:flex;flex-direction:column;gap:10px}
+footer{font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px}
+
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--chip);border-radius:12px;padding:4px;gap:4px}
+.tab{font:inherit;font-weight:600;font-size:.92rem;border:0;border-radius:9px;padding:9px 10px;background:transparent;color:var(--muted);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(20,30,60,.12)}
+.view{display:flex;flex-direction:column;gap:18px}
+
+.tlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.titem{font:inherit;color:var(--ink);width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;
+  display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;gap:10px;align-items:center}
+.titem .num{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.titem b{font-weight:600}
+.status{font-family:var(--f-mono);font-size:.66rem;color:var(--muted);text-align:right;text-transform:uppercase;letter-spacing:.04em}
+.status.go{color:var(--red)}
+.status.done{color:var(--blue)}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.panel h2{margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+.panel h3{margin:0;font-size:1rem;font-weight:700;display:flex;gap:8px;align-items:baseline}
+.panel h3 .step{font-family:var(--f-mono);font-size:.7rem;color:var(--red);font-weight:500}
+.panel p{margin:0;max-width:62ch}
+.muted{color:var(--muted);font-size:.92rem}
+.srcline{font-family:var(--f-mono);font-size:.7rem;color:var(--blue)}
+.back{align-self:flex-start}
+.fields{display:flex;flex-direction:column;gap:8px}
+.fields input,.concl textarea,.setup input{font:inherit;font-family:var(--f-card);font-size:1.05rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 12px;width:100%;box-sizing:border-box}
+.vals{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.vals li{display:flex;flex-direction:column;gap:6px;font-family:var(--f-card);font-size:1.08rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chipbtn{font:inherit;font-size:.8rem;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:4px 10px;cursor:pointer}
+.chipbtn[aria-pressed="true"]{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+.tag{font-family:var(--f-display);font-size:.72rem;border-radius:999px;padding:2px 8px;background:var(--chip);color:var(--muted);align-self:flex-start}
+.tag.partage{color:var(--blue)}
+.tag.difficile{color:var(--red)}
+.rule{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:.92rem}
+.qs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.qs li{display:flex;flex-direction:column;gap:3px;font-family:var(--f-card);font-size:1.1rem;line-height:1.35}
+.qs li span{font-family:var(--f-mono);font-size:.68rem;color:var(--red);text-transform:uppercase;letter-spacing:.04em}
+.concl{display:flex;flex-direction:column;gap:10px}
+.concl label{display:flex;flex-direction:column;gap:4px;font-size:.88rem;font-weight:600}
+.concl textarea{min-height:64px;resize:vertical}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.setup{display:flex;flex-direction:column;gap:10px}
+
+.tabs.sub{background:transparent;border:1px solid var(--line)}
+.stage{margin:6px 0 -8px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.sliders{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.sliders li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.pole{font-family:var(--f-card);font-size:1rem;line-height:1.25}
+.pole.r{text-align:right}
+.scale{display:flex;gap:3px}
+.scale span{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:.62rem;color:var(--muted)}
+.scale span:first-child{border-color:var(--blue);color:var(--blue)}
+.scale span:last-child{border-color:var(--red);color:var(--red)}
+@media (max-width:420px){.sliders li{grid-template-columns:1fr 1fr}.sliders .scale{grid-column:1/-1;grid-row:2;justify-content:center}}
+.score{display:flex;gap:12px;flex-wrap:wrap}
+.pts{display:flex;align-items:center;gap:8px;background:var(--chip);border-radius:12px;padding:6px 10px}
+.pts span{font-size:.88rem;font-weight:600}
+.pts strong{font-family:var(--f-mono);font-size:1.2rem;min-width:1.6ch;text-align:center;font-variant-numeric:tabular-nums}
+.pts .btn{padding:2px 10px}
+.final{font-family:var(--f-card);font-size:1.3rem;line-height:1.35;text-wrap:balance}
+
+.plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.pitem{font:inherit;color:var(--ink);width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;gap:10px;align-items:center}
+.pitem .num{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.ptxt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ptxt b{font-weight:700;font-size:1.02rem}
+.ptxt span{font-size:.82rem;color:var(--muted)}
+.ptxt .dur,.dur{font-family:var(--f-mono);font-size:.72rem;color:var(--red);margin:0}
+.srclink{color:var(--blue);font-size:.85rem;align-self:flex-start}
+details.mini,details.guide{border-top:0;padding-top:0}
+details.mini summary{font-weight:500;font-size:.88rem;color:var(--muted)}
+details.mini p{margin-top:8px}
+details.guide{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+details.guide .rule{margin-top:10px}
+.prog{height:4px;background:var(--chip);border-radius:2px;overflow:hidden}
+.prog span{display:block;height:100%;background:var(--red)}
+
+.pnav{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.btn.wide{width:100%}
+
+.distrow{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.disttxt{display:flex;flex-direction:column;gap:2px;min-width:0}
+#distlabel{font-weight:600;font-size:.98rem}
+#disthint{font-size:.8rem}
+.switch{flex-shrink:0;width:51px;height:31px;border-radius:999px;border:0;padding:2px;cursor:pointer;background:var(--line);position:relative;transition:background .2s}
+.switch span{display:block;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25),0 0 1px rgba(0,0,0,.2);transition:transform .2s}
+.switch[aria-checked="true"]{background:var(--ok)}
+.switch[aria-checked="true"] span{transform:translateX(20px)}
+@media (prefers-reduced-motion: reduce){.switch,.switch span{transition:none}}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="brand"><h1><svg class="knot" viewBox="0 0 100 44" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3.00 22.00 L5.50 22.00 L8.00 22.00 L10.50 22.00 L13.00 22.00 L13.37 21.99 L13.73 21.98 L14.08 21.95 L14.42 21.91 L14.75 21.87 L15.07 21.81 L15.38 21.75 L15.69 21.68 L15.99 21.60 L16.28 21.51 L16.57 21.41 L16.85 21.31 L17.13 21.20 L17.40 21.09 L17.68 20.97 L17.94 20.85 L18.21 20.72 L18.47 20.59 L18.74 20.45 L19.00 20.31 L19.26 20.17 L19.53 20.03 L19.79 19.88 L20.06 19.73 L20.32 19.58 L20.60 19.43 L20.87 19.28 L21.15 19.13 L21.43 18.98 L21.72 18.84 L22.01 18.69 L22.31 18.54 L22.62 18.40 L22.93 18.26 L23.25 18.12 L23.58 17.99 L23.92 17.86 L24.27 17.74 L24.63 17.62 L25.00 17.50 L26.28 17.06 L27.56 16.62 L28.84 16.18 L30.12 15.74 L31.40 15.30 L32.68 14.86 L33.96 14.42 L35.24 13.98 L36.52 13.54 L37.80 13.10 L39.08 12.66 L40.36 12.22 L41.64 11.78 L42.92 11.34 L44.20 10.90 L45.48 10.46 L46.12 10.24" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M3.00 22.00 L5.50 22.00 L8.00 22.00 L10.50 22.00 L13.00 22.00 L13.37 21.99 L13.73 21.98 L14.08 21.95 L14.42 21.91 L14.75 21.87 L15.07 21.81 L15.38 21.75 L15.69 21.68 L15.99 21.60 L16.28 21.51 L16.57 21.41 L16.85 21.31 L17.13 21.20 L17.40 21.09 L17.68 20.97 L17.94 20.85 L18.21 20.72 L18.47 20.59 L18.74 20.45 L19.00 20.31 L19.26 20.17 L19.53 20.03 L19.79 19.88 L20.06 19.73 L20.32 19.58 L20.60 19.43 L20.87 19.28 L21.15 19.13 L21.43 18.98 L21.72 18.84 L22.01 18.69 L22.31 18.54 L22.62 18.40 L22.93 18.26 L23.25 18.12 L23.58 17.99 L23.92 17.86 L24.27 17.74 L24.63 17.62 L25.00 17.50 L26.28 17.06 L27.56 16.62 L28.84 16.18 L30.12 15.74 L31.40 15.30 L32.68 14.86 L33.96 14.42 L35.24 13.98 L36.52 13.54 L37.80 13.10 L39.08 12.66 L40.36 12.22 L41.64 11.78 L42.92 11.34 L44.20 10.90 L45.48 10.46 L46.12 10.24" stroke="currentColor" stroke-width="4"/><path d="M54.44 7.38 L55.72 6.94 L57.00 6.50 L58.46 6.07 L59.85 5.83 L61.16 5.76 L62.40 5.86 L63.56 6.11 L64.65 6.51 L65.66 7.05 L66.60 7.71 L67.46 8.49 L68.25 9.38 L68.96 10.36 L69.60 11.43 L70.16 12.58 L70.65 13.80 L71.06 15.08 L71.40 16.40 L71.66 17.77 L71.85 19.16 L71.96 20.58 L72.00 22.00 L71.96 23.42" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M54.44 7.38 L55.72 6.94 L57.00 6.50 L58.46 6.07 L59.85 5.83 L61.16 5.76 L62.40 5.86 L63.56 6.11 L64.65 6.51 L65.66 7.05 L66.60 7.71 L67.46 8.49 L68.25 9.38 L68.96 10.36 L69.60 11.43 L70.16 12.58 L70.65 13.80 L71.06 15.08 L71.40 16.40 L71.66 17.77 L71.85 19.16 L71.96 20.58 L72.00 22.00 L71.96 23.42" stroke="currentColor" stroke-width="4"/><path d="M69.89 32.00 L69.29 33.11 L68.62 34.14 L67.87 35.08 L67.04 35.92 L66.14 36.64 L65.17 37.24 L64.12 37.71 L62.99 38.04 L61.79 38.21 L60.52 38.23 L59.17 38.07 L57.74 37.74 L56.36 37.28 L55.08 36.84 L53.80 36.40 L52.52 35.96 L51.24 35.52 L49.96 35.08 L48.68 34.64 L47.40 34.20 L46.12 33.76 L44.84 33.32 L43.56 32.88 L42.28 32.44 L41.00 32.00 L39.72 31.56 L38.44 31.12 L37.16 30.68 L35.88 30.24 L34.60 29.80 L33.32 29.36 L32.68 29.14" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M69.89 32.00 L69.29 33.11 L68.62 34.14 L67.87 35.08 L67.04 35.92 L66.14 36.64 L65.17 37.24 L64.12 37.71 L62.99 38.04 L61.79 38.21 L60.52 38.23 L59.17 38.07 L57.74 37.74 L56.36 37.28 L55.08 36.84 L53.80 36.40 L52.52 35.96 L51.24 35.52 L49.96 35.08 L48.68 34.64 L47.40 34.20 L46.12 33.76 L44.84 33.32 L43.56 32.88 L42.28 32.44 L41.00 32.00 L39.72 31.56 L38.44 31.12 L37.16 30.68 L35.88 30.24 L34.60 29.80 L33.32 29.36 L32.68 29.14" stroke="currentColor" stroke-width="4"/><path d="M24.63 26.38 L24.27 26.26 L23.92 26.14 L23.58 26.01 L23.25 25.88 L22.93 25.74 L22.62 25.60 L22.31 25.46 L22.01 25.31 L21.72 25.16 L21.43 25.02 L21.15 24.87 L20.87 24.72 L20.60 24.57 L20.32 24.42 L20.06 24.27 L19.79 24.12 L19.53 23.97 L19.26 23.83 L19.00 23.69 L18.74 23.55 L18.47 23.41 L18.21 23.28 L17.94 23.15 L17.68 23.03 L17.40 22.91 L17.13 22.80 L16.85 22.69 L16.57 22.59 L16.28 22.49 L15.99 22.40 L15.69 22.32 L15.38 22.25 L15.07 22.19 L14.75 22.13 L14.42 22.09 L14.08 22.05 L13.73 22.02 L13.37 22.01 L13.00 22.00" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M24.63 26.38 L24.27 26.26 L23.92 26.14 L23.58 26.01 L23.25 25.88 L22.93 25.74 L22.62 25.60 L22.31 25.46 L22.01 25.31 L21.72 25.16 L21.43 25.02 L21.15 24.87 L20.87 24.72 L20.60 24.57 L20.32 24.42 L20.06 24.27 L19.79 24.12 L19.53 23.97 L19.26 23.83 L19.00 23.69 L18.74 23.55 L18.47 23.41 L18.21 23.28 L17.94 23.15 L17.68 23.03 L17.40 22.91 L17.13 22.80 L16.85 22.69 L16.57 22.59 L16.28 22.49 L15.99 22.40 L15.69 22.32 L15.38 22.25 L15.07 22.19 L14.75 22.13 L14.42 22.09 L14.08 22.05 L13.73 22.02 L13.37 22.01 L13.00 22.00" stroke="currentColor" stroke-width="4"/><path d="M97.00 22.00 L94.50 22.00 L92.00 22.00 L89.50 22.00 L87.00 22.00 L86.63 21.99 L86.27 21.98 L85.92 21.95 L85.58 21.91 L85.25 21.87 L84.93 21.81 L84.62 21.75 L84.31 21.68 L84.01 21.60 L83.72 21.51 L83.43 21.41 L83.15 21.31 L82.87 21.20 L82.60 21.09 L82.32 20.97 L82.06 20.85 L81.79 20.72 L81.53 20.59 L81.26 20.45 L81.00 20.31 L80.74 20.17 L80.47 20.03 L80.21 19.88 L79.94 19.73 L79.68 19.58 L79.40 19.43 L79.13 19.28 L78.85 19.13 L78.57 18.98 L78.28 18.84 L77.99 18.69 L77.69 18.54 L77.38 18.40 L77.07 18.26 L76.75 18.12 L76.42 17.99 L76.08 17.86 L75.73 17.74 L75.37 17.62" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M97.00 22.00 L94.50 22.00 L92.00 22.00 L89.50 22.00 L87.00 22.00 L86.63 21.99 L86.27 21.98 L85.92 21.95 L85.58 21.91 L85.25 21.87 L84.93 21.81 L84.62 21.75 L84.31 21.68 L84.01 21.60 L83.72 21.51 L83.43 21.41 L83.15 21.31 L82.87 21.20 L82.60 21.09 L82.32 20.97 L82.06 20.85 L81.79 20.72 L81.53 20.59 L81.26 20.45 L81.00 20.31 L80.74 20.17 L80.47 20.03 L80.21 19.88 L79.94 19.73 L79.68 19.58 L79.40 19.43 L79.13 19.28 L78.85 19.13 L78.57 18.98 L78.28 18.84 L77.99 18.69 L77.69 18.54 L77.38 18.40 L77.07 18.26 L76.75 18.12 L76.42 17.99 L76.08 17.86 L75.73 17.74 L75.37 17.62" stroke="currentColor" stroke-width="4"/><path d="M67.32 14.86 L66.04 14.42 L64.76 13.98 L63.48 13.54 L62.20 13.10 L60.92 12.66 L59.64 12.22 L58.36 11.78 L57.08 11.34 L55.80 10.90 L54.52 10.46 L53.24 10.02 L51.96 9.58 L50.68 9.14 L49.40 8.70 L48.12 8.26 L46.84 7.82 L45.56 7.38 L44.28 6.94 L43.00 6.50 L41.54 6.07 L40.15 5.83 L38.84 5.76 L37.60 5.86 L36.44 6.11 L35.35 6.51 L34.34 7.05 L33.40 7.71 L32.54 8.49 L31.75 9.38 L31.04 10.36 L30.40 11.43 L30.11 12.00" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M67.32 14.86 L66.04 14.42 L64.76 13.98 L63.48 13.54 L62.20 13.10 L60.92 12.66 L59.64 12.22 L58.36 11.78 L57.08 11.34 L55.80 10.90 L54.52 10.46 L53.24 10.02 L51.96 9.58 L50.68 9.14 L49.40 8.70 L48.12 8.26 L46.84 7.82 L45.56 7.38 L44.28 6.94 L43.00 6.50 L41.54 6.07 L40.15 5.83 L38.84 5.76 L37.60 5.86 L36.44 6.11 L35.35 6.51 L34.34 7.05 L33.40 7.71 L32.54 8.49 L31.75 9.38 L31.04 10.36 L30.40 11.43 L30.11 12.00" stroke="currentColor" stroke-width="4"/><path d="M28.04 20.58 L28.00 22.00 L28.04 23.42 L28.15 24.84 L28.34 26.23 L28.60 27.60 L28.94 28.92 L29.35 30.20 L29.84 31.42 L30.40 32.57 L31.04 33.64 L31.75 34.62 L32.54 35.51 L33.40 36.29 L34.34 36.95 L35.35 37.49 L36.44 37.89 L37.60 38.14 L38.84 38.24 L40.15 38.17 L41.54 37.93 L43.00 37.50 L44.28 37.06 L45.56 36.62" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M28.04 20.58 L28.00 22.00 L28.04 23.42 L28.15 24.84 L28.34 26.23 L28.60 27.60 L28.94 28.92 L29.35 30.20 L29.84 31.42 L30.40 32.57 L31.04 33.64 L31.75 34.62 L32.54 35.51 L33.40 36.29 L34.34 36.95 L35.35 37.49 L36.44 37.89 L37.60 38.14 L38.84 38.24 L40.15 38.17 L41.54 37.93 L43.00 37.50 L44.28 37.06 L45.56 36.62" stroke="currentColor" stroke-width="4"/><path d="M53.88 33.76 L55.16 33.32 L56.44 32.88 L57.72 32.44 L59.00 32.00 L60.28 31.56 L61.56 31.12 L62.84 30.68 L64.12 30.24 L65.40 29.80 L66.68 29.36 L67.96 28.92 L69.24 28.48 L70.52 28.04 L71.80 27.60 L73.08 27.16 L74.36 26.72 L75.19 26.44 L75.55 26.33 L75.90 26.20 L76.25 26.07 L76.58 25.94 L76.91 25.81 L77.23 25.67 L77.54 25.53 L77.84 25.38 L78.14 25.24 L78.43 25.09 L78.71 24.94 L78.99 24.79 L79.27 24.64 L79.54 24.49 L79.81 24.34 L80.08 24.19 L80.34 24.05 L80.61 23.90 L80.87 23.76 L81.13 23.62 L81.39 23.48 L81.66 23.35 L81.92 23.22 L82.19 23.09 L82.46 22.97 L82.73 22.85 L83.01 22.74 L83.29 22.64 L83.57 22.54 L83.86 22.45 L84.16 22.36 L84.46 22.29 L84.77 22.22 L85.09 22.16 L85.42 22.11 L85.75 22.07 L86.10 22.03 L86.45 22.01 L86.81 22.00 L87.00 22.00" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M53.88 33.76 L55.16 33.32 L56.44 32.88 L57.72 32.44 L59.00 32.00 L60.28 31.56 L61.56 31.12 L62.84 30.68 L64.12 30.24 L65.40 29.80 L66.68 29.36 L67.96 28.92 L69.24 28.48 L70.52 28.04 L71.80 27.60 L73.08 27.16 L74.36 26.72 L75.19 26.44 L75.55 26.33 L75.90 26.20 L76.25 26.07 L76.58 25.94 L76.91 25.81 L77.23 25.67 L77.54 25.53 L77.84 25.38 L78.14 25.24 L78.43 25.09 L78.71 24.94 L78.99 24.79 L79.27 24.64 L79.54 24.49 L79.81 24.34 L80.08 24.19 L80.34 24.05 L80.61 23.90 L80.87 23.76 L81.13 23.62 L81.39 23.48 L81.66 23.35 L81.92 23.22 L82.19 23.09 L82.46 22.97 L82.73 22.85 L83.01 22.74 L83.29 22.64 L83.57 22.54 L83.86 22.45 L84.16 22.36 L84.46 22.29 L84.77 22.22 L85.09 22.16 L85.42 22.11 L85.75 22.07 L86.10 22.03 L86.45 22.01 L86.81 22.00 L87.00 22.00" stroke="currentColor" stroke-width="4"/><path d="M7.5 17V27M92.5 17V27" stroke="var(--knot-edge,currentColor)" stroke-width="3.2" stroke-linecap="round"/></g></svg>Knot</h1></div>
+    <p class="sync" id="sync" data-mode="loading">Connexion…</p>
+  </header>
+  <nav class="tabs" role="tablist" aria-label="Modes">
+    <button class="tab" id="tab-av" role="tab" aria-selected="true" type="button">Action ou Vérité</button>
+    <button class="tab" id="tab-topics" role="tab" aria-selected="false" type="button">Pour plus tard</button>
+  </nav>
+
+  <section class="view" id="view-topics" hidden></section>
+
+  <section class="view" id="view-av">
+  <p class="intro">Tirez une carte chacun votre tour, et prenez le temps qu’il faut sur chacune.</p>
+
+  <div class="distrow">
+    <div class="disttxt"><span id="distlabel">À distance</span></div>
+    <button class="switch" id="distsw" type="button" role="switch" aria-checked="true" aria-labelledby="distlabel"><span></span></button>
+  </div>
+  <div class="piles">
+    <button class="pile" data-pile="verite" id="pile-verite" type="button"><span class="pile-in"><b>Vérité</b><em>Une question à se poser</em><span id="count-verite"></span></span></button>
+    <button class="pile" data-pile="action" id="pile-action" type="button"><span class="pile-in"><b>Action</b><em>Un défi à relever</em><span id="count-action"></span></span></button>
+  </div>
+
+  <article class="card" id="card" aria-live="polite">
+    <div class="card-in">
+      <div class="corner tl" id="ctl" aria-hidden="true"></div>
+      <div class="corner br" id="cbr" aria-hidden="true"></div>
+      <p class="kicker" id="kicker"></p>
+      <p class="q" id="q"></p>
+      <div class="timer" id="timer" hidden>
+        <span class="clock" id="clock"></span>
+        <button class="btn small primary" id="timerbtn" type="button"></button>
+        <button class="btn small" id="timerreset" type="button" hidden>Arrêter</button>
+      </div>
+      <div class="meta" id="meta"></div>
+    </div>
+  </article>
+
+  <div class="actions">
+    <button class="btn" id="skip" type="button">Passer cette carte</button>
+  </div>
+  <p class="note" id="note" hidden></p>
+
+  <details id="history">
+    <summary><span>Déjà tirées <span id="hcount"></span></span></summary>
+    <ol class="hlist" id="hlist"></ol>
+  </details>
+
+  <details id="add">
+    <summary><span>Ajouter une carte</span></summary>
+    <form id="addform">
+      <div class="row" role="radiogroup" aria-label="Pile">
+        <label><input type="radio" name="addpile" id="add-verite" value="verite" checked> Vérité</label>
+        <label><input type="radio" name="addpile" id="add-action" value="action"> Action</label>
+      </div>
+      <textarea id="addtext" maxlength="300" placeholder="Votre question ou votre défi…" required></textarea>
+      <div class="row" id="addminrow" hidden>
+        <label for="addmin">Minuteur</label>
+        <input type="number" id="addmin" min="1" max="120" step="1" inputmode="numeric" placeholder="—">
+        <span class="muted">minutes · facultatif, laisse vide si pas besoin</span>
+      </div>
+      <p class="dup" id="dupwarn" hidden></p>
+      <button class="btn" type="submit" id="addbtn">Ajouter à la pile</button>
+    </form>
+    <div class="mine">
+      <p class="muted" id="minetitle"></p>
+      <ul class="minelist" id="minelist"></ul>
+    </div>
+  </details>
+
+  <details id="about">
+    <summary><span>D’où viennent ces cartes</span></summary>
+    <div class="about">
+      <p>Les cartes sont écrites pour Knot, en s’inspirant de travaux reconnus en psychologie du couple, de questionnaires célèbres et de textes de philosophie. La source qui a inspiré chaque carte est indiquée en bas de celle-ci. Ce sont des adaptations : un jeu pour se parler, pas un outil de thérapie.</p>
+      <ul class="refs" id="refs"></ul>
+    </div>
+  </details>
+
+  <div class="reshuffle">
+    <div class="links">
+      <button class="link" id="reshuffle-verite" type="button">Remélanger les vérités</button>
+      <button class="link" id="reshuffle-action" type="button">Remélanger les actions</button>
+    </div>
+    <div class="confirm" id="confirm" hidden>
+      <span id="confirmtext"></span>
+      <div class="actions">
+        <button class="btn small primary" id="confirmyes" type="button">Remélanger</button>
+        <button class="btn small" id="confirmno" type="button">Annuler</button>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <footer id="footer">Rien à écrire ici : parlez-en, et gardez le reste dans votre carnet.</footer>
+</div>
+
+<script>
+const SOURCES={
+ proust:{label:'Questionnaire de Proust',name:'Questionnaire de Proust (vers 1890)',what:'Un jeu de salon victorien auquel Marcel Proust a répondu deux fois, jeune. Ses questions dessinent un portrait intime : qualités, bonheur, peurs, idéaux.',url:'https://en.wikipedia.org/wiki/Proust_Questionnaire'},
+ pivot:{label:'Questionnaire de Pivot',name:'Questionnaire de Bernard Pivot',what:'Une version courte et ludique du questionnaire de Proust, posée aux invités de l’émission Apostrophes.',url:'https://en.wikipedia.org/wiki/Proust_Questionnaire'},
+ aron:{label:'Aron et al. (1997) · confidences réciproques',name:'Arthur Aron et al. (1997) · les 36 questions',what:'Des confidences réciproques, de plus en plus personnelles, créent un sentiment de proximité fort, même entre inconnus.',url:'https://ggia.berkeley.edu/practice/36_questions_for_increasing_closeness'},
+ lovemaps:{label:'Gottman · cartes d’amour',name:'John et Julie Gottman · cartes d’amour',what:'Bien connaître le monde intérieur de l’autre (ses soucis, ses espoirs, son histoire) est la base d’un couple solide.',url:'https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/'},
+ fondness:{label:'Gottman · tendresse et admiration',name:'Gottman · tendresse et admiration',what:'Exprimer régulièrement appréciation et respect protège du mépris, le comportement qui prédit le plus les ruptures.',url:'https://www.gottman.com/blog/the-four-horsemen-the-antidotes/'},
+ bids:{label:'Gottman · se tourner vers l’autre',name:'Gottman · se tourner vers l’autre',what:'Les petites demandes d’attention du quotidien, et la façon d’y répondre, nourrissent la confiance.',url:'https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/'},
+ meaning:{label:'Gottman · sens partagé',name:'Gottman · créer du sens ensemble',what:'Le dernier étage de la « maison du couple » : valeurs, rôles, rituels et projets construits à deux.',url:'https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/'},
+ rituals:{label:'Gottman · rituels de connexion',name:'Gottman · rituels de connexion',what:'Les petits rituels réguliers entretiennent le sentiment d’être ensemble.',url:'https://www.gottman.com/blog/the-sound-relationship-house-build-love-maps/'},
+ dreams:{label:'Gottman · les rêves derrière les conflits',name:'Gottman · problèmes permanents et rêves cachés',what:'Beaucoup de désaccords de couple ne se résolvent jamais complètement. Comprendre le rêve ou le besoin derrière la position de l’autre permet d’en parler sans s’enliser.',url:'https://couplestherapyinc.com/gottman-perpetual-problems/'},
+ conflict:{label:'Gottman · gérer les conflits',name:'Gottman · les quatre cavaliers et leurs antidotes',what:'Critique, mépris, défensive et mur du silence abîment le couple. Antidotes : aborder le sujet en douceur, cultiver l’appréciation, prendre sa part de responsabilité, faire une pause pour se calmer.',url:'https://www.gottman.com/blog/the-four-horsemen-the-antidotes/'},
+ repair:{label:'Gottman · tentatives de réparation',name:'Gottman · tentatives de réparation',what:'Les couples solides se disputent aussi ; ils savent surtout réparer, pendant et après.',url:'https://www.gottman.com/blog/the-four-horsemen-the-antidotes/'},
+ johnson:{label:'Johnson · thérapie centrée sur l’émotion',name:'Sue Johnson · Hold Me Tight',what:'Issue de la théorie de l’attachement : derrière beaucoup de disputes, une même question. Es-tu là pour moi ? Être disponible, réceptif et engagé émotionnellement.',url:'https://iceeft.com/hold-me-tight-for-therapists/'},
+ perel:{label:'Esther Perel · désir et distance',name:'Esther Perel · l’intimité et le désir',what:'La sécurité nourrit l’amour, un peu de mystère et d’altérité nourrit le désir. Voir l’autre comme une personne entière, avec sa propre vie, garde l’attirance vivante.',url:'https://questionconnection.com/articles/esther-perel-desire-intimacy-paradox'},
+ maint:{label:'Stafford & Canary · maintien relationnel',name:'Laura Stafford et Daniel Canary · maintien relationnel',what:'Positivité, ouverture, réassurance, réseau de proches et partage des tâches entretiennent un couple. À distance, la qualité des échanges compte plus que leur quantité.',url:'https://en.wikipedia.org/wiki/Relationship_maintenance'},
+ gable:{label:'Gable · réagir aux bonnes nouvelles',name:'Shelly Gable · réponse active et constructive',what:'La façon dont on accueille les bonnes nouvelles de l’autre compte autant que le soutien dans les moments durs.',url:'https://nobaproject.com/modules/positive-relationships'},
+ expansion:{label:'Aron · expansion de soi',name:'Arthur et Elaine Aron · expansion de soi',what:'Vivre ensemble des expériences nouvelles et stimulantes ravive la relation.',url:'https://compass.onlinelibrary.wiley.com/doi/full/10.1111/spc3.70082'},
+ rusbult:{label:'Rusbult · modèle d’engagement',name:'Caryl Rusbult · modèle de l’investissement',what:'L’engagement grandit avec la satisfaction et avec tout ce qu’on a investi ensemble : temps, souvenirs, projets.'},
+ fromm:{label:'Fromm · L’art d’aimer (1956)',name:'Erich Fromm · L’art d’aimer (1956)',what:'Aimer n’est pas seulement un sentiment qui nous arrive : c’est un art, une décision et un engagement qui s’exercent.',url:'https://philosophybreak.com/articles/erich-fromm-on-why-love-is-not-about-finding-the-one/'},
+ platon:{label:'Platon · Le Banquet',name:'Platon · Le Banquet',what:'Un dialogue sur la nature de l’amour, avec le célèbre mythe d’Aristophane sur les moitiés qui se cherchent.'},
+ aristote:{label:'Aristote · Éthique à Nicomaque',name:'Aristote · Éthique à Nicomaque',what:'Aristote distingue l’amitié fondée sur l’utilité, sur le plaisir, et celle qui aime l’autre pour ce qu’il est.'},
+ montaigne:{label:'Montaigne · De l’amitié',name:'Montaigne · Essais, « De l’amitié »',what:'Sur son lien avec La Boétie, qu’il renonce à expliquer autrement que par qui ils étaient l’un et l’autre.'},
+ pascal:{label:'Pascal · Pensées',name:'Blaise Pascal · Pensées',what:'Sur les raisons du cœur, que la raison ne connaît pas.'},
+ rilke:{label:'Rilke · Lettres à un jeune poète',name:'Rainer Maria Rilke · Lettres à un jeune poète',what:'Rilke décrit l’amour comme deux solitudes qui se protègent, se touchent et se saluent.'},
+ beauvoir:{label:'Beauvoir · Le Deuxième Sexe',name:'Simone de Beauvoir · Le Deuxième Sexe',what:'Pour Beauvoir, l’amour authentique repose sur la reconnaissance de deux libertés, sans que l’une se perde dans l’autre.'},
+ badiou:{label:'Badiou · Éloge de l’amour',name:'Alain Badiou · Éloge de l’amour (2009)',what:'L’amour comme construction : apprendre à voir le monde depuis le point de vue du Deux, et non plus de l’Un.'},
+ weil:{label:'Simone Weil · l’attention',name:'Simone Weil · l’attention',what:'Pour Simone Weil, l’attention portée à l’autre est la forme la plus rare de la générosité.'},
+ frankl:{label:'Frankl · le sens',name:'Viktor Frankl · Découvrir un sens à sa vie',what:'Psychiatre et survivant des camps, Frankl soutient qu’on peut trouver du sens même dans l’épreuve.'},
+ epictete:{label:'Épictète · Manuel',name:'Épictète · Manuel',what:'Le stoïcisme distingue ce qui dépend de nous de ce qui n’en dépend pas, pour concentrer son énergie sur le premier.'},
+ prep:{label:'Markman & Stanley · technique orateur-auditeur',name:'Howard Markman et Scott Stanley · programme PREP',what:'Un programme de prévention pour les couples. Sa technique orateur-auditeur : l’un parle, l’autre reformule avant de répondre, pour comprendre avant de chercher à résoudre.',url:'https://link.springer.com/rwe/10.1007/978-3-319-49425-8_97'},
+ stex:{label:'Saint-Exupéry · Terre des hommes',name:'Antoine de Saint-Exupéry · Terre des hommes',what:'Pour lui, aimer, c’est moins se regarder l’un l’autre que regarder ensemble dans la même direction.'}
+};
+
+const THEMES={toi:'Toi',nous:'Nous deux',conflit:'Désaccords',avenir:'Avenir',philo:'Grandes questions'};
+
+/* Vérité : [thème, source, texte] */
+const VERITE=[
+['toi','proust','Selon toi, quel est le trait principal de ton caractère ?'],
+['toi','proust','Quelle qualité préfères-tu chez une personne ?'],
+['toi','proust','Qu’est-ce que tu apprécies le plus chez tes amis ?'],
+['toi','proust','Quel est ton principal défaut, d’après toi ? Et d’après moi ?'],
+['toi','proust','Quelle serait ton idée du bonheur parfait ?'],
+['toi','proust','Quel serait, pour toi, le plus grand des malheurs ?'],
+['toi','proust','Si tu n’étais pas toi, qui aimerais-tu être ?'],
+['toi','proust','À quelle époque, ou dans quel pays, aimerais-tu vivre ?'],
+['toi','proust','Quel personnage de fiction t’a le plus marqué·e, et pourquoi ?'],
+['toi','proust','Qui sont tes héros ou tes héroïnes dans la vie réelle ?'],
+['toi','proust','Quel don aimerais-tu avoir reçu à la naissance ?'],
+['toi','proust','Quelle faute te paraît la plus facile à pardonner ?'],
+['toi','proust','Qu’est-ce que tu détestes par-dessus tout ?'],
+['toi','proust','Comment aimerais-tu qu’on se souvienne de toi ?'],
+['toi','proust','Quel est ton état d’esprit en ce moment, honnêtement ?'],
+['toi','proust','As-tu une devise, ou une phrase qui te guide ?'],
+['toi','proust','Dans quelles situations t’arrive-t-il de mentir, et pourquoi ?'],
+['toi','proust','Quel est ton plus grand regret ?'],
+['toi','proust','Qu’est-ce que tu considères comme ta plus grande réussite ?'],
+['toi','proust','Quel est le changement de l’histoire que tu admires le plus ?'],
+['toi','pivot','Quel est ton mot préféré ? Et celui que tu ne supportes pas ?'],
+['toi','pivot','Quel son ou quel bruit aimes-tu entendre ?'],
+['toi','pivot','Quel métier n’aimerais-tu jamais faire ?'],
+['toi','pivot','Quel autre métier aurais-tu aimé exercer ?'],
+['toi','pivot','Qu’est-ce qui te met vraiment en joie ?'],
+['toi','','Quelle est ta saison préférée, et quel souvenir y est accroché ?'],
+['toi','','Si tu devais choisir ton dernier repas, ce serait quoi ?'],
+['toi','','Qu’est-ce qui t’a fait découvrir le sentiment d’injustice ?'],
+['toi','','Raconte-moi quelque chose que tu n’as jamais dit à personne.'],
+['toi','aron','À quoi ressemblerait pour toi une journée ordinaire, mais parfaite ?'],
+['toi','aron','Quel souvenir d’enfance revient le plus souvent dans ta tête ?'],
+['toi','aron','Qu’est-ce que tu rêves de faire depuis longtemps ? Qu’est-ce qui t’a retenu·e jusqu’ici ?'],
+['toi','aron','Comment décrirais-tu ta relation avec les personnes qui t’ont élevé·e ?'],
+['toi','aron','Si tu pouvais changer une chose dans la façon dont tu as été élevé·e, ce serait quoi ?'],
+['toi','aron','Y a-t-il un sujet sur lequel tu ne supportes pas qu’on plaisante ?'],
+['toi','aron','Si ta vie devait changer complètement dans un an, que changerais-tu dès maintenant ?'],
+['toi','aron','Quand as-tu laissé quelqu’un te voir vraiment triste pour la dernière fois ?'],
+['toi','aron','Si tu pouvais connaître une seule vérité sur ton avenir, laquelle demanderais-tu ?'],
+['toi','aron','Quel est ton souvenir le plus précieux ?'],
+['toi','aron','Raconte un moment gênant dont tu peux rire aujourd’hui.'],
+['toi','aron','Si tu devais tout quitter en cinq minutes, quel objet emporterais-tu ?'],
+['toi','aron','Quelle place l’amitié tient-elle dans ta vie aujourd’hui ?'],
+['toi','aron','Dans quelles situations te sens-tu le plus vulnérable ?'],
+['toi','aron','Qu’est-ce que tu as du mal à demander aux autres ?'],
+['toi','lovemaps','Qui sont les trois personnes qui comptent le plus pour toi en ce moment ?'],
+['toi','lovemaps','Qu’est-ce qui te stresse en ce moment, même un peu ?'],
+['toi','lovemaps','Quel est ton rêve le plus secret, même s’il te paraît irréaliste ?'],
+['toi','lovemaps','Qu’est-ce qui t’a fait plaisir cette semaine, même un détail ?'],
+['toi','lovemaps','Quelle période de ta vie t’a le plus façonné·e ?'],
+['toi','lovemaps','Qu’est-ce que tu as envie d’apprendre en ce moment ?'],
+['toi','lovemaps','Dans quelles situations te sens-tu vraiment en sécurité ?'],
+['toi','lovemaps','Quel est ton meilleur souvenir d’école ? Et le pire ?'],
+['toi','lovemaps','Qui t’a appris le plus de choses sur la vie ?'],
+['toi','lovemaps','Quel compliment t’a le plus marqué·e ?'],
+['toi','lovemaps','De quoi avais-tu peur quand tu étais enfant ?'],
+['toi','lovemaps','Qu’est-ce qui te rend nostalgique ?'],
+['toi','lovemaps','Quel petit plaisir du quotidien te rend heureux·se ?'],
+['toi','lovemaps','Que voulais-tu faire « plus tard » quand tu étais enfant ?'],
+['toi','lovemaps','Quelle est la meilleure décision que tu aies prise ?'],
+['toi','lovemaps','Quel conseil donnerais-tu à toi d’il y a cinq ans ?'],
+['toi','lovemaps','Qu’est-ce qui te donne de l’énergie ? Et qu’est-ce qui t’en prend ?'],
+['toi','lovemaps','Comment sais-tu que tu as besoin d’être seul·e ?'],
+['toi','lovemaps','Qu’est-ce que les gens comprennent souvent mal chez toi ?'],
+['toi','lovemaps','Quel livre, quel film ou quelle chanson t’a changé·e ?'],
+
+['nous','fondness','Quel est ton souvenir préféré de nous deux ?'],
+['nous','fondness','Quel moment avec moi aurais-tu voulu figer pour toujours ?'],
+['nous','fondness','Quelle est la chose la plus drôle qui nous soit arrivée ?'],
+['nous','fondness','À quel moment t’es-tu senti·e le plus proche de moi ?'],
+['nous','fondness','Qu’est-ce que tu as remarqué chez moi au tout début, et qui compte toujours ?'],
+['nous','fondness','Raconte un moment où tu as été fier·ère de moi.'],
+['nous','fondness','Qu’est-ce que tu aimes chez moi et que je ne remarque sûrement pas ?'],
+['nous','fondness','Quelle qualité de l’autre aimerais-tu avoir ?'],
+['nous','fondness','Quel petit geste de ma part te fait fondre ?'],
+['nous','fondness','Quel lieu associes-tu le plus à nous deux ?'],
+['nous','fondness','Quelle habitude de moi te manque le plus en ce moment ?'],
+['nous','fondness','Quand t’es-tu dit que c’était sérieux entre nous ?'],
+['nous','fondness','Qu’est-ce qui te fait rire chez moi ?'],
+['nous','fondness','Si notre histoire était un film, quel en serait le titre ?'],
+['nous','fondness','Quelle est la plus belle attention que je t’aie faite ?'],
+['nous','fondness','Quel souvenir de nous aimerais-tu raconter un jour à nos petits-enfants ?'],
+['nous','expansion','Qu’est-ce qui a changé en toi depuis qu’on est ensemble ?'],
+['nous','expansion','Qu’as-tu appris de moi, ou grâce à moi ?'],
+['nous','perel','Dans quels moments me trouves-tu le plus attirant·e ?'],
+['nous','perel','Quand me vois-tu le plus dans mon élément ?'],
+['nous','perel','Qu’est-ce que tu aimes encore découvrir chez moi ?'],
+['nous','perel','Est-ce que la distance change quelque chose à ton désir de moi ? En quoi ?'],
+['nous','perel','Qu’est-ce qui, dans ta vie, n’appartient qu’à toi et que tu tiens à garder ?'],
+['nous','johnson','Sens-tu que tu peux me joindre quand tu as besoin de moi ?'],
+['nous','johnson','Te sens-tu écouté·e quand tu me parles de ce que tu ressens ?'],
+['nous','johnson','Sens-tu que tu comptes pour moi, même à distance ?'],
+['nous','johnson','Dans quels moments as-tu le plus besoin de moi ?'],
+['nous','','Qu’est-ce que notre relation t’apporte ?'],
+['nous','','Qu’est-ce qui manque à notre relation en ce moment ?'],
+['nous','','Pourquoi as-tu envie de te battre pour nous ?'],
+['nous','','Qu’est-ce que tu serais prêt·e à faire pour notre relation ?'],
+['nous','maint','Quelle petite attention de ma part t’a fait du bien récemment ?'],
+['nous','maint','De quelle façon aimes-tu que je te rassure sur nous ?'],
+['nous','maint','Est-ce qu’on se parle assez, trop, ou juste bien ? De quoi aimerais-tu qu’on parle plus ?'],
+['nous','maint','Est-ce que nos proches connaissent assez notre relation ? Aimerais-tu que ça change ?'],
+['nous','maint','Comment pourrait-on partager plus de petites choses du quotidien, malgré la distance ?'],
+['nous','maint','Note de 1 à 10 comment tu te sens dans notre relation ce mois-ci. Qu’est-ce qui ferait gagner un point ?'],
+['nous','maint','Qu’est-ce qui est le plus dur pour toi dans la distance ?'],
+['nous','maint','Qu’est-ce que la distance nous a appris de bien ?'],
+['nous','maint','Quel moment de ta journée aimerais-tu le plus partager avec moi ?'],
+['nous','gable','Quand je t’annonce une bonne nouvelle, comment aimes-tu que je réagisse ?'],
+['nous','gable','Quelle bonne nouvelle n’as-tu pas encore eu le temps de me raconter ?'],
+['nous','bids','Quels petits signes de ma part te montrent que je pense à toi ?'],
+['nous','bids','Y a-t-il des moments où tu as cherché mon attention sans que je le voie ?'],
+['nous','rusbult','Qu’avons-nous déjà construit ensemble qui compte pour toi ?'],
+['nous','rusbult','Quelle promesse aimerais-tu qu’on se fasse pour les mois à venir ?'],
+['nous','fromm','Qu’est-ce que tu choisis en moi, au-delà de ce que tu ressens ?'],
+['nous','fromm','Concrètement, comment choisis-tu notre relation un jour où c’est difficile ?'],
+
+['conflit','conflict','Quand on n’est pas d’accord, qu’est-ce qui t’aide à sentir qu’on est dans la même équipe ?'],
+['conflit','conflict','Comment se passaient les disputes chez toi, enfant ? Qu’est-ce que tu en as gardé ?'],
+['conflit','conflict','Quand tu es contrarié·e, de quoi as-tu besoin d’abord : d’espace, d’être écouté·e, ou d’une solution ?'],
+['conflit','conflict','Comment peut-on me dire quelque chose de difficile sans que je me braque ? Et pour toi ?'],
+['conflit','conflict','Inventez un mot ou un geste qui veut dire « pause, on reprend dans 20 minutes » quand ça chauffe.'],
+['conflit','conflict','Repensez à un désaccord passé. Chacun dit la part dont il se sent responsable.'],
+['conflit','conflict','Quel reproche de ma part te touche le plus ? Comment pourrais-je le dire autrement ?'],
+['conflit','conflict','Que voudrais-tu que je fasse quand tu te fermes pendant une dispute ?'],
+['conflit','conflict','Racontez un désaccord que vous avez bien géré. Qu’est-ce qui a marché ?'],
+['conflit','conflict','Que fais-tu quand tu sens la colère monter ?'],
+['conflit','conflict','Préfères-tu régler un conflit tout de suite, ou laisser passer une nuit ?'],
+['conflit','conflict','Qu’est-ce qui te fait te sentir jugé·e ?'],
+['conflit','conflict','Quelle règle aimerais-tu qu’on se fixe pour nos disputes ?'],
+['conflit','conflict','Quelle différence entre nous crée le plus de frictions ? Et laquelle aimes-tu le plus ?'],
+['conflit','repair','Qu’est-ce qui te montre que je cherche à réparer après une dispute ?'],
+['conflit','repair','Quelle phrase, dite au bon moment, t’aide à redescendre ?'],
+['conflit','repair','Qu’est-ce qui rend des excuses vraiment sincères, pour toi ?'],
+['conflit','repair','Après une dispute, de quoi as-tu besoin pour te sentir de nouveau en sécurité ?'],
+['conflit','repair','Y a-t-il quelque chose que tu as laissé passer et qui te pèse encore ?'],
+['conflit','dreams','Y a-t-il un sujet sur lequel on revient souvent ? Quel rêve ou quel besoin se cache derrière ta position ?'],
+['conflit','johnson','Dans une dispute, quelle est ta peur la plus profonde : être rejeté·e, ne pas compter, perdre ta liberté, autre chose ?'],
+['conflit','johnson','Quand je réponds tard ou peu, qu’est-ce que tu te racontes ? Qu’est-ce qui t’aiderait ?'],
+['conflit','maint','Qu’est-ce qui, dans la distance, crée le plus de malentendus entre nous ?'],
+['conflit','maint','Pour un sujet sensible, que préfères-tu : un appel, une visio, un message écrit, ou attendre de se voir ?'],
+['conflit','epictete','Dans ce qui nous fait souffrir de la distance, qu’est-ce qui dépend de nous, et qu’est-ce qui n’en dépend pas ?'],
+
+['avenir','meaning','Qu’est-ce qui donne du sens à ta vie, aujourd’hui ?'],
+['avenir','meaning','Quelles valeurs ta famille t’a-t-elle transmises ? Lesquelles gardes-tu ?'],
+['avenir','meaning','Comment imagines-tu un dimanche ordinaire chez nous, dans dix ans ?'],
+['avenir','meaning','Que veut dire « réussir sa vie » pour toi ?'],
+['avenir','meaning','Qu’est-ce que l’argent représente pour toi : la sécurité, la liberté, le plaisir, autre chose ?'],
+['avenir','meaning','Qu’est-ce qu’un foyer, pour toi ?'],
+['avenir','meaning','Quel rôle aimerais-tu jouer dans la vie de tes proches ?'],
+['avenir','meaning','Quelle valeur de ton éducation voudrais-tu transmettre à des enfants ? Et laquelle laisserais-tu de côté ?'],
+['avenir','meaning','Où nos convictions se rejoignent-elles, même si on ne les exprime pas de la même façon ?'],
+['avenir','meaning','Comment aimerais-tu qu’on parle de nos différences de convictions à des enfants ?'],
+['avenir','meaning','Quelle place la foi, la spiritualité ou l’absence de croyance tient-elle dans ta vie de tous les jours ?'],
+['avenir','meaning','Quelle place veux-tu que le travail prenne dans ta vie ?'],
+['avenir','meaning','Où te vois-tu vivre plus tard ? Qu’est-ce qui compte le plus dans ce choix ?'],
+['avenir','meaning','Quel genre de vieux couple aimerais-tu qu’on devienne ?'],
+['avenir','meaning','Que voudrais-tu que nos enfants disent de nous, plus tard ?'],
+['avenir','meaning','Comment imagines-tu le partage des tâches quand on vivra ensemble ?'],
+['avenir','meaning','Quelle relation aimerais-tu qu’on ait avec nos familles respectives ?'],
+['avenir','meaning','Comment aimerais-tu qu’on célèbre les fêtes, et avec qui ?'],
+['avenir','meaning','Quel est le prochain grand projet que tu aimerais qu’on réalise ?'],
+['avenir','meaning','Comment voudrais-tu qu’on se soutienne quand l’un de nous traverse une période difficile ?'],
+['avenir','meaning','À quoi ressemblera la fin de la distance ? Qu’est-ce qu’on doit décider pour y arriver ?'],
+['avenir','meaning','Que ferait-on si l’un de nous recevait une belle opportunité loin de l’autre ?'],
+['avenir','rituals','Quelle tradition de ton enfance aimerais-tu garder ? Laquelle aimerais-tu inventer avec moi ?'],
+['avenir','fondness','Qu’admires-tu dans les convictions de l’autre, même sans les partager ?'],
+['avenir','dreams','Quel rêve as-tu mis de côté ? Comment pourrais-je t’aider à le reprendre ?'],
+['avenir','dreams','Si tu avais une année entière sans contrainte, qu’en ferais-tu ?'],
+['avenir','dreams','Sur quoi es-tu prêt·e à faire des compromis, et sur quoi jamais ?'],
+['avenir','dreams','Quel voyage aimerais-tu qu’on fasse un jour ensemble, et pourquoi celui-là ?'],
+['avenir','rusbult','Qu’est-ce qui pourrait nous rendre plus forts dans dix ans qu’aujourd’hui ?'],
+
+['philo','platon','Dans Le Banquet, Aristophane raconte que chacun cherche sa moitié perdue. Crois-tu qu’on cherche une moitié, ou qu’on se construit à deux ?'],
+['philo','aristote','Aristote distingue les liens fondés sur l’utilité, sur le plaisir, et sur ce que l’autre est vraiment. Qu’est-ce qui, entre nous, relève du troisième ?'],
+['philo','montaigne','Montaigne expliquait son amitié par un simple « parce que c’était lui, parce que c’était moi ». Peut-on vraiment expliquer pourquoi on aime quelqu’un ?'],
+['philo','pascal','Pascal disait que le cœur a ses raisons que la raison ne connaît pas. Ton cœur et ta raison ont-ils déjà été en désaccord à mon sujet ?'],
+['philo','rilke','Rilke voyait l’amour comme deux solitudes qui se protègent l’une l’autre. Qu’est-ce que ça t’évoque pour nous ?'],
+['philo','beauvoir','Pour Beauvoir, un amour authentique unit deux libertés. Comment rester libres tout en étant ensemble ?'],
+['philo','badiou','Pour Badiou, aimer, c’est apprendre à voir le monde à deux. Qu’est-ce que tu vois différemment depuis qu’on est ensemble ?'],
+['philo','weil','Simone Weil voyait l’attention comme la forme la plus rare de la générosité. Quand t’es-tu senti·e vraiment regardé·e par quelqu’un ?'],
+['philo','fromm','Pour Fromm, aimer est un art qui s’apprend. Qu’est-ce que tu travailles, toi, pour aimer mieux ?'],
+['philo','fromm','L’amour, est-ce un sentiment qui nous arrive, ou une capacité qu’on développe ?'],
+['philo','fromm','Pour toi, aimer, c’est surtout un sentiment, ou une décision qu’on reprend chaque jour ?'],
+['philo','frankl','Viktor Frankl pensait qu’on peut trouver du sens même dans l’épreuve. Quel sens donnes-tu à notre distance ?'],
+['philo','stex','Saint-Exupéry disait qu’aimer, c’est regarder ensemble dans la même direction. Vers quoi regardons-nous ?'],
+['philo','perel','Esther Perel dit que le désir a besoin d’un peu d’espace. La distance peut-elle aussi nous apporter quelque chose ?'],
+['philo','','Est-ce que les gens peuvent vraiment changer ?'],
+['philo','','Le bonheur, est-ce un état, un chemin, ou une décision ?'],
+['philo','','Vaut-il mieux être aimé·e, ou être compris·e ?'],
+['philo','','Qu’est-ce qui donne de la valeur à une promesse ?'],
+['philo','','Peut-on aimer quelqu’un sans le connaître entièrement ?'],
+['philo','','La fidélité, c’est quoi pour toi, au-delà de l’exclusivité ?'],
+['philo','','Peut-on être heureux sans être libre ?'],
+['philo','','Qu’est-ce que tu crois, sans pouvoir le prouver ?'],
+['philo','','Qu’est-ce qui te fait te sentir vivant·e ?'],
+['philo','','Si tu pouvais poser une seule question à l’univers, laquelle ?'],
+['philo','','Le temps passé loin l’un de l’autre, est-ce du temps perdu ?'],
+['philo','','Qu’est-ce que la confiance ? Comment se reconstruit-elle quand elle est abîmée ?'],
+['philo','','La routine te fait-elle peur ? Peut-elle être belle ?'],
+['philo','','Qu’est-ce qui est plus important : avoir raison, ou être en paix ?'],
+['philo','','Si tu pouvais revivre une seule journée de ta vie, laquelle choisirais-tu ?']
+];
+
+/* Action : [source, minutes (0 = sans minuteur), quand ('now' | 'week'), texte] */
+const ACTION=[
+['expansion',5,'now','Dessinez-vous l’un l’autre sans montrer la feuille. Révélation à la fin.'],
+['aron',8,'now','Raconte-moi ta vie en 4 minutes, avec le plus de détails possible. Puis c’est à moi.'],
+['aron',4,'now','Regardez-vous dans les yeux en silence pendant 4 minutes (en visio si vous êtes loin). Puis dites ce que vous avez ressenti.'],
+['aron',45,'now','Faites les 36 questions d’Aron en entier. Le lien est dans « D’où viennent ces cartes ».'],
+['aron',10,'now','Deux vérités, un mensonge : chacun raconte trois anecdotes d’enfance, l’autre trouve la fausse.'],
+['fondness',5,'now','Dites chacun trois choses que vous avez appréciées chez l’autre cette semaine.'],
+['fondness',8,'now','Chacun écrit en 3 minutes 10 choses qu’il aime chez l’autre, puis les lit à voix haute.'],
+['fondness',4,'now','Deux minutes de compliments sans répétition, pendant que l’autre écoute sans répondre. Puis on inverse.'],
+['fondness',10,'now','Écrivez chacun une mini lettre d’amour en 5 minutes, puis lisez-la à voix haute.'],
+['gable',10,'now','Chacun raconte une bonne nouvelle de sa semaine. L’autre pose trois questions dessus et s’en réjouit franchement.'],
+['gable',5,'now','Chacun dit une chose dont il est fier cette semaine. L’autre le félicite comme s’il avait gagné un prix.'],
+['lovemaps',10,'now','Montre trois objets qui comptent pour toi et raconte leur histoire.'],
+['lovemaps',10,'now','Dessinez de mémoire le plan du logement de l’autre. Vérification en visio.','d'],
+['lovemaps',15,'now','Chacun prépare 5 questions sur lui-même. On compte les points.'],
+['lovemaps',10,'now','Montre une photo de toi enfant et raconte ce que tu pensais à cet âge.'],
+['lovemaps',5,'now','Ouvrez votre galerie photo à la même date il y a un an. Montrez la photo et racontez.'],
+['lovemaps',5,'now','Racontez votre semaine en trois photos de votre téléphone.'],
+['lovemaps',10,'now','Portrait chinois : si l’autre était un animal, une couleur, une saison, un plat, une ville…'],
+['fondness',10,'now','Racontez votre rencontre du point de vue de l’autre.'],
+['fondness',5,'now','Fermez les yeux. L’un décrit un souvenir commun, l’autre ajoute les détails qu’il a oubliés.'],
+['meaning',10,'now','Écrivez ensemble la liste de tout ce que vous voulez faire quand vous vous retrouverez.','d'],
+['meaning',15,'now','Imaginez chacun votre journée idéale à deux, heure par heure, puis comparez.'],
+['meaning',15,'now','Dessinez chacun votre vie à deux dans cinq ans, puis montrez-vous vos dessins.'],
+['meaning',15,'now','Écrivez ensemble le « règlement officiel » de votre couple, en dix articles.'],
+['meaning',20,'now','Écrivez chacun une lettre à ouvrir le jour où la distance prendra fin.','d'],
+['dreams',10,'now','Écrivez chacun cinq rêves de vie, puis comparez vos listes.'],
+['rituals',5,'now','Inventez un rituel pour vous dire bonne nuit, que vous garderez même une fois réunis.','d'],
+['rituals',10,'now','Préparez-vous chacun une boisson chaude et buvez-la ensemble en racontant votre journée.'],
+['rituals',20,'now','Lisez ou travaillez chacun de votre côté en visio, sans parler. Juste être ensemble.','d'],
+['rituals',0,'now','Endormez-vous en appel.','d'],
+['rituals',5,'now','Regardez le ciel ou la lune au même moment, chacun chez soi, et décrivez-le à l’autre.','d'],
+['maint',10,'now','Bilan de la semaine : un moment fort, un moment dur, et une envie pour la semaine prochaine.'],
+['expansion',10,'now','Inventez une histoire à deux, une phrase chacun votre tour.'],
+['expansion',10,'now','Dessin à l’aveugle : l’un décrit un dessin, l’autre le reproduit sans le voir.'],
+['expansion',10,'now','Mime : faites deviner un film, un lieu ou un souvenir sans dire un mot.'],
+['expansion',10,'now','Pensez à un souvenir commun. L’autre le devine en posant seulement des questions par oui ou non.'],
+['expansion',5,'now','Défendez très sérieusement pendant 2 minutes une opinion absurde choisie par l’autre.'],
+['expansion',2,'now','Imitez-vous l’un l’autre pendant une minute chacun.'],
+['expansion',5,'now','Fredonnez une chanson chacun votre tour. L’autre doit la trouver.'],
+['expansion',5,'now','Visite guidée : fais-moi visiter ton logement comme un agent immobilier très enthousiaste.','d'],
+['expansion',5,'now','Montre la vue depuis ta fenêtre et décris-la comme un poète.'],
+['expansion',10,'now','Ouvrez une carte du monde, choisissez un endroit au hasard et imaginez votre vie là-bas.'],
+['expansion',10,'now','Lisez à voix haute un poème ou une page d’un livre que vous aimez.'],
+['expansion',15,'now','Construisez ensemble une playlist en direct, une chanson chacun votre tour.'],
+['expansion',15,'now','Faites une séance d’étirements ou de yoga ensemble, avec une vidéo gratuite.'],
+['expansion',5,'now','Méditez 5 minutes ensemble en silence, puis dites ce qui vous est passé par la tête.'],
+['expansion',10,'now','Fabriquez chacun un petit objet en papier, sans modèle. Présentez-le à l’autre.'],
+['expansion',30,'now','Cuisinez chacun un plat avec ce que vous avez déjà dans vos placards, puis mangez ensemble.'],
+['expansion',30,'now','Promenez-vous en appel vidéo et faites visiter votre quartier à l’autre.','d'],
+['expansion',5,'now','Apprenez à dire une phrase tendre dans une langue que vous ne parlez ni l’un ni l’autre.'],
+['maint',0,'week','Écris-moi une lettre à la main, prends-la en photo et envoie-la-moi.','d'],
+['maint',0,'week','Envoie-moi un message vocal pour mon réveil, un matin de la semaine.','d'],
+['maint',0,'week','Envoie-moi une photo d’un détail de ta journée qui t’a fait penser à moi.','d'],
+['maint',0,'week','Enregistre une courte vidéo de ta routine du matin pour me la montrer.','d'],
+['bids',0,'week','Note trois moments de la semaine où tu as pensé à moi. Raconte-les-moi en fin de semaine.'],
+['bids',0,'week','Envoie-moi un message à une heure inattendue pour me dire pourquoi tu m’aimes aujourd’hui.','d'],
+['johnson',0,'week','Repère un moment difficile de ma semaine et envoie-moi un mot pour ce moment-là.','d'],
+['expansion',0,'week','Fais une chose nouvelle cette semaine (un lieu, un plat, une activité) et raconte-la-moi.'],
+['expansion',0,'week','Apprends une petite chose cette semaine (un mot, un tour, une astuce) pour me la montrer ensuite.'],
+['expansion',0,'week','Prenez chacun une photo à 7h, 12h, 18h et 22h le même jour. Faites ensuite un montage côte à côte.','d'],
+['rituals',0,'week','Lisez le même chapitre ou le même article cette semaine, et parlez-en ensuite.'],
+['rituals',0,'week','Regardez séparément le même film cette semaine, puis débriefez au prochain appel.','d'],
+['rituals',0,'week','Prends une photo de ton ciel chaque soir pendant une semaine.','d'],
+['fondness',0,'week','Fais-moi un petit dessin chaque jour de la semaine, même un gribouillis.'],
+['fondness',0,'week','Écris cinq choses que j’ai faites pour toi cette année et dont tu me remercies.'],
+['lovemaps',0,'week','Choisis une photo de nous et écris trois lignes sur ce jour-là.'],
+['lovemaps',0,'week','Prépare trois questions que tu ne m’as jamais posées, pour notre prochain moment à deux.'],
+['lovemaps',0,'week','Raconte-moi par message un rêve que tu as fait cette semaine.','d'],
+['lovemaps',0,'week','Envoie-moi chaque jour, pendant trois jours, un souvenir de ton enfance.','d']
+];
+
+Object.assign(SOURCES,{
+ frisch:{label:'Max Frisch · Questionnaires',name:'Max Frisch · Questionnaires (1966-1971)',what:'L’écrivain suisse a publié des séries de questions sur l’espoir, le mariage, l’amitié, l’argent, la patrie ou la mort. Elles sont directes, parfois dérangeantes, et ne cherchent pas la bonne réponse.',url:'https://en.wikipedia.org/wiki/Max_Frisch'},
+ oral:{label:'Gottman · entretien sur l’histoire du couple',name:'Buehlman, Gottman et Katz (1992) · Oral History Interview',what:'Un entretien où le couple raconte son histoire : la rencontre, les premières impressions, les bons et les mauvais moments, le modèle de ses parents. La façon dont un couple raconte son passé en dit long sur son avenir.',url:'https://www.johngottman.net/wp-content/uploads/2011/05/How-a-couple-views-their-past-predicts-their-future-predicting-divorce-from-an-oral-history-interview.pdf'},
+ mcadams:{label:'McAdams · récit de vie',name:'Dan McAdams · The Life Story Interview',what:'Ce psychologue étudie l’identité comme une histoire qu’on se raconte : chapitres de vie, scènes clés (sommet, point bas, tournant), défis, convictions et projets.',url:'https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/4/3901/files/2020/11/The-Life-Story-Interview-II-2007.pdf'},
+ sternberg:{label:'Sternberg · triangle de l’amour',name:'Robert Sternberg · théorie triangulaire de l’amour',what:'L’amour combine trois ingrédients : l’intimité (la complicité), la passion (le désir) et l’engagement (la décision de durer). Leurs proportions changent avec le temps.',url:'https://socialsci.libretexts.org/Bookshelves/Gender_Studies/Sexuality_the_Self_and_Society_(Ruhman_Bowman_Jackson_Lushtak_Newman_and_Sunder)/08:_Attraction_Love_and_Relationship_Formation/8.04:_Love_Styles'},
+ lee:{label:'John Alan Lee · styles d’amour',name:'John Alan Lee · les couleurs de l’amour',what:'Six façons d’aimer : la passion (éros), le jeu (ludus), l’amitié qui grandit (storgè), le choix réfléchi (pragma), l’amour anxieux (mania) et le don (agapè).',url:'https://socialsci.libretexts.org/Bookshelves/Gender_Studies/Sexuality_the_Self_and_Society_(Ruhman_Bowman_Jackson_Lushtak_Newman_and_Sunder)/08:_Attraction_Love_and_Relationship_Formation/8.04:_Love_Styles'},
+ attach:{label:'Hazan & Shaver · attachement',name:'Cindy Hazan et Phillip Shaver (1987) · l’amour comme attachement',what:'Notre façon d’aimer adulte prolonge en partie la façon dont on s’est attaché enfant : sécurité, anxiété ou besoin de distance.',url:'https://www.psychologywizard.net/uploads/2/6/6/4/26640833/hazanshaver1987.pdf'},
+ michel:{label:'Rusbult · phénomène Michel-Ange',name:'Caryl Rusbult et Eli Finkel · le phénomène Michel-Ange',what:'Comme un sculpteur révèle la statue dans le bloc, un bon partenaire aide l’autre à devenir la personne qu’il rêve d’être.',url:'https://journals.sagepub.com/doi/10.1111/j.1467-8721.2009.01657.x'},
+ via:{label:'Peterson & Seligman · forces de caractère',name:'Christopher Peterson et Martin Seligman · les 24 forces de caractère',what:'Une classification issue de la psychologie positive : curiosité, courage, gentillesse, humour, persévérance, gratitude… Reconnaître ses forces et celles de l’autre nourrit le bien-être.',url:'https://en.wikipedia.org/wiki/Values_in_Action_Inventory_of_Strengths'},
+ schwartz:{label:'Schwartz · valeurs fondamentales',name:'Shalom Schwartz · théorie des valeurs fondamentales',what:'Dix valeurs universelles, présentes partout mais classées différemment par chacun : autonomie, stimulation, plaisir, réussite, pouvoir, sécurité, conformité, tradition, bienveillance, universalisme.',url:'https://uranos.ch/research/references/Schwartz_2006/Schwartzpaper.pdf'},
+ sfbt:{label:'Thérapie brève orientée solutions',name:'Steve de Shazer et Insoo Kim Berg · thérapie brève orientée solutions',what:'Plutôt que de disséquer le problème, on cherche ce qui marche déjà : la « question miracle », les échelles de 1 à 10, les exceptions.',url:'https://link.springer.com/rwe/10.1007/978-3-319-49425-8_1072'},
+ fred:{label:'Fredrickson · micro-moments d’amour',name:'Barbara Fredrickson · Love 2.0',what:'L’amour se vit aussi en micro-moments de connexion partagée, une chaleur commune de quelques secondes qu’on peut cultiver.',url:'https://www.positivityresonance.com/'},
+ reis:{label:'Reis · se sentir compris',name:'Harry Reis · la réceptivité perçue',what:'Se sentir compris, accepté et soutenu par l’autre est l’un des piliers les plus solides de l’intimité.',url:'https://anthonyongphd.wordpress.com/wp-content/uploads/2018/01/reis-clark-2013.pdf'},
+ impett:{label:'Impett et al. (2024) · régime équilibré de l’amour',name:'Emily Impett et al. (2024) · au-delà des langages de l’amour',what:'Les « 5 langages de l’amour » ne sont pas confirmés par la recherche. Les chercheurs proposent plutôt l’idée d’un régime équilibré : on a besoin de toutes les formes d’amour, en proportions qui varient.',url:'https://www.utoronto.ca/news/little-evidence-linking-five-love-languages-healthy-relationships-researchers-say'},
+ ware:{label:'Bronnie Ware · regrets de fin de vie',name:'Bronnie Ware · Les cinq regrets des mourants',what:'Une infirmière en soins palliatifs a recueilli les regrets les plus fréquents : ne pas avoir vécu selon soi, avoir trop travaillé, ne pas avoir exprimé ses sentiments, avoir perdu ses amis, ne pas s’être autorisé à être heureux.',url:'https://www.caringchoices.org/wp-content/uploads/2013/08/Bronnie-Ware-Article-Top-Five-Regrets-of-the-Dying.pdf'},
+ eightdates:{label:'Gottman · Eight Dates',name:'John et Julie Gottman · Eight Dates (2018)',what:'Huit conversations essentielles pour un couple : confiance, conflits, intimité, travail et argent, famille, aventure, croissance et spiritualité, rêves.',url:'https://www.goodreads.com/book/show/37588679-eight-dates'},
+ prepare:{label:'PREPARE/ENRICH · questionnaire prénuptial',name:'David Olson · PREPARE/ENRICH',what:'Un questionnaire utilisé par des conseillers conjugaux pour faire le point avant de s’engager : communication, conflits, rôles, intimité, finances, spiritualité…',url:'https://www.healthymarriageinfo.org/wp-content/uploads/2017/12/PREPAREENRICH-Program-Version.pdf'},
+ nyt:{label:'New York Times · 13 questions avant le mariage',name:'Eleanor Stanford · 13 Questions to Ask Before Getting Married (New York Times, 2016)',what:'Un article célèbre, écrit avec des thérapeutes, sur les sujets à aborder avant de s’engager : conflits, intimité, foi, indépendance, enfants, argent.',url:'https://www.today.com/health/what-know-getting-married-13-difficult-questions-couples-need-ask-t82516'},
+ pospsy:{label:'Psychologie positive · exercices',name:'Psychologie positive · lettre de gratitude, meilleur soi possible, trois bonnes choses',what:'Des exercices courts et étudiés : écrire une lettre de remerciement, imaginer sa meilleure vie possible, noter chaque soir trois bonnes choses.',url:'https://sites.hofstra.edu/jeffrey-froh/wp-content/uploads/sites/86/2019/11/Gratitude-Interventions-chapter_final.pdf'},
+ cnv:{label:'Rosenberg · communication non violente',name:'Marshall Rosenberg · la communication non violente',what:'Exprimer un désaccord en quatre temps : ce que j’observe, ce que je ressens, ce dont j’ai besoin, ce que je demande.'},
+ surreal:{label:'Les surréalistes · cadavre exquis',name:'Les surréalistes · le cadavre exquis',what:'Un jeu inventé par Breton, Prévert et leurs amis : on écrit ou dessine à plusieurs sans voir ce que l’autre a fait.'},
+ oulipo:{label:'Oulipo · écriture sous contrainte',name:'L’Oulipo (Queneau, Perec…)',what:'Un groupe d’écrivains qui invente des contraintes pour stimuler l’imagination, comme écrire sans la lettre e.'},
+ stendhal:{label:'Stendhal · De l’amour (1822)',name:'Stendhal · De l’amour (1822)',what:'Sa théorie de la « cristallisation » : comme un rameau plongé dans une mine de sel se couvre de cristaux, l’amoureux pare l’autre de mille perfections.',url:'https://fr.wikipedia.org/wiki/Cristallisation_(Stendhal)'},
+ lewis:{label:'C. S. Lewis · Les quatre amours',name:'C. S. Lewis · Les quatre amours (1960)',what:'L’auteur chrétien distingue l’affection, l’amitié, l’éros et la charité. Les amis sont côte à côte, tournés vers un intérêt commun ; les amants sont face à face.',url:'https://en.wikipedia.org/wiki/The_Four_Loves'},
+ comte:{label:'Comte-Sponville · éros, philia, agapè',name:'André Comte-Sponville · Petit traité des grandes vertus',what:'Trois amours : celui qui manque (éros), celui qui se réjouit de l’autre (philia), celui qui donne (agapè).',url:'https://www.cairn.info/petit-traite-des-grandes-vertus--9782130466710-page-291.htm'},
+ hooks:{label:'bell hooks · À propos d’amour',name:'bell hooks · À propos d’amour (2000)',what:'Reprenant le psychiatre Scott Peck, elle définit l’amour comme la volonté de nourrir sa propre croissance et celle de l’autre. Pour elle, l’amour est une pratique, faite de soin, de respect, de confiance et d’honnêteté.'},
+ kierk:{label:'Kierkegaard · Les Œuvres de l’amour',name:'Søren Kierkegaard · Les Œuvres de l’amour (1847)',what:'Le philosophe danois voit dans l’amour un devoir, ce qui le protège des humeurs et le rend plus solide que l’inclination.',url:'https://en.wikipedia.org/wiki/Works_of_Love'},
+ levinas:{label:'Levinas · le visage',name:'Emmanuel Levinas · le visage d’autrui',what:'Pour Levinas, le visage de l’autre nous appelle et nous rend responsables de lui avant toute réflexion.'},
+ buber:{label:'Buber · Je et Tu',name:'Martin Buber · Je et Tu (1923)',what:'Buber oppose la relation « Je-Tu », rencontre vraie et entière, à la relation « Je-Cela », où l’autre devient un objet ou un moyen.'},
+ han:{label:'Byung-Chul Han · Agonie de l’Éros',name:'Byung-Chul Han · Agonie de l’Éros (2012)',what:'Le philosophe craint que notre époque, tournée vers soi et vers le choix infini, fasse disparaître l’Autre, alors que le désir a besoin de différence.',url:'https://mitpress.mit.edu/9780262533379/the-agony-of-eros/'},
+ illouz:{label:'Eva Illouz · Pourquoi l’amour fait mal',name:'Eva Illouz · Pourquoi l’amour fait mal (2012)',what:'La sociologue montre comment le choix illimité et la peur de s’engager transforment l’expérience amoureuse moderne.',url:'https://www.seuil.com/ouvrage/pourquoi-l-amour-fait-mal-eva-illouz/9782021081527'},
+ bauman:{label:'Bauman · L’amour liquide',name:'Zygmunt Bauman · L’amour liquide (2003)',what:'Le sociologue décrit des liens qu’on veut pouvoir défaire facilement, et le besoin, pourtant, de liens solides.'},
+ botton:{label:'Alain de Botton · Du mariage',name:'Alain de Botton · Du mariage (2016)',what:'Un roman-essai sur l’amour qui dure : on ne trouve pas la personne parfaite, on apprend à aimer celle qu’on a choisie, avec ses difficultés et les siennes.',url:'https://lareviewofbooks.org/article/course-love-crash-course-long-term-relationship/'},
+ barthes:{label:'Barthes · Fragments d’un discours amoureux',name:'Roland Barthes · Fragments d’un discours amoureux (1977)',what:'Un abécédaire des états amoureux. Dans « l’absence », il y a toujours celui qui part et celui qui reste et attend.',url:'https://compagnieaffable.wordpress.com/2017/05/11/fragments-dun-discours-amoureux-de-roland-barthes-a-comme-absence/'},
+ rochef:{label:'La Rochefoucauld · Maximes (1665)',name:'François de La Rochefoucauld · Maximes (1665)',what:'Des phrases courtes et lucides sur l’amour-propre, la jalousie et la passion. Dont celle-ci : l’absence diminue les médiocres passions et augmente les grandes, comme le vent éteint les bougies et allume le feu.'},
+ paul:{label:'Saint Paul · Première lettre aux Corinthiens',name:'Saint Paul · Première lettre aux Corinthiens, chapitre 13',what:'Le célèbre « hymne à l’amour » de la Bible : l’amour est patient, il rend service, il ne jalouse pas, il ne cherche pas son intérêt, il excuse tout, espère tout, endure tout.'},
+ augustin:{label:'Saint Augustin',name:'Saint Augustin (IVe-Ve siècle)',what:'Le théologien résume la morale chrétienne en une phrase : « Aime, et fais ce que tu veux. »'},
+ aquin:{label:'Thomas d’Aquin',name:'Thomas d’Aquin (XIIIe siècle)',what:'Pour lui, aimer, c’est vouloir le bien de l’autre.'},
+ spinoza:{label:'Spinoza · Éthique',name:'Baruch Spinoza · Éthique (1677)',what:'Spinoza définit l’amour comme une joie accompagnée de l’idée de ce qui la cause.'},
+ nietzsche:{label:'Nietzsche · Humain, trop humain',name:'Friedrich Nietzsche · Humain, trop humain (1878)',what:'Il voit le mariage comme une longue conversation : avant de s’engager, il conseille de se demander si l’on aura encore plaisir à parler avec l’autre jusque dans la vieillesse.'},
+ gibran:{label:'Khalil Gibran · Le Prophète',name:'Khalil Gibran · Le Prophète (1923)',what:'Il conseille aux amants de laisser des espaces dans leur union, comme les piliers d’un temple qui se tiennent à distance pour porter le même toit.'},
+ ovide:{label:'Ovide · L’Art d’aimer',name:'Ovide · L’Art d’aimer (vers l’an 1)',what:'Le poète latin traite l’amour comme un art qui s’apprend, avec humour.'},
+ seneque:{label:'Sénèque · Lettres à Lucilius',name:'Sénèque · Lettres à Lucilius',what:'Le stoïcien rapporte cette formule : « Si tu veux être aimé, aime. »'},
+ epicure:{label:'Épicure · l’amitié',name:'Épicure',what:'Pour Épicure, l’amitié est le plus grand des biens que la sagesse procure pour une vie heureuse.'},
+ sartre:{label:'Sartre · L’Être et le Néant',name:'Jean-Paul Sartre · L’Être et le Néant (1943)',what:'Pour Sartre, l’amoureux veut être tout pour l’autre, le centre de son monde, ce qui rend l’amour à la fois exigeant et fragile.'},
+ rougemont:{label:'Denis de Rougemont · L’Amour et l’Occident',name:'Denis de Rougemont · L’Amour et l’Occident (1939)',what:'À partir de Tristan et Iseut, il oppose la passion, qui se nourrit d’obstacles, à l’amour fidèle, qui se construit dans la durée.'},
+ proustr:{label:'Proust · Un amour de Swann',name:'Marcel Proust · Un amour de Swann (1913)',what:'Swann gâche des années pour une femme « qui n’était pas son genre ». Proust y décrit la jalousie et l’imagination amoureuse.'}
+});
+Object.assign(THEMES,{histoire:'Notre histoire',leger:'Pour sourire'});
+
+VERITE.push(
+['toi','frisch','Quel espoir as-tu abandonné en grandissant ? Est-ce que tu le regrettes ?'],
+['toi','frisch','Qu’est-ce que tu possèdes qui te possède un peu aussi ?'],
+['toi','frisch','Où te sens-tu chez toi : dans un lieu, avec des gens, dans une langue ?'],
+['toi','frisch','Aimerais-tu savoir comment tu vas mourir ?'],
+['toi','frisch','Qu’est-ce qui te rend ridicule à tes propres yeux ? Est-ce que ça te dérange que je le voie ?'],
+['toi','frisch','Combien de vrais amis as-tu ? Combien d’entre eux remarqueraient que tu as disparu pendant un mois ?'],
+['toi','frisch','Quand as-tu été heureux·se sans t’en rendre compte sur le moment ?'],
+['toi','frisch','As-tu déjà ri à un moment où il ne fallait surtout pas ?'],
+['toi','frisch','Qu’est-ce que tu sais de l’amour aujourd’hui que tu ne savais pas à 15 ans ?'],
+['toi','frisch','Qu’est-ce qui te fait honte chez les autres ? Pourquoi est-ce que ça te touche autant ?'],
+['nous','frisch','Est-ce qu’il t’arrive d’espérer quelque chose pour moi sans oser me le dire ?'],
+['nous','frisch','Te souviens-tu de la première fois où tu as eu peur de me perdre ?'],
+['nous','frisch','Qu’est-ce que tu ne me pardonnerais pas ? En es-tu vraiment sûr·e ?'],
+['nous','frisch','Préférerais-tu connaître toutes mes pensées pendant une journée, ou que je connaisse toutes les tiennes ?'],
+['nous','frisch','Est-ce que tu te sens plus libre avec moi, ou moins libre ?'],
+['nous','frisch','Si l’argent n’existait pas, qu’est-ce que tu m’offrirais ?'],
+['nous','frisch','Quand tu dis « nous », à quoi penses-tu exactement ?'],
+['philo','frisch','Une promesse t’a-t-elle déjà libéré·e plutôt qu’enfermé·e ?'],
+['philo','frisch','Si tu devais oublier demain tout ce qui s’est passé aujourd’hui, que voudrais-tu me dire ce soir ?'],
+
+['histoire','oral','Raconte notre rencontre comme à quelqu’un qui ne nous connaît pas.'],
+['histoire','oral','Quelle a été ta toute première impression de moi ? Qu’est-ce qui s’est révélé faux ?'],
+['histoire','oral','Qu’est-ce qui t’a donné envie de me revoir, après la première fois ?'],
+['histoire','oral','Y a-t-il eu un moment où tu as hésité sur nous ? Qu’est-ce qui t’a fait rester ?'],
+['histoire','oral','Quel a été notre premier vrai moment difficile ? Comment on s’en est sortis ?'],
+['histoire','oral','De quoi te souviens-tu de nos débuts que j’ai sûrement oublié ?'],
+['histoire','oral','Comment as-tu parlé de moi à tes proches la toute première fois ?'],
+['histoire','oral','Qu’est-ce qui a changé entre nous depuis le début, en mieux ?'],
+['histoire','oral','Quel couple admires-tu le plus autour de toi ? Qu’est-ce qu’il fait bien ?'],
+['histoire','oral','Comment était le couple de tes parents ? Qu’est-ce que tu veux garder, ou faire autrement ?'],
+['histoire','oral','Y a-t-il un couple que tu ne voudrais jamais qu’on devienne ? Pourquoi ?'],
+['histoire','oral','D’après toi, qu’est-ce qui fait qu’un couple dure ?'],
+['histoire','oral','Pourquoi, à ton avis, certains couples se séparent-ils ?'],
+['histoire','oral','Quel moment de notre histoire mériterait un chapitre entier ?'],
+['histoire','oral','Quand as-tu décidé de tenter la distance avec moi ? Est-ce que ça a été facile ?'],
+['histoire','oral','Qu’est-ce qui t’a le plus surpris·e chez moi en apprenant à me connaître ?'],
+['histoire','oral','Quelle est la première chose que tu as aimée dans ma façon de parler, de rire ou de bouger ?'],
+['histoire','oral','Te souviens-tu de ton premier message pour moi ? Que voulais-tu vraiment dire ?'],
+['histoire','oral','Quel bon moment de notre histoire te repasses-tu quand je te manque ?'],
+['histoire','oral','Quelle épreuve nous a rendus plus forts, d’après toi ?'],
+
+['toi','mcadams','Si ta vie était un livre, quels seraient les titres de ses chapitres jusqu’ici ?'],
+['toi','mcadams','Quel a été le sommet de ta vie, le moment où tu t’es senti·e le plus vivant·e ?'],
+['toi','mcadams','Quel a été le point le plus bas de ta vie ? Qu’est-ce qui t’a aidé·e à remonter ?'],
+['toi','mcadams','Quel moment a été un tournant dans ta vie, même si tu ne l’as compris qu’après ?'],
+['toi','mcadams','Quel est ton plus vieux souvenir ? Qu’est-ce qu’il dit de toi ?'],
+['toi','mcadams','Raconte un moment où tu as fait preuve de sagesse, ou où quelqu’un t’en a appris.'],
+['toi','mcadams','As-tu déjà vécu un moment qui t’a paru plus grand que toi : spirituel, mystique, ou simplement bouleversant ?'],
+['toi','mcadams','Quel sera le prochain chapitre de ta vie ? Comment voudrais-tu l’appeler ?'],
+['toi','mcadams','Quel fil rouge traverse ta vie depuis l’enfance ?'],
+['toi','mcadams','Quel échec t’a le plus appris ?'],
+['toi','mcadams','Quelle perte t’a le plus changé·e ?'],
+['toi','mcadams','Comment tes convictions ont-elles changé depuis tes 15 ans ?'],
+['toi','mcadams','Quel est le plus grand défi de ta vie jusqu’ici ?'],
+['toi','mcadams','Raconte un souvenir d’adulte que tu revois avec une précision étonnante.'],
+
+['nous','sternberg','Entre la complicité, le désir et l’engagement, lequel est le plus fort entre nous en ce moment ? Lequel la distance met-elle le plus à l’épreuve ?'],
+['nous','sternberg','Qu’est-ce qui nourrit notre complicité, même à distance ?'],
+['nous','sternberg','Qu’est-ce qui entretient le désir quand on ne peut pas se toucher ?'],
+['nous','sternberg','Quel geste concret prouve l’engagement mieux qu’une parole, pour toi ?'],
+['nous','lee','Certains aiment comme une passion, d’autres comme une amitié qui grandit, d’autres de façon réfléchie. Comment aimes-tu, toi ? Et moi ?'],
+['nous','lee','Notre histoire a-t-elle commencé comme un coup de foudre, ou comme une amitié qui a glissé ?'],
+['nous','lee','La jalousie, pour toi, c’est une preuve d’amour ou un signal d’alarme ?'],
+['nous','lee','Est-ce qu’aimer, pour toi, ça peut aussi être un jeu ?'],
+['toi','attach','Quand quelqu’un que tu aimes s’éloigne, as-tu tendance à t’accrocher, à prendre de la distance, ou à attendre calmement ?'],
+['toi','attach','Est-ce facile pour toi de dépendre de quelqu’un ? Et que quelqu’un dépende de toi ?'],
+['toi','attach','Qu’est-ce qui te faisait te sentir en sécurité quand tu étais petit·e ?'],
+['nous','attach','Quand tu es inquiet·e pour nous, que se passe-t-il dans ton corps ? Qu’est-ce qui te calme ?'],
+['nous','attach','Qu’est-ce qui t’aide à te sentir en sécurité avec moi, malgré les kilomètres ?'],
+['nous','michel','Qui aimerais-tu devenir dans cinq ans ? Comment puis-je t’aider à y arriver ?'],
+['nous','michel','Y a-t-il un trait de toi que tu sens grandir depuis qu’on est ensemble ?'],
+['nous','michel','Est-ce que je t’aide à devenir la personne que tu veux être ? En quoi, concrètement ?'],
+['nous','michel','Y a-t-il des moments où je te pousse vers quelqu’un que tu ne veux pas être ?'],
+['nous','michel','Quelle part de toi aimerais-tu que je remarque davantage ?'],
+['toi','via','Choisis tes trois plus grandes forces : curiosité, courage, gentillesse, humour, persévérance, sens de la justice, gratitude, créativité… Lesquelles, et pourquoi ?'],
+['nous','via','Laquelle de mes forces admires-tu le plus ? Et laquelle m’envies-tu un peu ?'],
+['toi','via','Quelle force aimerais-tu développer cette année ?'],
+['toi','via','Dans quelle situation récente as-tu été courageux·se ?'],
+['toi','via','Jusqu’où ta curiosité t’a-t-elle déjà emmené·e ?'],
+['avenir','schwartz','Liberté, sécurité, tradition, aventure, réussite, bienveillance : classe-les pour toi. Je fais pareil.'],
+['avenir','schwartz','Quelle valeur de tes parents as-tu gardée sans même t’en rendre compte ?'],
+['avenir','schwartz','Préfères-tu une vie prévisible et sûre, ou pleine d’imprévus ?'],
+['avenir','schwartz','Qu’est-ce qui compte le plus pour toi : être reconnu·e, ou être utile ?'],
+['avenir','schwartz','Quelle personne admires-tu sans réserve ? Qu’est-ce que ça dit de tes valeurs ?'],
+['nous','sfbt','Si un miracle se produisait cette nuit et que notre relation devenait exactement ce que tu souhaites, quel serait le premier petit signe que tu remarquerais demain ?'],
+['conflit','sfbt','De 1 à 10, où en est notre façon de communiquer à distance ? Qu’est-ce qui nous ferait passer au chiffre au-dessus ?'],
+['conflit','sfbt','Pense à une fois où on a évité une dispute de justesse. Qu’est-ce qu’on a fait de bien ?'],
+['nous','sfbt','Qu’est-ce qui marche déjà entre nous et qu’il faut surtout continuer ?'],
+['conflit','sfbt','Quand ça va mieux entre nous, qu’est-ce que je fais différemment ?'],
+['nous','fred','Raconte un tout petit moment de connexion entre nous cette semaine, même de deux secondes.'],
+['nous','fred','Quand t’es-tu senti·e sur la même longueur d’onde que moi récemment, sans rien dire ?'],
+['toi','fred','Avec qui, à part moi, as-tu partagé un vrai moment de chaleur cette semaine ?'],
+['nous','reis','Quand tu me racontes quelque chose d’important, qu’est-ce qui te montre que j’ai vraiment compris ?'],
+['nous','reis','Y a-t-il un sujet sur lequel tu ne te sens pas tout à fait compris·e par moi ?'],
+['nous','reis','Qu’est-ce que je fais qui te donne l’impression d’être aimé·e tel·le que tu es ?'],
+['nous','impett','Mots doux, temps ensemble, petits services, contact, surprises, soutien à tes projets, simple compagnie : de quoi as-tu le plus besoin en ce moment ?'],
+['nous','impett','À distance, quelle forme d’amour te manque le plus ?'],
+['nous','impett','Quelle forme d’amour est-ce que je te donne sans m’en rendre compte ?'],
+['toi','ware','Vis-tu la vie que tu veux vraiment, ou celle qu’on attend de toi ?'],
+['toi','ware','Si tu reprenais un peu de temps à ton travail ou tes études, à quoi le donnerais-tu ?'],
+['toi','ware','Quel sentiment as-tu gardé pour toi alors qu’il méritait d’être dit ?'],
+['toi','ware','Quel ami as-tu perdu de vue et aimerais-tu retrouver ?'],
+['toi','ware','Qu’est-ce qui t’empêche de t’autoriser à être plus heureux·se ?'],
+['avenir','eightdates','Qu’est-ce qu’une aventure, pour toi ? Quelle est la prochaine que tu aimerais vivre avec moi ?'],
+['nous','eightdates','Comment aimes-tu qu’on s’amuse ? Qu’est-ce qu’on ne fait plus assez ?'],
+['avenir','eightdates','Qu’est-ce qu’on t’a appris sur l’argent sans jamais te le dire ?'],
+['avenir','eightdates','Le travail, pour toi, c’est d’abord un gagne-pain, une vocation ou une identité ?'],
+['nous','eightdates','Qu’est-ce qui te fait te sentir désiré·e ?'],
+['nous','eightdates','Comment veux-tu qu’on parle de nos envies et de notre intimité, même quand c’est gênant ?'],
+['avenir','eightdates','Comment veux-tu grandir, spirituellement ou intérieurement, dans les années qui viennent ?'],
+['avenir','nyt','Quelle place l’indépendance doit-elle garder dans un couple qui vit ensemble ?'],
+['avenir','nyt','Comment tes parents se partageaient-ils l’argent et les décisions ? Qu’en penses-tu aujourd’hui ?'],
+['avenir','prepare','Sur quel sujet de vie commune penses-tu qu’on sera le plus vite d’accord ? Et le moins ?'],
+['toi','pospsy','Imagine ta vie dans dix ans, si tout s’était passé au mieux. Décris une journée.'],
+['toi','pospsy','À qui aimerais-tu dire merci sans l’avoir jamais fait ?'],
+['conflit','cnv','Quand tu es agacé·e par moi, quel besoin se cache derrière, en général ?'],
+['conflit','cnv','Quelle différence fais-tu entre une demande et une exigence ?'],
+['conflit','cnv','Quelle phrase de reproche t’a le plus blessé·e dans ta vie ? Comment aurait-elle pu être dite ?'],
+
+['philo','stendhal','Stendhal compare l’amour à un rameau qui se couvre de cristaux de sel : on pare l’autre de mille perfections. Lesquelles m’as-tu prêtées au début ? Lesquelles étaient vraies ?'],
+['philo','stendhal','Pour Stendhal, un petit doute relance l’amour. Est-ce que la distance fait cet effet-là chez toi ?'],
+['philo','lewis','C. S. Lewis distingue l’affection, l’amitié, l’éros et la charité. Lequel est le plus fort entre nous ? Lequel aimerais-tu qu’on cultive ?'],
+['philo','lewis','Pour Lewis, les amis sont côte à côte, les amants face à face. Qu’est-ce qu’on regarde côte à côte, nous deux ?'],
+['philo','comte','Comte-Sponville distingue l’amour qui manque, l’amour qui se réjouit et l’amour qui donne. En ce moment, le nôtre est surtout lequel ?'],
+['philo','comte','Peut-on aimer quelqu’un sans le désirer ? Et le désirer sans l’aimer ?'],
+['philo','hooks','bell hooks définit l’amour comme la volonté de faire grandir l’autre et soi-même. Est-ce que je te fais grandir ? Et toi, moi ?'],
+['philo','hooks','Pour bell hooks, on ne peut pas à la fois aimer et blesser volontairement. Qu’est-ce qui, pour toi, est incompatible avec l’amour ?'],
+['philo','hooks','bell hooks dit qu’on apprend à aimer en apprenant d’abord à s’aimer soi-même. Est-ce que tu t’aimes assez, toi ?'],
+['philo','kierk','Kierkegaard voyait dans l’amour un devoir, plus solide que l’humeur du jour. Est-ce que cette idée te choque ou te rassure ?'],
+['philo','levinas','Pour Levinas, le visage de l’autre nous oblige. Qu’est-ce que tu lis sur mon visage que je ne dis pas ?'],
+['philo','buber','Buber distingue la rencontre vraie, « Je-Tu », de la relation utile, « Je-Cela ». Quand t’es-tu senti·e vraiment rencontré·e par moi ?'],
+['philo','han','Byung-Chul Han craint qu’on ne cherche plus chez l’autre qu’un miroir de soi. Qu’est-ce qui, chez moi, te reste étranger ? Est-ce que ça te plaît ?'],
+['philo','illouz','Eva Illouz montre que le choix infini des applis rend l’engagement plus difficile. As-tu déjà eu l’impression qu’on pouvait toujours trouver mieux ? Comment fait-on pour choisir ?'],
+['philo','bauman','Bauman parle d’« amour liquide », des liens qu’on veut pouvoir défaire facilement. Qu’est-ce qui rend un lien solide, pour toi ?'],
+['philo','botton','Alain de Botton dit qu’on n’épouse jamais la bonne personne : on apprend à aimer celle qu’on a choisie. D’accord ou pas ?'],
+['philo','botton','Pour de Botton, chacun est un peu difficile à vivre. En quoi l’es-tu, honnêtement ?'],
+['philo','barthes','Barthes écrit que dans l’absence, il y a toujours celui qui part et celui qui attend. Entre nous, qui a le plus l’impression d’attendre ?'],
+['philo','barthes','Barthes décrit l’attente amoureuse comme un petit théâtre intérieur. Que se passe-t-il dans ta tête quand tu attends un message de moi ?'],
+['philo','rochef','La Rochefoucauld écrit que certains ne seraient jamais tombés amoureux s’ils n’avaient entendu parler de l’amour. Quelle part de ton idée de l’amour vient des films, des livres, des chansons ?'],
+['philo','rochef','« L’absence diminue les médiocres passions et augmente les grandes, comme le vent éteint les bougies et allume le feu. » Qu’est-ce que la distance a éteint, et qu’a-t-elle allumé ?'],
+['philo','paul','Saint Paul écrit que l’amour est patient, qu’il rend service, qu’il ne jalouse pas, qu’il ne cherche pas son intérêt. Laquelle de ces qualités te semble la plus difficile ?'],
+['philo','augustin','Saint Augustin : « Aime, et fais ce que tu veux. » Comment comprends-tu cette phrase ?'],
+['philo','aquin','Pour Thomas d’Aquin, aimer, c’est vouloir le bien de l’autre. T’arrive-t-il de vouloir pour moi un bien que je ne veux pas ?'],
+['philo','spinoza','Pour Spinoza, l’amour est une joie accompagnée de l’idée de sa cause. Quelle joie précise te vient de moi ?'],
+['philo','nietzsche','Nietzsche conseillait de se demander, avant de s’engager, si l’on aura encore plaisir à parler avec l’autre jusque dans la vieillesse. De quoi parlerons-nous à 80 ans ?'],
+['philo','gibran','Gibran conseille aux amants de laisser des espaces dans leur union, comme les piliers d’un temple. Quels espaces sont importants pour toi ?'],
+['philo','ovide','Ovide traite l’amour comme un art qui s’apprend. Qu’as-tu appris sur l’amour, comme on apprend un métier ?'],
+['philo','seneque','Sénèque : « Si tu veux être aimé, aime. » Est-ce vrai dans ton expérience ?'],
+['philo','epicure','Épicure mettait l’amitié au sommet des biens. Sommes-nous aussi des amis, tous les deux ? Qu’est-ce qui le prouve ?'],
+['philo','sartre','Pour Sartre, l’amoureux veut être tout pour l’autre. As-tu besoin d’être tout pour moi ?'],
+['philo','rougemont','Pour Denis de Rougemont, la passion se nourrit d’obstacles. Quand la distance disparaîtra, qu’est-ce qui nourrira la nôtre ?'],
+['philo','platon','Dans Le Banquet, Diotime décrit l’amour comme une échelle : de la beauté d’un corps à celle d’une âme, puis des idées. Qu’est-ce qui t’a attiré·e chez moi d’abord, et qu’est-ce qui te retient aujourd’hui ?'],
+['philo','platon','Dans Phèdre, Platon voit l’amour comme une folie venue des dieux. As-tu déjà fait une folie par amour ?'],
+['philo','aristote','Pour Aristote, l’ami est un autre soi-même. Suis-je un autre toi, ou vraiment quelqu’un d’autre ?'],
+['philo','montaigne','Montaigne conseille de garder une « arrière-boutique » toute à soi. Quelle est la tienne ?'],
+['philo','rilke','Rilke écrit qu’aimer est peut-être la tâche la plus difficile, celle pour laquelle tout le reste n’est que préparation. Es-tu d’accord ?'],
+['philo','beauvoir','Beauvoir et Sartre ont écrit leur propre pacte amoureux. Si on écrivait le nôtre, quelle serait la première clause ?'],
+['philo','weil','Simone Weil écrit : « Aimer purement, c’est consentir à la distance. » Qu’est-ce que cette phrase t’évoque pour nous ?'],
+['philo','frankl','Au camp, Viktor Frankl tenait en pensant à sa femme, sans savoir si elle vivait encore. L’amour peut-il exister sans la présence de l’autre ?'],
+['philo','fromm','Fromm oppose « je t’aime parce que j’ai besoin de toi » à « j’ai besoin de toi parce que je t’aime ». Laquelle te ressemble le plus ?'],
+['philo','badiou','Pour Badiou, l’amour commence par un hasard qu’on transforme en destin. Notre rencontre, hasard ou destin ?'],
+['philo','proustr','Swann tombe amoureux d’une femme « qui n’était pas son genre ». Étais-je ton genre, au début ?'],
+
+['toi','pivot','Quel objet de ta chambre d’enfant aurais-tu sauvé d’un incendie ?'],
+['toi','pivot','Quelle odeur te ramène immédiatement chez tes grands-parents ?'],
+['toi','lovemaps','Quelle phrase tes parents répétaient-ils tout le temps ?'],
+['leger','','Quel est le mensonge d’enfant dont tu es le plus fier·ère ?'],
+['toi','lovemaps','Quel prof t’a marqué·e, en bien ou en mal ?'],
+['leger','','Quelle bêtise as-tu faite que tes parents ignorent encore ?'],
+['leger','','Quel plat sais-tu cuisiner pour impressionner quelqu’un ?'],
+['leger','','Quelle chanson chantes-tu quand personne n’écoute ?'],
+['leger','','À quoi ressemblait ton style à 14 ans ? Sois honnête.'],
+['leger','','À quel métier jouais-tu quand tu étais enfant ?'],
+['toi','lovemaps','Quel est le plus beau paysage que tu aies vu de tes yeux ?'],
+['toi','lovemaps','Quelle règle de ta famille trouvais-tu injuste ?'],
+['leger','','Si tu ouvrais un petit commerce, ce serait quoi ?'],
+['toi','lovemaps','Quel est le meilleur conseil qu’on t’ait donné, et qui te l’a donné ?'],
+['leger','','As-tu une superstition, même toute petite ?'],
+['leger','','Quel film peux-tu revoir sans jamais te lasser ?'],
+['leger','','Quelle est ta façon préférée de perdre du temps ?'],
+['toi','expansion','Quelle est la chose la plus spontanée que tu aies faite ?'],
+['leger','','Quel est le cadeau le plus réussi que tu aies jamais fait ?'],
+['leger','','Quelle expression de ta région ou de ta famille personne ne comprend ?'],
+['leger','','Qu’est-ce qui te met de bonne humeur en moins de cinq minutes ?'],
+['leger','','Raconte ton plus grand fou rire.'],
+['leger','','Quel surnom as-tu eu, et d’où vient-il ?'],
+['toi','lovemaps','De quoi étais-tu convaincu·e enfant, à tort ?'],
+['toi','lovemaps','Si tu pouvais dîner avec quelqu’un de ton arbre généalogique, qui choisirais-tu ?'],
+['toi','lovemaps','Quel livre t’a fait pleurer ?'],
+['toi','lovemaps','Quelle habitude de quelqu’un d’autre as-tu adoptée sans le vouloir ?'],
+['leger','','Qu’est-ce que tout le monde croit que tu sais faire, alors que pas du tout ?'],
+['toi','lovemaps','Qu’as-tu appris tout·e seul·e, sans personne ?'],
+['toi','lovemaps','Dans quelle pièce de chez toi te sens-tu le mieux ? Pourquoi ?'],
+['leger','','Quelle est la meilleure chose que tu aies mangée cette année ?'],
+['toi','fondness','Quel compliment aimerais-tu recevoir plus souvent ?'],
+['leger','','Qu’est-ce que tu collectionnes sans le dire ?'],
+['leger','','Quel âge as-tu dans ta tête ?'],
+['leger','','Si tu passais une journée entière sans téléphone, que ferais-tu ?'],
+['toi','rituals','Quel petit rituel du matin ne négocies-tu jamais ?'],
+['toi','pivot','Quelle question te pose-t-on trop souvent ? Et laquelle ne te pose-t-on jamais ?'],
+['leger','','Quelle odeur te fait penser à moi ?'],
+['nous','lovemaps','Quel détail de moi reconnaîtrais-tu les yeux fermés ?'],
+['nous','lovemaps','Quelle habitude de moi as-tu adoptée ?'],
+['nous','rituals','Quel mot ou quelle expression est devenu « à nous » ?'],
+['leger','','Si on avait un chien, comment s’appellerait-il, et pourquoi ?'],
+['nous','rituals','Quelle chanson est la nôtre, ou devrait l’être ?'],
+['nous','fondness','Quel est le plus beau message que je t’aie envoyé ?'],
+['leger','','Qu’est-ce que je fais mieux que toi, honnêtement ?'],
+['leger','','Dans un film sur nous, qui jouerait nos rôles ?'],
+['nous','fondness','Quelle est la chose la plus bizarre que tu aimes chez moi ?'],
+['nous','fondness','Quelle photo de moi préfères-tu ? Pourquoi celle-là ?'],
+['leger','','Quelle dispute ridicule risque-t-on d’avoir un jour, d’après toi ?'],
+['nous','lovemaps','Qu’est-ce que tu as le plus envie de me montrer de ta ville ?'],
+['leger','','Si on écrivait un livre de cuisine à deux, quel serait le titre ?'],
+['leger','','Quel serait ton nom de scène si tu étais chanteur·se ?'],
+['leger','','Quelle est l’application de ton téléphone qui en dit le plus sur toi ?'],
+['leger','','Quel est ton plus grand talent pour procrastiner ?']
+);
+
+ACTION.push(
+['pospsy',10,'now','Lettre de gratitude : écris en 5 minutes un merci précis pour une chose que l’autre a faite, puis lis-le à voix haute. Ensuite c’est son tour.'],
+['pospsy',12,'now','Meilleur soi possible : écrivez chacun 5 minutes sur votre vie dans dix ans si tout se passait au mieux, puis lisez-vous vos textes.'],
+['pospsy',0,'week','Trois bonnes choses : chaque soir de la semaine, envoyez-vous trois bonnes choses de votre journée, et pourquoi elles sont arrivées.','d'],
+['pospsy',0,'week','Chaque soir de la semaine, envoie une chose pour laquelle tu remercies l’autre ce jour-là.','d'],
+['fred',6,'now','Fermez les yeux 3 minutes et pensez à l’autre en lui souhaitant du bien, en silence. Puis dites ce que vous avez ressenti.'],
+['fred',6,'now','Racontez chacun un souvenir commun au présent, avec tous les sens : ce que vous voyez, entendez, sentez.'],
+['surreal',10,'now','Cadavre exquis : chacun écrit à tour de rôle un morceau de phrase (sujet, verbe, complément) sans voir ceux de l’autre. Lisez le résultat.'],
+['surreal',10,'now','Cadavre exquis dessiné : l’un dessine une tête, plie la feuille, l’autre dessine un corps sur la sienne sans voir. Assemblez à l’écran.'],
+['oulipo',10,'now','Écrivez-vous chacun un petit mot doux de quatre lignes, sans utiliser la lettre e.'],
+['oulipo',10,'now','Écrivez chacun un poème dont chaque vers commence par une lettre du prénom de l’autre.'],
+['proust',15,'now','Questionnaire de Proust express : posez-vous 10 questions du questionnaire à tour de rôle, réponses en une phrase maximum.'],
+['frisch',10,'now','Chacun pose la question la plus difficile qu’il oserait poser à l’autre. On a le droit de passer.'],
+['mcadams',15,'now','Racontez chacun votre vie en chapitres, avec un titre pour chaque chapitre.'],
+['mcadams',10,'now','Dessinez chacun la courbe de votre vie, avec ses hauts et ses bas, puis présentez-la à l’autre.'],
+['sfbt',10,'now','Question miracle : décrivez ensemble, minute par minute, votre premier matin quand vous vivrez au même endroit.'],
+['michel',10,'now','Chacun décrit la personne qu’il voudrait devenir. L’autre propose une chose concrète pour l’aider.'],
+['via',5,'now','Chacun nomme trois forces de l’autre, avec un exemple précis à chaque fois.'],
+['oral',10,'now','Racontez votre rencontre à deux voix, phrase par phrase, comme dans une interview.'],
+['oral',10,'now','Retrouvez vos tout premiers messages et relisez-les à voix haute.'],
+['stendhal',10,'now','Faites chacun la liste des « cristaux » : 5 qualités que vous avez prêtées à l’autre au début. Lesquelles se sont révélées vraies ?'],
+['sternberg',10,'now','Dessinez chacun un triangle complicité, désir, engagement, tel que vous voyez notre couple aujourd’hui. Comparez vos dessins.'],
+['schwartz',15,'now','Classez chacun ces valeurs : liberté, sécurité, aventure, tradition, réussite, plaisir, bienveillance, justice, spiritualité, reconnaissance. Comparez vos trois premières.'],
+['ware',10,'now','Chacun dit une chose qu’il regretterait de ne pas avoir faite avec l’autre dans un an. Choisissez-en une à planifier.'],
+['johnson',5,'now','Finissez chacun trois fois la phrase : « Quand tu me manques, j’ai besoin que tu… »'],
+['johnson',5,'now','Dites-vous à tour de rôle une peur liée à la distance. L’autre répond seulement : « Je suis là, je t’entends. »','d'],
+['cnv',10,'now','Communication non violente : chacun formule une petite frustration en quatre temps : ce que j’ai vu, ce que j’ai ressenti, mon besoin, ma demande.'],
+['prep',10,'now','Entraînez-vous à la technique orateur-auditeur sur un sujet léger, comme vos vacances idéales : l’un parle, l’autre reformule.'],
+['repair',10,'now','Écrivez ensemble votre liste de phrases de réparation, celles qui vous calment vraiment après une tension.'],
+['lovemaps',15,'now','Écrivez chacun votre « mode d’emploi » : ce qui me fait du bien, ce qui m’agace, comment me consoler. Échangez.'],
+['lovemaps',10,'now','Faites-vous deviner : chacun prépare 5 phrases « Je préfère… », l’autre complète la fin.'],
+['lewis',20,'now','Côte à côte : choisissez une activité à faire en même temps sans vous regarder (un puzzle en ligne, un dessin, une lecture), juste ensemble.'],
+['rituals',5,'now','Choisissez une chanson qui voudra dire « je pense à toi » quand vous vous l’enverrez, sans un mot.','d'],
+['rituals',5,'now','Inventez un geste secret à faire devant la caméra pour vous dire au revoir.','d'],
+['rituals',10,'now','Choisissez un rendez-vous fixe dans la semaine juste pour vous deux, et donnez-lui un nom.'],
+['expansion',15,'now','Apprenez ensemble le début d’une chorégraphie avec une vidéo gratuite.'],
+['expansion',15,'now','Suivez la même vidéo d’origami gratuite et comparez vos résultats.'],
+['expansion',30,'now','Visitez ensemble un musée en ligne gratuit. Chacun choisit son œuvre préférée et explique pourquoi.'],
+['expansion',15,'now','Promenez-vous ensemble sur Street View dans une ville où vous n’êtes jamais allés.'],
+['expansion',15,'now','Blind test : chacun prépare 10 extraits de chansons qu’il aime, l’autre devine.'],
+['expansion',10,'now','Jeu du dictionnaire : choisissez un mot rare, chacun invente une fausse définition, l’autre devine la vraie.'],
+['expansion',3,'now','Tirez une lettre au hasard. En 60 secondes, trouvez chez vous l’objet le plus drôle qui commence par cette lettre.'],
+['expansion',10,'now','Inventez la carte du restaurant que vous ouvririez à deux : nom, plats, prix.'],
+['expansion',5,'now','Raconte un souvenir d’enfance en plaçant trois mots imposés par l’autre.'],
+['expansion',15,'now','Dessinez ensemble votre blason de couple : couleurs, animal, devise.'],
+['expansion',10,'now','Racontez chacun un rêve de la nuit et inventez ensemble la suite.'],
+['expansion',5,'now','Dessinez l’autre avec la main que vous n’utilisez jamais.'],
+['expansion',10,'now','Faites chacun la « bande-annonce » de votre semaine, avec la voix des films.'],
+['aron',15,'now','Faites seulement le premier tiers des 36 questions d’Aron, les plus légères.'],
+['',10,'now','Choisissez une phrase d’un philosophe dans « D’où viennent ces cartes » et débattez 10 minutes : d’accord ou pas ?'],
+['maint',15,'now','Présentez-vous mutuellement à un ami ou un proche en visio.','d'],
+['maint',10,'now','Préparez ensemble votre prochain rendez-vous « spécial » avec un thème : années 90, voyage, pyjamas…'],
+['maint',0,'week','Envoie une photo de ton repas ce soir, avec la note que tu lui donnes sur 10.','d'],
+['maint',0,'week','Filme 30 secondes de ton trajet de tous les jours.','d'],
+['maint',0,'week','Lis un chapitre de ton livre à voix haute et envoie-moi l’enregistrement.','d'],
+['oulipo',0,'week','Écris-moi un haïku par jour pendant trois jours.'],
+['expansion',0,'week','Choisis un mot rare par jour et glisse-le dans nos conversations. L’autre doit le repérer.'],
+['expansion',0,'week','Envoie une photo de quelque chose de rouge, puis de bleu, puis de jaune, un par jour.','d'],
+['meaning',0,'week','Écris trois souvenirs que tu veux qu’on crée ensemble l’année prochaine.'],
+['johnson',0,'week','Enregistre un message vocal que je pourrai écouter un jour où je serai triste.','d'],
+['fred',0,'week','Note chaque fois que tu ris cette semaine. Raconte-moi la meilleure.'],
+['hooks',0,'week','Écris dix choses que tu aimes chez toi, et envoie-les-moi.','d'],
+['expansion',0,'week','Fais une chose qui te fait un peu peur cette semaine, et raconte-la-moi.'],
+['nietzsche',0,'week','Écris une lettre à toi à 80 ans, sur nous deux.'],
+['expansion',0,'week','Écoute en entier un album que l’autre adore, puis débriefez ensemble.'],
+['lovemaps',0,'week','Envoie-moi chaque jour une chose que je ne sais pas encore sur toi.','d']
+);
+
+Object.assign(SOURCES,{
+ scudery:{label:'Madeleine de Scudéry · la Carte du Tendre',name:'Madeleine de Scudéry · la Carte du Tendre (1654)',what:'Dans son roman Clélie, Madeleine de Scudéry dessine une carte imaginaire du sentiment amoureux, avec ses villages (Billet-Doux, Petits-Soins), son lac d’Indifférence et sa mer Dangereuse.',url:'https://fr.wikipedia.org/wiki/Carte_de_Tendre'},
+ touch:{label:'Recherche sur le toucher affectueux',name:'Le toucher affectueux',what:'Les études sur le couple associent les gestes de tendresse (mains, câlins, massages) à moins de stress et à plus de satisfaction. Gottman conseille aussi un baiser d’au moins six secondes par jour.'}
+});
+/* [source, minutes, quand, texte, mode] — mode 'e' = à faire ensemble physiquement, 'd' = seulement à distance, '' = les deux */
+ACTION.push(
+['touch',10,'now','Massez-vous les mains cinq minutes chacun, en silence.','e'],
+['touch',0,'week','Chaque jour de la semaine, embrassez-vous au moins six secondes, sans être pressés.','e'],
+['touch',5,'now','Dansez un slow dans le salon, sur une chanson choisie par l’autre.','e'],
+['touch',5,'now','Restez enlacés trois minutes sans parler, téléphones dans une autre pièce.','e'],
+['fred',15,'now','Regardez un lever ou un coucher de soleil ensemble, sans rien dire, puis racontez ce que vous avez ressenti.','e'],
+['expansion',20,'now','Promenade sans téléphone : chacun montre à l’autre trois détails qu’il n’aurait pas remarqués.','e'],
+['expansion',30,'now','Marchez au hasard : à chaque carrefour, pile ou face décide de la direction.','e'],
+['expansion',45,'now','Cuisinez à quatre mains un plat inventé avec ce qu’il y a dans le frigo, puis donnez-lui un nom.','e'],
+['expansion',60,'now','Construisez une cabane de couvertures et passez-y une heure.','e'],
+['expansion',10,'now','Je te guide : l’un ferme les yeux, l’autre le guide dans la maison uniquement à la voix.','e'],
+['expansion',10,'now','Jeu des cinq sens : l’un ferme les yeux, l’autre lui fait sentir, toucher ou goûter cinq choses de la maison à deviner.','e'],
+['expansion',20,'now','Apprenez-vous mutuellement une chose que vous savez faire : un nœud, un pas de danse, un tour de cartes.','e'],
+['expansion',30,'now','Séance photo dans votre quartier : photographiez-vous comme pour un magazine de mode.','e'],
+['expansion',10,'now','Concours de châteaux de cartes : le plus haut gagne.','e'],
+['expansion',60,'now','Pique-nique dans un endroit où vous n’êtes jamais allés, avec ce que vous avez à la maison.','e'],
+['expansion',5,'now','Dessin à l’aveugle : dessinez le visage de l’autre en le regardant, sans jamais regarder votre feuille.','e'],
+['rituals',60,'now','Dîner aux chandelles avec ce que vous avez, téléphones dans une autre pièce.','e'],
+['rituals',20,'now','Rangez une pièce ensemble en musique, en dansant.','e'],
+['rituals',10,'now','Plantez une graine ensemble et donnez un nom à la plante.','e'],
+['rituals',0,'week','Prenez une photo de vous deux au même endroit chaque jour de la semaine.','e'],
+['fondness',0,'week','Écris un mot doux et cache-le chez l’autre. Il a une semaine pour le trouver.','e'],
+['lovemaps',15,'now','Lisez-vous à voix haute un chapitre d’un livre, allongés.','e'],
+['oral',5,'now','Rejouez votre premier rendez-vous en version accélérée, en deux minutes.','e'],
+['meaning',30,'now','Réorganisez ensemble un coin de votre chez-vous pour qu’il vous ressemble à tous les deux.','e'],
+
+['scudery',20,'now','Dessinez ensemble la carte imaginaire de votre relation, comme la Carte du Tendre : ses villes, ses fleuves, ses tempêtes, ses territoires encore inexplorés.',''],
+['oulipo',5,'now','Écrivez chacun un haïku sur l’autre, en trois minutes.',''],
+['oulipo',10,'now','Poème à quatre mains : écrivez un vers chacun votre tour, en voyant ce que l’autre a écrit.',''],
+['oulipo',15,'now','Écrivez une chanson de quatre lignes sur l’air d’une comptine.',''],
+['oulipo',5,'now','Racontez votre histoire d’amour en six mots, pas un de plus.',''],
+['oulipo',10,'now','Inventez un mot qui n’existe pas pour une émotion que vous ressentez souvent ensemble. Donnez-en la définition.',''],
+['surreal',10,'now','Racontez chacun une histoire inventée à partir d’un objet choisi par l’autre.',''],
+['surreal',5,'now','Décrivez un objet banal de chez vous comme un poète romantique.',''],
+['expansion',20,'now','Créez la une d’un journal daté de dans dix ans, consacrée à vous deux : titre, photo dessinée, articles.',''],
+['expansion',30,'now','Faites chacun un collage de votre année avec de vieux magazines ou des papiers récupérés.',''],
+['expansion',10,'now','Inventez une boisson sans alcool avec ce que vous avez, et donnez-lui un nom qui vous ressemble.',''],
+['expansion',20,'now','Composez la bande-son de votre histoire : une chanson pour chaque période.',''],
+['expansion',10,'now','Inventez une fête qui n’existe que pour vous deux : sa date, son nom, son rituel.',''],
+['expansion',15,'now','Dessinez chacun le plan de votre chez-vous idéal, puis fusionnez les deux en un seul plan.',''],
+['expansion',10,'now','Portrait chinois de votre couple : si vous étiez un film, une ville, un plat, une saison…',''],
+['expansion',15,'now','Écrivez ensemble le scénario de la bande-annonce du film de votre vie.',''],
+['expansion',20,'now','Apprenez un tour de magie avec une vidéo gratuite et faites-le à l’autre.',''],
+['expansion',15,'now','Dessinez ou peignez le même sujet pendant 15 minutes, puis comparez vos versions.',''],
+['expansion',10,'now','Faites chacun une présentation de trois minutes sur un sujet que vous adorez. L’autre pose une question.',''],
+['expansion',5,'now','Écrivez une critique gastronomique très élogieuse du dernier plat que l’autre a cuisiné.',''],
+['expansion',10,'now','Origami : apprenez à plier une grue en papier, puis offrez-la à l’autre.',''],
+['expansion',0,'week','Défi photo de la semaine : un thème par jour (lumière, ombre, rouge, fenêtre, mains). Comparez vos photos à la fin.',''],
+['expansion',0,'week','Apprenez chacun une chanson, un poème ou une tirade par cœur, et récitez-la à l’autre à la fin de la semaine.',''],
+['pospsy',15,'now','Faites ensemble la liste de 50 petites choses qui vous rendent heureux, en alternant.',''],
+['pospsy',15,'now','Bocal à souvenirs : écrivez chacun dix souvenirs communs sur des petits papiers, puis lisez-les au hasard.',''],
+['pospsy',15,'now','Écrivez une lettre à la personne que l’autre était à dix ans.',''],
+['lovemaps',10,'now','Photographiez chacun cinq choses de votre quotidien qui vous font penser à l’autre, et montrez-les.',''],
+['lovemaps',10,'now','Faites deviner à l’autre votre réponse à cinq questions sur vous. Un point par bonne réponse.',''],
+['fondness',10,'now','Écrivez ensemble une lettre à vous deux dans un an. Gardez-la jusqu’à la date prévue.',''],
+['fondness',5,'now','Chacun termine la phrase « Je t’aime parce que… » cinq fois, sans réfléchir.',''],
+['meaning',15,'now','Écrivez ensemble la liste des dix choses que vous voulez vivre avant vos 40 ans.','']
+);
+
+/* Petits défis à faire ensemble, sur le moment */
+ACTION.push(
+['touch',0,'now','Fais un bisou sur l’oreille de l’autre.','e'],
+['touch',5,'now','Masse les pieds de l’autre pendant cinq minutes.','e'],
+['touch',3,'now','Masse les épaules de l’autre pendant trois minutes.','e'],
+['touch',2,'now','Masse le cuir chevelu de l’autre pendant deux minutes.','e'],
+['touch',3,'now','Mets de la crème sur les mains de l’autre en les massant doucement.','e'],
+['touch',1,'now','Câlin de vingt secondes : interdit de lâcher avant la fin.','e'],
+['touch',0,'now','Fais un câlin à l’autre et ne le lâche pas avant qu’il ou elle rie.','e'],
+['touch',0,'now','Fais un câlin par derrière à l’autre, là, maintenant.','e'],
+['touch',0,'now','Fais un bisou esquimau, nez contre nez.','e'],
+['touch',0,'now','Fais un bisou dans le cou de l’autre.','e'],
+['touch',0,'now','Fais un bisou sur chaque doigt de la main de l’autre.','e'],
+['touch',0,'now','Fais un bisou à l’autre sur la joue, le front ou la main : c’est lui ou elle qui choisit.','e'],
+['touch',3,'now','Écris un mot du bout du doigt dans le dos de l’autre. Il ou elle doit le deviner.','e'],
+['touch',2,'now','Dessine une forme dans la paume de l’autre, qui doit la deviner les yeux fermés.','e'],
+['touch',2,'now','Pose ta tête sur les genoux de l’autre, qui te caresse les cheveux pendant deux minutes.','e'],
+['touch',5,'now','Faites la cuillère pendant cinq minutes, sans téléphone.','e'],
+['touch',1,'now','Mets-toi dans le dos de l’autre et respirez au même rythme pendant une minute.','e'],
+['touch',0,'now','Tiens la main de l’autre pendant tout le prochain épisode ou le prochain film.','e'],
+['touch',10,'now','Prépare un bain de pieds chaud pour l’autre.','e'],
+['fondness',0,'now','Chuchote à l’oreille de l’autre ce que tu préfères chez lui ou chez elle.','e'],
+['fondness',0,'now','Fais trois compliments à l’autre en le regardant dans les yeux.','e'],
+['fondness',0,'now','Prends l’autre dans tes bras et dis-lui une chose que tu n’oses pas dire d’habitude.','e'],
+['fondness',2,'now','Récite à l’oreille de l’autre un poème ou les paroles d’une chanson qui te font penser à lui ou à elle.','e'],
+['fondness',1,'now','Prends une photo de l’autre là, maintenant, comme si c’était la plus belle photo de ta vie.','e'],
+['fondness',5,'now','Écris trois post-it doux et colle-les là où l’autre les trouvera aujourd’hui.','e'],
+['bids',5,'now','Prépare une boisson chaude pour l’autre, exactement comme il ou elle l’aime.','e'],
+['bids',10,'now','Prépare un goûter surprise pour l’autre avec ce que vous avez dans les placards.','e'],
+['bids',10,'now','Installe un coin cosy pour l’autre : plaid, coussins, lumière douce.','e'],
+['bids',15,'now','Prépare une soirée film : choisis le film, installe le canapé, prépare de quoi grignoter.','e'],
+['bids',10,'now','Fais tout de suite une tâche ménagère que l’autre déteste.','e'],
+['expansion',1,'now','Faites une photo de vous deux avec la grimace la plus ridicule possible.','e'],
+['expansion',3,'now','Fais un playback sur une chanson devant l’autre, à fond.','e'],
+['expansion',1,'now','Fais une danse ridicule pendant trente secondes.','e'],
+['expansion',3,'now','Pierre-feuille-ciseaux en trois manches : le perdant fait un massage de deux minutes.','e'],
+['expansion',2,'now','Bataille de pouces en trois manches.','e'],
+['expansion',2,'now','Concours de regard : le premier qui rit doit faire un bisou à l’autre.','e'],
+['expansion',1,'now','Jouez à « Je te tiens par la barbichette ».','e'],
+['expansion',2,'now','Jacques a dit : pendant deux minutes, l’autre doit t’obéir.','e'],
+['expansion',1,'now','Bataille d’oreillers de trente secondes.','e'],
+['expansion',3,'now','Lis les lignes de la main de l’autre comme une voyante, en inventant votre avenir à deux.','e'],
+['expansion',2,'now','Lis l’horoscope de l’autre à voix haute, en inventant une prédiction sur vous deux.','e'],
+['expansion',3,'now','Fais le portrait de l’autre avec des objets de la pièce, en trois minutes.','e'],
+['expansion',3,'now','Dessine un petit tatouage au stylo sur le poignet de l’autre.','e'],
+['expansion',2,'now','Enfile un vêtement de l’autre et défile comme un mannequin.','e'],
+['expansion',5,'now','Choisissez mutuellement la tenue de l’autre pour demain.','e'],
+['expansion',3,'now','Dos à dos : décrivez chacun l’autre de mémoire, couleur des yeux et vêtements compris.','e'],
+['expansion',3,'now','Faites un selfie dans chaque pièce de votre chez-vous, en trois minutes.','e'],
+['expansion',5,'now','Recréez une vieille photo de vous deux, dans la même pose.','e'],
+['expansion',2,'now','Faites la course jusqu’au bout de l’appartement, à cloche-pied.','e'],
+['expansion',5,'now','Mini-spectacle : chante, récite ou improvise quelque chose devant l’autre, qui doit applaudir.','e'],
+['lovemaps',10,'now','Allongez-vous par terre, regardez le plafond ou le ciel, et racontez-vous un souvenir d’enfance.','e'],
+['rituals',1,'now','Pacte du petit doigt : promets à l’autre une petite chose pour la semaine.','e'],
+['rituals',0,'week','Demain matin, apporte un petit-déjeuner au lit à l’autre, même tout simple.','e'],
+['rituals',0,'week','Cette semaine, cuisine le plat préféré de l’autre.','e'],
+['bids',0,'week','Cette semaine, cache un petit mot dans la poche ou le sac de l’autre.','e'],
+['bids',0,'week','Cette semaine, rends un service que l’autre repousse depuis longtemps.','e'],
+['expansion',0,'week','Cette semaine, organise une petite sortie surprise et gratuite : balade, marché, coucher de soleil.','e'],
+['fondness',0,'week','Cette semaine, prends l’autre en photo sans qu’il ou elle le sache, dans un moment que tu trouves beau.','e'],
+['pospsy',0,'week','Cette semaine, fais une petite attention surprise à l’autre chaque jour.','']
+);
+
+const SORTS=[
+ {id:'partage',label:'Je partage'},
+ {id:'respecte',label:'Je respecte sans partager'},
+ {id:'difficile',label:'J’ai du mal avec'}
+];
+const TOPICS=[
+{id:'foi',title:'Foi et convictions',src:['meaning','dreams'],
+ why:'Vous ne voyez pas le monde de la même façon, et c’est une richesse autant qu’un défi. En parler maintenant, au calme, évite d’en parler pour la première fois au milieu d’une décision importante.',
+ prompt:'Écris 5 convictions ou valeurs qui comptent pour toi et qui viennent de ta foi ou de ta façon de voir le monde.',
+ q:['Comment ta vision du monde s’est-elle construite ? Qui ou quoi l’a façonnée ?',
+    'Parmi les valeurs de l’autre, laquelle te touche, même si elle ne vient pas du même endroit que les tiennes ?',
+    'Qu’est-ce qui te ferait te sentir respecté·e dans tes convictions ? Qu’est-ce qui pourrait te blesser sans que l’autre le veuille ?',
+    'Quelle place aimerais-tu que la foi, ou son absence, ait dans notre vie de tous les jours : fêtes, rituels, discussions, communauté ?',
+    'Y a-t-il une conviction de l’autre que tu aimerais mieux comprendre ? Pose-lui la question.']},
+{id:'enfants',title:'Éducation des enfants',src:['meaning','conflict'],
+ why:'Vous êtes d’accord sur beaucoup de choses, c’est une belle base. Ce sujet sert à repérer les quelques points où vous voyez les choses différemment, bien avant qu’ils deviennent concrets.',
+ prompt:'Écris 5 choses que tu voudrais absolument transmettre à des enfants.',
+ q:['Qu’as-tu reçu de ton éducation que tu veux garder ? Et qu’est-ce que tu ne veux pas reproduire ?',
+    'Comment aimerais-tu parler de foi et de convictions à nos enfants ? À quel âge pourraient-ils choisir par eux-mêmes ?',
+    'Que penses-tu des limites, des punitions et des récompenses ?',
+    'Comment voudrais-tu qu’on fasse quand on n’est pas d’accord devant eux ?']},
+{id:'argent',title:'L’argent',src:['meaning','dreams'],
+ why:'L’argent est une source de tension fréquente dans les couples, souvent parce qu’il représente autre chose que lui-même : la sécurité, la liberté, la générosité.',
+ prompt:'Écris 5 principes qui guident ta façon de gérer l’argent.',
+ q:['Que représentait l’argent dans ta famille quand tu étais enfant ?',
+    'Comptes communs, comptes séparés, un mélange ? Qu’est-ce qui te paraît juste ?',
+    'Quelle part aimerais-tu épargner, donner, ou dépenser pour le plaisir ?',
+    'À partir de quel montant aimerais-tu qu’on décide ensemble avant un achat ?']},
+{id:'familles',title:'Nos familles',src:['maint','meaning'],
+ why:'En vous mettant ensemble, vous rejoignez aussi deux familles, avec leurs habitudes et leurs attentes. Mieux vaut savoir ce que chacun attend avant les prochaines fêtes.',
+ prompt:'Écris 5 choses importantes dans ta relation avec ta famille.',
+ q:['À quelle fréquence aimerais-tu voir ta famille ? Et la mienne ?',
+    'Comment aimerais-tu qu’on partage les fêtes entre nos deux familles ?',
+    'Quelle place l’avis de nos parents devrait-il avoir dans nos décisions ?',
+    'Qu’est-ce qui pourrait te mettre mal à l’aise avec ma famille ? Comment pourrais-je t’aider ?']},
+{id:'travail',title:'Travail et ambitions',src:['dreams','gable'],
+ why:'Vos projets professionnels décideront en partie où et comment vous vivrez. En parler tôt permet de se soutenir plutôt que de se freiner.',
+ prompt:'Écris 5 ambitions ou envies pour ta vie professionnelle.',
+ q:['Qu’est-ce qu’une vie professionnelle réussie, pour toi ?',
+    'Jusqu’où serais-tu prêt·e à aller pour ta carrière : déménager, gagner moins, travailler plus ?',
+    'Si nos deux carrières entrent en conflit un jour, comment voudrais-tu qu’on décide ?',
+    'Comment puis-je soutenir tes ambitions, concrètement ?']},
+{id:'vivre',title:'Où et comment vivre',src:['meaning','dreams'],
+ why:'Après la distance viendra la question du lieu. Chacun a des attaches, des envies et des limites qu’il vaut mieux connaître avant de choisir.',
+ prompt:'Écris 5 critères de ton lieu de vie idéal.',
+ q:['Qu’est-ce qui te manquerait le plus si tu quittais l’endroit où tu vis ?',
+    'Ville, campagne, ton pays, le mien, ailleurs ? Qu’est-ce qui compte vraiment dans ce choix ?',
+    'À quoi ressemble ton intérieur idéal, et la vie qu’on y mène ?',
+    'Qu’est-ce qu’on doit décider, et pour quand, pour que la distance se termine ?']},
+{id:'temps',title:'Temps à deux, temps pour soi',src:['perel','maint'],
+ why:'Après des mois à distance, vivre ensemble demandera d’ajuster beaucoup de choses. Chacun a besoin de proximité et d’espace, mais pas dans les mêmes proportions.',
+ prompt:'Écris 5 besoins que tu as pour te sentir bien au quotidien : seul·e, à deux, ou avec d’autres.',
+ q:['De combien de temps seul·e as-tu besoin ? Comment le reconnais-tu ?',
+    'Quelle place tes amis doivent-ils garder dans ta vie ?',
+    'À quoi ressemble une bonne soirée à deux pour toi ? Et une bonne semaine ?',
+    'Qu’est-ce qui, dans ta vie, n’appartient qu’à toi et doit le rester ?']},
+{id:'desaccords',title:'Nos désaccords',src:['conflict','repair'],
+ why:'Tous les couples se disputent ; ce qui compte, c’est la façon de le faire. Connaître les réactions de l’autre aide à rester une équipe face au problème.',
+ prompt:'Écris 5 choses qui t’aident, ou qui te blessent, quand on n’est pas d’accord.',
+ q:['Comment les disputes se passaient-elles chez toi, enfant ?',
+    'Quand tu es en colère ou blessé·e, de quoi as-tu besoin en premier ?',
+    'Quel mot ou quel geste choisir pour dire « pause, on reprend dans 20 minutes » ?',
+    'Quelles règles voulez-vous vous fixer pour vos désaccords ? Écrivez-les ensemble dans la conclusion.']},
+{id:'limites',title:'Fidélité et limites',src:['johnson','maint'],
+ why:'Ce qui paraît évident pour l’un ne l’est pas forcément pour l’autre. La distance rend la confiance encore plus précieuse : autant savoir où chacun place ses limites.',
+ prompt:'Écris 5 limites importantes pour toi dans un couple : amitiés, réseaux sociaux, ex, intimité…',
+ q:['Qu’est-ce que la fidélité veut dire pour toi, au-delà de l’exclusivité ?',
+    'Qu’est-ce qui te rassure quand on est loin ? Qu’est-ce qui t’inquiète ?',
+    'Y a-t-il des situations où tu aimerais que je te prévienne ?',
+    'Si l’un de nous franchissait une limite, comment voudrais-tu qu’on en parle ?']},
+{id:'engagement',title:'S’engager',src:['fromm','rusbult'],
+ why:'Vous avez déjà choisi la distance, ce qui est un engagement fort. Ce sujet sert à dire ce que vous voulez construire ensuite, et comment vous continuerez à vous choisir.',
+ prompt:'Écris 5 choses que l’engagement veut dire pour toi.',
+ q:['Que représente le mariage pour toi ? Est-ce important, et sous quelle forme ?',
+    'Quelles promesses aimerais-tu qu’on se fasse ? Lesquelles te font peur ?',
+    'Comment continuer à se choisir quand la vie deviendra routinière ?',
+    'Qu’est-ce que cette période de distance nous a appris pour la suite ?']}
+];
+
+/* Pour plus tard : un paquet par étude. Carte : [section, type ('q' question, 'ex' exercice), texte, minutes] */
+Object.assign(SOURCES,{
+ johnson7:{label:'Sue Johnson · Hold Me Tight',name:'Sue Johnson · Hold Me Tight : sept conversations (2008)',what:'La fondatrice de la thérapie centrée sur l’émotion propose sept conversations pour sortir des cercles vicieux, comprendre les blessures de chacun et se sentir de nouveau en sécurité ensemble.',url:'https://catdir.loc.gov/catdir/toc/ecip081/2007041109.html'}
+});
+const PAQUETS=[
+{id:'aron',dur:'45 min',name:'Les 36 questions',study:'Arthur Aron et al. (1997)',src:['aron'],url:'https://ggia.berkeley.edu/practice/36_questions_for_increasing_closeness',
+ intro:'En 1997, le psychologue Arthur Aron a montré que des confidences réciproques, de plus en plus personnelles, créent un vrai sentiment de proximité, même entre inconnus. Le protocole compte trois séries de questions qui montent en intensité, puis quatre minutes à se regarder dans les yeux. Ces cartes sont écrites dans l’esprit de ses trois séries ; la liste originale, en anglais, est accessible par le lien.',
+ how:'Répondez tous les deux à chaque carte, en alternant qui commence. Comptez environ 15 minutes par série.',
+ cards:[
+ ['Série 1 · Faire connaissance','q','Si tu pouvais inviter n’importe qui à dîner, vivant ou disparu, qui choisirais-tu ? De quoi parleriez-vous ?'],
+ ['Série 1 · Faire connaissance','q','Aimerais-tu être connu·e du grand public ? Pour quoi ?'],
+ ['Série 1 · Faire connaissance','q','Avant un coup de fil important, t’arrive-t-il de répéter dans ta tête ce que tu vas dire ?'],
+ ['Série 1 · Faire connaissance','q','Décris une journée ordinaire, mais parfaite.'],
+ ['Série 1 · Faire connaissance','q','À quand remonte la dernière fois que tu as chanté seul·e ? Et pour quelqu’un ?'],
+ ['Série 1 · Faire connaissance','q','Si tu pouvais garder pour toujours l’esprit ou le corps de tes 30 ans, lequel choisirais-tu ?'],
+ ['Série 1 · Faire connaissance','ex','Trouvez trois choses que vous avez en commun et que vous ne saviez pas encore.',5],
+ ['Série 1 · Faire connaissance','q','Pour quoi te sens-tu le plus reconnaissant·e dans ta vie ?'],
+ ['Série 1 · Faire connaissance','q','Si tu pouvais changer une chose dans la façon dont on t’a élevé·e, ce serait quoi ?'],
+ ['Série 1 · Faire connaissance','ex','Racontez chacun votre vie en 4 minutes, avec le plus de détails possible.',8],
+ ['Série 2 · Aller plus loin','q','Si tu pouvais connaître une seule vérité sur ton avenir, laquelle demanderais-tu ?'],
+ ['Série 2 · Aller plus loin','q','Qu’est-ce que tu rêves de faire depuis longtemps ? Qu’est-ce qui t’en empêche ?'],
+ ['Série 2 · Aller plus loin','q','Quelle est la réussite dont tu es le plus fier·ère ?'],
+ ['Série 2 · Aller plus loin','q','Qu’est-ce qui compte le plus pour toi dans une amitié ?'],
+ ['Série 2 · Aller plus loin','q','Quel est ton souvenir le plus précieux ? Et le plus douloureux ?'],
+ ['Série 2 · Aller plus loin','q','Si tu savais qu’il te reste un an à vivre, que changerais-tu dès demain ?'],
+ ['Série 2 · Aller plus loin','q','Quelle place la tendresse et l’affection ont-elles dans ta vie ?'],
+ ['Série 2 · Aller plus loin','ex','Dites-vous à tour de rôle une qualité de l’autre, jusqu’à cinq chacun.',5],
+ ['Série 2 · Aller plus loin','q','Ta famille était-elle chaleureuse ? Penses-tu avoir eu une enfance plus heureuse que la plupart des gens ?'],
+ ['Série 2 · Aller plus loin','q','Comment décrirais-tu ta relation avec ta mère, ou la personne qui t’a élevé·e ?'],
+ ['Série 3 · Se livrer','ex','Dites chacun trois phrases vraies qui commencent par « Nous… », sur ce que vous vivez là, maintenant.',4],
+ ['Série 3 · Se livrer','q','Complète : « J’aimerais avoir quelqu’un avec qui partager… »'],
+ ['Série 3 · Se livrer','q','Qu’est-ce que l’autre doit savoir sur toi pour être vraiment proche de toi ?'],
+ ['Série 3 · Se livrer','q','Dis à l’autre ce que tu aimes chez lui ou chez elle, avec une honnêteté qu’on n’ose pas d’habitude.'],
+ ['Série 3 · Se livrer','q','Raconte un moment vraiment gênant de ta vie.'],
+ ['Série 3 · Se livrer','q','Quand as-tu pleuré devant quelqu’un pour la dernière fois ? Et seul·e ?'],
+ ['Série 3 · Se livrer','q','Y a-t-il un sujet trop grave pour qu’on en plaisante ?'],
+ ['Série 3 · Se livrer','q','Si tu partais ce soir sans pouvoir parler à personne, que regretterais-tu de ne pas avoir dit ? Pourquoi ne l’as-tu pas encore dit ?'],
+ ['Série 3 · Se livrer','q','Ta maison brûle, tout le monde est sauf. Tu peux sauver un seul objet. Lequel, et pourquoi ?'],
+ ['Série 3 · Se livrer','ex','Confie à l’autre un souci personnel et demande-lui comment il ou elle ferait. Puis demande-lui comment il t’a senti·e en en parlant.',10],
+ ['Pour finir','ex','Regardez-vous dans les yeux, sans parler (en visio si vous êtes loin), pendant 4 minutes. Puis dites ce que vous avez ressenti.',4]
+ ]},
+{id:'histoire',dur:'1 h',name:'Notre histoire',study:'Gottman · entretien sur l’histoire du couple',src:['oral'],
+ intro:'Dans les années 1990, l’équipe de John Gottman a demandé à des couples de raconter leur histoire. La façon dont ils en parlaient, avec tendresse ou avec amertume, en disant « nous » ou « je », permettait de prédire en grande partie l’avenir du couple. Ce paquet vous fait raconter la vôtre, à deux voix.',
+ how:'Racontez à deux voix : l’un commence, l’autre complète ou corrige. Les désaccords sur les souvenirs font partie du jeu.',
+ cards:[
+ ['La rencontre','q','Comment vous êtes-vous rencontrés ? Racontez-le comme à quelqu’un qui ne vous connaît pas.'],
+ ['La rencontre','q','Quelle a été ta première impression de l’autre ? Qu’est-ce qui t’a attiré·e ?'],
+ ['La rencontre','q','Qu’est-ce qui se passait dans ta vie à ce moment-là ?'],
+ ['Les débuts','q','Qu’est-ce que vous faisiez ensemble au début ? Quel est ton souvenir préféré de cette période ?'],
+ ['Les débuts','q','Qu’est-ce qui t’a donné envie de continuer après les premiers rendez-vous ?'],
+ ['Les débuts','q','Comment tes proches ont-ils réagi quand tu leur as parlé de l’autre ?'],
+ ['Le choix','q','À quel moment as-tu su que c’était sérieux ?'],
+ ['Le choix','q','Quelle a été la plus grande décision prise ensemble jusqu’ici ? Était-ce une évidence ou un choix difficile ?'],
+ ['Le choix','q','Qu’est-ce qui t’a fait choisir cette personne-là, et pas une autre ?'],
+ ['Les bons moments','q','Quels ont été vos meilleurs moments ensemble jusqu’ici ?'],
+ ['Les bons moments','q','Qu’est-ce qui a été plus facile que prévu ?'],
+ ['Les épreuves','q','Quels ont été les moments les plus difficiles ?'],
+ ['Les épreuves','q','Comment vous en êtes-vous sortis ? Qu’est-ce qui vous a fait tenir ?'],
+ ['Les épreuves','q','Qu’est-ce que ces moments difficiles vous ont appris l’un sur l’autre ?'],
+ ['Nos modèles','q','Comment était le couple de tes parents ? En quoi le nôtre lui ressemble-t-il, et en quoi est-il différent ?'],
+ ['Nos modèles','q','Quel couple autour de vous admirez-vous ? Lequel ne voudriez-vous pas devenir ?'],
+ ['Notre philosophie','q','D’après vous, qu’est-ce qui fait qu’un couple tient dans la durée ?'],
+ ['Notre philosophie','q','Pourquoi pensez-vous que certains couples se séparent ?'],
+ ['Notre philosophie','q','Qu’est-ce qui a le plus changé entre vous depuis le début ?'],
+ ['Pour finir','ex','Donnez ensemble un titre à chaque chapitre de votre histoire jusqu’ici, puis au chapitre qui commence.',10]
+ ]},
+{id:'huit',dur:'8 × 30 min',name:'Huit rendez-vous',study:'John et Julie Gottman · Eight Dates (2018)',src:['eightdates'],url:'https://www.goodreads.com/book/show/37588679-eight-dates',
+ intro:'Après quarante ans de recherche sur les couples, les Gottman ont choisi huit conversations à avoir absolument : confiance, conflits, intimité, travail et argent, famille, aventure, croissance et spiritualité, rêves. Ils les conçoivent comme de vrais rendez-vous, un par thème.',
+ how:'Gardez un thème par soirée, comme un vrai rendez-vous. Commencez chaque thème par la question la plus légère.',
+ cards:[
+ ['1 · Confiance et engagement','q','Qu’est-ce qui te fait confiance en moi, concrètement ?'],
+ ['1 · Confiance et engagement','q','Qu’est-ce que t’engager envers moi veut dire, pour toi, aujourd’hui ?'],
+ ['1 · Confiance et engagement','q','Y a-t-il quelque chose qui a abîmé ta confiance dans le passé, avec moi ou avec d’autres ?'],
+ ['2 · Les conflits','q','Comment ta famille gérait-elle les disputes ?'],
+ ['2 · Les conflits','q','Quand on n’est pas d’accord, qu’est-ce qui t’aide à te sentir écouté·e ?'],
+ ['2 · Les conflits','q','Quel désaccord revient souvent entre nous ? Quel besoin se cache derrière ta position ?'],
+ ['3 · L’intimité','q','Qu’est-ce qui te fait te sentir désiré·e ?'],
+ ['3 · L’intimité','q','Comment aimerais-tu qu’on parle de notre intimité, même quand c’est gênant ?'],
+ ['3 · L’intimité','q','Qu’est-ce qui entretient le lien physique entre nous, même quand on est loin ?'],
+ ['4 · Travail et argent','q','Qu’est-ce que l’argent représente pour toi : sécurité, liberté, plaisir ?'],
+ ['4 · Travail et argent','q','Quelle place veux-tu que le travail prenne dans ta vie ?'],
+ ['4 · Travail et argent','q','Comment aimerais-tu qu’on gère l’argent quand on vivra ensemble ?'],
+ ['5 · La famille','q','Quelle relation aimerais-tu qu’on ait avec nos familles ?'],
+ ['5 · La famille','q','Qu’est-ce qu’une famille, pour toi ?'],
+ ['5 · La famille','q','Qu’as-tu reçu de ta famille que tu veux transmettre ?'],
+ ['6 · Le jeu et l’aventure','q','Quand t’es-tu senti·e le plus vivant·e avec moi ?'],
+ ['6 · Le jeu et l’aventure','q','Quelle aventure aimerais-tu qu’on vive ensemble ?'],
+ ['6 · Le jeu et l’aventure','ex','Écrivez chacun cinq aventures que vous aimeriez vivre à deux, puis comparez vos listes.',10],
+ ['7 · Croissance et spiritualité','q','Comment veux-tu grandir, intérieurement, dans les années qui viennent ?'],
+ ['7 · Croissance et spiritualité','q','Qu’est-ce qui est sacré pour toi, avec ou sans religion ?'],
+ ['7 · Croissance et spiritualité','q','Comment peut-on respecter et nourrir la vie intérieure de l’autre, même si elle est différente ?'],
+ ['8 · Les rêves','q','Quel est ton plus grand rêve ?'],
+ ['8 · Les rêves','q','Quel rêve as-tu mis de côté ?'],
+ ['8 · Les rêves','q','Comment puis-je t’aider à réaliser tes rêves ?']
+ ]},
+{id:'johnson',dur:'3 h',name:'Tiens-moi fort',study:'Sue Johnson · Hold Me Tight (2008)',src:['johnson7'],url:'https://catdir.loc.gov/catdir/toc/ecip081/2007041109.html',
+ intro:'Pour Sue Johnson, fondatrice de la thérapie centrée sur l’émotion, beaucoup de disputes cachent une même question : « Es-tu là pour moi ? » Elle propose sept conversations pour comprendre vos réactions, apaiser les blessures et vous sentir en sécurité ensemble. Ce paquet les adapte, avec douceur.',
+ how:'Ce paquet est le plus intime. Prenez-le dans l’ordre, en plusieurs fois, et seulement quand vous êtes tous les deux disponibles.',
+ cards:[
+ ['1 · Nos cercles vicieux','q','Quand on se dispute, qui a tendance à insister, et qui à se retirer ?'],
+ ['1 · Nos cercles vicieux','q','Quand je me ferme ou quand j’insiste, qu’est-ce que tu ressens ?'],
+ ['1 · Nos cercles vicieux','ex','Décrivez ensemble votre « danse » quand ça coince : « Plus tu…, plus je… ». Donnez-lui un nom, pour pouvoir dire « Attention, c’est notre danse ».',10],
+ ['2 · Nos points sensibles','q','Quels mots ou quelles attitudes te touchent plus fort que les autres ?'],
+ ['2 · Nos points sensibles','q','D’où vient cette sensibilité, d’après toi ?'],
+ ['2 · Nos points sensibles','q','Quand ce point sensible est touché, de quoi as-tu besoin de ma part ?'],
+ ['3 · Revenir sur un moment difficile','ex','Choisissez une petite dispute passée. Racontez-la chacun de votre côté, en parlant de ce que vous ressentiez, pas de ce que l’autre a fait.',15],
+ ['3 · Revenir sur un moment difficile','q','Qu’est-ce que tu aurais eu besoin que je dise ou fasse, à ce moment-là ?'],
+ ['4 · Se rejoindre','q','De quoi as-tu le plus peur dans notre relation ?'],
+ ['4 · Se rejoindre','q','De quoi as-tu le plus besoin de ma part, en ce moment ?'],
+ ['4 · Se rejoindre','ex','Finissez chacun la phrase : « J’ai besoin de savoir que… » Puis l’autre répond simplement à ce besoin.',5],
+ ['5 · Pardonner les blessures','q','Y a-t-il une blessure entre nous qui n’est pas tout à fait refermée ?'],
+ ['5 · Pardonner les blessures','q','De quoi aurais-tu besoin pour la laisser derrière toi ?'],
+ ['6 · Tendresse et toucher','q','Comment est-ce que je te fais sentir aimé·e physiquement, de près comme de loin ?'],
+ ['6 · Tendresse et toucher','q','Qu’est-ce qui te manque le plus dans la tendresse quand on est séparés, même quelques jours ?'],
+ ['7 · Faire vivre notre amour','q','Quels rituels nous rapprochent ? Lequel aimerais-tu ajouter ?'],
+ ['7 · Faire vivre notre amour','ex','Racontez ensemble l’histoire de votre couple dans cinq ans, comme si elle s’était très bien passée.',10]
+ ]},
+{id:'recit',dur:'1 h 30 par personne',name:'Le récit de vie',study:'Dan McAdams · The Life Story Interview',src:['mcadams'],url:'https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/4/3901/files/2020/11/The-Life-Story-Interview-II-2007.pdf',
+ intro:'Le psychologue Dan McAdams étudie l’identité comme une histoire qu’on se raconte. Son entretien suit une structure précise : les chapitres de la vie, quelques scènes clés, l’avenir, les défis, les convictions et le fil rouge. Ici, vous vous écoutez raconter votre vie.',
+ how:'Une personne raconte tout le paquet pendant que l’autre écoute et pose des questions, puis on inverse la fois suivante. Ou bien répondez chacun à chaque carte.',
+ cards:[
+ ['Les chapitres','ex','Découpe ta vie en deux à sept chapitres, comme un livre. Donne un titre à chacun et résume-les.',15],
+ ['Les scènes clés','q','Le sommet : le moment où tu t’es senti·e le plus heureux·se ou le plus vivant·e.'],
+ ['Les scènes clés','q','Le point bas : un moment très dur. Qu’est-ce qui t’a aidé·e à le traverser ?'],
+ ['Les scènes clés','q','Le tournant : un moment qui a changé la direction de ta vie.'],
+ ['Les scènes clés','q','Un souvenir d’enfance heureux.'],
+ ['Les scènes clés','q','Un souvenir d’enfance difficile.'],
+ ['Les scènes clés','q','Un souvenir d’adulte très net, que tu revois comme un film.'],
+ ['Les scènes clés','q','Un moment spirituel, mystique, ou simplement plus grand que toi.'],
+ ['Les scènes clés','q','Un moment où tu as fait preuve de sagesse, ou où quelqu’un t’en a appris.'],
+ ['L’avenir','q','À quoi ressemble le prochain chapitre de ta vie ?'],
+ ['L’avenir','q','Quels sont tes rêves et tes espoirs pour la suite ?'],
+ ['L’avenir','q','Quel projet porte ta vie en ce moment ?'],
+ ['Les défis','q','Quel est le plus grand défi de ta vie jusqu’ici ? Comment l’as-tu affronté ?'],
+ ['Les défis','q','Quelle perte t’a le plus marqué·e ?'],
+ ['Les défis','q','Quel échec ou quel regret portes-tu ?'],
+ ['Les convictions','q','En quoi crois-tu ? Comment cette conviction a-t-elle évolué ?'],
+ ['Les convictions','q','Quelle est la valeur la plus importante de ta vie ?'],
+ ['Le fil rouge','q','En regardant toute ton histoire, quel thème revient ? Quel message ta vie raconte-t-elle ?'],
+ ['Pour finir','q','À l’écoute : qu’est-ce qui t’a le plus touché·e ou surpris·e dans l’histoire de l’autre ?']
+ ]},
+{id:'valeurs',dur:'1 h',name:'Nos valeurs',study:'Shalom Schwartz · théorie des valeurs fondamentales',src:['schwartz','prep'],url:'https://uranos.ch/research/references/Schwartz_2006/Schwartzpaper.pdf',
+ intro:'Le psychologue Shalom Schwartz a montré, dans des dizaines de pays, que dix valeurs fondamentales existent partout. Chacun les classe à sa façon, et deux personnes qui s’aiment peuvent les classer très différemment. Ce paquet commence par vos propres valeurs, puis passe les dix en revue.',
+ how:'Gardez le guide de conversation ouvert pour ce paquet : l’objectif est de comprendre l’autre, pas de le convaincre.',
+ cards:[
+ ['Vos 5 valeurs','ex','Écrivez chacun, sur un papier, 5 valeurs ou convictions qui comptent pour vous, sans les montrer.',5],
+ ['Vos 5 valeurs','ex','Lisez-vous vos listes chacun votre tour. Pour chaque valeur de l’autre, dites où vous la placez : « Je partage », « Je respecte sans partager », ou « J’ai du mal avec ».',10],
+ ['Vos 5 valeurs','q','Reprenez les valeurs placées dans « J’ai du mal avec ». Celui qui les a écrites explique ce qu’il y met, l’autre reformule avant de répondre.'],
+ ['Les dix valeurs','q','Autonomie : penser et choisir par soi-même. Quelle place a-t-elle dans ta vie ?'],
+ ['Les dix valeurs','q','Stimulation : la nouveauté, le défi, l’excitation. En as-tu besoin, ou t’épuise-t-elle ?'],
+ ['Les dix valeurs','q','Plaisir : profiter de la vie. Est-ce que tu t’autorises assez à en profiter ?'],
+ ['Les dix valeurs','q','Réussite : être compétent et reconnu. Qu’est-ce que réussir veut dire pour toi ?'],
+ ['Les dix valeurs','q','Pouvoir : avoir de l’influence, des ressources. Est-ce important pour toi ? Pourquoi ?'],
+ ['Les dix valeurs','q','Sécurité : la stabilité, pour soi et pour les siens. De quoi as-tu besoin pour te sentir en sécurité ?'],
+ ['Les dix valeurs','q','Conformité : respecter les règles et ne pas blesser les autres. Quelles règles te paraissent sacrées ?'],
+ ['Les dix valeurs','q','Tradition : respecter ce qu’on a reçu, religion ou coutumes. Que veux-tu garder de ce que tu as reçu ?'],
+ ['Les dix valeurs','q','Bienveillance : prendre soin des proches. Comment le montres-tu ?'],
+ ['Les dix valeurs','q','Universalisme : la justice, la nature, le bien de tous. Qu’est-ce qui te révolte dans le monde ?'],
+ ['Pour finir','ex','Classez chacun les dix valeurs de la plus importante à la moins importante. Comparez vos trois premières et vos trois dernières.',10],
+ ['Pour finir','q','Où nos valeurs se rejoignent-elles, même quand on ne les exprime pas de la même façon ?']
+ ]},
+{id:'engager',dur:'2 h',name:'Avant de s’engager',study:'New York Times (2016) et PREPARE/ENRICH',src:['nyt','prepare'],url:'https://www.today.com/health/what-know-getting-married-13-difficult-questions-couples-need-ask-t82516',
+ intro:'Les conseillers conjugaux utilisent des questionnaires comme PREPARE/ENRICH pour faire le point avant un engagement, et un article du New York Times écrit avec des thérapeutes a rendu célèbres « 13 questions à se poser avant de se marier ». Ce paquet en reprend les thèmes, du quotidien jusqu’au plus lointain.',
+ how:'Avancez dans l’ordre : on commence par le quotidien et on finit par le plus lointain. Rien ne presse pour les dernières cartes.',
+ cards:[
+ ['Communiquer','q','Qu’est-ce qui te donne envie de te confier ? Et qu’est-ce qui te fait te refermer ?'],
+ ['Communiquer','q','Y a-t-il des sujets dont tu as du mal à parler avec moi ?'],
+ ['Les conflits','q','Comment tes parents se disputaient-ils, et se réconciliaient-ils ?'],
+ ['Les conflits','q','Quelles règles voudrais-tu qu’on se fixe pour nos disputes ?'],
+ ['Le quotidien','q','Comment imagines-tu le partage des tâches à la maison ?'],
+ ['Le quotidien','q','De combien de temps seul·e as-tu besoin, et comment me le diras-tu ?'],
+ ['Les loisirs','q','Quels loisirs veux-tu garder pour toi, et lesquels aimerais-tu partager ?'],
+ ['Les autres','q','Quelle place veux-tu que nos amis aient dans notre vie ?'],
+ ['Les autres','q','Comment partagera-t-on les fêtes entre nos deux familles ?'],
+ ['Les autres','q','Jusqu’où nos parents peuvent-ils donner leur avis sur nos choix ?'],
+ ['L’argent','q','Es-tu plutôt dépensier·ère ou économe ? Et moi ?'],
+ ['L’argent','q','Compte commun, comptes séparés, un mélange ?'],
+ ['L’argent','q','As-tu des dettes, des projets d’épargne, des peurs liées à l’argent ?'],
+ ['Intimité et fidélité','q','Qu’est-ce que la fidélité veut dire pour toi ? Où places-tu la limite ?'],
+ ['Intimité et fidélité','q','Qu’attends-tu de notre vie intime dans la durée ?'],
+ ['La foi','q','Quelle place la foi, ou son absence, aura-t-elle dans notre maison ?'],
+ ['La foi','q','Comment voudrais-tu qu’on célèbre les fêtes religieuses ou laïques ?'],
+ ['Où vivre','q','Où imagines-tu qu’on vivra ? Qu’est-ce qui compte le plus dans ce choix ?'],
+ ['Les enfants','q','Veux-tu des enfants ? Quand, combien, et pourquoi ?'],
+ ['Les enfants','q','Que voudrais-tu leur transmettre, et que ne voudrais-tu surtout pas reproduire ?'],
+ ['Les enfants','q','Comment parlera-t-on de foi et de convictions à des enfants, nous qui voyons les choses différemment ?'],
+ ['L’avenir','q','Que fait-on si l’un de nous reçoit une belle opportunité loin de l’autre ?'],
+ ['L’avenir','q','Comment veux-tu qu’on se soutienne si l’un de nous tombe malade ou traverse une période très dure ?'],
+ ['Pour finir','q','Quelle est la question que tu n’as jamais osé me poser sur notre avenir ?']
+ ]},
+{id:'ecrivains',dur:'45 min',name:'Questionnaires d’écrivains',study:'Proust, Pivot et Frisch',src:['proust','pivot','frisch'],url:'https://en.wikipedia.org/wiki/Proust_Questionnaire',
+ intro:'Le questionnaire de Proust était un jeu de salon de l’époque victorienne, auquel Marcel Proust a répondu jeune ; on le pose encore aujourd’hui aux célébrités. Bernard Pivot en a tiré une version courte pour son émission. L’écrivain Max Frisch a écrit des questions plus dérangeantes sur l’espoir, l’amitié ou le mariage. Ce paquet suit ces trois questionnaires.',
+ how:'Répondez vite, sans trop réfléchir, puis revenez sur les réponses qui vous surprennent.',
+ cards:[
+ ['Le questionnaire de Proust','q','Le principal trait de ton caractère ?'],
+ ['Le questionnaire de Proust','q','La qualité que tu préfères chez quelqu’un ?'],
+ ['Le questionnaire de Proust','q','Ce que tu apprécies le plus chez tes amis ?'],
+ ['Le questionnaire de Proust','q','Ton principal défaut ?'],
+ ['Le questionnaire de Proust','q','Ton occupation préférée ?'],
+ ['Le questionnaire de Proust','q','Ton rêve de bonheur ?'],
+ ['Le questionnaire de Proust','q','Quel serait ton plus grand malheur ?'],
+ ['Le questionnaire de Proust','q','Ce que tu voudrais être ?'],
+ ['Le questionnaire de Proust','q','Le pays où tu désirerais vivre ?'],
+ ['Le questionnaire de Proust','q','Ta couleur, ta fleur et ton oiseau préférés ?'],
+ ['Le questionnaire de Proust','q','Tes auteurs, tes musiciens et tes peintres préférés ?'],
+ ['Le questionnaire de Proust','q','Tes héros dans la fiction ? Et dans la vie réelle ?'],
+ ['Le questionnaire de Proust','q','Ce que tu détestes par-dessus tout ?'],
+ ['Le questionnaire de Proust','q','Le don de la nature que tu voudrais avoir ?'],
+ ['Le questionnaire de Proust','q','Les fautes qui t’inspirent le plus d’indulgence ?'],
+ ['Le questionnaire de Proust','q','Ton état d’esprit actuel ?'],
+ ['Le questionnaire de Proust','q','Ta devise ?'],
+ ['La version de Pivot','q','Ton mot préféré ? Et celui que tu détestes ?'],
+ ['La version de Pivot','q','Ce qui t’enthousiasme ? Et ce qui te met en colère ?'],
+ ['La version de Pivot','q','Le son et le bruit que tu préfères ? Et celui que tu détestes ?'],
+ ['La version de Pivot','q','Le métier que tu aurais aimé faire ? Et celui que tu ne ferais pour rien au monde ?'],
+ ['À la manière de Frisch','q','Quel espoir as-tu abandonné ? Est-ce que tu le regrettes ?'],
+ ['À la manière de Frisch','q','Qu’est-ce que tu possèdes qui te possède un peu aussi ?'],
+ ['À la manière de Frisch','q','Combien de vrais amis as-tu ? Qu’est-ce qui fait qu’ils le sont ?'],
+ ['À la manière de Frisch','q','Te sens-tu plus libre avec moi, ou moins ?'],
+ ['À la manière de Frisch','q','Une promesse t’a-t-elle déjà libéré·e plutôt qu’enfermé·e ?'],
+ ['À la manière de Frisch','q','Où te sens-tu chez toi : un lieu, des gens, une langue ?'],
+ ['À la manière de Frisch','q','Qu’est-ce que tu sais de l’amour aujourd’hui que tu ne savais pas à 15 ans ?']
+ ]}
+];
+
+
+const PILES={verite:{name:'Vérité',short:'VÉRITÉ'},action:{name:'Action',short:'ACTION'}};
+const PILE_IDS=new Set(Object.keys(PILES));
+function hash(s){ let h=5381; for(let i=0;i<s.length;i++){ h=((h<<5)+h+s.charCodeAt(i))>>>0 } return h.toString(36) }
+const BASE=[];
+VERITE.forEach(r=>BASE.push({id:'v-'+hash(r[2]),pile:'verite',theme:r[0],src:r[1],text:r[2],min:0,when:''}));
+ACTION.forEach(r=>BASE.push({id:'a-'+hash(r[3]),pile:'action',theme:'',src:r[0],min:r[1],when:r[2],text:r[3],mode:r[4]||''}));
+const BY_ID=new Map(BASE.map(c=>[c.id,c]));
+
+const LS='par-avion-v3';
+const S={drawn:{},custom:{},current:null,confirming:null};
+let db=null, mode='loading', readonly=false, busy=false, animate=false, noteTimer=null;
+let timer={end:0,left:0,running:false,id:null,cardId:null};
+const $=id=>document.getElementById(id);
+
+function allCards(pile){
+  const custom=Object.values(S.custom).filter(c=>c.pile===pile).sort((a,b)=>(a.at||0)-(b.at||0));
+  return BASE.filter(c=>c.pile===pile).concat(custom);
+}
+function cardById(id){ if(!id) return null; return BY_ID.get(id)||S.custom[id]||null }
+let DIST=true; try{ const v=localStorage.getItem('knot-distance'); if(v==='0') DIST=false }catch(e){}
+function modeOk(c){ if(c.pile!=='action') return true; return DIST?c.mode!=='e':c.mode!=='d' }
+function remaining(pile){ return allCards(pile).filter(c=>!S.drawn[c.id]&&modeOk(c)) }
+
+function loadLocal(){ try{const r=JSON.parse(localStorage.getItem(LS)||'null'); if(r){S.drawn=r.drawn||{};S.custom=r.custom||{};S.current=r.current||null}}catch(e){} }
+function saveLocal(){ if(mode!=='local') return; try{localStorage.setItem(LS,JSON.stringify({drawn:S.drawn,custom:S.custom,current:S.current}))}catch(e){} }
+
+function note(msg,ok){ const n=$('note'); n.textContent=msg; n.className='note'+(ok?' ok':''); n.hidden=false; clearTimeout(noteTimer); noteTimer=setTimeout(()=>{n.hidden=true},6000) }
+const unsubs=[];
+function goLocal(){
+  unsubs.splice(0).forEach(u=>{ try{u()}catch(e){} });
+  db=null; mode='local'; readonly=false; busy=false;
+  S.drawn={}; S.custom={}; S.current=null; loadLocal(); render();
+  note('Les cartes se tirent sur ce téléphone seulement. Pour un paquet partagé, ouvrez la page avec le même compte Claude.');
+}
+function writeFailed(e){
+  if(e&&(e.code==='invalid_argument'||e.code==='not_granted'||e.code==='revoked')){ goLocal(); return }
+  note('La carte n’a pas pu être enregistrée. Réessaie dans un instant.');
+  render();
+}
+
+function renderRefs(){
+  const ul=$('refs'); ul.textContent='';
+  Object.values(SOURCES).forEach(s=>{
+    const li=document.createElement('li');
+    const b=document.createElement('b'); b.textContent=s.name;
+    const sp=document.createElement('span'); sp.textContent=s.what;
+    li.append(b,sp);
+    if(s.url){ const a=document.createElement('a'); a.href=s.url; a.target='_blank'; a.rel='noopener'; a.textContent='En savoir plus'; li.append(a) }
+    ul.append(li);
+  });
+}
+
+function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return m+':'+String(s).padStart(2,'0') }
+function resetTimer(c){ clearInterval(timer.id); timer={end:0,left:c&&c.min?c.min*60:0,running:false,id:null,cardId:c?c.id:null} }
+function tick(){
+  timer.left=Math.max(0,Math.round((timer.end-Date.now())/1000));
+  if(timer.left===0){ clearInterval(timer.id); timer.running=false; timer.done=true; try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){} }
+  renderTimer();
+}
+function renderTimer(){
+  const c=cardById(S.current);
+  const show=!!(c&&c.pile==='action'&&c.min);
+  $('timer').hidden=!show; if(!show) return;
+  if(timer.cardId!==c.id) resetTimer(c);
+  const clock=$('clock');
+  if(timer.done&&!timer.running){ clock.textContent='Temps écoulé'; clock.className='clock done' }
+  else { clock.textContent=fmt(timer.left); clock.className='clock' }
+  $('timerbtn').textContent=timer.running?'Pause':(timer.done?'Relancer':(timer.left<c.min*60?'Reprendre':'Lancer le minuteur'));
+  $('timerreset').hidden=!(timer.running||timer.left<c.min*60||timer.done);
+}
+$('timerbtn').onclick=()=>{
+  const c=cardById(S.current); if(!c||!c.min) return;
+  if(timer.running){ clearInterval(timer.id); timer.running=false; tick(); return }
+  if(timer.done||timer.left<=0){ timer.left=c.min*60; timer.done=false }
+  timer.end=Date.now()+timer.left*1000; timer.running=true; clearInterval(timer.id); timer.id=setInterval(tick,500); renderTimer();
+};
+$('timerreset').onclick=()=>{ resetTimer(cardById(S.current)); renderTimer() };
+
+const KNOT_SVG='<svg class="knot" viewBox="0 0 100 44" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3.00 22.00 L5.50 22.00 L8.00 22.00 L10.50 22.00 L13.00 22.00 L13.37 21.99 L13.73 21.98 L14.08 21.95 L14.42 21.91 L14.75 21.87 L15.07 21.81 L15.38 21.75 L15.69 21.68 L15.99 21.60 L16.28 21.51 L16.57 21.41 L16.85 21.31 L17.13 21.20 L17.40 21.09 L17.68 20.97 L17.94 20.85 L18.21 20.72 L18.47 20.59 L18.74 20.45 L19.00 20.31 L19.26 20.17 L19.53 20.03 L19.79 19.88 L20.06 19.73 L20.32 19.58 L20.60 19.43 L20.87 19.28 L21.15 19.13 L21.43 18.98 L21.72 18.84 L22.01 18.69 L22.31 18.54 L22.62 18.40 L22.93 18.26 L23.25 18.12 L23.58 17.99 L23.92 17.86 L24.27 17.74 L24.63 17.62 L25.00 17.50 L26.28 17.06 L27.56 16.62 L28.84 16.18 L30.12 15.74 L31.40 15.30 L32.68 14.86 L33.96 14.42 L35.24 13.98 L36.52 13.54 L37.80 13.10 L39.08 12.66 L40.36 12.22 L41.64 11.78 L42.92 11.34 L44.20 10.90 L45.48 10.46 L46.12 10.24" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M3.00 22.00 L5.50 22.00 L8.00 22.00 L10.50 22.00 L13.00 22.00 L13.37 21.99 L13.73 21.98 L14.08 21.95 L14.42 21.91 L14.75 21.87 L15.07 21.81 L15.38 21.75 L15.69 21.68 L15.99 21.60 L16.28 21.51 L16.57 21.41 L16.85 21.31 L17.13 21.20 L17.40 21.09 L17.68 20.97 L17.94 20.85 L18.21 20.72 L18.47 20.59 L18.74 20.45 L19.00 20.31 L19.26 20.17 L19.53 20.03 L19.79 19.88 L20.06 19.73 L20.32 19.58 L20.60 19.43 L20.87 19.28 L21.15 19.13 L21.43 18.98 L21.72 18.84 L22.01 18.69 L22.31 18.54 L22.62 18.40 L22.93 18.26 L23.25 18.12 L23.58 17.99 L23.92 17.86 L24.27 17.74 L24.63 17.62 L25.00 17.50 L26.28 17.06 L27.56 16.62 L28.84 16.18 L30.12 15.74 L31.40 15.30 L32.68 14.86 L33.96 14.42 L35.24 13.98 L36.52 13.54 L37.80 13.10 L39.08 12.66 L40.36 12.22 L41.64 11.78 L42.92 11.34 L44.20 10.90 L45.48 10.46 L46.12 10.24" stroke="currentColor" stroke-width="4"/><path d="M54.44 7.38 L55.72 6.94 L57.00 6.50 L58.46 6.07 L59.85 5.83 L61.16 5.76 L62.40 5.86 L63.56 6.11 L64.65 6.51 L65.66 7.05 L66.60 7.71 L67.46 8.49 L68.25 9.38 L68.96 10.36 L69.60 11.43 L70.16 12.58 L70.65 13.80 L71.06 15.08 L71.40 16.40 L71.66 17.77 L71.85 19.16 L71.96 20.58 L72.00 22.00 L71.96 23.42" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M54.44 7.38 L55.72 6.94 L57.00 6.50 L58.46 6.07 L59.85 5.83 L61.16 5.76 L62.40 5.86 L63.56 6.11 L64.65 6.51 L65.66 7.05 L66.60 7.71 L67.46 8.49 L68.25 9.38 L68.96 10.36 L69.60 11.43 L70.16 12.58 L70.65 13.80 L71.06 15.08 L71.40 16.40 L71.66 17.77 L71.85 19.16 L71.96 20.58 L72.00 22.00 L71.96 23.42" stroke="currentColor" stroke-width="4"/><path d="M69.89 32.00 L69.29 33.11 L68.62 34.14 L67.87 35.08 L67.04 35.92 L66.14 36.64 L65.17 37.24 L64.12 37.71 L62.99 38.04 L61.79 38.21 L60.52 38.23 L59.17 38.07 L57.74 37.74 L56.36 37.28 L55.08 36.84 L53.80 36.40 L52.52 35.96 L51.24 35.52 L49.96 35.08 L48.68 34.64 L47.40 34.20 L46.12 33.76 L44.84 33.32 L43.56 32.88 L42.28 32.44 L41.00 32.00 L39.72 31.56 L38.44 31.12 L37.16 30.68 L35.88 30.24 L34.60 29.80 L33.32 29.36 L32.68 29.14" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M69.89 32.00 L69.29 33.11 L68.62 34.14 L67.87 35.08 L67.04 35.92 L66.14 36.64 L65.17 37.24 L64.12 37.71 L62.99 38.04 L61.79 38.21 L60.52 38.23 L59.17 38.07 L57.74 37.74 L56.36 37.28 L55.08 36.84 L53.80 36.40 L52.52 35.96 L51.24 35.52 L49.96 35.08 L48.68 34.64 L47.40 34.20 L46.12 33.76 L44.84 33.32 L43.56 32.88 L42.28 32.44 L41.00 32.00 L39.72 31.56 L38.44 31.12 L37.16 30.68 L35.88 30.24 L34.60 29.80 L33.32 29.36 L32.68 29.14" stroke="currentColor" stroke-width="4"/><path d="M24.63 26.38 L24.27 26.26 L23.92 26.14 L23.58 26.01 L23.25 25.88 L22.93 25.74 L22.62 25.60 L22.31 25.46 L22.01 25.31 L21.72 25.16 L21.43 25.02 L21.15 24.87 L20.87 24.72 L20.60 24.57 L20.32 24.42 L20.06 24.27 L19.79 24.12 L19.53 23.97 L19.26 23.83 L19.00 23.69 L18.74 23.55 L18.47 23.41 L18.21 23.28 L17.94 23.15 L17.68 23.03 L17.40 22.91 L17.13 22.80 L16.85 22.69 L16.57 22.59 L16.28 22.49 L15.99 22.40 L15.69 22.32 L15.38 22.25 L15.07 22.19 L14.75 22.13 L14.42 22.09 L14.08 22.05 L13.73 22.02 L13.37 22.01 L13.00 22.00" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M24.63 26.38 L24.27 26.26 L23.92 26.14 L23.58 26.01 L23.25 25.88 L22.93 25.74 L22.62 25.60 L22.31 25.46 L22.01 25.31 L21.72 25.16 L21.43 25.02 L21.15 24.87 L20.87 24.72 L20.60 24.57 L20.32 24.42 L20.06 24.27 L19.79 24.12 L19.53 23.97 L19.26 23.83 L19.00 23.69 L18.74 23.55 L18.47 23.41 L18.21 23.28 L17.94 23.15 L17.68 23.03 L17.40 22.91 L17.13 22.80 L16.85 22.69 L16.57 22.59 L16.28 22.49 L15.99 22.40 L15.69 22.32 L15.38 22.25 L15.07 22.19 L14.75 22.13 L14.42 22.09 L14.08 22.05 L13.73 22.02 L13.37 22.01 L13.00 22.00" stroke="currentColor" stroke-width="4"/><path d="M97.00 22.00 L94.50 22.00 L92.00 22.00 L89.50 22.00 L87.00 22.00 L86.63 21.99 L86.27 21.98 L85.92 21.95 L85.58 21.91 L85.25 21.87 L84.93 21.81 L84.62 21.75 L84.31 21.68 L84.01 21.60 L83.72 21.51 L83.43 21.41 L83.15 21.31 L82.87 21.20 L82.60 21.09 L82.32 20.97 L82.06 20.85 L81.79 20.72 L81.53 20.59 L81.26 20.45 L81.00 20.31 L80.74 20.17 L80.47 20.03 L80.21 19.88 L79.94 19.73 L79.68 19.58 L79.40 19.43 L79.13 19.28 L78.85 19.13 L78.57 18.98 L78.28 18.84 L77.99 18.69 L77.69 18.54 L77.38 18.40 L77.07 18.26 L76.75 18.12 L76.42 17.99 L76.08 17.86 L75.73 17.74 L75.37 17.62" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M97.00 22.00 L94.50 22.00 L92.00 22.00 L89.50 22.00 L87.00 22.00 L86.63 21.99 L86.27 21.98 L85.92 21.95 L85.58 21.91 L85.25 21.87 L84.93 21.81 L84.62 21.75 L84.31 21.68 L84.01 21.60 L83.72 21.51 L83.43 21.41 L83.15 21.31 L82.87 21.20 L82.60 21.09 L82.32 20.97 L82.06 20.85 L81.79 20.72 L81.53 20.59 L81.26 20.45 L81.00 20.31 L80.74 20.17 L80.47 20.03 L80.21 19.88 L79.94 19.73 L79.68 19.58 L79.40 19.43 L79.13 19.28 L78.85 19.13 L78.57 18.98 L78.28 18.84 L77.99 18.69 L77.69 18.54 L77.38 18.40 L77.07 18.26 L76.75 18.12 L76.42 17.99 L76.08 17.86 L75.73 17.74 L75.37 17.62" stroke="currentColor" stroke-width="4"/><path d="M67.32 14.86 L66.04 14.42 L64.76 13.98 L63.48 13.54 L62.20 13.10 L60.92 12.66 L59.64 12.22 L58.36 11.78 L57.08 11.34 L55.80 10.90 L54.52 10.46 L53.24 10.02 L51.96 9.58 L50.68 9.14 L49.40 8.70 L48.12 8.26 L46.84 7.82 L45.56 7.38 L44.28 6.94 L43.00 6.50 L41.54 6.07 L40.15 5.83 L38.84 5.76 L37.60 5.86 L36.44 6.11 L35.35 6.51 L34.34 7.05 L33.40 7.71 L32.54 8.49 L31.75 9.38 L31.04 10.36 L30.40 11.43 L30.11 12.00" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M67.32 14.86 L66.04 14.42 L64.76 13.98 L63.48 13.54 L62.20 13.10 L60.92 12.66 L59.64 12.22 L58.36 11.78 L57.08 11.34 L55.80 10.90 L54.52 10.46 L53.24 10.02 L51.96 9.58 L50.68 9.14 L49.40 8.70 L48.12 8.26 L46.84 7.82 L45.56 7.38 L44.28 6.94 L43.00 6.50 L41.54 6.07 L40.15 5.83 L38.84 5.76 L37.60 5.86 L36.44 6.11 L35.35 6.51 L34.34 7.05 L33.40 7.71 L32.54 8.49 L31.75 9.38 L31.04 10.36 L30.40 11.43 L30.11 12.00" stroke="currentColor" stroke-width="4"/><path d="M28.04 20.58 L28.00 22.00 L28.04 23.42 L28.15 24.84 L28.34 26.23 L28.60 27.60 L28.94 28.92 L29.35 30.20 L29.84 31.42 L30.40 32.57 L31.04 33.64 L31.75 34.62 L32.54 35.51 L33.40 36.29 L34.34 36.95 L35.35 37.49 L36.44 37.89 L37.60 38.14 L38.84 38.24 L40.15 38.17 L41.54 37.93 L43.00 37.50 L44.28 37.06 L45.56 36.62" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M28.04 20.58 L28.00 22.00 L28.04 23.42 L28.15 24.84 L28.34 26.23 L28.60 27.60 L28.94 28.92 L29.35 30.20 L29.84 31.42 L30.40 32.57 L31.04 33.64 L31.75 34.62 L32.54 35.51 L33.40 36.29 L34.34 36.95 L35.35 37.49 L36.44 37.89 L37.60 38.14 L38.84 38.24 L40.15 38.17 L41.54 37.93 L43.00 37.50 L44.28 37.06 L45.56 36.62" stroke="currentColor" stroke-width="4"/><path d="M53.88 33.76 L55.16 33.32 L56.44 32.88 L57.72 32.44 L59.00 32.00 L60.28 31.56 L61.56 31.12 L62.84 30.68 L64.12 30.24 L65.40 29.80 L66.68 29.36 L67.96 28.92 L69.24 28.48 L70.52 28.04 L71.80 27.60 L73.08 27.16 L74.36 26.72 L75.19 26.44 L75.55 26.33 L75.90 26.20 L76.25 26.07 L76.58 25.94 L76.91 25.81 L77.23 25.67 L77.54 25.53 L77.84 25.38 L78.14 25.24 L78.43 25.09 L78.71 24.94 L78.99 24.79 L79.27 24.64 L79.54 24.49 L79.81 24.34 L80.08 24.19 L80.34 24.05 L80.61 23.90 L80.87 23.76 L81.13 23.62 L81.39 23.48 L81.66 23.35 L81.92 23.22 L82.19 23.09 L82.46 22.97 L82.73 22.85 L83.01 22.74 L83.29 22.64 L83.57 22.54 L83.86 22.45 L84.16 22.36 L84.46 22.29 L84.77 22.22 L85.09 22.16 L85.42 22.11 L85.75 22.07 L86.10 22.03 L86.45 22.01 L86.81 22.00 L87.00 22.00" stroke="var(--knot-edge,currentColor)" stroke-width="6.4"/><path d="M53.88 33.76 L55.16 33.32 L56.44 32.88 L57.72 32.44 L59.00 32.00 L60.28 31.56 L61.56 31.12 L62.84 30.68 L64.12 30.24 L65.40 29.80 L66.68 29.36 L67.96 28.92 L69.24 28.48 L70.52 28.04 L71.80 27.60 L73.08 27.16 L74.36 26.72 L75.19 26.44 L75.55 26.33 L75.90 26.20 L76.25 26.07 L76.58 25.94 L76.91 25.81 L77.23 25.67 L77.54 25.53 L77.84 25.38 L78.14 25.24 L78.43 25.09 L78.71 24.94 L78.99 24.79 L79.27 24.64 L79.54 24.49 L79.81 24.34 L80.08 24.19 L80.34 24.05 L80.61 23.90 L80.87 23.76 L81.13 23.62 L81.39 23.48 L81.66 23.35 L81.92 23.22 L82.19 23.09 L82.46 22.97 L82.73 22.85 L83.01 22.74 L83.29 22.64 L83.57 22.54 L83.86 22.45 L84.16 22.36 L84.46 22.29 L84.77 22.22 L85.09 22.16 L85.42 22.11 L85.75 22.07 L86.10 22.03 L86.45 22.01 L86.81 22.00 L87.00 22.00" stroke="currentColor" stroke-width="4"/><path d="M7.5 17V27M92.5 17V27" stroke="var(--knot-edge,currentColor)" stroke-width="3.2" stroke-linecap="round"/></g></svg>';
+function cornerHTML(letter,num){ const d=document.createElement('div'); const b=document.createElement('b'); b.textContent=letter; d.append(b); if(num){ const s=document.createElement('span'); s.textContent=num; d.append(s) } d.insertAdjacentHTML('beforeend',KNOT_SVG); return d }
+function setCorners(letter,num){ ['ctl','cbr'].forEach(id=>{ const c=$(id); c.textContent=''; c.append(...cornerHTML(letter,num).childNodes) }) }
+function lenClass(t){ return t.length>220?' xlong':(t.length>140?' long':'') }
+function render(){
+  const sy=$('sync'); const m=readonly?'readonly':mode;
+  sy.dataset.mode=m;
+  sy.textContent={loading:'Connexion…',shared:'Paquet partagé à deux',local:'Sur cet appareil seulement',readonly:'Lecture seule'}[m];
+
+  const canWrite=!readonly&&mode!=='loading';
+  for(const p of PILE_IDS){
+    const left=remaining(p).length;
+    $('count-'+p).textContent=left+' / '+allCards(p).filter(modeOk).length+' cartes';
+    $('pile-'+p).disabled=!canWrite||busy||left===0;
+  }
+  $('distsw').setAttribute('aria-checked',String(DIST));
+
+  const cur=cardById(S.current);
+  const card=$('card'), q=$('q'), meta=$('meta');
+  meta.textContent='';
+  if(cur){
+    const list=allCards(cur.pile);
+    const idx=list.findIndex(c=>c.id===cur.id)+1;
+    card.className='card '+cur.pile;
+    setCorners(cur.pile==='action'?'A':'V',String(idx));
+    let k=PILES[cur.pile].name;
+    if(cur.pile==='verite'&&THEMES[cur.theme]) k+=' · '+THEMES[cur.theme];
+    if(cur.pile==='action') k+=' · '+(cur.when==='week'?'Cette semaine':(cur.min?cur.min+' min':'Maintenant'));
+    $('kicker').textContent=k;
+    q.textContent=cur.text; q.className='q'+lenClass(cur.text);
+    const src=SOURCES[cur.src]; const s=document.createElement('span');
+    if(src){ s.className='src'; s.textContent='D’après '+src.label }
+    else if(String(cur.id).startsWith('perso-')){ s.textContent='Carte ajoutée par vous' }
+    if(s.textContent) meta.append(s);
+    meta.hidden=!meta.childNodes.length;
+  } else {
+    card.className='card cover';
+    setCorners('K','');
+    $('kicker').textContent='Prêts ?';
+    q.className='q cover';
+    q.textContent='Choisissez Vérité ou Action pour tirer la première carte.';
+    meta.hidden=true;
+  }
+  if(animate){ card.classList.remove('enter'); void card.offsetWidth; card.classList.add('enter'); animate=false }
+  renderTimer();
+
+  $('skip').disabled=!canWrite||busy||!cur;
+
+  const drawn=Object.entries(S.drawn).filter(([id,v])=>v&&cardById(id)).sort((a,b)=>(b[1].at||0)-(a[1].at||0));
+  $('hcount').textContent='('+drawn.length+')';
+  const hl=$('hlist'); hl.textContent='';
+  if(!drawn.length){ const li=document.createElement('li'); li.className='empty'; li.textContent='Aucune carte tirée pour l’instant.'; hl.append(li) }
+  drawn.slice(0,60).forEach(([id])=>{ const c=cardById(id); const li=document.createElement('li');
+    const n=document.createElement('span'); n.className=c.pile==='action'?'a':'v'; n.textContent=PILES[c.pile].name;
+    const t=document.createElement('div'); t.textContent=c.text; li.append(n,t); hl.append(li) });
+
+  $('addbtn').disabled=!canWrite;
+  renderMine();
+  for(const p of PILE_IDS){ const n=Object.values(S.drawn).filter(v=>v&&v.pile===p).length; $('reshuffle-'+p).disabled=!canWrite||n===0 }
+  $('confirm').hidden=!S.confirming;
+  if(S.confirming){ const n=Object.values(S.drawn).filter(v=>v&&v.pile===S.confirming).length;
+    $('confirmtext').textContent='Les '+n+' carte'+(n>1?'s':'')+' « '+PILES[S.confirming].name+' » déjà tirée'+(n>1?'s':'')+' reviendront dans la pile, pour vous deux.' }
+  renderTopics();
+}
+
+async function draw(pile,excludeId){
+  if(busy) return false;
+  const p=remaining(pile).filter(c=>c.id!==excludeId);
+  if(!p.length) return false;
+  const c=p[Math.floor(Math.random()*p.length)];
+  const at=Date.now();
+  busy=true;
+  S.drawn={...S.drawn,[c.id]:{pile,at}}; S.current=c.id; animate=true; render(); saveLocal();
+  try{
+    if(mode==='shared'){ await db.doc('drawn/'+c.id).set({pile,at}); await db.doc('state/current').set({cardId:c.id,at}); }
+  }catch(e){ const d={...S.drawn}; delete d[c.id]; S.drawn=d; busy=false; writeFailed(e); return false }
+  busy=false; render(); return true;
+}
+async function skip(){
+  const old=S.current; const c=cardById(old); if(!c||busy) return;
+  if(!remaining(c.pile).some(x=>x.id!==old)){ note('Il n’y a plus d’autre carte dans cette pile.'); return }
+  const ok=await draw(c.pile,old); if(!ok) return;
+  const d={...S.drawn}; delete d[old]; S.drawn=d; render(); saveLocal();
+  if(mode==='shared'){ try{ await db.doc('drawn/'+old).delete() }catch(e){ writeFailed(e) } }
+}
+async function reshuffle(pile){
+  const ids=Object.keys(S.drawn).filter(id=>S.drawn[id]&&S.drawn[id].pile===pile);
+  S.confirming=null; busy=true;
+  const d={...S.drawn}; ids.forEach(id=>delete d[id]); S.drawn=d;
+  const cur=cardById(S.current); const curIn=!!cur&&cur.pile===pile;
+  if(curIn) S.current=null;
+  render(); saveLocal();
+  try{
+    if(mode==='shared'){ for(const id of ids){ await db.doc('drawn/'+id).delete() } if(curIn) await db.doc('state/current').delete() }
+  }catch(e){ writeFailed(e) }
+  busy=false; render();
+}
+async function addCard(pile,text,min){
+  const id='perso-'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  min=pile==='action'?Math.max(0,Math.min(120,min|0)):0;
+  const c={id,pile,theme:'',src:'',text,min,when:'',at:Date.now()};
+  S.custom={...S.custom,[id]:c}; render(); saveLocal();
+  if(mode==='shared'){ try{ await db.doc('cards/'+id).set({pile,text,min,at:c.at}) }catch(e){ const x={...S.custom}; delete x[id]; S.custom=x; writeFailed(e); return } }
+  note('Carte ajoutée à la pile « '+PILES[pile].name+' ».',true);
+}
+let confirmDel=null, editing=null;
+async function editCard(id,text,min){
+  const c=S.custom[id]; if(!c) return;
+  min=c.pile==='action'?Math.max(0,Math.min(120,min|0)):0;
+  const prev=c; const upd={...c,text,min};
+  editing=null; S.custom={...S.custom,[id]:upd};
+  if(S.current===id&&typeof resetTimer==='function') resetTimer(upd);
+  render(); saveLocal();
+  if(mode==='shared'){ try{ await db.doc('cards/'+id).set({pile:upd.pile,text,min,at:upd.at||Date.now()}) }catch(e){ S.custom={...S.custom,[id]:prev}; writeFailed(e); return } }
+  note('Carte modifiée.',true);
+}
+async function deleteCard(id){
+  confirmDel=null;
+  const x={...S.custom}; delete x[id]; S.custom=x;
+  const wasDrawn=!!S.drawn[id]; if(wasDrawn){ const d={...S.drawn}; delete d[id]; S.drawn=d }
+  const wasCur=S.current===id; if(wasCur) S.current=null;
+  render(); saveLocal();
+  if(mode==='shared'){ try{
+    await db.doc('cards/'+id).delete();
+    if(wasDrawn) await db.doc('drawn/'+id).delete();
+    if(wasCur) await db.doc('state/current').delete();
+  }catch(e){ writeFailed(e); return } }
+  note('Carte supprimée.',true);
+}
+function renderMine(){
+  if(editing&&document.getElementById('edit-'+editing)&&S.custom[editing]) return;
+  const mine=Object.values(S.custom).sort((a,b)=>(b.at||0)-(a.at||0));
+  $('minetitle').textContent=mine.length?'Vos cartes ('+mine.length+')':'Les cartes que vous ajoutez apparaîtront ici.';
+  const ul=$('minelist'); ul.textContent='';
+  const canWrite=!readonly&&mode!=='loading';
+  mine.forEach(c=>{
+    const li=document.createElement('li');
+    const txt=document.createElement('div'); txt.className='txt';
+    const tag=document.createElement('span'); tag.className=c.pile==='action'?'a':'';
+    tag.textContent=PILES[c.pile].name+(c.pile==='action'&&c.min?' · '+c.min+' min':'');
+    const t=document.createElement('div'); t.textContent=c.text;
+    txt.append(tag,t);
+    const del=document.createElement('div'); del.className='del';
+    if(editing===c.id){
+      li.className='editing';
+      const ta=document.createElement('textarea'); ta.id='edit-'+c.id; ta.maxLength=300; ta.value=c.text;
+      const wrap=document.createElement('div'); wrap.className='editbox'; wrap.append(ta);
+      let sel=null;
+      if(c.pile==='action'){
+        sel=document.createElement('input'); sel.type='number'; sel.min='1'; sel.max='120'; sel.step='1'; sel.inputMode='numeric'; sel.placeholder='—';
+        sel.className='editmin'; sel.id='editmin-'+c.id; sel.value=c.min?String(c.min):'';
+        const r=document.createElement('div'); r.className='row'; const l=document.createElement('label'); l.htmlFor=sel.id; l.textContent='Minuteur';
+        const h=document.createElement('span'); h.className='muted'; h.textContent='minutes · facultatif';
+        r.append(l,sel,h); wrap.append(r);
+      }
+      const acts=document.createElement('div'); acts.className='del';
+      const save=document.createElement('button'); save.type='button'; save.className='btn primary'; save.textContent='Enregistrer';
+      save.onclick=()=>{ const t=ta.value.trim(); if(!t){ note('La carte ne peut pas être vide.'); return } editCard(c.id,t.slice(0,300),sel?Math.round(+sel.value)||0:0) };
+      const cancel=document.createElement('button'); cancel.type='button'; cancel.className='btn'; cancel.textContent='Annuler';
+      cancel.onclick=()=>{ editing=null; renderMine() };
+      acts.append(save,cancel); wrap.append(acts);
+      li.append(wrap); ul.append(li); setTimeout(()=>{ try{ta.focus()}catch(e){} },0); return;
+    }
+    if(confirmDel===c.id){
+      const yes=document.createElement('button'); yes.type='button'; yes.className='btn primary'; yes.textContent='Supprimer';
+      yes.onclick=()=>deleteCard(c.id);
+      const no=document.createElement('button'); no.type='button'; no.className='btn'; no.textContent='Annuler';
+      no.onclick=()=>{ confirmDel=null; renderMine() };
+      del.append(yes,no);
+    } else {
+      const b=document.createElement('button'); b.type='button'; b.className='btn'; b.textContent='Supprimer'; b.disabled=!canWrite;
+      b.setAttribute('aria-label','Supprimer la carte : '+c.text);
+      b.onclick=()=>{ confirmDel=c.id; editing=null; renderMine() };
+      const m=document.createElement('button'); m.type='button'; m.className='btn'; m.textContent='Modifier'; m.disabled=!canWrite;
+      m.setAttribute('aria-label','Modifier la carte : '+c.text);
+      m.onclick=()=>{ editing=c.id; confirmDel=null; renderMine() };
+      del.append(m,b);
+    }
+    li.append(txt,del); ul.append(li);
+  });
+}
+
+const STOP=new Set('le la les l un une des du de d au aux et ou ton ta tes tu toi te t mon ma mes moi me m je j nous notre nos vous votre vos il elle on ils elles ce cet cette ces c ca cela qu que qui quoi quel quelle quels quelles est es suis etre a as ai avez avons en dans sur pour par avec sans plus pas ne n y se s si sa son ses leur leurs comme quand comment pourquoi ou est-ce ce-que tout tous toute toutes tres bien fait faire peu deja encore autre autres celui celle ceux lui eux meme aussi alors donc mais car'.split(' '));
+function toks(s){
+  const w=s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’']/g,' ').replace(/[^a-z0-9\s-]/g,' ').split(/[\s-]+/);
+  const out=new Set(); w.forEach(x=>{ if(!x||STOP.has(x)||x.length<3) return; out.add(x.replace(/(s|x)$/,'').slice(0,5)) }); return out;
+}
+const TOK=new Map();
+function tokOf(c){ let t=TOK.get(c.id+'|'+c.text); if(!t){ t=toks(c.text); TOK.set(c.id+'|'+c.text,t) } return t }
+function similar(text,pile,exceptId){
+  const A=toks(text); if(A.size<2) return null;
+  let best=null,bs=0;
+  for(const c of allCards(pile)){ if(c.id===exceptId) continue; const B=tokOf(c); if(B.size<2) continue;
+    let n=0; A.forEach(x=>{ if(B.has(x)) n++ });
+    if(n<2) continue;
+    const cont=n/Math.min(A.size,B.size), jac=n/(A.size+B.size-n);
+    const s=cont*0.6+jac*0.4;
+    const need=Math.min(A.size,B.size)<3?0.66:0.4;
+    if(cont>=0.75&&jac>=need&&s>bs){ bs=s; best=c } }
+  return best;
+}
+let dupTimer=null;
+function checkDup(){
+  const w=$('dupwarn'); const t=$('addtext').value.trim();
+  const pile=$('add-action').checked?'action':'verite';
+  const m=t?similar(t,pile,null):null;
+  w.textContent=''; w.hidden=!m;
+  $('addbtn').textContent=m?'Ajouter quand même':'Ajouter à la pile';
+  if(!m) return;
+  const q=document.createElement('q'); q.textContent=m.text;
+  w.append(document.createTextNode('Cette carte existe déjà sous une autre forme, ce n’est sans doute pas utile de l’ajouter :'),q);
+}
+$('addtext').addEventListener('input',()=>{ clearTimeout(dupTimer); dupTimer=setTimeout(checkDup,250) });
+function syncAddMin(){ $('addminrow').hidden=!$('add-action').checked; checkDup() }
+$('add-action').addEventListener('change',syncAddMin);
+$('add-verite').addEventListener('change',syncAddMin);
+
+$('distsw').onclick=()=>{ DIST=!DIST; try{localStorage.setItem('knot-distance',DIST?'1':'0')}catch(e){} render() };
+$('pile-verite').onclick=()=>draw('verite');
+$('pile-action').onclick=()=>draw('action');
+$('skip').onclick=skip;
+$('reshuffle-verite').onclick=()=>{S.confirming='verite';render()};
+$('reshuffle-action').onclick=()=>{S.confirming='action';render()};
+$('confirmno').onclick=()=>{S.confirming=null;render()};
+$('confirmyes').onclick=()=>{ if(S.confirming) reshuffle(S.confirming) };
+$('addform').addEventListener('submit',e=>{e.preventDefault(); const t=$('addtext').value.trim(); if(!t) return;
+  addCard($('add-action').checked?'action':'verite',t.slice(0,300),Math.round(+$('addmin').value)||0); $('addtext').value=''; $('addmin').value=''; checkDup()});
+
+/* ---------- Pour plus tard ---------- */
+const TLS='par-avion-plus-tard-v1';
+const T={view:'av',open:null,data:{}};
+try{ T.data=JSON.parse(localStorage.getItem(TLS)||'{}')||{} }catch(e){ T.data={} }
+function tSave(){ try{ localStorage.setItem(TLS,JSON.stringify(T.data)) }catch(e){} }
+function tGet(id){ return T.data[id]||(T.data[id]={mine:['','','','',''],placed:[],common:'',diff:'',how:'',done:false}) }
+function el(tag,cls,text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e }
+let saveTimer=null; function tSaveSoon(){ clearTimeout(saveTimer); saveTimer=setTimeout(tSave,300) }
+
+function setView(v){
+  T.view=v;
+  $('tab-av').setAttribute('aria-selected',String(v==='av'));
+  $('tab-topics').setAttribute('aria-selected',String(v==='topics'));
+  $('view-av').hidden=v!=='av'; $('view-topics').hidden=v!=='topics';
+  $('footer').textContent=v==='av'?'Rien à écrire ici : parlez-en, et gardez le reste dans votre carnet.':'Un sujet quand vous voulez, à votre rythme.';
+  renderTopics();
+}
+$('tab-av').onclick=()=>setView('av');
+$('tab-topics').onclick=()=>setView('topics');
+
+function topicStatus(t){
+  const d=T.data[t.id]; if(!d) return {label:'',cls:''};
+  if(d.done) return {label:'Fait',cls:'done'};
+  if(d.mine.some(x=>x.trim())||d.common||d.diff||d.how) return {label:'Commencé',cls:'go'};
+  return {label:'',cls:''};
+}
+
+const KLS='par-avion-paquets-v1';
+let K={}; try{ K=JSON.parse(localStorage.getItem(KLS)||'{}')||{} }catch(e){ K={} }
+function kSave(){ try{ localStorage.setItem(KLS,JSON.stringify(K)) }catch(e){} }
+function kGet(id){ return K[id]||(K[id]={i:-1,max:-1}) }
+let ptimer={key:null,left:0,end:0,running:false,done:false,id:null};
+
+function renderTopics(){
+  if(T.view!=='topics') return;
+  const root=$('view-topics'); root.textContent='';
+  if(T.open){ const pq=PAQUETS.find(x=>x.id===T.open); if(pq){ renderPaquet(root,pq); return } T.open=null }
+
+  const intro=el('div','panel');
+  intro.append(el('h2',null,'Pour plus tard'),
+    el('p',null,'Huit paquets, chacun tiré d’une étude ou d’un questionnaire reconnu. Les cartes se suivent dans l’ordre prévu par la méthode, pour avancer pas à pas.'),
+    el('p','muted','Rien à configurer : votre progression reste sur ce téléphone.'));
+  root.append(intro);
+  root.append(guideBox(true));
+
+  const ul=el('ul','plist');
+  PAQUETS.forEach((pq,n)=>{
+    const d=K[pq.id]; const tot=pq.cards.length;
+    const li=el('li'); const b=el('button','pitem'); b.type='button';
+    const txt=el('span','ptxt'); txt.append(el('b',null,pq.name),el('span',null,pq.study));
+    let st='';
+    if(d&&d.max>=tot-1) st='Terminé'; else if(d&&d.i>=0) st=(d.i+1)+' / '+tot; else st=tot+' cartes · '+pq.dur;
+    b.append(el('span','num',String(n+1).padStart(2,'0')),txt,el('span','status'+(d&&d.max>=tot-1?' done':(d&&d.i>=0?' go':'')),st));
+    b.onclick=()=>{ T.open=pq.id; renderTopics(); window.scrollTo(0,0) };
+    li.append(b); ul.append(li);
+  });
+  root.append(ul);
+}
+
+function guideBox(open){
+  const g=document.createElement('details'); g.className='guide'; if(open) g.open=true;
+  g.append(el('summary',null,'Guide de conversation'));
+  const r=el('ul','rule');
+  ['Celui qui parle parle de lui, avec des « je », en phrases courtes.',
+   'L’autre reformule ce qu’il a compris avant de répondre : « Si je comprends bien, pour toi… »',
+   'On cherche à comprendre, pas à convaincre. Les solutions viendront après.',
+   'On a le droit de passer une carte, sans se justifier.',
+   'Si ça chauffe, pause de 20 minutes, puis on reprend.'].forEach(x=>r.append(el('li',null,x)));
+  g.append(el('p','muted','Valable pour tous les paquets.'),r,srcLine(['prep','conflict']));
+  return g;
+}
+function fmtT(s){ return Math.floor(s/60)+':'+String(s%60).padStart(2,'0') }
+function renderPaquet(root,pq){
+  const d=kGet(pq.id); const tot=pq.cards.length;
+  const back=el('button','link back','← Tous les paquets'); back.type='button';
+  back.onclick=()=>{ clearInterval(ptimer.id); ptimer.running=false; T.open=null; renderTopics() };
+  root.append(back);
+
+  const head=el('div','panel');
+  head.append(el('p','muted',pq.study),el('h2',null,pq.name),el('p','muted',tot+' cartes · environ '+pq.dur));
+  if(d.i<0){ head.append(el('p',null,pq.intro)); }
+  else { const det=document.createElement('details'); det.className='mini'; det.append(el('summary',null,'À propos de cette étude'),el('p',null,pq.intro)); head.append(det) }
+  head.append(el('p','muted',pq.how),srcLine(pq.src));
+  if(pq.url){ const a=document.createElement('a'); a.href=pq.url; a.target='_blank'; a.rel='noopener'; a.className='srclink'; a.textContent='Voir l’étude'; head.append(a) }
+  root.append(head);
+
+  if(d.i<0){
+    const go=el('button','btn primary wide','Commencer le paquet'); go.type='button';
+    go.onclick=()=>{ d.i=0; d.max=Math.max(d.max,0); kSave(); renderTopics() };
+    root.append(go);
+  } else {
+    const c=pq.cards[d.i];
+    const prog=el('div','prog'); const bar=el('span'); bar.style.width=Math.round((d.i+1)/tot*100)+'%'; prog.append(bar);
+    prog.setAttribute('role','progressbar'); prog.setAttribute('aria-valuemin','1'); prog.setAttribute('aria-valuemax',String(tot)); prog.setAttribute('aria-valuenow',String(d.i+1));
+    root.append(prog);
+    const card=el('article','card pcard'); const inn=el('div','card-in');
+    ['tl','br'].forEach(pos=>{ const co=el('div','corner '+pos); co.setAttribute('aria-hidden','true'); co.append(...cornerHTML(String(PAQUETS.indexOf(pq)+1),String(d.i+1)+'/'+tot).childNodes); inn.append(co) });
+    inn.append(el('p','kicker',c[0]+(c[1]==='ex'?' · Exercice':'')),el('p','q'+lenClass(c[2]),c[2]));
+    if(c[1]==='ex'&&c[3]){
+      const key=pq.id+':'+d.i; if(ptimer.key!==key){ clearInterval(ptimer.id); ptimer={key,left:c[3]*60,end:0,running:false,done:false,id:null} }
+      const tw=el('div','timer'); const clock=el('span','clock'+(ptimer.done?' done':''),ptimer.done?'Temps écoulé':fmtT(ptimer.left));
+      const tb=el('button','btn small primary',ptimer.running?'Pause':(ptimer.done?'Relancer':(ptimer.left<c[3]*60?'Reprendre':'Lancer le minuteur'))); tb.type='button';
+      const tick=()=>{ ptimer.left=Math.max(0,Math.round((ptimer.end-Date.now())/1000)); if(ptimer.left===0){ clearInterval(ptimer.id); ptimer.running=false; ptimer.done=true; try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){} }
+        if(document.body.contains(clock)){ clock.textContent=ptimer.done?'Temps écoulé':fmtT(ptimer.left); clock.className='clock'+(ptimer.done?' done':''); tb.textContent=ptimer.running?'Pause':(ptimer.done?'Relancer':'Reprendre') } };
+      tb.onclick=()=>{ if(ptimer.running){ clearInterval(ptimer.id); ptimer.running=false; tick(); return }
+        if(ptimer.done||ptimer.left<=0){ ptimer.left=c[3]*60; ptimer.done=false }
+        ptimer.end=Date.now()+ptimer.left*1000; ptimer.running=true; clearInterval(ptimer.id); ptimer.id=setInterval(tick,500); tb.textContent='Pause' };
+      tw.append(clock,tb); inn.append(tw);
+    }
+    card.append(inn); root.append(card);
+
+    const row=el('div','actions pnav');
+    const prev=el('button','btn','Précédente'); prev.type='button'; prev.disabled=d.i===0;
+    prev.onclick=()=>{ d.i--; kSave(); renderTopics() };
+    const last=d.i>=tot-1;
+    const next=el('button','btn primary',last?'Terminer le paquet':'Carte suivante'); next.type='button';
+    next.onclick=()=>{ if(last){ d.max=tot-1; d.i=tot-1; kSave(); T.open=null; renderTopics(); window.scrollTo(0,0); return } d.i++; d.max=Math.max(d.max,d.i); kSave(); renderTopics() };
+    row.append(prev,next); root.append(row);
+
+    root.append(guideBox(false));
+
+    const rs=el('button','link','Recommencer ce paquet'); rs.type='button';
+    const conf=el('div','confirm'); conf.hidden=true;
+    conf.append(el('span',null,'Le paquet reviendra à la première carte, sur ce téléphone.'));
+    const cr=el('div','actions'); const y=el('button','btn small primary','Recommencer'); y.type='button'; const n=el('button','btn small','Annuler'); n.type='button';
+    y.onclick=()=>{ K[pq.id]={i:-1,max:-1}; kSave(); renderTopics() }; n.onclick=()=>{ conf.hidden=true };
+    cr.append(y,n); conf.append(cr); rs.onclick=()=>{ conf.hidden=false };
+    root.append(rs,conf);
+  }
+}
+
+function srcLine(keys){ const labels=keys.map(k=>SOURCES[k]&&SOURCES[k].label).filter(Boolean); return el('p','srcline','D’après '+labels.join(' · ')) }
+function step(n,title){ const h=el('h3'); h.append(el('span','step','ÉTAPE '+n),document.createTextNode(title)); return h }
+
+function renderTopic(root,t){
+  const d=tGet(t.id); const idx=TOPICS.indexOf(t);
+  const back=el('button','link back','← Tous les sujets'); back.type='button';
+  back.onclick=()=>{ T.open=null; tSave(); renderTopics() };
+  root.append(back);
+
+  const head=el('div','panel');
+  head.append(el('p','muted','Sujet '+String(idx+1).padStart(2,'0')+' / '+TOPICS.length),el('h2',null,t.title),el('p',null,t.why),srcLine(t.src));
+  root.append(head);
+
+  const s1=el('div','panel');
+  s1.append(step(1,'Chacun de son côté'),el('p',null,t.prompt),
+    el('p','muted','Écrivez chacun sur votre téléphone, ou sur un papier, sans vous montrer vos réponses.'));
+  const f=el('div','fields');
+  d.mine.forEach((v,i)=>{ const inp=document.createElement('input'); inp.id='mine-'+t.id+'-'+i; inp.maxLength=160; inp.placeholder=(i+1)+'.'; inp.value=v;
+    inp.oninput=()=>{ d.mine[i]=inp.value; tSaveSoon() }; f.append(inp) });
+  s1.append(f); root.append(s1);
+
+  const s2=el('div','panel');
+  s2.append(step(2,'L’échange'),
+    el('p',null,'Lisez-vous vos réponses chacun votre tour. Pour chaque réponse de l’autre, dites où vous la placez :'));
+  const legend=el('ul','rule');
+  [['Je partage','vous avez la même valeur, peut-être pour d’autres raisons.'],
+   ['Je respecte sans partager','ce n’est pas la tienne, mais tu la comprends.'],
+   ['J’ai du mal avec','c’est là que la conversation sera la plus utile. Ce n’est pas un reproche.']]
+   .forEach(([a,b])=>{ const li=el('li'); li.append(el('b',null,a+' : '),document.createTextNode(b)); legend.append(li) });
+  s2.append(legend);
+  const filled=d.mine.map((x,i)=>[x.trim(),i]).filter(([x])=>x);
+  if(filled.length){
+    s2.append(el('p','muted','Note ici où l’autre a placé tes réponses :'));
+    const ul=el('ul','vals');
+    filled.forEach(([x,i])=>{ const li=el('li'); li.append(el('span',null,x)); const ch=el('div','chips');
+      SORTS.forEach(o=>{ const b=el('button','chipbtn',o.label); b.type='button'; b.setAttribute('aria-pressed',String(d.placed[i]===o.id));
+        b.onclick=()=>{ d.placed[i]=d.placed[i]===o.id?'':o.id; tSave(); [...ch.children].forEach((x,k)=>x.setAttribute('aria-pressed',String(d.placed[i]===SORTS[k].id))) };
+        ch.append(b) });
+      li.append(ch); ul.append(li) });
+    s2.append(ul);
+  }
+  root.append(s2);
+
+  const s3=el('div','panel');
+  s3.append(step(3,'La conversation'),el('p',null,'La règle, le temps de ce sujet :'));
+  const r=el('ul','rule');
+  ['Celui qui parle parle de lui, avec des « je », en phrases courtes.',
+   'L’autre reformule ce qu’il a compris avant de répondre : « Si je comprends bien, pour toi… »',
+   'On cherche à comprendre, pas à convaincre. Les solutions viendront après.',
+   'Si ça chauffe, pause de 20 minutes, puis on reprend.'].forEach(x=>r.append(el('li',null,x)));
+  s3.append(r,srcLine(['prep','conflict']));
+  const qs=el('ol','qs');
+  const li0=el('li'); li0.append(el('span',null,'Pour commencer'),document.createTextNode('Reprenez les réponses placées dans « J’ai du mal avec ». Celui qui les a écrites explique ce qu’il y met, l’autre reformule.')); qs.append(li0);
+  t.q.forEach((q,i)=>{ const li=el('li'); li.append(el('span',null,i%2===0?'L’un commence':'L’autre commence'),document.createTextNode(q)); qs.append(li) });
+  s3.append(qs); root.append(s3);
+
+  const s4=el('div','panel concl');
+  s4.append(step(4,'Ce que vous retenez'),el('p','muted','À la fin de l’appel, notez ensemble l’essentiel. Un seul de vous deux peut l’écrire, ou chacun de son côté.'));
+  [['common','Ce qu’on a en commun'],['diff','Ce qui reste différent'],['how','Comment on fera avec']].forEach(([k,label])=>{
+    const l=el('label',null,label); const ta=document.createElement('textarea'); ta.id='concl-'+t.id+'-'+k; ta.maxLength=1200; ta.value=d[k]||'';
+    ta.oninput=()=>{ d[k]=ta.value; tSaveSoon() }; l.append(ta); s4.append(l) });
+  const row=el('div','actions');
+  const done=el('button','btn primary',d.done?'Rouvrir le sujet':'Marquer comme fait'); done.type='button';
+  done.onclick=()=>{ d.done=!d.done; tSave(); if(d.done){ T.open=null; window.scrollTo(0,0) } renderTopics() };
+  const clear=el('button','btn','Effacer ce sujet'); clear.type='button';
+  const conf=el('div','confirm'); conf.hidden=true;
+  conf.append(el('span',null,'Tout ce que tu as écrit pour ce sujet sur ce téléphone sera effacé.'));
+  const cr=el('div','actions'); const yes=el('button','btn small primary','Effacer'); yes.type='button'; const no=el('button','btn small','Annuler'); no.type='button';
+  yes.onclick=()=>{ delete T.data[t.id]; tSave(); renderTopics() }; no.onclick=()=>{ conf.hidden=true };
+  cr.append(yes,no); conf.append(cr);
+  clear.onclick=()=>{ conf.hidden=false };
+  row.append(done,clear); s4.append(row,conf); root.append(s4);
+}
+
+renderRefs();
+render();
+
+(async()=>{
+  let ns=null;
+  try{ ns=window.claude&&window.claude.use?await window.claude.use('db'):null }catch(e){ ns=null }
+  if(!ns){ mode='local'; loadLocal(); render(); return }
+  db=ns; mode='shared'; render();
+  const onErr=e=>{ if(e&&(e.code==='revoked'||e.code==='not_granted')) goLocal() };
+  unsubs.push(db.collection('drawn').onSnapshot(s=>{ const o={}; s.docs.forEach(d=>{const v=d.data(); if(v&&PILE_IDS.has(v.pile)) o[d.id]={pile:v.pile,at:+v.at||0}}); S.drawn=o; render() },onErr));
+  unsubs.push(db.collection('cards').onSnapshot(s=>{ const o={}; s.docs.forEach(d=>{const v=d.data(); if(v&&typeof v.text==='string'&&PILE_IDS.has(v.pile)) o[d.id]={id:d.id,pile:v.pile,theme:'',src:(typeof v.src==='string'&&SOURCES[v.src])?v.src:'',text:v.text.slice(0,400),min:Math.max(0,Math.min(120,+v.min||0)),when:v.when==='week'?'week':'',at:+v.at||0}}); S.custom=o; render() },onErr));
+  unsubs.push(db.doc('state/current').onSnapshot(d=>{ const v=d.exists?d.data():null; const id=v&&typeof v.cardId==='string'?v.cardId:null;
+    if(id!==S.current){ S.current=id; animate=true } render() },onErr));
+})();
+</script>
