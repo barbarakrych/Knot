@@ -12,7 +12,7 @@
   "id": "a-1nanh7q",
   "source": "aron",
   "taille": "petite",
-  "minutes": 8,
+  "minutes": 4,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Raconte-moi ta vie en 4 minutes, avec le plus de détails possible. Puis c’est à moi."
@@ -57,7 +57,7 @@
   "id": "a-1qno26g",
   "source": "fondness",
   "taille": "petite",
-  "minutes": 8,
+  "minutes": 3,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Chacun écrit en 3 minutes 10 choses qu’il aime chez l’autre, puis les lit à voix haute."
@@ -66,7 +66,7 @@
   "id": "a-1pcszwy",
   "source": "fondness",
   "taille": "petite",
-  "minutes": 4,
+  "minutes": 2,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Deux minutes de compliments sans répétition, pendant que l’autre écoute sans répondre. Puis on inverse."
@@ -75,7 +75,7 @@
   "id": "a-1pfk3rz",
   "source": "fondness",
   "taille": "petite",
-  "minutes": 10,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Écrivez chacun une mini lettre d’amour en 5 minutes, puis lisez-la à voix haute."
@@ -327,7 +327,7 @@
   "id": "a-1mc6sr6",
   "source": "expansion",
   "taille": "petite",
-  "minutes": 5,
+  "minutes": 2,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Défendez très sérieusement pendant 2 minutes une opinion absurde choisie par l’autre."
@@ -627,7 +627,7 @@
   "id": "a-1b8akkr",
   "source": "pospsy",
   "taille": "petite",
-  "minutes": 10,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Lettre de gratitude : écris en 5 minutes un merci précis pour une chose que l’autre a faite, puis lis-le à voix haute. Ensuite c’est son tour."
@@ -636,7 +636,7 @@
   "id": "a-1j9kt2p",
   "source": "pospsy",
   "taille": "petite",
-  "minutes": 12,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Meilleur soi possible : écrivez chacun 5 minutes sur votre vie dans dix ans si tout se passait au mieux, puis lisez-vous vos textes."
@@ -663,7 +663,7 @@
   "id": "a-1j8yiu0",
   "source": "fred",
   "taille": "petite",
-  "minutes": 6,
+  "minutes": 3,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Fermez les yeux 3 minutes et pensez à l’autre en lui souhaitant du bien, en silence. Puis dites ce que vous avez ressenti."
@@ -1414,7 +1414,7 @@
   "id": "a-r5di6t",
   "source": "oral",
   "taille": "petite",
-  "minutes": 5,
+  "minutes": 2,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Rejouez votre premier rendez-vous en version accélérée, en deux minutes."
@@ -1441,7 +1441,7 @@
   "id": "a-1wra95d",
   "source": "oulipo",
   "taille": "petite",
-  "minutes": 5,
+  "minutes": 3,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Écrivez chacun un haïku sur l’autre, en trois minutes."
@@ -1594,7 +1594,7 @@
   "id": "a-1bbmks8",
   "source": "expansion",
   "taille": "petite",
-  "minutes": 10,
+  "minutes": 3,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Faites chacun une présentation de trois minutes sur un sujet que vous adorez. L’autre pose une question."
