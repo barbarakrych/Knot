@@ -132,12 +132,13 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
     const row = el('div', 'actions pnav');
     const prev = el('button', 'btn', 'Précédente'); prev.type = 'button'; prev.disabled = d.i === 0;
-    prev.onclick = () => { d.i--; kSave(); render(); };
+    // Swipe : vers la gauche pour revenir, vers la droite pour avancer.
+    prev.onclick = () => { balayer(card, () => root.querySelector('.pcard'), 'gauche'); d.i--; kSave(); render(); };
     const last = d.i >= tot - 1;
     const next = el('button', 'btn primary', last ? 'Terminer le paquet' : 'Carte suivante'); next.type = 'button';
     next.onclick = () => {
       if (last) { d.max = tot - 1; d.i = tot - 1; kSave(); setOpen(null); render(); window.scrollTo(0, 0); return; }
-      balayer(card, () => root.querySelector('.pcard')); // l'ancienne carte part, la suivante est dessous
+      balayer(card, () => root.querySelector('.pcard'), 'droite'); // l'ancienne carte part, la suivante est dessous
       d.i++; d.max = Math.max(d.max, d.i); kSave(); render();
     };
     row.append(prev, next); root.append(row);
