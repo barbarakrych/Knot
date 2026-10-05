@@ -16,6 +16,16 @@ async function montrerPage() {
   try { await Promise.race([document.fonts.ready, new Promise(ok => setTimeout(ok, 1500))]); } catch (e) {}
   void document.body.offsetWidth; // le navigateur prend en compte l'état final avant de réactiver les animations
   document.documentElement.classList.remove('chargement');
+  // Une fois l'app dessinée, on prévient le service worker : il livre « pret.gif », le navigateur annonce
+  // « page chargée » et l'écran de démarrage d'Android peut laisser la place à l'app.
+  // (Secours au bout de 200 ms : quand la page n'est pas à l'écran, le navigateur ne dessine pas.)
+  let dit = false;
+  const direPret = () => {
+    if (dit) return; dit = true;
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage('pret');
+  };
+  requestAnimationFrame(() => setTimeout(direPret, 0));
+  setTimeout(direPret, 200);
 }
 
 async function demarrer() {
