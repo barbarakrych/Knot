@@ -1,5 +1,5 @@
 /* Onglet « Pour plus tard » : les 8 paquets, carte par carte, dans l'ordre. */
-import { $, el, fmt, lenClass, vibrer, cornerNodes, srcLine } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes, srcLine } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
 const GUIDE = [
@@ -113,7 +113,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       tb.type = 'button';
       const tick = () => {
         ptimer.left = Math.max(0, Math.round((ptimer.end - Date.now()) / 1000));
-        if (ptimer.left === 0) { clearInterval(ptimer.id); ptimer.running = false; ptimer.done = true; vibrer(); }
+        if (ptimer.left === 0) { clearInterval(ptimer.id); ptimer.running = false; ptimer.done = true; }
         if (document.body.contains(clock)) {
           clock.textContent = ptimer.done ? 'Temps écoulé' : fmt(ptimer.left);
           clock.className = 'clock' + (ptimer.done ? ' done' : '');

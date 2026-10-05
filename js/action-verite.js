@@ -1,6 +1,6 @@
 /* Onglet « Action ou Vérité » : tirage, Passer, remélange, minuteur,
    interrupteur « À distance », défi en cours, historique, cartes ajoutées, sources. */
-import { $, el, fmt, lenClass, vibrer, cornerNodes } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
@@ -67,7 +67,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
   function tick() {
     timer.left = Math.max(0, Math.round((timer.end - Date.now()) / 1000));
-    if (timer.left === 0) { clearInterval(timer.id); timer.running = false; timer.done = true; vibrer(); }
+    if (timer.left === 0) { clearInterval(timer.id); timer.running = false; timer.done = true; }
     renderTimer();
   }
   function renderTimer() {

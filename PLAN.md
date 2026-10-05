@@ -87,7 +87,7 @@ Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
 - Mode sombre et réglages
   - Une icône réglages en haut à droite, à côté du logo, qui ouvre un écran Réglages contenant : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut), le son de fin du minuteur (activé ou non), et l'interrupteur À distance, qui quitte l'écran de jeu. Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
-  - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper).
+  - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
 - Exporter ses notes ou ses cartes
 - Faire relire le projet : « Utilise un sous-agent pour relire tout le code et me dire ce qui pourrait poser problème. Ne signale que ce qui compte vraiment. »
 

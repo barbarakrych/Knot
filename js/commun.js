@@ -15,8 +15,6 @@ export function fmt(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).
 // Texte long → police un peu plus petite sur la carte
 export function lenClass(t) { return t.length > 220 ? ' xlong' : (t.length > 140 ? ' long' : ''); }
 
-export function vibrer() { try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (e) {} }
-
 // Coin de carte : lettre (V, A, K, numéro du paquet), numéro, et petit nœud
 // (copié depuis le logo du titre, pour ne pas répéter le dessin).
 export function cornerNodes(letter, num) {
