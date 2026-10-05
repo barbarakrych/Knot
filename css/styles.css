@@ -53,9 +53,12 @@ h1 .knot{width:76px;height:auto;color:var(--blue);--knot-edge:#C9A646}
   box-shadow:0 1px 2px rgba(20,30,60,.08),0 14px 34px -14px rgba(20,30,60,.35)}
 /* Le bas de la carte garde la place du coin (environ 61 px : 12 px de marge + 49 px de lettre, numéro et nœud) : la source et le minuteur restent au-dessus. */
 .card-in{flex:1;min-width:0;position:relative;background:var(--card);border-radius:11px;padding:52px 24px 70px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
-.card.enter .card-in{animation:enter .45s cubic-bezier(.2,.8,.2,1)}
-@keyframes enter{from{transform:translateY(10px) rotate(-1.2deg);opacity:.2}to{transform:none;opacity:1}}
-@media (prefers-reduced-motion: reduce){.card.enter .card-in{animation:none}}
+/* Swipe : copie de l'ancienne carte qui part vers la gauche en tournant (voir balayer() dans commun.js).
+   Elle reste opaque du début à la fin : la nouvelle carte, dessous, est déjà entière. */
+.card.swipe{position:fixed;margin:0;min-height:0;max-width:none;z-index:50;pointer-events:none;transform-origin:50% 100%;
+  animation:swipe .38s cubic-bezier(.45,0,.75,.4) forwards}
+@keyframes swipe{to{transform:translateX(-135%) rotate(-14deg)}}
+@media (prefers-reduced-motion: reduce){.card.swipe{display:none}}
 .corner{position:absolute;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1;color:var(--blue)}
 .corner.tl{top:12px;left:13px}
 .corner.br{bottom:12px;right:13px;transform:rotate(180deg)}

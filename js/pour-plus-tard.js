@@ -1,5 +1,5 @@
 /* Onglet « Pour plus tard » : les 8 paquets, carte par carte, dans l'ordre. */
-import { $, el, fmt, lenClass, cornerNodes, srcLine } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
 const GUIDE = [
@@ -137,6 +137,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     const next = el('button', 'btn primary', last ? 'Terminer le paquet' : 'Carte suivante'); next.type = 'button';
     next.onclick = () => {
       if (last) { d.max = tot - 1; d.i = tot - 1; kSave(); setOpen(null); render(); window.scrollTo(0, 0); return; }
+      balayer(card, () => root.querySelector('.pcard')); // l'ancienne carte part, la suivante est dessous
       d.i++; d.max = Math.max(d.max, d.i); kSave(); render();
     };
     row.append(prev, next); root.append(row);

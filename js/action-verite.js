@@ -1,6 +1,6 @@
 /* Onglet « Action ou Vérité » : tirage, Passer, remélange, minuteur,
    interrupteur « À distance », défi en cours, historique, cartes ajoutées, sources. */
-import { $, el, fmt, lenClass, cornerNodes } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes, balayer } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
@@ -12,7 +12,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   // État du jeu. drawn : cartes déjà tirées { id: {pile, at} } ; custom : cartes ajoutées ; current : carte affichée ;
   // defi : identifiant du défi en cours (une action « grande »), ou null.
   const S = { drawn: {}, custom: {}, current: null, defi: null, confirming: null };
-  let animate = false, noteTimer = null, confirmDel = null, editing = null;
+  let noteTimer = null, confirmDel = null, editing = null;
   let timer = { end: 0, left: 0, running: false, done: false, id: null, cardId: null };
   let DIST = lire(CLES.distance, true) !== false;
 
@@ -130,7 +130,6 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       $('detail').hidden = true;
       meta.hidden = true;
     }
-    if (animate) { card.classList.remove('enter'); void card.offsetWidth; card.classList.add('enter'); animate = false; }
     renderTimer();
 
     const defi = cardById(S.defi);
@@ -168,7 +167,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (!p.length) return false;
     const c = p[Math.floor(Math.random() * p.length)];
     S.drawn = { ...S.drawn, [c.id]: { pile, at: Date.now() } };
-    S.current = c.id; animate = true;
+    balayer($('card')); // l'ancienne carte part, la nouvelle est dessous
+    S.current = c.id;
     if (c.big) S.defi = c.id; // un défi tiré devient le défi en cours
     render(); sauver();
     return true;
