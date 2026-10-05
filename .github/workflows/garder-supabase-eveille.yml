@@ -1,0 +1,37 @@
+# Garder Supabase éveillé
+# Un projet Supabase gratuit se met en pause après une semaine sans activité.
+# Tous les 3 jours, GitHub lance cette tâche sur un de ses ordinateurs : elle appelle la fonction « reveil »
+# de la base (qui répond simplement « true », sans rien lire ni modifier), ce qui compte comme une activité.
+# On peut aussi la lancer à la main : onglet Actions du dépôt → « Garder Supabase éveillé » → Run workflow.
+#
+# Secrets du dépôt (Settings → Secrets and variables → Actions) :
+#   SUPABASE_URL : adresse du projet, ex. https://xxxx.supabase.co
+#   SUPABASE_CLE : clé PUBLIQUE (sb_publishable_… ou anon). Jamais la clé secrète ni service_role.
+
+name: Garder Supabase éveillé
+
+on:
+  schedule:
+    - cron: '17 7 */3 * *'   # tous les 3 jours, vers 7 h 17 (heure de Londres)
+  workflow_dispatch:          # bouton « Run workflow » pour la lancer à la main
+
+permissions: {}               # la tâche n'a besoin d'aucun droit sur le dépôt
+
+jobs:
+  reveil:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Petite lecture dans la base
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_CLE: ${{ secrets.SUPABASE_CLE }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_CLE" ]; then
+            echo "Il manque le secret SUPABASE_URL ou SUPABASE_CLE dans les réglages du dépôt."
+            exit 1
+          fi
+          reponse=$(curl -sS --fail-with-body --max-time 30 -X POST "${SUPABASE_URL%/}/rest/v1/rpc/reveil" \
+            -H "apikey: $SUPABASE_CLE" -H "Content-Type: application/json" -d '{}')
+          echo "Réponse de Supabase : $reponse"
+          [ "$reponse" = "true" ]

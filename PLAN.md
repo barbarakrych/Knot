@@ -68,6 +68,8 @@ Test : chacun ouvre l'app, l'un tire une carte, elle apparaît chez l'autre.
 - Chacun son tour : l'app indique à qui c'est le tour de tirer, et sous chaque carte qui l'a tirée.
 - Minuteur partagé : une fois lancé, il s'écoule sur les deux téléphones (si l'app est ouverte sur les deux en même temps).
 - Défi en cours partagé : le défi en cours s'affiche sur les deux téléphones, et « C'est fait ! » ou « Remettre dans la pile » sur l'un le retire aussi chez l'autre.
+- Interrupteur « À distance » partagé : il est le même sur les deux téléphones, comme les cartes tirées. Le changer sur l'un le change aussi chez l'autre.
+- Reprise de la progression : quand le partage s'active, la progression déjà faite sur un téléphone (cartes tirées, paquets « Pour plus tard ») devient celle du couple, au lieu de repartir de zéro.
 
 ---
 
@@ -81,12 +83,15 @@ Objectif : la première carte du paquet Nos valeurs devient interactive. Chacun 
 
 ## Étape 5 · Cartes personnelles privées
 
-Objectif : les cartes que j'ajoute, moi seule les vois dans ma liste ; pareil pour lui.
+Objectif : les cartes que j'ajoute, moi seule les vois dans ma liste ; pareil pour l'autre.
 
-À décider avant : quand ma carte privée sort au tirage, mon copain la voit-il à l'écran ? (Proposition : oui, c'est une carte surprise, mais il ne la voit jamais dans les listes.)
+Décidé :
+- Une carte ajoutée par une personne entre dans le paquet commun et peut sortir au tirage chez les deux.
+- Elle n'apparaît que dans la liste « Vos cartes » de la personne qui l'a créée.
+- Quand elle sort au tirage, elle ressemble exactement aux autres cartes : rien n'indique qui l'a ajoutée.
 
 Prompt :
-> Étape 5 du PLAN. Les cartes ajoutées par une personne doivent être privées : visibles seulement dans sa propre liste « Vos cartes ». Voici ma décision sur le tirage : [écris ta réponse]. Utilise les règles RLS de Supabase pour que ce soit garanti par la base de données, pas seulement par l'affichage, et montre-moi comment le vérifier avec les deux comptes.
+> Étape 5 du PLAN. Les cartes ajoutées par une personne doivent être privées : visibles seulement dans sa propre liste « Vos cartes », mais elles entrent dans le paquet commun et peuvent sortir au tirage chez les deux, sans rien qui indique qui les a ajoutées (voir « Décidé »). Utilise les règles RLS de Supabase pour que ce soit garanti par la base de données, pas seulement par l'affichage, et montre-moi comment le vérifier avec les deux comptes.
 
 ---
 
@@ -104,6 +109,8 @@ Idées à piocher, une par session :
   - Déjà essayé (sans effet, retiré) : retarder le signal « page chargée » jusqu'à ce que l'app soit prête, pour que Chrome garde le logo plus longtemps.
   - Piste suivante : garder sur le téléphone une copie de la dernière page affichée et la montrer tout de suite à l'ouverture.
 - Exporter ses notes ou ses cartes
+- Note « Pourquoi Knot ? » en bas de page, avec ce texte, sans le modifier :
+  > Les Grecs l'appelaient Hêraklêotikon hamma, le nœud d'Héraclès : deux cordes passées l'une dans l'autre, qui ne font plus qu'un. Il porte le nom de celui qui a traversé douze épreuves sans lâcher. On ne le défait pas en tirant, seulement en prenant le temps de le comprendre, boucle après boucle. Knot, c'est ce nœud-là : deux fils qui se découvrent sans masque et choisissent de tenir ensemble, même quand ça tire.
 - Faire relire le projet : « Utilise un sous-agent pour relire tout le code et me dire ce qui pourrait poser problème. Ne signale que ce qui compte vraiment. »
 
 ## Plus tard · Des cartes infinies

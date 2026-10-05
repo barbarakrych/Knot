@@ -299,3 +299,11 @@ revoke all on function public.mon_couple_id(), public.creer_couple(text, text), 
 grant execute on function public.mon_couple_id(), public.creer_couple(text, text), public.apercu_code(text),
   public.utiliser_code(text, text), public.code_relier()
   to authenticated;
+
+-- ───────────── Réveil ─────────────
+-- Appelée tous les 3 jours par GitHub Actions (.github/workflows/garder-supabase-eveille.yml) avec la clé publique,
+-- pour que le projet gratuit ne se mette pas en pause. Elle ne lit aucune table et ne modifie rien : elle répond « true ».
+create or replace function public.reveil() returns boolean
+language sql stable set search_path = '' as $$ select true $$;
+revoke all on function public.reveil() from public;
+grant execute on function public.reveil() to anon, authenticated;
