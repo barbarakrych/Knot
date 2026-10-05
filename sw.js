@@ -29,38 +29,10 @@ self.addEventListener('activate', evenement => {
   evenement.waitUntil(self.clients.claim());
 });
 
-/* « pret.gif » : une image invisible demandée par la page au démarrage. Le navigateur attend ses images avant
-   d'annoncer « page chargée », et Chrome sur Android garde l'écran de démarrage jusqu'à ce moment-là.
-   On ne livre donc l'image que quand l'app nous dit « pret » (voir app.js), ou au bout de 4 secondes au plus tard :
-   l'écran de démarrage disparaît directement sur l'app, sans moment vide entre les deux. */
-const IMAGE_VIDE = Uint8Array.from(atob('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'), c => c.charCodeAt(0));
-const PRETES = new Set();      // pages qui ont déjà dit « pret »
-const EN_ATTENTE = new Map();  // page → fonction qui livre son image
-
-self.addEventListener('message', evenement => {
-  if (evenement.data !== 'pret' || !evenement.source) return;
-  const page = evenement.source.id;
-  const livrer = EN_ATTENTE.get(page);
-  if (livrer) livrer(); else PRETES.add(page);
-});
-
-function attendrePage(page) {
-  return new Promise(livrer => {
-    if (PRETES.delete(page)) { livrer(); return; }
-    const fin = () => { EN_ATTENTE.delete(page); livrer(); };
-    EN_ATTENTE.set(page, fin);
-    setTimeout(fin, 4000);
-  }).then(() => new Response(IMAGE_VIDE, { headers: { 'Content-Type': 'image/gif', 'Cache-Control': 'no-store' } }));
-}
-
 self.addEventListener('fetch', evenement => {
   const demande = evenement.request;
   if (demande.method !== 'GET') return;
   const url = new URL(demande.url);
-  if (url.origin === self.location.origin && url.pathname.endsWith('/pret.gif')) {
-    evenement.respondWith(attendrePage(evenement.clientId));
-    return;
-  }
   if (url.origin !== self.location.origin && !POLICES.includes(url.origin)) return;
 
   evenement.respondWith(caches.open(RESERVE).then(async reserve => {
