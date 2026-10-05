@@ -123,7 +123,7 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun prépare 5 questions sur lui-même. On compte les points."
+  "texte": "Chacun prépare 5 questions sur lui-même, l’autre essaie d’y répondre. On compte les points."
  },
  {
   "id": "a-ex583t",
@@ -177,7 +177,7 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Fermez les yeux. L’un décrit un souvenir commun, l’autre ajoute les détails qu’il a oubliés."
+  "texte": "Fermez les yeux. L’un décrit un souvenir commun, l’autre ajoute les détails oubliés."
  },
  {
   "id": "a-1gbav3d",
@@ -519,7 +519,7 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Fais une chose nouvelle cette semaine (un lieu, un plat, une activité) et raconte-la-moi.",
+  "texte": "Fais quelque chose de nouveau cette semaine (un lieu, un plat, une activité) et raconte-la-moi.",
   "detail": "Idées : un café où tu n’es jamais allé·e, une recette d’un autre pays, un sport à essayer gratuitement, un nouveau chemin pour rentrer."
  },
  {
@@ -585,7 +585,7 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Écris cinq choses que j’ai faites pour toi cette année et dont tu me remercies."
+  "texte": "Écris cinq choses que j’ai faites pour toi cette année et pour lesquelles tu me remercies."
  },
  {
   "id": "a-u8g62u",
@@ -1193,7 +1193,7 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Écris une lettre à toi à 80 ans, sur nous deux."
+  "texte": "Écris une lettre à la personne que tu seras à 80 ans, sur nous deux."
  },
  {
   "id": "a-n5k3n6",
@@ -1682,7 +1682,7 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Faites deviner à l’autre votre réponse à cinq questions sur vous. Un point par bonne réponse."
+  "texte": "Chacun fait deviner à l’autre ses réponses à cinq questions sur lui-même. Un point par bonne réponse."
  },
  {
   "id": "a-lxl7s9",
@@ -1691,7 +1691,7 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez ensemble une lettre à vous deux dans un an. Gardez-la jusqu’à la date prévue."
+  "texte": "Écrivez ensemble une lettre au couple que vous serez dans un an. Gardez-la jusqu’à la date prévue."
  },
  {
   "id": "a-kjqo0s",
@@ -1782,7 +1782,7 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "ensemble",
-  "texte": "Fais un câlin par derrière à l’autre, là, maintenant."
+  "texte": "Prends l’autre dans tes bras par derrière, là, maintenant."
  },
  {
   "id": "a-1eg1xzq",

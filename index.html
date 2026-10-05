@@ -1,7 +1,19 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="chargement">
 <head>
 <meta charset="utf-8">
+<style>
+/* Avant tout le reste : le fond de la page a déjà la couleur de l'écran de démarrage, même si les styles ne sont pas encore chargés.
+   « chargement » : la page reste invisible et sans animation tant que app.js ne l'a pas mise dans son bon état. */
+html{background:#EEF1F6}
+@media (prefers-color-scheme: dark){html{background:#0F1420}}
+.chargement .app{visibility:hidden}
+.chargement *,.chargement *::before,.chargement *::after{transition:none!important;animation:none!important}
+</style>
+<script>
+// Filet de sécurité : si le démarrage échoue complètement, on montre quand même la page au bout de 4 secondes.
+setTimeout(function () { document.documentElement.classList.remove('chargement'); }, 4000);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#EEF1F6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F1420" media="(prefers-color-scheme: dark)">

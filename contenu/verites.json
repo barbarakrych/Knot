@@ -117,7 +117,7 @@
   "id": "v-nn2e45",
   "theme": "toi",
   "source": "proust",
-  "texte": "Quel est le changement de l’histoire que tu admires le plus ?"
+  "texte": "Quel tournant de l’histoire admires-tu le plus ?"
  },
  {
   "id": "v-1r09m1z",
@@ -219,7 +219,7 @@
   "id": "v-1ao5xhw",
   "theme": "toi",
   "source": "aron",
-  "texte": "Quand as-tu laissé quelqu’un te voir vraiment triste pour la dernière fois ?"
+  "texte": "À quand remonte la dernière fois où tu as laissé quelqu’un te voir vraiment triste ?"
  },
  {
   "id": "v-9v7vw9",
@@ -357,7 +357,7 @@
   "id": "v-1l1oew6",
   "theme": "toi",
   "source": "lovemaps",
-  "texte": "Quel conseil donnerais-tu à toi d’il y a cinq ans ?"
+  "texte": "Quel conseil donnerais-tu à la personne que tu étais il y a cinq ans ?"
  },
  {
   "id": "v-eikxkh",
@@ -429,7 +429,7 @@
   "id": "v-gy23bq",
   "theme": "nous",
   "source": "fondness",
-  "texte": "Quelle qualité de l’autre aimerais-tu avoir ?"
+  "texte": "Laquelle de mes qualités aimerais-tu avoir ?"
  },
  {
   "id": "v-uau5gi",
@@ -447,7 +447,7 @@
   "id": "v-1wzr1a8",
   "theme": "nous",
   "source": "fondness",
-  "texte": "Quelle habitude de moi te manque le plus en ce moment ?"
+  "texte": "Laquelle de mes habitudes te manque le plus en ce moment ?"
  },
  {
   "id": "v-lqmnhj",
@@ -513,7 +513,7 @@
   "id": "v-18z48gc",
   "theme": "nous",
   "source": "perel",
-  "texte": "Est-ce que la distance change quelque chose à ton désir de moi ? En quoi ?"
+  "texte": "Est-ce que la distance change quelque chose à ton désir pour moi ? En quoi ?"
  },
  {
   "id": "v-138vuqh",
@@ -603,7 +603,7 @@
   "id": "v-15lyl5t",
   "theme": "nous",
   "source": "maint",
-  "texte": "Note de 1 à 10 comment tu te sens dans notre relation ce mois-ci. Qu’est-ce qui ferait gagner un point ?"
+  "texte": "De 1 à 10, comment te sens-tu dans notre relation ce mois-ci ? Qu’est-ce qui lui ferait gagner un point ?"
  },
  {
   "id": "v-14hq67j",
@@ -963,7 +963,7 @@
   "id": "v-1qx0ycq",
   "theme": "avenir",
   "source": "fondness",
-  "texte": "Qu’admires-tu dans les convictions de l’autre, même sans les partager ?"
+  "texte": "Qu’admires-tu dans mes convictions, même sans les partager ?"
  },
  {
   "id": "v-19tno5r",
@@ -1047,7 +1047,7 @@
   "id": "v-28ttjt",
   "theme": "philo",
   "source": "fromm",
-  "texte": "Pour Fromm, aimer est un art qui s’apprend. Qu’est-ce que tu travailles, toi, pour aimer mieux ?"
+  "texte": "Pour Fromm, aimer est un art qui s’apprend. Sur quoi travailles-tu, toi, pour mieux aimer ?"
  },
  {
   "id": "v-xck0ej",
@@ -1437,7 +1437,7 @@
   "id": "v-bg3pk7",
   "theme": "toi",
   "source": "mcadams",
-  "texte": "Raconte un moment où tu as fait preuve de sagesse, ou où quelqu’un t’en a appris."
+  "texte": "Raconte un moment où tu as fait preuve de sagesse, ou un moment où quelqu’un t’a transmis la sienne."
  },
  {
   "id": "v-1d7jl3v",
@@ -1575,7 +1575,7 @@
   "id": "v-1huww26",
   "theme": "nous",
   "source": "michel",
-  "texte": "Y a-t-il un trait de toi que tu sens grandir depuis qu’on est ensemble ?"
+  "texte": "Y a-t-il un trait de ta personnalité que tu sens grandir depuis qu’on est ensemble ?"
  },
  {
   "id": "v-3d1g9m",
@@ -1749,7 +1749,7 @@
   "id": "v-792d5z",
   "theme": "toi",
   "source": "ware",
-  "texte": "Si tu reprenais un peu de temps à ton travail ou tes études, à quoi le donnerais-tu ?"
+  "texte": "Si tu reprenais un peu de temps à ton travail ou à tes études, à quoi le consacrerais-tu ?"
  },
  {
   "id": "v-1vn6wio",
@@ -2355,7 +2355,7 @@
   "id": "v-iwy5yo",
   "theme": "nous",
   "source": "lovemaps",
-  "texte": "Quelle habitude de moi as-tu adoptée ?"
+  "texte": "Laquelle de mes habitudes as-tu adoptée ?"
  },
  {
   "id": "v-1lzwa3p",
@@ -2439,6 +2439,6 @@
   "id": "v-6c05iq",
   "theme": "leger",
   "source": null,
-  "texte": "Quel est ton plus grand talent pour procrastiner ?"
+  "texte": "Quelle est ta meilleure technique pour procrastiner ?"
  }
 ]

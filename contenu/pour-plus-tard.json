@@ -56,7 +56,7 @@
    {
     "partie": "Série 1 · Faire connaissance",
     "type": "question",
-    "texte": "Pour quoi te sens-tu le plus reconnaissant·e dans ta vie ?",
+    "texte": "De quoi te sens-tu le plus reconnaissant·e dans ta vie ?",
     "minutes": null
    },
    {
@@ -188,7 +188,7 @@
    {
     "partie": "Série 3 · Se livrer",
     "type": "exercice",
-    "texte": "Confie à l’autre un souci personnel et demande-lui comment il ou elle ferait. Puis demande-lui comment il t’a senti·e en en parlant.",
+    "texte": "Confie à l’autre un souci personnel et demande-lui comment il ou elle ferait. Puis demande-lui ce qu’il ou elle a perçu de tes émotions pendant que tu en parlais.",
     "minutes": 10
    },
    {
@@ -348,13 +348,13 @@
    {
     "partie": "1 · Confiance et engagement",
     "type": "question",
-    "texte": "Qu’est-ce qui te fait confiance en moi, concrètement ?",
+    "texte": "Qu’est-ce qui te donne confiance en moi, concrètement ?",
     "minutes": null
    },
    {
     "partie": "1 · Confiance et engagement",
     "type": "question",
-    "texte": "Qu’est-ce que t’engager envers moi veut dire, pour toi, aujourd’hui ?",
+    "texte": "Que veut dire, pour toi, t’engager envers moi aujourd’hui ?",
     "minutes": null
    },
    {
@@ -584,7 +584,7 @@
    {
     "partie": "6 · Tendresse et toucher",
     "type": "question",
-    "texte": "Comment est-ce que je te fais sentir aimé·e physiquement, de près comme de loin ?",
+    "texte": "Par quels gestes te sens-tu aimé·e de moi, de près comme de loin ?",
     "minutes": null
    },
    {
@@ -670,7 +670,7 @@
    {
     "partie": "Les scènes clés",
     "type": "question",
-    "texte": "Un moment où tu as fait preuve de sagesse, ou où quelqu’un t’en a appris.",
+    "texte": "Un moment où tu as fait preuve de sagesse, ou un moment où quelqu’un t’a transmis la sienne.",
     "minutes": null
    },
    {
@@ -1130,7 +1130,7 @@
    {
     "partie": "La version de Pivot",
     "type": "question",
-    "texte": "Le son et le bruit que tu préfères ? Et celui que tu détestes ?",
+    "texte": "Le son ou le bruit que tu préfères ? Et celui que tu détestes ?",
     "minutes": null
    },
    {

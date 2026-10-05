@@ -10,6 +10,14 @@ const FOOTER = {
   topics: 'Un sujet quand vous voulez, à votre rythme.'
 };
 
+// Montre la page d'un coup, déjà dans son bon état. La classe « chargement » (voir index.html) la gardait invisible
+// et sans animation. On attend les polices (au plus 1,5 s) pour que le texte ne change pas de forme sous nos yeux.
+async function montrerPage() {
+  try { await Promise.race([document.fonts.ready, new Promise(ok => setTimeout(ok, 1500))]); } catch (e) {}
+  void document.body.offsetWidth; // le navigateur prend en compte l'état final avant de réactiver les animations
+  document.documentElement.classList.remove('chargement');
+}
+
 async function demarrer() {
   let contenu;
   try {
@@ -20,6 +28,7 @@ async function demarrer() {
     const err = $('loaderr');
     err.textContent = 'Les cartes n’ont pas pu être chargées. Recharge la page ; si ça continue, vérifie que l’app est bien ouverte via le serveur (http://…) et pas en double-cliquant sur le fichier.';
     err.hidden = false;
+    montrerPage();
     return;
   }
 
@@ -40,6 +49,7 @@ async function demarrer() {
   $('tab-topics').onclick = () => setView('topics');
 
   setView(lire(CLES.ecran, {}).view === 'topics' ? 'topics' : 'av');
+  montrerPage();
 }
 
 demarrer();
