@@ -2,7 +2,13 @@
 # Un projet Supabase gratuit se met en pause après une semaine sans activité.
 # Tous les 3 jours, GitHub lance cette tâche sur un de ses ordinateurs : elle appelle la fonction « reveil »
 # de la base (qui répond simplement « true », sans rien lire ni modifier), ce qui compte comme une activité.
-# On peut aussi la lancer à la main : onglet Actions du dépôt → « Garder Supabase éveillé » → Run workflow.
+#
+# GitHub suspend les tâches planifiées d'un dépôt resté 60 jours sans commit. Pour que ça n'arrive jamais,
+# le 1er de chaque mois la tâche fait elle-même un petit commit : elle écrit la date du jour dans
+# .github/derniere-activite.txt. Ce fichier ne sert qu'à ça : l'app ne le lit pas.
+#
+# On peut aussi la lancer à la main : onglet Actions du dépôt → « Garder Supabase éveillé » → Run workflow
+# (cocher « Faire aussi le commit d'activité » pour tester le commit).
 #
 # Secrets du dépôt (Settings → Secrets and variables → Actions) :
 #   SUPABASE_URL : adresse du projet, ex. https://xxxx.supabase.co
@@ -12,10 +18,15 @@ name: Garder Supabase éveillé
 
 on:
   schedule:
-    - cron: '17 7 */3 * *'   # tous les 3 jours, vers 7 h 17 (heure de Londres)
+    - cron: '17 7 */3 * *'   # les 1er, 4, 7… du mois, vers 7 h 17 (heure de Londres)
   workflow_dispatch:          # bouton « Run workflow » pour la lancer à la main
+    inputs:
+      commit_activite:
+        description: 'Faire aussi le commit d’activité (normalement le 1er du mois)'
+        type: boolean
+        default: false
 
-permissions: {}               # la tâche n'a besoin d'aucun droit sur le dépôt
+permissions: {}               # par défaut, aucun droit sur le dépôt
 
 jobs:
   reveil:
@@ -35,3 +46,37 @@ jobs:
             -H "apikey: $SUPABASE_CLE" -H "Content-Type: application/json" -d '{}')
           echo "Réponse de Supabase : $reponse"
           [ "$reponse" = "true" ]
+
+  # Le 1er du mois (ou à la main si la case est cochée) : petit commit pour que le dépôt reste « actif »
+  activite:
+    if: github.event_name == 'schedule' || inputs.commit_activite
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: write         # seul droit nécessaire : ajouter un commit
+    steps:
+      - name: Est-ce le 1er du mois ?
+        id: jour
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ] && [ "$(date -u +%d)" != "01" ]; then
+            echo "Pas le 1er du mois : pas de commit aujourd'hui."
+            echo "commit=non" >> "$GITHUB_OUTPUT"
+          else
+            echo "commit=oui" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.jour.outputs.commit == 'oui'
+      - name: Commit d'activité
+        if: steps.jour.outputs.commit == 'oui'
+        run: |
+          date -u +"%Y-%m-%d" > .github/derniere-activite.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/derniere-activite.txt
+          if git diff --cached --quiet; then
+            echo "Date déjà à jour : rien à enregistrer."
+            exit 0
+          fi
+          git commit -m "Activité mensuelle automatique (garde la tâche de réveil active)"
+          git push
+          echo "Commit d'activité fait : $(cat .github/derniere-activite.txt)"

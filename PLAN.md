@@ -109,7 +109,7 @@ Idées à piocher, une par session :
   - Déjà essayé (sans effet, retiré) : retarder le signal « page chargée » jusqu'à ce que l'app soit prête, pour que Chrome garde le logo plus longtemps.
   - Piste suivante : garder sur le téléphone une copie de la dernière page affichée et la montrer tout de suite à l'ouverture.
 - Exporter ses notes ou ses cartes
-- Note « Pourquoi Knot ? » en bas de page, avec ce texte, sans le modifier :
+- ✅ Fait : note « Pourquoi Knot ? » en bas de toutes les pages (élément fixe, comme le logo), avec ce texte, sans le modifier :
   > Les Grecs l'appelaient Hêraklêotikon hamma, le nœud d'Héraclès : deux cordes passées l'une dans l'autre, qui ne font plus qu'un. Il porte le nom de celui qui a traversé douze épreuves sans lâcher. On ne le défait pas en tirant, seulement en prenant le temps de le comprendre, boucle après boucle. Knot, c'est ce nœud-là : deux fils qui se découvrent sans masque et choisissent de tenir ensemble, même quand ça tire.
 - Faire relire le projet : « Utilise un sous-agent pour relire tout le code et me dire ce qui pourrait poser problème. Ne signale que ce qui compte vraiment. »
 

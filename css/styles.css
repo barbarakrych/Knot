@@ -144,6 +144,11 @@ textarea{font:inherit;font-family:var(--f-card);font-size:1.05rem;color:var(--in
 .links{display:flex;gap:16px;flex-wrap:wrap}
 .link{font:inherit;font-size:.9rem;color:var(--muted);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .link:disabled{opacity:.5;cursor:default}
+/* « Pourquoi Knot ? » : petite note en bas de l'écran du jeu */
+.pourquoi{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pourquoi p{margin:0}
+.pourquoi-titre{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pourquoi p:last-child{font-family:var(--f-card);font-size:.9rem;line-height:1.5;color:var(--muted);max-width:44ch;text-wrap:pretty}
 .confirm{background:var(--chip);border-radius:10px;padding:12px;font-size:.9rem;display:flex;flex-direction:column;gap:10px}
 footer{font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px}
 

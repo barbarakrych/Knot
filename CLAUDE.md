@@ -52,5 +52,6 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 
 ## Habitudes de travail
 - Git : sauvegarde (commit) après chaque étape qui marche, avec un message clair en français.
+- Avant chaque `git push` : `git pull --rebase`. Le 1er de chaque mois, la tâche GitHub « Garder Supabase éveillé » (`.github/workflows/garder-supabase-eveille.yml`) ajoute elle-même un commit (date dans `.github/derniere-activite.txt`) pour que GitHub ne la suspende jamais ; il faut donc récupérer ce commit avant d'envoyer les nôtres. Elle appelle aussi tous les 3 jours la fonction `reveil()` de Supabase pour que le projet gratuit ne se mette pas en pause.
 - Ne jamais mettre de clé secrète dans le code. La clé publique (« anon ») de Supabase peut y être ; la clé « service_role » jamais.
 - Vérifie ton travail toi-même avant de dire que c'est fini : ouvre l'app, teste le parcours, montre-moi le résultat.
