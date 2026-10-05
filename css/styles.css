@@ -58,6 +58,8 @@ h1 .knot{width:76px;height:auto;color:var(--blue);--knot-edge:#C9A646}
 .card.swipe{position:fixed;margin:0;min-height:0;max-width:none;z-index:50;pointer-events:none;transform-origin:50% 100%;
   animation:swipe .38s cubic-bezier(.45,0,.75,.4) forwards}
 @keyframes swipe{to{transform:translateX(-135%) rotate(-14deg)}}
+.card.swipe.droite{animation-name:swipe-droite}
+@keyframes swipe-droite{to{transform:translateX(135%) rotate(14deg)}}
 @media (prefers-reduced-motion: reduce){.card.swipe{display:none}}
 .corner{position:absolute;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1;color:var(--blue)}
 .corner.tl{top:12px;left:13px}

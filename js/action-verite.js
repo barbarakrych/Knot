@@ -162,12 +162,13 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
 
   /* ---------- Tirer, passer, remélanger ---------- */
   // Une carte tirée ne ressort pas tant qu'on ne remélange pas.
-  function draw(pile, excludeId) {
+  // sens du swipe : vers la droite quand on pioche, vers la gauche quand on passe.
+  function draw(pile, excludeId, sens = 'droite') {
     const p = remaining(pile).filter(c => c.id !== excludeId);
     if (!p.length) return false;
     const c = p[Math.floor(Math.random() * p.length)];
     S.drawn = { ...S.drawn, [c.id]: { pile, at: Date.now() } };
-    balayer($('card')); // l'ancienne carte part, la nouvelle est dessous
+    balayer($('card'), undefined, sens); // l'ancienne carte part, la nouvelle est dessous
     S.current = c.id;
     if (c.big) S.defi = c.id; // un défi tiré devient le défi en cours
     render(); sauver();
@@ -182,7 +183,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       if (wasDefi) S.defi = old;
       note('Il n’y a plus d’autre carte dans cette pile.'); return;
     }
-    if (!draw(c.pile, old)) return;
+    if (!draw(c.pile, old, 'gauche')) return;
     const d = { ...S.drawn }; delete d[old]; S.drawn = d;
     render(); sauver();
   }

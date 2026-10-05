@@ -16,10 +16,11 @@ export function fmt(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).
 export function lenClass(t) { return t.length > 220 ? ' xlong' : (t.length > 140 ? ' long' : ''); }
 
 // Swipe : à appeler juste AVANT d'afficher la nouvelle carte. Une copie de la carte actuelle est posée
-// par-dessus, puis part vers la gauche en tournant ; la nouvelle carte, déjà entière dessous, se révèle.
+// par-dessus, puis part sur le côté en tournant ; la nouvelle carte, déjà entière dessous, se révèle.
 // Rien si le téléphone est réglé pour réduire les animations.
 // nouvelle : fonction qui renvoie la nouvelle carte (par défaut, la même carte, mise à jour sur place).
-export function balayer(card, nouvelle = () => card) {
+// sens : 'gauche' (par défaut) ou 'droite'.
+export function balayer(card, nouvelle = () => card, sens = 'gauche') {
   if (!card || !card.isConnected) return;
   try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
   const r = card.getBoundingClientRect();
@@ -30,6 +31,7 @@ export function balayer(card, nouvelle = () => card) {
   copie.setAttribute('aria-hidden', 'true');
   copie.inert = true;
   copie.classList.add('swipe');
+  if (sens === 'droite') copie.classList.add('droite');
   Object.assign(copie.style, { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
   document.body.append(copie);
   // Si la nouvelle carte a bougé (ex. l'encadré « Défi en cours » apparaît au-dessus),
