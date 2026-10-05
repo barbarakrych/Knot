@@ -64,7 +64,7 @@ jobs:
           else
             echo "commit=oui" >> "$GITHUB_OUTPUT"
           fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5   # tourne sur Node.js 24 (v4 utilisait Node.js 20, abandonné par GitHub)
         if: steps.jour.outputs.commit == 'oui'
       - name: Commit d'activité
         if: steps.jour.outputs.commit == 'oui'
