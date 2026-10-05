@@ -1,5 +1,5 @@
 /* Onglet « Pour plus tard » : les 8 paquets, carte par carte, dans l'ordre. */
-import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer, iconeMinuteur } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
 const GUIDE = [
@@ -109,25 +109,35 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       const key = pq.id + ':' + d.i;
       if (ptimer.key !== key) { stopTimer(); ptimer = { key, left: c.min * 60, end: 0, running: false, done: false, id: null }; }
       const tw = el('div', 'timer');
-      const clock = el('span', 'clock' + (ptimer.done ? ' done' : ''), ptimer.done ? 'Temps écoulé' : fmt(ptimer.left));
-      const tb = el('button', 'btn small primary', ptimer.running ? 'Pause' : (ptimer.done ? 'Relancer' : (ptimer.left < c.min * 60 ? 'Reprendre' : 'Lancer le minuteur')));
-      tb.type = 'button';
+      const clock = el('span', 'clock');
+      const tb = el('button', 'rond primary');
+      const tr = el('button', 'rond');
+      tb.type = tr.type = 'button';
+      // Met l'horloge et les deux boutons dans l'état du minuteur
+      const afficher = () => {
+        clock.textContent = ptimer.done ? 'Temps écoulé' : fmt(ptimer.left);
+        clock.className = 'clock' + (ptimer.done ? ' done' : '');
+        if (ptimer.running) iconeMinuteur(tb, 'pause', 'Pause');
+        else iconeMinuteur(tb, 'lancer', ptimer.done ? 'Relancer' : (ptimer.left < c.min * 60 ? 'Reprendre' : 'Lancer le minuteur'));
+        iconeMinuteur(tr, 'recommencer', 'Recommencer');
+        tr.hidden = !(ptimer.running || ptimer.done || ptimer.left < c.min * 60);
+      };
       const tick = () => {
         ptimer.left = Math.max(0, Math.round((ptimer.end - Date.now()) / 1000));
         if (ptimer.left === 0) { clearInterval(ptimer.id); ptimer.running = false; ptimer.done = true; }
-        if (document.body.contains(clock)) {
-          clock.textContent = ptimer.done ? 'Temps écoulé' : fmt(ptimer.left);
-          clock.className = 'clock' + (ptimer.done ? ' done' : '');
-          tb.textContent = ptimer.running ? 'Pause' : (ptimer.done ? 'Relancer' : 'Reprendre');
-        }
+        afficher();
       };
       tb.onclick = () => {
         if (ptimer.running) { stopTimer(); tick(); return; }
         if (ptimer.done || ptimer.left <= 0) { ptimer.left = c.min * 60; ptimer.done = false; }
         ptimer.end = Date.now() + ptimer.left * 1000; ptimer.running = true;
-        clearInterval(ptimer.id); ptimer.id = setInterval(tick, 500); tb.textContent = 'Pause';
+        clearInterval(ptimer.id); ptimer.id = setInterval(tick, 500); afficher();
       };
-      tw.append(clock, tb); inn.append(tw);
+      tr.onclick = () => { stopTimer(); ptimer.left = c.min * 60; ptimer.done = false; afficher(); };
+      afficher();
+      const boutons = el('div', 'timer-boutons');
+      boutons.append(tb, tr);
+      tw.append(clock, boutons); inn.append(tw);
     }
     card.append(inn); root.append(card);
 

@@ -44,19 +44,11 @@ export function preparerAccueil(entrer) {
         couple = await creerCouple($('acc-moi').value, $('acc-autre').value);
         $('acc-code').textContent = couple.codeCouple;
         $('acc-code-aide').textContent = 'Donne ce code à ' + couple.prenomAutre + ' : sur son téléphone, dans Knot, « J’ai un code ». Tu le retrouveras dans les Réglages (l’engrenage en haut à droite).';
-        $('acc-partager').hidden = !navigator.share;
         montrer('acc-code-cree');
       } catch (e) { erreur('acc-creer-erreur', e); }
     });
   };
   $('acc-copier').onclick = () => copier(couple.codeCouple, $('acc-copier'));
-  $('acc-partager').onclick = () => {
-    navigator.share({
-      title: 'Knot',
-      text: 'Rejoins-moi sur Knot : ouvre l’app, choisis « J’ai un code » et tape ' + couple.codeCouple,
-      url: location.origin + location.pathname
-    }).catch(() => {});
-  };
   $('acc-jouer').onclick = () => entrer(couple);
 
   // J'ai un code → « Tu es bien … ? »

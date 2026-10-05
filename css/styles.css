@@ -79,7 +79,15 @@ h1 .knot{width:76px;height:auto;color:var(--blue);--knot-edge:#C9A646}
 .meta{align-self:stretch;display:flex;flex-direction:column;gap:4px;font-family:var(--f-mono);font-size:.68rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
 .meta .src{color:var(--blue)}
 
-.timer{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+/* Minuteur : le temps centré, puis dessous les boutons ronds, centrés et toujours sur une seule ligne */
+.timer{display:flex;flex-direction:column;align-items:center;gap:8px}
+.timer .clock{text-align:center}
+.timer-boutons{display:flex;justify-content:center;gap:10px;flex-wrap:nowrap}
+.rond{flex-shrink:0;width:44px;height:44px;border-radius:50%;padding:0;display:grid;place-items:center;cursor:pointer;
+  border:1.5px solid var(--ink);background:transparent;color:var(--ink)}
+.rond.primary{background:var(--ink);color:var(--paper)}
+.rond svg{width:20px;height:20px;fill:currentColor}
+.rond svg.trait{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .clock{font-family:var(--f-mono);font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--red);min-width:4.5ch}
 .clock.done{font-family:var(--f-display);font-size:1rem;font-weight:600}
 
@@ -207,6 +215,7 @@ details.guide .rule{margin-top:10px}
 .accueil p{margin:0;max-width:62ch}
 .accroche{font-family:var(--f-card);font-size:1.25rem;line-height:1.35;text-wrap:balance}
 .accueil .link{align-self:center;margin-top:4px}
+.accueil .etape>.btn.small{align-self:center}
 .champ{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.95rem}
 .champ input{font:inherit;font-weight:400;font-size:1.05rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;box-sizing:border-box}
 .champ input.saisie-code{font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.06em}

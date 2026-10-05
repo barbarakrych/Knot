@@ -63,10 +63,7 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       <h2>Votre code</h2>
       <p class="code-grand" id="acc-code"></p>
       <p class="muted" id="acc-code-aide"></p>
-      <div class="actions">
-        <button class="btn small" id="acc-copier" type="button">Copier</button>
-        <button class="btn small" id="acc-partager" type="button" hidden>Partager</button>
-      </div>
+      <button class="btn small" id="acc-copier" type="button">Copier</button>
       <button class="btn primary wide" id="acc-jouer" type="button">Commencer à jouer</button>
     </div>
 
@@ -141,8 +138,10 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       <p class="detail" id="detail" hidden></p>
       <div class="timer" id="timer" hidden>
         <span class="clock" id="clock"></span>
-        <button class="btn small primary" id="timerbtn" type="button"></button>
-        <button class="btn small" id="timerreset" type="button" hidden>Arrêter</button>
+        <div class="timer-boutons">
+          <button class="rond primary" id="timerbtn" type="button"></button>
+          <button class="rond" id="timerreset" type="button" hidden></button>
+        </div>
       </div>
       <div class="meta" id="meta"></div>
     </div>

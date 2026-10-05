@@ -1,6 +1,6 @@
 /* Onglet « Action ou Vérité » : tirage, Passer, remélange, minuteur,
    interrupteur « À distance », défi en cours, historique, cartes ajoutées, sources. */
-import { $, el, fmt, lenClass, cornerNodes, balayer } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
@@ -78,7 +78,9 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const clock = $('clock');
     if (timer.done && !timer.running) { clock.textContent = 'Temps écoulé'; clock.className = 'clock done'; }
     else { clock.textContent = fmt(timer.left); clock.className = 'clock'; }
-    $('timerbtn').textContent = timer.running ? 'Pause' : (timer.done ? 'Relancer' : (timer.left < duree(c) ? 'Reprendre' : 'Lancer le minuteur'));
+    if (timer.running) iconeMinuteur($('timerbtn'), 'pause', 'Pause');
+    else iconeMinuteur($('timerbtn'), 'lancer', timer.done ? 'Relancer' : (timer.left < duree(c) ? 'Reprendre' : 'Lancer le minuteur'));
+    iconeMinuteur($('timerreset'), 'recommencer', 'Recommencer');
     $('timerreset').hidden = !(timer.running || timer.left < duree(c) || timer.done);
   }
   $('timerbtn').onclick = () => {

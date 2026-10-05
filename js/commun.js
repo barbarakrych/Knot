@@ -12,6 +12,19 @@ export function el(tag, cls, text) {
 // Minuteur : 125 secondes → « 2:05 »
 export function fmt(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }
 
+// Boutons ronds du minuteur : petite icône dessinée (pas de caractère ▶, que l'iPhone change en émoji).
+// Le libellé reste lu par les lecteurs d'écran et s'affiche au survol.
+const ICONES_MINUTEUR = {
+  lancer: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.8v12.4a.8.8 0 0 0 1.2.7l9.8-6.2a.8.8 0 0 0 0-1.4L9.7 5.1a.8.8 0 0 0-1.2.7Z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>',
+  recommencer: '<svg viewBox="0 0 24 24" aria-hidden="true" class="trait"><path d="M5 12a7 7 0 1 0 2.1-5"/><path d="M5 4.5V9h4.5"/></svg>'
+};
+export function iconeMinuteur(bouton, icone, libelle) {
+  bouton.innerHTML = ICONES_MINUTEUR[icone];
+  bouton.setAttribute('aria-label', libelle);
+  bouton.title = libelle;
+}
+
 // Texte long → police un peu plus petite sur la carte
 export function lenClass(t) { return t.length > 220 ? ' xlong' : (t.length > 140 ? ' long' : ''); }
 
