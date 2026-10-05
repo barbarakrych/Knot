@@ -4,7 +4,7 @@
 # de la base (qui répond simplement « true », sans rien lire ni modifier), ce qui compte comme une activité.
 #
 # GitHub suspend les tâches planifiées d'un dépôt resté 60 jours sans commit. Pour que ça n'arrive jamais,
-# le 1er de chaque mois la tâche fait elle-même un petit commit : elle écrit la date du jour dans
+# le 1er de chaque mois la tâche fait elle-même un petit commit : elle écrit la date et l'heure dans
 # .github/derniere-activite.txt. Ce fichier ne sert qu'à ça : l'app ne le lit pas.
 #
 # On peut aussi la lancer à la main : onglet Actions du dépôt → « Garder Supabase éveillé » → Run workflow
@@ -69,7 +69,7 @@ jobs:
       - name: Commit d'activité
         if: steps.jour.outputs.commit == 'oui'
         run: |
-          date -u +"%Y-%m-%d" > .github/derniere-activite.txt
+          date -u +"%Y-%m-%d %H:%M UTC" > .github/derniere-activite.txt   # avec l'heure : le fichier change à chaque fois
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .github/derniere-activite.txt
