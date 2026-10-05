@@ -57,9 +57,13 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
 
   /* ---------- Minuteur ---------- */
+  // Durée du minuteur en secondes : champ « secondes » s'il existe, sinon les minutes.
+  function duree(c) { return c ? (c.sec || (c.min || 0) * 60) : 0; }
+  // Pour l'étiquette de la carte : « 30 s » ou « 5 min ».
+  function dureeTxt(c) { return c.sec ? c.sec + ' s' : c.min + ' min'; }
   function resetTimer(c) {
     clearInterval(timer.id);
-    timer = { end: 0, left: c && c.min ? c.min * 60 : 0, running: false, done: false, id: null, cardId: c ? c.id : null };
+    timer = { end: 0, left: duree(c), running: false, done: false, id: null, cardId: c ? c.id : null };
   }
   function tick() {
     timer.left = Math.max(0, Math.round((timer.end - Date.now()) / 1000));
@@ -68,19 +72,19 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
   function renderTimer() {
     const c = cardById(S.current);
-    const show = !!(c && c.pile === 'action' && c.min);
+    const show = !!(c && c.pile === 'action' && duree(c));
     $('timer').hidden = !show; if (!show) return;
     if (timer.cardId !== c.id) resetTimer(c);
     const clock = $('clock');
     if (timer.done && !timer.running) { clock.textContent = 'Temps écoulé'; clock.className = 'clock done'; }
     else { clock.textContent = fmt(timer.left); clock.className = 'clock'; }
-    $('timerbtn').textContent = timer.running ? 'Pause' : (timer.done ? 'Relancer' : (timer.left < c.min * 60 ? 'Reprendre' : 'Lancer le minuteur'));
-    $('timerreset').hidden = !(timer.running || timer.left < c.min * 60 || timer.done);
+    $('timerbtn').textContent = timer.running ? 'Pause' : (timer.done ? 'Relancer' : (timer.left < duree(c) ? 'Reprendre' : 'Lancer le minuteur'));
+    $('timerreset').hidden = !(timer.running || timer.left < duree(c) || timer.done);
   }
   $('timerbtn').onclick = () => {
-    const c = cardById(S.current); if (!c || !c.min) return;
+    const c = cardById(S.current); if (!c || !duree(c)) return;
     if (timer.running) { clearInterval(timer.id); timer.running = false; tick(); return; }
-    if (timer.done || timer.left <= 0) { timer.left = c.min * 60; timer.done = false; }
+    if (timer.done || timer.left <= 0) { timer.left = duree(c); timer.done = false; }
     timer.end = Date.now() + timer.left * 1000; timer.running = true;
     clearInterval(timer.id); timer.id = setInterval(tick, 500); renderTimer();
   };
@@ -108,7 +112,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       setCorners(cur.pile === 'action' ? 'A' : 'V', String(idx));
       let k = PILES[cur.pile].name;
       if (cur.pile === 'verite' && THEMES[cur.theme]) k += ' · ' + THEMES[cur.theme];
-      if (cur.pile === 'action') k += (cur.big ? ' · Défi' : '') + ' · ' + (cur.when === 'week' ? 'Cette semaine' : (cur.min ? cur.min + ' min' : 'Maintenant'));
+      if (cur.pile === 'action') k += (cur.big ? ' · Défi' : '') + ' · ' + (cur.when === 'week' ? 'Cette semaine' : (duree(cur) ? dureeTxt(cur) : 'Maintenant'));
       $('kicker').textContent = k;
       q.textContent = cur.text; q.className = 'q' + lenClass(cur.text);
       $('detail').textContent = cur.detail || ''; $('detail').hidden = !cur.detail;

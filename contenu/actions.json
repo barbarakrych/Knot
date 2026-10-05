@@ -336,7 +336,7 @@
   "id": "a-thozwj",
   "source": "expansion",
   "taille": "petite",
-  "minutes": 2,
+  "minutes": 1,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Imitez-vous l’un l’autre pendant une minute chacun."
@@ -408,7 +408,7 @@
   "id": "a-13glkg1",
   "source": "expansion",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Méditez 5 minutes ensemble en silence, puis dites ce qui vous est passé par la tête."
@@ -988,7 +988,7 @@
   "id": "a-1gox1ie",
   "source": "expansion",
   "taille": "petite",
-  "minutes": 3,
+  "minutes": 1,
   "quand": "maintenant",
   "mode": "les-deux",
   "texte": "Tirez une lettre au hasard. En 60 secondes, trouvez chez vous l’objet le plus drôle qui commence par cette lettre."
@@ -1098,6 +1098,7 @@
   "source": "maint",
   "taille": "grande",
   "minutes": null,
+  "secondes": 30,
   "quand": "semaine",
   "mode": "distance",
   "texte": "Filme 30 secondes de ton trajet de tous les jours."
@@ -1216,7 +1217,7 @@
   "id": "a-1cbpitc",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Massez-vous les mains cinq minutes chacun, en silence."
@@ -1226,6 +1227,7 @@
   "source": "touch",
   "taille": "grande",
   "minutes": null,
+  "secondes": 6,
   "quand": "semaine",
   "mode": "ensemble",
   "texte": "Chaque jour de la semaine, embrassez-vous au moins six secondes, sans être pressés."
@@ -1243,7 +1245,7 @@
   "id": "a-1wu60jn",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 3,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Restez enlacés trois minutes sans parler, téléphones dans une autre pièce."
@@ -1288,7 +1290,7 @@
   "id": "a-o4k2p0",
   "source": "expansion",
   "taille": "grande",
-  "minutes": null,
+  "minutes": 60,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Construisez une cabane de couvertures et passez-y une heure."
@@ -1722,7 +1724,7 @@
   "id": "a-rb5ji",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Masse les pieds de l’autre pendant cinq minutes."
@@ -1731,7 +1733,7 @@
   "id": "a-1y81pci",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 3,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Masse les épaules de l’autre pendant trois minutes."
@@ -1740,7 +1742,7 @@
   "id": "a-136l0og",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 2,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Masse le cuir chevelu de l’autre pendant deux minutes."
@@ -1759,6 +1761,7 @@
   "source": "touch",
   "taille": "petite",
   "minutes": null,
+  "secondes": 20,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Câlin de vingt secondes : interdit de lâcher avant la fin."
@@ -1839,7 +1842,7 @@
   "id": "a-1mgxzo",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 2,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Pose ta tête sur les genoux de l’autre, qui te caresse les cheveux pendant deux minutes."
@@ -1848,7 +1851,7 @@
   "id": "a-1ligs7v",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 5,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Faites la cuillère pendant cinq minutes, sans téléphone."
@@ -1857,7 +1860,7 @@
   "id": "a-8gvp6",
   "source": "touch",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 1,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Mets-toi dans le dos de l’autre et respirez au même rythme pendant une minute."
@@ -2001,7 +2004,8 @@
   "id": "a-ctqi2",
   "source": "expansion",
   "taille": "petite",
-  "minutes": 1,
+  "minutes": null,
+  "secondes": 30,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Fais une danse ridicule pendant trente secondes."
@@ -2010,7 +2014,7 @@
   "id": "a-x1w984",
   "source": "expansion",
   "taille": "petite",
-  "minutes": null,
+  "minutes": 2,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Pierre-feuille-ciseaux en trois manches : le perdant fait un massage de deux minutes."
@@ -2055,7 +2059,8 @@
   "id": "a-ztvjf2",
   "source": "expansion",
   "taille": "petite",
-  "minutes": 1,
+  "minutes": null,
+  "secondes": 30,
   "quand": "maintenant",
   "mode": "ensemble",
   "texte": "Bataille d’oreillers de trente secondes."

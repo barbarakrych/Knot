@@ -20,7 +20,8 @@ export async function chargerContenu() {
 
   // Cartes de base des deux piles.
   // mode des actions : 'ensemble' (en vrai), 'distance' (seulement à distance), 'les-deux'.
-  // min : 0 = pas de minuteur (minutes vaut null dans le fichier).
+  // min : minuteur en minutes ; sec : minuteur en secondes (champ « secondes », pour les durées courtes).
+  // Les deux à 0 = pas de minuteur.
   // big : true pour les actions « grande », appelées « défis » dans l'interface.
   // detail : thèmes ou idées affichés en petit sous le texte (souvent vide).
   const BASE = [];
@@ -29,7 +30,7 @@ export async function chargerContenu() {
   }));
   actions.forEach(a => BASE.push({
     id: a.id, pile: 'action', theme: '', src: a.source || '', text: a.texte,
-    min: a.minutes == null ? 0 : a.minutes, when: a.quand === 'semaine' ? 'week' : '', mode: a.mode || 'les-deux',
+    min: a.minutes == null ? 0 : a.minutes, sec: a.secondes == null ? 0 : a.secondes, when: a.quand === 'semaine' ? 'week' : '', mode: a.mode || 'les-deux',
     big: a.taille === 'grande', detail: a.detail || ''
   }));
 
