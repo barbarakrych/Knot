@@ -1,5 +1,5 @@
 /* Onglet « Action ou Vérité » : tirage, Passer, remélange, minuteur,
-   interrupteur « À distance », historique, cartes ajoutées, sources. */
+   interrupteur « À distance », défi en cours, historique, cartes ajoutées, sources. */
 import { $, el, fmt, lenClass, vibrer, cornerNodes } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
@@ -9,8 +9,9 @@ const PILE_IDS = Object.keys(PILES);
 export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   const BY_ID = new Map(BASE.map(c => [c.id, c]));
 
-  // État du jeu. drawn : cartes déjà tirées { id: {pile, at} } ; custom : cartes ajoutées ; current : carte affichée.
-  const S = { drawn: {}, custom: {}, current: null, confirming: null };
+  // État du jeu. drawn : cartes déjà tirées { id: {pile, at} } ; custom : cartes ajoutées ; current : carte affichée ;
+  // defi : identifiant du défi en cours (une action « grande »), ou null.
+  const S = { drawn: {}, custom: {}, current: null, defi: null, confirming: null };
   let animate = false, noteTimer = null, confirmDel = null, editing = null;
   let timer = { end: 0, left: 0, running: false, done: false, id: null, cardId: null };
   let DIST = lire(CLES.distance, true) !== false;
@@ -21,9 +22,11 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       S.drawn = r.drawn || {};
       S.custom = r.custom || {};
       S.current = r.current || null;
+      S.defi = r.defi || null;
+      if (!cardById(S.defi)) S.defi = null; // carte disparue du contenu
     }
   }
-  function sauver() { ecrire(CLES.pioche, { drawn: S.drawn, custom: S.custom, current: S.current }); }
+  function sauver() { ecrire(CLES.pioche, { drawn: S.drawn, custom: S.custom, current: S.current, defi: S.defi }); }
 
   function allCards(pile) {
     const custom = Object.values(S.custom).filter(c => c.pile === pile).sort((a, b) => (a.at || 0) - (b.at || 0));
@@ -35,7 +38,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (c.pile !== 'action') return true;
     return DIST ? c.mode !== 'ensemble' : c.mode !== 'distance';
   }
-  function remaining(pile) { return allCards(pile).filter(c => !S.drawn[c.id] && modeOk(c)); }
+  // Tant qu'un défi est en cours, aucun autre défi ne peut sortir.
+  function remaining(pile) { return allCards(pile).filter(c => !S.drawn[c.id] && modeOk(c) && !(S.defi && c.big)); }
 
   function note(msg, ok) {
     const n = $('note'); n.textContent = msg; n.className = 'note' + (ok ? ' ok' : ''); n.hidden = false;
@@ -104,9 +108,10 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       setCorners(cur.pile === 'action' ? 'A' : 'V', String(idx));
       let k = PILES[cur.pile].name;
       if (cur.pile === 'verite' && THEMES[cur.theme]) k += ' · ' + THEMES[cur.theme];
-      if (cur.pile === 'action') k += ' · ' + (cur.when === 'week' ? 'Cette semaine' : (cur.min ? cur.min + ' min' : 'Maintenant'));
+      if (cur.pile === 'action') k += (cur.big ? ' · Défi' : '') + ' · ' + (cur.when === 'week' ? 'Cette semaine' : (cur.min ? cur.min + ' min' : 'Maintenant'));
       $('kicker').textContent = k;
       q.textContent = cur.text; q.className = 'q' + lenClass(cur.text);
+      $('detail').textContent = cur.detail || ''; $('detail').hidden = !cur.detail;
       const src = SOURCES[cur.src]; const s = el('span');
       if (src) { s.className = 'src'; s.textContent = 'D’après ' + src.label; }
       else if (String(cur.id).startsWith('perso-')) { s.textContent = 'Carte ajoutée par vous'; }
@@ -118,10 +123,15 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       $('kicker').textContent = 'Prêts ?';
       q.className = 'q cover';
       q.textContent = 'Choisissez Vérité ou Action pour tirer la première carte.';
+      $('detail').hidden = true;
       meta.hidden = true;
     }
     if (animate) { card.classList.remove('enter'); void card.offsetWidth; card.classList.add('enter'); animate = false; }
     renderTimer();
+
+    const defi = cardById(S.defi);
+    $('defi').hidden = !defi;
+    if (defi) $('defitext').textContent = defi.text;
 
     $('skip').disabled = !cur;
 
@@ -155,17 +165,39 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const c = p[Math.floor(Math.random() * p.length)];
     S.drawn = { ...S.drawn, [c.id]: { pile, at: Date.now() } };
     S.current = c.id; animate = true;
+    if (c.big) S.defi = c.id; // un défi tiré devient le défi en cours
     render(); sauver();
     return true;
   }
   // Passer : on tire une autre carte, et celle passée retourne dans la pile.
   function skip() {
     const old = S.current; const c = cardById(old); if (!c) return;
-    if (!remaining(c.pile).some(x => x.id !== old)) { note('Il n’y a plus d’autre carte dans cette pile.'); return; }
+    const wasDefi = S.defi === old;
+    if (wasDefi) S.defi = null; // passer un défi l'annule
+    if (!remaining(c.pile).some(x => x.id !== old)) {
+      if (wasDefi) S.defi = old;
+      note('Il n’y a plus d’autre carte dans cette pile.'); return;
+    }
     if (!draw(c.pile, old)) return;
     const d = { ...S.drawn }; delete d[old]; S.drawn = d;
     render(); sauver();
   }
+  // Défi en cours : « C'est fait ! » le termine (la carte reste tirée) ;
+  // « Remettre dans la pile » l'annule et la carte peut ressortir.
+  function defiDone() {
+    S.defi = null;
+    render(); sauver();
+    note('Bravo ! Les défis peuvent de nouveau sortir.', true);
+  }
+  function defiBack() {
+    const id = S.defi; if (!id) return;
+    S.defi = null;
+    const d = { ...S.drawn }; delete d[id]; S.drawn = d;
+    if (S.current === id) S.current = null;
+    render(); sauver();
+    note('Le défi est retourné dans la pile.', true);
+  }
+
   function reshuffle(pile) {
     S.confirming = null;
     const d = { ...S.drawn };
@@ -177,17 +209,20 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
 
   /* ---------- Cartes ajoutées ---------- */
-  function addCard(pile, text, min) {
+  function addCard(pile, text, min, big) {
     const id = 'perso-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     min = pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
-    S.custom = { ...S.custom, [id]: { id, pile, theme: '', src: '', text, min, when: '', mode: '', at: Date.now() } };
+    big = pile === 'action' && !!big;
+    S.custom = { ...S.custom, [id]: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, detail: '', at: Date.now() } };
     render(); sauver();
     note('Carte ajoutée à la pile « ' + PILES[pile].name + ' ».', true);
   }
-  function editCard(id, text, min) {
+  function editCard(id, text, min, big) {
     const c = S.custom[id]; if (!c) return;
     min = c.pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
-    const upd = { ...c, text, min };
+    big = c.pile === 'action' && !!big;
+    const upd = { ...c, text, min, big };
+    if (S.defi === id && !big) S.defi = null; // ce n'est plus un défi
     editing = null; S.custom = { ...S.custom, [id]: upd };
     if (S.current === id) resetTimer(upd);
     render(); sauver();
@@ -198,6 +233,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const x = { ...S.custom }; delete x[id]; S.custom = x;
     if (S.drawn[id]) { const d = { ...S.drawn }; delete d[id]; S.drawn = d; }
     if (S.current === id) S.current = null;
+    if (S.defi === id) S.defi = null;
     render(); sauver();
     note('Carte supprimée.', true);
   }
@@ -211,7 +247,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       const li = el('li');
       const txt = el('div', 'txt');
       txt.append(
-        el('span', c.pile === 'action' ? 'a' : '', PILES[c.pile].name + (c.pile === 'action' && c.min ? ' · ' + c.min + ' min' : '')),
+        el('span', c.pile === 'action' ? 'a' : '', PILES[c.pile].name + (c.pile === 'action' && c.big ? ' · Défi' : '') + (c.pile === 'action' && c.min ? ' · ' + c.min + ' min' : '')),
         el('div', null, c.text)
       );
       const del = el('div', 'del');
@@ -220,18 +256,23 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
         li.className = 'editing';
         const ta = el('textarea'); ta.id = 'edit-' + c.id; ta.maxLength = 300; ta.value = c.text;
         const wrap = el('div', 'editbox'); wrap.append(ta);
-        let sel = null;
+        let sel = null, big = null;
         if (c.pile === 'action') {
           sel = el('input', 'editmin'); sel.type = 'number'; sel.min = '1'; sel.max = '120'; sel.step = '1'; sel.inputMode = 'numeric'; sel.placeholder = '—';
           sel.id = 'editmin-' + c.id; sel.value = c.min ? String(c.min) : '';
           const r = el('div', 'row'); const l = el('label', null, 'Minuteur'); l.htmlFor = sel.id;
           r.append(l, sel, el('span', 'muted', 'minutes · facultatif')); wrap.append(r);
+          big = el('input'); big.type = 'checkbox'; big.checked = !!c.big;
+          const bl = el('label'); bl.append(big, document.createTextNode(' C’est un défi'));
+          const br = el('div', 'bigrow');
+          br.append(bl, el('span', 'muted', 'À organiser ou à faire dans les jours qui viennent. Un seul défi à la fois.'));
+          wrap.append(br);
         }
         const acts = el('div', 'del');
         const save = el('button', 'btn primary', 'Enregistrer'); save.type = 'button';
         save.onclick = () => {
           const t = ta.value.trim(); if (!t) { note('La carte ne peut pas être vide.'); return; }
-          editCard(c.id, t.slice(0, 300), sel ? Math.round(+sel.value) || 0 : 0);
+          editCard(c.id, t.slice(0, 300), sel ? Math.round(+sel.value) || 0 : 0, big && big.checked);
         };
         const cancel = el('button', 'btn', 'Annuler'); cancel.type = 'button';
         cancel.onclick = () => { editing = null; renderMine(); };
@@ -293,7 +334,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (!m) return;
     w.append(document.createTextNode('Cette carte existe déjà sous une autre forme, ce n’est sans doute pas utile de l’ajouter :'), el('q', null, m.text));
   }
-  function syncAddMin() { $('addminrow').hidden = !$('add-action').checked; checkDup(); }
+  function syncAddMin() { const a = $('add-action').checked; $('addminrow').hidden = !a; $('addbigrow').hidden = !a; checkDup(); }
 
   /* ---------- Boutons ---------- */
   $('addtext').addEventListener('input', () => { clearTimeout(dupTimer); dupTimer = setTimeout(checkDup, 250); });
@@ -303,6 +344,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('pile-verite').onclick = () => draw('verite');
   $('pile-action').onclick = () => draw('action');
   $('skip').onclick = skip;
+  $('defidone').onclick = defiDone;
+  $('defiback').onclick = defiBack;
   $('reshuffle-verite').onclick = () => { S.confirming = 'verite'; render(); };
   $('reshuffle-action').onclick = () => { S.confirming = 'action'; render(); };
   $('confirmno').onclick = () => { S.confirming = null; render(); };
@@ -310,8 +353,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('addform').addEventListener('submit', e => {
     e.preventDefault();
     const t = $('addtext').value.trim(); if (!t) return;
-    addCard($('add-action').checked ? 'action' : 'verite', t.slice(0, 300), Math.round(+$('addmin').value) || 0);
-    $('addtext').value = ''; $('addmin').value = ''; checkDup();
+    addCard($('add-action').checked ? 'action' : 'verite', t.slice(0, 300), Math.round(+$('addmin').value) || 0, $('addbig').checked);
+    $('addtext').value = ''; $('addmin').value = ''; $('addbig').checked = false; checkDup();
   });
 
   charger();

@@ -23,7 +23,10 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 ## Règles du jeu à respecter
 - Une carte tirée ne ressort pas tant qu'on ne remélange pas la pile. « Passer » remet la carte dans la pile.
 - Interrupteur « À distance » : activé, il retire les actions `mode: "ensemble"` ; désactivé, il retire les actions `mode: "distance"`. Il ne concerne que la pile Action.
-- Les actions avec `minutes` ont un minuteur. `quand: "semaine"` s'affiche « Cette semaine ».
+- Les actions avec `minutes` ont un minuteur ; `minutes: null` = pas de minuteur. `quand: "semaine"` s'affiche « Cette semaine ».
+- Champ `taille` des actions : `"petite"` (se fait sur le moment) ou `"grande"` (demande de s'organiser ou se fait plus tard). Dans l'interface, les grandes actions s'appellent des « défis ». Une carte ajoutée par le couple est un défi si la case « C'est un défi » est cochée, sinon elle est petite.
+- Défi en cours : quand on tire un défi, il devient le défi en cours, affiché en haut de l'écran Action ou Vérité avec « C'est fait ! » et un lien « Remettre dans la pile ». Tant qu'il y a un défi en cours, aucun autre défi ne sort au tirage (les petites actions, si). « C'est fait ! » termine le défi (la carte reste tirée) ; « Remettre dans la pile » l'annule et la carte peut ressortir. Passer un défi juste tiré l'annule aussi. Remélanger et l'interrupteur « À distance » ne touchent pas au défi en cours.
+- Champ `detail` (facultatif) : thèmes ou idées, affichés sous le texte de la carte, en plus petit, sans chevaucher les coins.
 - Chaque carte affiche sa source (« D'après … ») à partir de `sources.json`.
 - « Pour plus tard » : les cartes d'un paquet se suivent dans l'ordre, avec Précédente / Carte suivante et une progression. Le guide de conversation est affiché sur la liste des paquets et dans chaque paquet.
 - Aucun défi ne demande de dépenser de l'argent ou de se faire livrer.

@@ -30,6 +30,13 @@
   <section class="view" id="view-av">
   <p class="intro">Tirez une carte chacun votre tour, et prenez le temps qu’il faut sur chacune.</p>
 
+  <div class="defi" id="defi" hidden>
+    <p class="defi-k">Défi en cours</p>
+    <p class="defi-t" id="defitext"></p>
+    <button class="btn small primary" id="defidone" type="button">C’est fait !</button>
+    <button class="link" id="defiback" type="button">Remettre dans la pile</button>
+  </div>
+
   <div class="distrow">
     <div class="disttxt"><span id="distlabel">À distance</span></div>
     <button class="switch" id="distsw" type="button" role="switch" aria-checked="true" aria-labelledby="distlabel"><span></span></button>
@@ -45,6 +52,7 @@
       <div class="corner br" id="cbr" aria-hidden="true"></div>
       <p class="kicker" id="kicker"></p>
       <p class="q" id="q"></p>
+      <p class="detail" id="detail" hidden></p>
       <div class="timer" id="timer" hidden>
         <span class="clock" id="clock"></span>
         <button class="btn small primary" id="timerbtn" type="button"></button>
@@ -76,6 +84,10 @@
         <label for="addmin">Minuteur</label>
         <input type="number" id="addmin" min="1" max="120" step="1" inputmode="numeric" placeholder="—">
         <span class="muted">minutes · facultatif, laisse vide si pas besoin</span>
+      </div>
+      <div class="bigrow" id="addbigrow" hidden>
+        <label><input type="checkbox" id="addbig"> C’est un défi</label>
+        <span class="muted">À organiser ou à faire dans les jours qui viennent. Un seul défi à la fois.</span>
       </div>
       <p class="dup" id="dupwarn" hidden></p>
       <button class="btn" type="submit" id="addbtn">Ajouter à la pile</button>

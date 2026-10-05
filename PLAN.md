@@ -66,6 +66,7 @@ Test : chacun ouvre l'app, l'un tire une carte, elle apparaît chez l'autre.
 À inclure dans cette étape :
 - Chacun son tour : l'app indique à qui c'est le tour de tirer, et sous chaque carte qui l'a tirée.
 - Minuteur partagé : une fois lancé, il s'écoule sur les deux téléphones (si l'app est ouverte sur les deux en même temps).
+- Défi en cours partagé : le défi en cours s'affiche sur les deux téléphones, et « C'est fait ! » ou « Remettre dans la pile » sur l'un le retire aussi chez l'autre.
 
 ---
 
