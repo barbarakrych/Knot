@@ -11,7 +11,7 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 ## Référence
 - `prototype/knot-prototype.html` : la version qui marche dans claude.ai. C'est la référence pour le design, les écrans et le comportement. Ne pas l'éditer : reconstruire proprement à côté.
 - `contenu/` : tout le contenu en JSON (vérités, actions, paquets « Pour plus tard », sources, thèmes). Les textes sont validés : ne jamais les réécrire sans me demander.
-- `design/knot-logo.svg` : le logo (nœud d'Héraclès, bleu marine bordé d'or).
+- `design/knot-logo.svg` : le logo (nœud d'Héraclès, bleu marine bordé d'or, sans traits aux extrémités).
 - `PLAN.md` : les étapes du projet, dans l'ordre. On en fait une à la fois.
 
 ## Choix techniques
@@ -37,7 +37,7 @@ Jeu de cartes pour couples, à distance ou non : « Action ou Vérité » et « 
 - Couleurs : papier #EEF1F6, carte #FFFFFF, encre #1C2740, gris #5B6782, rouge #C8323A, bleu #2A4A98, or du logo #C9A646, vert interrupteur #34C759. Mode sombre : reprendre les valeurs du prototype.
 - Polices : Bricolage Grotesque (titres, interface), Newsreader (texte des cartes), DM Mono (petites étiquettes).
 - L'interrupteur « À distance » ressemble à celui des réveils d'iPhone.
-- Icône de l'app : le nœud (bleu bordé d'or) au centre d'un panneau blanc, sur un fond entièrement rayé rouge, blanc, bleu « par avion ». Fabriquée par `node outils/generer-icones.js` à partir du logo : écrit `design/icone.svg` (et la version Android `icone-maskable.svg`) puis les PNG de `icones/`.
+- Icône de l'app : le nœud et le mot Knot en blanc, dans la police des titres, sur fond bleu nuit #1C2740 (aussi la couleur de l'écran de démarrage, `background_color` du manifest). Originaux : `design/icone.svg` (aussi utilisée comme favicon) et la version Android `design/icone-maskable.svg` (plus de marge). `node outils/generer-icones.js` en tire les PNG de `icones/`.
 
 ## Habitudes de travail
 - Git : sauvegarde (commit) après chaque étape qui marche, avec un message clair en français.
