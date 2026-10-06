@@ -33,7 +33,7 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Faites les 36 questions d’Aron en entier. Le lien est dans « D’où viennent ces cartes »."
+  "texte": "Faites les 36 questions d’Aron en entier. Le lien est dans « Sources d’inspiration »."
  },
  {
   "id": "a-9nwy8l",
@@ -1063,7 +1063,7 @@
   "minutes": 10,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Choisissez une phrase d’un philosophe dans « D’où viennent ces cartes » et débattez 10 minutes : d’accord ou pas ?"
+  "texte": "Choisissez une phrase d’un philosophe dans « Sources d’inspiration » et débattez 10 minutes : d’accord ou pas ?"
  },
  {
   "id": "a-qc2nkh",
