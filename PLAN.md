@@ -109,7 +109,7 @@ Idées à piocher, une par session :
   - Quand À distance est activé, afficher la distance entre nous (par exemple « ✈ 5 500 km entre vous »). À décider : localisation automatique (arrondie à la ville, jamais la position exacte) ou ville choisie une fois dans les Réglages.
   - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
 - Pouvoir balayer la carte du doigt pour en tirer une nouvelle.
-- Bandeau « Nouvelle version disponible, toucher pour l'afficher » : aujourd'hui, une mise à jour n'apparaît qu'à la 2ᵉ ouverture de l'app (le service worker montre d'abord la copie en réserve). Le bandeau proposerait la nouveauté dès la 1ʳᵉ ouverture, sans couper une partie en cours.
+- ✅ Fait autrement : mises à jour automatiques dès la 1ʳᵉ ouverture, sans bandeau. La nouvelle version s'installe toute seule et l'app se recharge une fois, à un moment calme (jamais pendant un minuteur ou une saisie). Détails dans CLAUDE.md, « Choix techniques ».
 - Démarrage sur Android : entre l'écran de démarrage (le logo) et l'app, il y a encore comme un saut d'environ une seconde.
   - Déjà fait (et gardé) : fond de la même couleur partout dès le premier instant, page invisible et sans animation tant qu'elle n'est pas prête, puis affichée d'un coup.
   - Déjà essayé (sans effet, retiré) : retarder le signal « page chargée » jusqu'à ce que l'app soit prête, pour que Chrome garde le logo plus longtemps.

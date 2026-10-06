@@ -150,17 +150,14 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     });
 
     renderMine();
-    for (const p of PILE_IDS) {
-      const n = Object.values(S.drawn).filter(v => v && v.pile === p).length;
-      $('reshuffle-' + p).disabled = n === 0;
-    }
-    const total = Object.values(S.drawn).filter(v => v).length;
+    for (const p of PILE_IDS) $('reshuffle-' + p).disabled = aRemelanger(p).length === 0;
+    const total = aRemelanger('tout').length;
     $('reshuffle-tout').disabled = total === 0;
     $('confirm').hidden = !S.confirming;
     if (S.confirming === 'tout') {
       $('confirmtext').textContent = 'Les ' + total + ' carte' + (total > 1 ? 's' : '') + ' déjà tirée' + (total > 1 ? 's' : '') + ' (vérités et actions) reviendront dans leur pile, pour vous deux.';
     } else if (S.confirming) {
-      const n = Object.values(S.drawn).filter(v => v && v.pile === S.confirming).length;
+      const n = aRemelanger(S.confirming).length;
       $('confirmtext').textContent = 'Les ' + n + ' carte' + (n > 1 ? 's' : '') + ' « ' + PILES[S.confirming].name + ' » déjà tirée' + (n > 1 ? 's' : '') + ' reviendront dans la pile, pour vous deux.';
     }
   }
@@ -219,13 +216,21 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     note('Le défi est retourné dans la pile.', true);
   }
 
-  // pile = 'verite', 'action' ou 'tout' (les deux piles). Le défi en cours et le tour ne sont pas touchés.
+  // Cartes tirées qu'un remélange de cette pile ('verite', 'action' ou 'tout') remet dans la pile :
+  // toutes, sauf celle du défi en cours, qui reste tirée (elle ne ressort pas tant que le défi est en cours).
+  function aRemelanger(pile) {
+    return Object.keys(S.drawn).filter(id => {
+      const d = S.drawn[id];
+      return d && (pile === 'tout' || d.pile === pile) && id !== S.defi && cardById(id);
+    });
+  }
+
+  // Le défi en cours n'est pas touché : il reste affiché chez les deux, et s'il est la carte affichée, elle reste aussi.
   function reshuffle(pile) {
     S.confirming = null;
-    const o = [];
-    Object.keys(S.drawn).forEach(id => { const d = S.drawn[id]; if (d && (pile === 'tout' || d.pile === pile)) o.push({ suppr: ['tirees', id] }); });
+    const o = aRemelanger(pile).map(id => ({ suppr: ['tirees', id] }));
     const cur = cardById(S.current);
-    if (cur && (pile === 'tout' || cur.pile === pile)) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
+    if (cur && cur.id !== S.defi && (pile === 'tout' || cur.pile === pile)) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
     if (o.length) agir(o); else render();
   }
 

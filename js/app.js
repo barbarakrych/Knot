@@ -7,6 +7,7 @@ import { demarrerActionVerite } from './action-verite.js';
 import { demarrerPourPlusTard } from './pour-plus-tard.js';
 import { coupleLocal, actualiser, nomsDuCouple } from './couple.js';
 import * as partie from './partie.js';
+import { surveillerMisesAJour } from './mise-a-jour.js';
 import { preparerAccueil } from './accueil.js';
 import { preparerReglages } from './reglages.js';
 
@@ -112,7 +113,6 @@ async function demarrer() {
 
 demarrer();
 
-// Service worker (sw.js) : garde une copie de l'app sur l'appareil pour qu'elle marche hors ligne.
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(e => console.warn('Hors ligne indisponible :', e));
-}
+// Service worker (sw.js) : garde une copie de l'app sur l'appareil pour qu'elle marche hors ligne,
+// et installe les nouvelles versions toutes seules, à un moment calme (voir mise-a-jour.js).
+surveillerMisesAJour();

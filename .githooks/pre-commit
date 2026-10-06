@@ -1,0 +1,4 @@
+#!/bin/sh
+# Avant chaque commit : met à jour le numéro de version de l'app dans sw.js (voir outils/version-sw.js),
+# pour que les téléphones installent la nouvelle version toute seule.
+node outils/version-sw.js && git add sw.js
