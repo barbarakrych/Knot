@@ -131,6 +131,39 @@ begin
       r := r || '✅ Un ordre interdit est refusé'::text;
     end;
 
+    -- Étape 5 : cartes ajoutées. A ajoute une carte en prétendant être la place 2 : la base note quand même la place de A.
+    rep := public.jouer('[{"set": ["perso", "perso-a1"], "valeur": {"id": "perso-a1", "pile": "verite", "text": "Carte de A", "min": 0, "big": false, "at": 1, "place": 2}}]'::jsonb);
+    r := r || (case when rep->'etat'->'perso'->'perso-a1'->>'place' = '1' then '✅' else '❌' end
+               || ' La carte ajoutée par A est notée à la place de A, même si son téléphone dit le contraire');
+
+    -- B essaie de modifier, puis de supprimer la carte de A
+    perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
+    rep := public.jouer('[{"set": ["perso", "perso-a1"], "valeur": {"id": "perso-a1", "pile": "verite", "text": "Modifiée par B", "place": 2}}]'::jsonb);
+    r := r || (case when rep->'etat'->'perso'->'perso-a1'->>'text' = 'Carte de A' then '✅' else '❌' end
+               || ' B ne peut pas modifier la carte de A');
+    rep := public.jouer('[{"suppr": ["perso", "perso-a1"]}]'::jsonb);
+    r := r || (case when rep->'etat'->'perso' ? 'perso-a1' then '✅' else '❌' end
+               || ' B ne peut pas supprimer la carte de A');
+
+    -- B peut tirer la carte de A (elle est dans le paquet commun), et ajouter la sienne
+    rep := public.jouer('[{"set": ["tirees", "perso-a1"], "valeur": {"pile": "verite", "at": 2, "par": 2}},
+                          {"set": ["affichee"], "valeur": "perso-a1"},
+                          {"set": ["perso", "perso-b1"], "valeur": {"id": "perso-b1", "pile": "action", "text": "Carte de B", "min": 5, "big": false, "at": 2}}]'::jsonb);
+    r := r || (case when rep->'etat'->>'affichee' = 'perso-a1' and rep->'etat'->'tirees' ? 'perso-a1' then '✅' else '❌' end
+               || ' B peut tirer la carte de A');
+    r := r || (case when rep->'etat'->'perso'->'perso-b1'->>'place' = '2' then '✅' else '❌' end
+               || ' La carte ajoutée par B est notée à la place de B');
+
+    -- A modifie sa carte, mais ne peut pas supprimer celle de B
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.jouer('[{"set": ["perso", "perso-a1"], "valeur": {"id": "perso-a1", "pile": "verite", "text": "Carte de A, modifiée", "min": 0, "big": false, "at": 1}},
+                          {"suppr": ["perso", "perso-b1"]},
+                          {"set": ["affichee"], "valeur": "v1"}]'::jsonb);
+    r := r || (case when rep->'etat'->'perso'->'perso-a1'->>'text' = 'Carte de A, modifiée' then '✅' else '❌' end
+               || ' A peut modifier sa propre carte');
+    r := r || (case when rep->'etat'->'perso' ? 'perso-b1' and rep->'etat'->>'affichee' = 'v1' then '✅' else '❌' end
+               || ' A ne peut pas supprimer la carte de B (et le reste de ses gestes passe quand même)');
+
     -- A ne peut pas écrire directement dans sa propre partie : tout passe par jouer()
     begin
       update public.parties set etat = '{}'::jsonb where couple_id = couple1;
@@ -177,6 +210,12 @@ begin
     r := r || (case when nb = 1 then '✅' else '❌' end || ' Le nouveau téléphone voit le couple 1');
     select count(*) into nb from public.parties where etat->>'affichee' = 'v1';
     r := r || (case when nb = 1 then '✅' else '❌' end || ' Le nouveau téléphone retrouve la partie du couple');
+    rep := public.jouer('[{"set": ["perso", "perso-b1"], "valeur": {"id": "perso-b1", "pile": "action", "text": "Carte de B, modifiée", "min": 5, "big": false, "at": 2}},
+                          {"suppr": ["perso", "perso-a1"]}]'::jsonb);
+    r := r || (case when rep->'etat'->'perso'->'perso-b1'->>'text' = 'Carte de B, modifiée' then '✅' else '❌' end
+               || ' Le nouveau téléphone de B peut modifier les cartes de B');
+    r := r || (case when rep->'etat'->'perso' ? 'perso-a1' then '✅' else '❌' end
+               || ' Le nouveau téléphone de B ne peut toujours pas supprimer la carte de A');
 
     -- L'ancien téléphone de B est détaché
     perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);

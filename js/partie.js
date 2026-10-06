@@ -16,7 +16,7 @@
      affichee id de la carte affichée, ou null
      defi     id du défi en cours, ou null
      distance interrupteur « À distance »
-     perso    { id: carte } cartes ajoutées
+     perso    { id: carte } cartes ajoutées (carte.place = place de son auteur, écrite par la base)
      paquets  { id: { i, max } } progression des paquets « Pour plus tard »
      minuteur { cle, marche, fin, reste } le minuteur commun (fin en heure du serveur) */
 import { CLES, lire, ecrire, effacer } from './stockage.js';
@@ -87,7 +87,8 @@ function ordresReprise(e, version) {
     if (v && !e.tirees[id]) o.push({ set: ['tirees', id], valeur: { pile: v.pile, at: v.at || 0, par: null } });
   }
   for (const [id, c] of Object.entries(p.custom || {})) {
-    if (c && !e.perso[id]) o.push({ set: ['perso', id], valeur: c });
+    // Cartes ajoutées sur ce téléphone : elles sont à moi (la base y écrira de toute façon ma place)
+    if (c && !e.perso[id]) o.push({ set: ['perso', id], valeur: { ...c, place: (coupleLocal() || {}).place || null } });
   }
   if (!e.affichee && p.current) o.push({ set: ['affichee'], valeur: p.current });
   if (!e.defi && p.defi) o.push({ set: ['defi'], valeur: p.defi });

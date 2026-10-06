@@ -33,6 +33,9 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const c = coupleLocal(); if (!c || !place) return '';
     return place === c.place ? c.prenomMoi : c.prenomAutre;
   }
+  // Une carte ajoutée est à moi si elle porte ma place (une carte sans place, d'avant l'étape 5, est à la personne 1).
+  // Même règle que jouer() dans la base, qui refuse qu'on modifie ou supprime la carte de l'autre.
+  function aMoi(c) { return (c.place || 1) === maPlace(); }
 
   function allCards(pile) {
     const custom = Object.values(S.custom).filter(c => c.pile === pile).sort((a, b) => (a.at || 0) - (b.at || 0));
@@ -116,7 +119,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       $('detail').textContent = cur.detail || ''; $('detail').hidden = !cur.detail;
       const src = SOURCES[cur.src]; const s = el('span');
       if (src) { s.className = 'src'; s.textContent = 'D’après ' + src.label; }
-      else if (String(cur.id).startsWith('perso-')) { s.textContent = 'Carte ajoutée par vous'; }
+      else if (S.custom[cur.id]) { s.className = 'src'; s.textContent = 'Carte ajoutée'; } // jamais par qui
       if (s.textContent) meta.append(s);
       meta.hidden = !meta.childNodes.length;
     } else {
@@ -190,17 +193,18 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     balayer($('card'), undefined, 'droite'); // l'ancienne carte part vers la droite, la nouvelle est dessous
     agir(ordresTirer(auHasard(p)));
   }
-  // Passer : on tire une autre carte, et celle passée retourne dans la pile.
+  // Passer (toujours possible) : on tire une autre carte, et celle passée retourne dans la pile.
+  // S'il n'y a pas d'autre carte, elle retourne quand même dans la pile et on revient à « Prêts ? ».
   function skip() {
     const old = S.current; const c = cardById(old); if (!c) return;
     const wasDefi = S.defi === old; // passer un défi l'annule : les autres défis peuvent alors sortir
     const defi = wasDefi ? null : cardById(S.defi);
     const p = allCards(c.pile).filter(x => x.id !== old && !S.drawn[x.id] && modeOk(x) && !(defi && x.big));
-    if (!p.length) { note('Il n’y a plus d’autre carte dans cette pile.'); return; }
     balayer($('card'), undefined, 'gauche');
     const o = [{ suppr: ['tirees', old] }];
     if (wasDefi) o.push({ suppr: ['defi'] });
-    agir(o.concat(ordresTirer(auHasard(p))));
+    if (p.length) agir(o.concat(ordresTirer(auHasard(p))));
+    else agir(o.concat({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] }));
   }
   // Défi en cours : « C'est fait ! » le termine (la carte reste tirée) ;
   // « Remettre dans la pile » l'annule et la carte peut ressortir.
@@ -234,16 +238,18 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (o.length) agir(o); else render();
   }
 
-  /* ---------- Cartes ajoutées (partagées par les deux pour l'instant ; privées à l'étape 5) ---------- */
+  /* ---------- Cartes ajoutées ----------
+     Elles entrent dans le paquet commun et peuvent sortir chez les deux (avec « Carte ajoutée », jamais par qui).
+     Seul leur auteur les voit dans « Vos cartes » et peut les modifier ou les supprimer (garanti par jouer()). */
   function addCard(pile, text, min, big) {
     const id = 'perso-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     min = pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
     big = pile === 'action' && !!big;
-    agir([{ set: ['perso', id], valeur: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, detail: '', at: Date.now() } }]);
+    agir([{ set: ['perso', id], valeur: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, detail: '', at: Date.now(), place: maPlace() } }]);
     note('Carte ajoutée à la pile « ' + PILES[pile].name + ' ».', true);
   }
   function editCard(id, text, min, big) {
-    const c = S.custom[id]; if (!c) return;
+    const c = S.custom[id]; if (!c || !aMoi(c)) return;
     min = c.pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
     big = c.pile === 'action' && !!big;
     editing = null;
@@ -255,6 +261,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
   function deleteCard(id) {
     confirmDel = null;
+    if (!S.custom[id] || !aMoi(S.custom[id])) return;
     const o = [{ suppr: ['perso', id] }, { suppr: ['tirees', id] }];
     if (S.current === id) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
     if (S.defi === id) o.push({ suppr: ['defi'] });
@@ -264,7 +271,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
 
   function renderMine() {
     if (editing && document.getElementById('edit-' + editing) && S.custom[editing]) return;
-    const mine = Object.values(S.custom).sort((a, b) => (b.at || 0) - (a.at || 0));
+    const mine = Object.values(S.custom).filter(aMoi).sort((a, b) => (b.at || 0) - (a.at || 0));
     $('minetitle').textContent = mine.length ? 'Vos cartes (' + mine.length + ')' : 'Les cartes que vous ajoutez apparaîtront ici.';
     const ul = $('minelist'); ul.textContent = '';
     mine.forEach(c => {

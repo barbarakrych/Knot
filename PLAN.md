@@ -100,6 +100,11 @@ Décidé :
 Prompt :
 > Étape 5 du PLAN. Les cartes ajoutées par une personne doivent être privées : visibles seulement dans sa propre liste « Vos cartes », et seule cette personne peut les modifier ou les supprimer. Elles entrent dans le paquet commun et peuvent sortir au tirage chez les deux, avec « Carte ajoutée » à la place de la source, sans jamais indiquer qui l'a écrite ; « Passer » reste toujours possible (voir « Décidé »). Utilise les règles de Supabase pour que seule l'autrice ou l'auteur d'une carte puisse la modifier ou la supprimer, garanti par la base de données, et montre-moi comment le vérifier avec les deux comptes.
 
+✅ Fait (détails dans CLAUDE.md, « Règles du jeu ») :
+- Chaque carte ajoutée porte la place de son auteur, écrite par `jouer()` dans `supabase/schema.sql`, qui ignore toute modification ou suppression de la carte de l'autre. Les cartes d'avant l'étape 5 sont à la personne 1. Tests dans `supabase/test-rls.sql`.
+- « Vos cartes » ne montre que ses propres cartes ; au tirage, « Carte ajoutée » à la place de la source.
+- « Passer » marche aussi sur la dernière carte d'une pile (retour à « Prêts ? »).
+
 ---
 
 ## Étape 6 · Finitions

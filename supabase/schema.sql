@@ -1,4 +1,4 @@
--- Knot · étapes 3 et 4 : le couple et la partie partagée.
+-- Knot · étapes 3, 4 et 5 : le couple, la partie partagée et les cartes ajoutées.
 -- À coller dans Supabase → SQL Editor → Run. Peut être relancé sans danger (rien n'est effacé).
 --
 -- Principe de sécurité :
@@ -63,6 +63,12 @@ create table if not exists public.parties (
 create or replace function public.mon_couple_id() returns uuid
 language sql stable security definer set search_path = '' as $$
   select couple_id from public.membres where user_id = auth.uid()
+$$;
+
+-- Ma place dans le couple (1 = la personne qui l'a créé, 2 = l'autre), ou rien. Sert à savoir à qui est une carte ajoutée.
+create or replace function public.ma_place() returns smallint
+language sql stable security definer set search_path = '' as $$
+  select place from public.membres where user_id = auth.uid()
 $$;
 
 alter table public.couples enable row level security;
@@ -306,6 +312,15 @@ $$;
 -- Les couples créés avant l'étape 4 reçoivent leur partie.
 insert into public.parties (couple_id, etat) select id, public.etat_vide() from public.couples on conflict do nothing;
 
+-- Étape 5 : les cartes ajoutées avant cette étape n'ont pas d'auteur noté. Elles vont à la personne 1.
+update public.parties p set
+  etat = jsonb_set(p.etat, '{perso}', (
+    select jsonb_object_agg(k, case when jsonb_typeof(v) = 'object' and not v ? 'place' then v || '{"place": 1}'::jsonb else v end)
+    from jsonb_each(p.etat->'perso') as t(k, v))),
+  version = p.version + 1, modifiee_le = now()
+where jsonb_typeof(p.etat->'perso') = 'object'
+  and exists (select 1 from jsonb_each(p.etat->'perso') as t(k, v) where jsonb_typeof(v) = 'object' and not v ? 'place');
+
 -- 5. Jouer : applique une liste de petits ordres à la partie de MON couple, puis renvoie
 --    {"etat": …, "version": …, "maintenant": heure du serveur en millisecondes}.
 --    Un ordre : {"set": ["tirees", "v12"], "valeur": {…}} (écrire) ou {"suppr": ["tirees", "v12"]} (effacer).
@@ -313,10 +328,14 @@ insert into public.parties (couple_id, etat) select id, public.etat_vide() from 
 --      • tirees, perso, paquets : des listes « identifiant → valeur », chemin de 2 éléments ;
 --      • affichee, defi, distance, minuteur : une seule valeur, chemin de 1 élément.
 --    Une liste vide ne change rien : elle sert à lire la partie et l'heure du serveur.
+--    Étape 5 : une carte ajoutée (perso) porte la place de son auteur, écrite ici par la base (jamais celle
+--    envoyée par le téléphone). Un ordre qui modifie ou efface la carte de l'autre est ignoré, sans bloquer les autres.
 create or replace function public.jouer(ordres jsonb) returns jsonb
 language plpgsql volatile security definer set search_path = '' as $$
 declare
   le_couple uuid := public.mon_couple_id();
+  ma smallint := public.ma_place();
+  existante jsonb;
   e jsonb;
   v bigint;
   o jsonb;
@@ -352,6 +371,17 @@ begin
         if cardinality(chemin) <> 1 then raise exception 'ordres_invalides'; end if;
       else
         raise exception 'ordres_invalides';
+      end if;
+      if cle = 'perso' then
+        -- Seul l'auteur touche à sa carte (une carte sans place, d'avant l'étape 5, est à la personne 1)
+        existante := e->'perso'->chemin[2];
+        if jsonb_typeof(existante) = 'object' and coalesce(existante->>'place', '1') <> ma::text then
+          continue;
+        end if;
+        if o ? 'set' then
+          if jsonb_typeof(o->'valeur') is distinct from 'object' then raise exception 'ordres_invalides'; end if;
+          o := jsonb_set(o, '{valeur,place}', to_jsonb(ma));
+        end if;
       end if;
       if o ? 'set' then e := jsonb_set(e, chemin, coalesce(o->'valeur', 'null'::jsonb), true);
       else e := e #- chemin;
@@ -390,7 +420,7 @@ grant select on public.couples, public.membres, public.codes_relier, public.part
 -- Les outils internes ne sont appelables par personne de l'extérieur.
 
 revoke all on function public.initiale(text), public.prenom_propre(text), public.code_propre(text),
-  public.nouveau_code(text, text), public.trop_d_essais(), public.etat_vide()
+  public.nouveau_code(text, text), public.trop_d_essais(), public.etat_vide(), public.ma_place()
   from public, anon, authenticated;
 
 revoke all on function public.mon_couple_id(), public.creer_couple(text, text), public.apercu_code(text),
