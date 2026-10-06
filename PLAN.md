@@ -92,11 +92,13 @@ Objectif : les cartes que j'ajoute, moi seule les vois dans ma liste ; pareil po
 
 Décidé :
 - Une carte ajoutée par une personne entre dans le paquet commun et peut sortir au tirage chez les deux.
-- Elle n'apparaît que dans la liste « Vos cartes » de la personne qui l'a créée.
-- Quand elle sort au tirage, elle ressemble exactement aux autres cartes : rien n'indique qui l'a ajoutée.
+- Au tirage, elle affiche « Carte ajoutée » à la place de la source (« D'après… »), sans jamais indiquer qui l'a écrite.
+- Elle n'apparaît que dans la liste « Vos cartes » de la personne qui l'a créée : elle seule peut la modifier ou la supprimer, et c'est garanti par les règles de sécurité (RLS) de Supabase.
+- « Passer » reste toujours possible, sans justification.
+- Choix de simplicité : le texte des cartes de l'autre arrive sur le téléphone, mais n'est affiché qu'au tirage (pas de délai, le tirage marche hors ligne). La base garantit qui peut modifier ou supprimer une carte ; c'est l'app qui la cache de la liste « Vos cartes » de l'autre.
 
 Prompt :
-> Étape 5 du PLAN. Les cartes ajoutées par une personne doivent être privées : visibles seulement dans sa propre liste « Vos cartes », mais elles entrent dans le paquet commun et peuvent sortir au tirage chez les deux, sans rien qui indique qui les a ajoutées (voir « Décidé »). Utilise les règles RLS de Supabase pour que ce soit garanti par la base de données, pas seulement par l'affichage, et montre-moi comment le vérifier avec les deux comptes.
+> Étape 5 du PLAN. Les cartes ajoutées par une personne doivent être privées : visibles seulement dans sa propre liste « Vos cartes », et seule cette personne peut les modifier ou les supprimer. Elles entrent dans le paquet commun et peuvent sortir au tirage chez les deux, avec « Carte ajoutée » à la place de la source, sans jamais indiquer qui l'a écrite ; « Passer » reste toujours possible (voir « Décidé »). Utilise les règles de Supabase pour que seule l'autrice ou l'auteur d'une carte puisse la modifier ou la supprimer, garanti par la base de données, et montre-moi comment le vérifier avec les deux comptes.
 
 ---
 
