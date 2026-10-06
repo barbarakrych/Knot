@@ -27,7 +27,10 @@ const POLICES = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'];
 
 // Sur l'ordinateur (serveur local), on prend toujours la dernière version des fichiers pour voir tout de suite
 // ce qu'on modifie ; la réserve ne sert qu'en cas de coupure.
-const SUR_ORDINATEUR = ['localhost', '127.0.0.1'].includes(self.location.hostname);
+// Adresse du site de présentation, à côté de l'app (ex. https://barbarakrych.github.io/Knot/site/)
+const SITE = new URL('site/', self.registration.scope).href;
+
+const SUR_ORDINATEUR =['localhost', '127.0.0.1'].includes(self.location.hostname);
 
 self.addEventListener('install', evenement => {
   // cache: 'reload' : on va chercher la version du serveur, pas une vieille copie du navigateur.
@@ -70,6 +73,8 @@ self.addEventListener('fetch', evenement => {
     return;
   }
   if (url.origin !== self.location.origin) return;
+  // Le site de présentation (dossier site/) est une page indépendante : jamais mis en réserve, jamais intercepté
+  if (url.href.startsWith(SITE)) return;
 
   evenement.respondWith(caches.open(RESERVE).then(async reserve => {
     // ignoreSearch : « index.html?x=1 » utilise la même copie que « index.html »
