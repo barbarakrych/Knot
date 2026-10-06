@@ -46,7 +46,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     const intro = el('div', 'panel');
     intro.append(
       el('h2', null, 'Pour plus tard'),
-      el('p', null, 'Huit paquets, chacun tiré d’une étude ou d’un questionnaire reconnu. Les cartes se suivent dans l’ordre prévu par la méthode, pour avancer pas à pas.'),
+      el('p', null, 'Huit paquets, chacun inspiré d’une étude ou d’un questionnaire reconnu. Les cartes se suivent dans l’ordre prévu par la méthode, pour avancer pas à pas.'),
       // Même phrase sous « Pourquoi Knot ? » (index.html)
       el('p', 'affiliation', 'Knot n’est affilié à aucun des chercheurs, auteurs ou organismes cités. Les cartes sont des créations originales inspirées de leurs travaux.')
     );
