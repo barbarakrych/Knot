@@ -1,12 +1,27 @@
 /* Écran Réglages (l'engrenage en haut à droite).
-   Un bloc <section class="reglage"> par réglage dans index.html : thème, son et À distance s'ajouteront à côté (étape 6).
-   Pour l'instant : le couple (code à donner à l'autre, ou « Relier le téléphone de [l'autre] »). */
+   Un bloc <section class="reglage"> par réglage dans index.html : thème et son s'ajouteront à côté (étape 6).
+   Pour l'instant, de haut en bas : « À distance » (partagé avec l'autre téléphone),
+   puis le couple (code à donner à l'autre, ou « Relier le téléphone de [l'autre] »). */
 import { $, el, copier } from './commun.js';
 import { actualiser, demanderCodeRelier, messageErreur } from './couple.js';
+import { etat, agir, ecouter } from './partie.js';
 
 // detache() : appelée si la base dit que ce téléphone ne fait plus partie du couple.
 export function preparerReglages(detache) {
   let ouvert = false;
+
+  // Interrupteur partagé : il montre la partie, et un appui envoie l'ordre à l'autre téléphone aussi.
+  // À distance : activé, il retire les actions « ensemble » ; désactivé, les actions « distance ».
+  const INTERRUPTEURS = { distsw: 'distance' };
+  function afficherInterrupteurs() {
+    const e = etat();
+    for (const [id, cle] of Object.entries(INTERRUPTEURS)) $(id).setAttribute('aria-checked', String(e[cle] !== false));
+  }
+  for (const [id, cle] of Object.entries(INTERRUPTEURS)) {
+    $(id).onclick = () => agir([{ set: [cle], valeur: etat()[cle] === false }]);
+  }
+  ecouter(afficherInterrupteurs);
+  afficherInterrupteurs();
 
   // Code bien visible + bouton Copier + petite phrase d'aide
   function blocCode(etiquette, code, aide) {

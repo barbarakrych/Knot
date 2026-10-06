@@ -94,6 +94,52 @@ begin
       r := r || ('✅ Même A ne peut pas effacer de membre directement (refusé : ' || sqlerrm || ')');
     end;
 
+    -- Étape 4 : la partie partagée. A tire une carte…
+    rep := public.jouer('[{"set": ["tirees", "v1"], "valeur": {"pile": "verite", "at": 1, "par": 1}},
+                          {"set": ["affichee"], "valeur": "v1"}]'::jsonb);
+    -- (version 2 : B en rejoignant le couple a déjà fait passer la partie en version 1)
+    r := r || (case when (rep->>'version')::int = 2 and rep->'etat'->'tirees' ? 'v1' then '✅' else '❌' end
+               || ' A tire une carte (partie en version ' || coalesce(rep->>'version', '?') || ')');
+
+    -- … B la voit
+    perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
+    select count(*) into nb from public.parties where etat->>'affichee' = 'v1';
+    r := r || (case when nb = 1 then '✅' else '❌' end || ' B voit la carte tirée par A');
+
+    -- C ne voit pas la partie du couple 1, et ses ordres ne touchent que la sienne
+    perform set_config('request.jwt.claims', json_build_object('sub', c, 'role', 'authenticated')::text, true);
+    select count(*) into nb from public.parties where couple_id = couple1;
+    r := r || (case when nb = 0 then '✅' else '❌' end || ' C ne voit pas la partie du couple 1');
+    rep := public.jouer('[{"set": ["distance"], "valeur": false}]'::jsonb);
+    begin
+      update public.parties set etat = '{}'::jsonb where couple_id = couple1;
+      get diagnostics nb = row_count;
+      r := r || (case when nb = 0 then '✅' else '❌' end || ' C ne peut pas écrire dans la partie du couple 1');
+    exception when others then
+      r := r || ('✅ C ne peut pas écrire dans la partie du couple 1 (refusé : ' || sqlerrm || ')');
+    end;
+
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    select count(*) into nb from public.parties where (etat->>'distance')::boolean;
+    r := r || (case when nb = 1 then '✅' else '❌' end || ' Le réglage changé par C n''a pas touché le couple 1');
+
+    -- Un ordre hors des clés permises est refusé
+    begin
+      rep := public.jouer('[{"set": ["pirate"], "valeur": 1}]'::jsonb);
+      r := r || '❌ Un ordre interdit a été accepté'::text;
+    exception when others then
+      r := r || '✅ Un ordre interdit est refusé'::text;
+    end;
+
+    -- A ne peut pas écrire directement dans sa propre partie : tout passe par jouer()
+    begin
+      update public.parties set etat = '{}'::jsonb where couple_id = couple1;
+      get diagnostics nb = row_count;
+      r := r || (case when nb = 0 then '✅' else '❌' end || ' Même A ne peut pas écrire directement dans la partie');
+    exception when others then
+      r := r || ('✅ Même A ne peut pas écrire directement dans la partie (refusé : ' || sqlerrm || ')');
+    end;
+
     -- Code « relier » : A le crée pour B
     relier1 := public.code_relier();
     relier1_bis := public.code_relier();
@@ -129,11 +175,21 @@ begin
     r := r || (case when rep->>'ok' = 'true' then '✅' else '❌' end || ' Le nouveau téléphone reprend la place');
     select count(*) into nb from public.couples;
     r := r || (case when nb = 1 then '✅' else '❌' end || ' Le nouveau téléphone voit le couple 1');
+    select count(*) into nb from public.parties where etat->>'affichee' = 'v1';
+    r := r || (case when nb = 1 then '✅' else '❌' end || ' Le nouveau téléphone retrouve la partie du couple');
 
     -- L'ancien téléphone de B est détaché
     perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
     select count(*) into nb from public.couples;
     r := r || (case when nb = 0 then '✅' else '❌' end || ' L''ancien téléphone de B ne voit plus le couple');
+    select count(*) into nb from public.parties;
+    r := r || (case when nb = 0 then '✅' else '❌' end || ' L''ancien téléphone de B ne voit plus la partie');
+    begin
+      rep := public.jouer('[]'::jsonb);
+      r := r || '❌ L''ancien téléphone de B peut encore jouer'::text;
+    exception when others then
+      r := r || '✅ L''ancien téléphone de B ne peut plus jouer'::text;
+    end;
 
     -- F essaie le même code relier : déjà utilisé
     perform set_config('request.jwt.claims', json_build_object('sub', f, 'role', 'authenticated')::text, true);

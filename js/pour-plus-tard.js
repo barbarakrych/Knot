@@ -1,6 +1,7 @@
 /* Onglet « Pour plus tard » : les 8 paquets, carte par carte, dans l'ordre. */
-import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer, iconeMinuteur } from './commun.js';
+import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer, iconeMinuteur, etatMinuteur, ordreMinuteur } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
+import { etat, agir, ecouter, maintenant } from './partie.js';
 
 const GUIDE = [
   'Celui qui parle parle de lui, avec des « je », en phrases courtes.',
@@ -12,16 +13,16 @@ const GUIDE = [
 
 export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
   // Progression par paquet : i = carte affichée (-1 = pas commencé), max = carte la plus loin atteinte.
-  let K = lire(CLES.paquets, {});
-  if (typeof K !== 'object') K = {};
+  // Elle est partagée par les deux téléphones (partie.js) ; le paquet ouvert, lui, reste propre à ce téléphone.
+  let K = {}, MINUTEUR = null;
+  function charger() { const e = etat(); K = e.paquets; MINUTEUR = e.minuteur; }
   let open = lire(CLES.ecran, {}).open || null;
   let visible = false;
-  let ptimer = { key: null, left: 0, end: 0, running: false, done: false, id: null };
+  let afficherMinuteur = null; // met à jour le minuteur de la carte affichée, s'il y en a un
 
-  function kSave() { ecrire(CLES.paquets, K); }
-  function kGet(id) { return K[id] || (K[id] = { i: -1, max: -1 }); }
+  function kSave(id, d) { agir([{ set: ['paquets', id], valeur: { i: d.i, max: d.max } }]); }
+  function kGet(id) { return { ...(K[id] || { i: -1, max: -1 }) }; }
   function setOpen(id) { open = id; ecrire(CLES.ecran, { ...lire(CLES.ecran, {}), open: id }); }
-  function stopTimer() { clearInterval(ptimer.id); ptimer.running = false; }
 
   function guideBox(isOpen) {
     const g = el('details', 'guide'); if (isOpen) g.open = true;
@@ -34,6 +35,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
   function render() {
     if (!visible) return;
+    afficherMinuteur = null;
     const root = $('view-topics'); root.textContent = '';
     if (open) {
       const pq = PAQUETS.find(x => x.id === open);
@@ -44,8 +46,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     const intro = el('div', 'panel');
     intro.append(
       el('h2', null, 'Pour plus tard'),
-      el('p', null, 'Huit paquets, chacun tiré d’une étude ou d’un questionnaire reconnu. Les cartes se suivent dans l’ordre prévu par la méthode, pour avancer pas à pas.'),
-      el('p', 'muted', 'Rien à configurer : votre progression reste sur ce téléphone.')
+      el('p', null, 'Huit paquets, chacun tiré d’une étude ou d’un questionnaire reconnu. Les cartes se suivent dans l’ordre prévu par la méthode, pour avancer pas à pas.')
     );
     root.append(intro, guideBox(true));
 
@@ -68,7 +69,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     const d = kGet(pq.id); const tot = pq.cards.length;
     if (d.i >= tot) d.i = tot - 1;
     const back = el('button', 'link back', '← Tous les paquets'); back.type = 'button';
-    back.onclick = () => { stopTimer(); setOpen(null); render(); };
+    back.onclick = () => { setOpen(null); render(); };
     root.append(back);
 
     const head = el('div', 'panel');
@@ -85,7 +86,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
     if (d.i < 0) {
       const go = el('button', 'btn primary wide', 'Commencer le paquet'); go.type = 'button';
-      go.onclick = () => { d.i = 0; d.max = Math.max(d.max, 0); kSave(); render(); };
+      go.onclick = () => { d.i = 0; d.max = Math.max(d.max, 0); kSave(pq.id, d); render(); };
       root.append(go);
       return;
     }
@@ -105,36 +106,27 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     inn.append(el('p', 'kicker', c.partie + (c.ex ? ' · Exercice' : '')), el('p', 'q' + lenClass(c.texte), c.texte));
 
     // Minuteur pour les exercices qui ont une durée
+    // Le minuteur est celui de la partie, partagé avec l'autre téléphone (clé « paquet:id:numéro de carte »).
     if (c.ex && c.min) {
-      const key = pq.id + ':' + d.i;
-      if (ptimer.key !== key) { stopTimer(); ptimer = { key, left: c.min * 60, end: 0, running: false, done: false, id: null }; }
+      const cle = 'paquet:' + pq.id + ':' + d.i, total = c.min * 60;
       const tw = el('div', 'timer');
       const clock = el('span', 'clock');
       const tb = el('button', 'rond primary');
       const tr = el('button', 'rond');
       tb.type = tr.type = 'button';
       // Met l'horloge et les deux boutons dans l'état du minuteur
-      const afficher = () => {
-        clock.textContent = ptimer.done ? 'Temps écoulé' : fmt(ptimer.left);
-        clock.className = 'clock' + (ptimer.done ? ' done' : '');
-        if (ptimer.running) iconeMinuteur(tb, 'pause', 'Pause');
-        else iconeMinuteur(tb, 'lancer', ptimer.done ? 'Relancer' : (ptimer.left < c.min * 60 ? 'Reprendre' : 'Lancer le minuteur'));
+      afficherMinuteur = () => {
+        const t = etatMinuteur(MINUTEUR, cle, total, maintenant());
+        clock.textContent = t.done ? 'Temps écoulé' : fmt(t.left);
+        clock.className = 'clock' + (t.done ? ' done' : '');
+        if (t.running) iconeMinuteur(tb, 'pause', 'Pause');
+        else iconeMinuteur(tb, 'lancer', t.done ? 'Relancer' : (t.left < total ? 'Reprendre' : 'Lancer le minuteur'));
         iconeMinuteur(tr, 'recommencer', 'Recommencer');
-        tr.hidden = !(ptimer.running || ptimer.done || ptimer.left < c.min * 60);
+        tr.hidden = !(t.running || t.done || t.left < total);
       };
-      const tick = () => {
-        ptimer.left = Math.max(0, Math.round((ptimer.end - Date.now()) / 1000));
-        if (ptimer.left === 0) { clearInterval(ptimer.id); ptimer.running = false; ptimer.done = true; }
-        afficher();
-      };
-      tb.onclick = () => {
-        if (ptimer.running) { stopTimer(); tick(); return; }
-        if (ptimer.done || ptimer.left <= 0) { ptimer.left = c.min * 60; ptimer.done = false; }
-        ptimer.end = Date.now() + ptimer.left * 1000; ptimer.running = true;
-        clearInterval(ptimer.id); ptimer.id = setInterval(tick, 500); afficher();
-      };
-      tr.onclick = () => { stopTimer(); ptimer.left = c.min * 60; ptimer.done = false; afficher(); };
-      afficher();
+      tb.onclick = () => agir([ordreMinuteur(MINUTEUR, cle, total, maintenant())]);
+      tr.onclick = () => agir([{ suppr: ['minuteur'] }]);
+      afficherMinuteur();
       const boutons = el('div', 'timer-boutons');
       boutons.append(tb, tr);
       tw.append(clock, boutons); inn.append(tw);
@@ -144,13 +136,13 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     const row = el('div', 'actions pnav');
     const prev = el('button', 'btn', 'Précédente'); prev.type = 'button'; prev.disabled = d.i === 0;
     // Swipe : vers la gauche pour revenir, vers la droite pour avancer.
-    prev.onclick = () => { balayer(card, () => root.querySelector('.pcard'), 'gauche'); d.i--; kSave(); render(); };
+    prev.onclick = () => { balayer(card, () => root.querySelector('.pcard'), 'gauche'); d.i--; kSave(pq.id, d); render(); };
     const last = d.i >= tot - 1;
     const next = el('button', 'btn primary', last ? 'Terminer le paquet' : 'Carte suivante'); next.type = 'button';
     next.onclick = () => {
-      if (last) { d.max = tot - 1; d.i = tot - 1; kSave(); setOpen(null); render(); window.scrollTo(0, 0); return; }
+      if (last) { d.max = tot - 1; d.i = tot - 1; kSave(pq.id, d); setOpen(null); render(); window.scrollTo(0, 0); return; }
       balayer(card, () => root.querySelector('.pcard'), 'droite'); // l'ancienne carte part, la suivante est dessous
-      d.i++; d.max = Math.max(d.max, d.i); kSave(); render();
+      d.i++; d.max = Math.max(d.max, d.i); kSave(pq.id, d); render();
     };
     row.append(prev, next); root.append(row);
 
@@ -158,16 +150,34 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
     const rs = el('button', 'link', 'Recommencer ce paquet'); rs.type = 'button';
     const conf = el('div', 'confirm'); conf.hidden = true;
-    conf.append(el('span', null, 'Le paquet reviendra à la première carte, sur ce téléphone.'));
+    conf.append(el('span', null, 'Le paquet reviendra à la première carte, pour vous deux.'));
     const cr = el('div', 'actions');
     const y = el('button', 'btn small primary', 'Recommencer'); y.type = 'button';
     const n = el('button', 'btn small', 'Annuler'); n.type = 'button';
-    y.onclick = () => { stopTimer(); K[pq.id] = { i: -1, max: -1 }; kSave(); render(); };
+    y.onclick = () => { kSave(pq.id, { i: -1, max: -1 }); render(); };
     n.onclick = () => { conf.hidden = true; };
     cr.append(y, n); conf.append(cr);
     rs.onclick = () => { conf.hidden = false; };
     root.append(rs, conf);
   }
+
+  // Changement de la partie. Geste fait ici : l'écran est déjà redessiné par le bouton, seul le minuteur est mis à jour.
+  // Reçu de l'autre téléphone : on redessine si la progression a changé (avec un swipe si la carte ouverte a changé),
+  // sinon seulement le minuteur.
+  ecouter((e, origine) => {
+    const avant = K;
+    charger();
+    if (origine === 'serveur' && visible && JSON.stringify(avant) !== JSON.stringify(K)) {
+      const a = open && avant[open], b = open && K[open];
+      const card = document.querySelector('#view-topics .pcard');
+      if (card && a && b && a.i !== b.i && b.i >= 0) {
+        balayer(card, () => document.querySelector('#view-topics .pcard'), b.i > a.i ? 'droite' : 'gauche');
+      }
+      render();
+    } else if (afficherMinuteur) afficherMinuteur();
+  });
+  setInterval(() => { if (afficherMinuteur && MINUTEUR && MINUTEUR.marche) afficherMinuteur(); }, 500);
+  charger();
 
   // app.js appelle ceci quand on change d'onglet
   return {

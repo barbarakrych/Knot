@@ -25,6 +25,25 @@ export function iconeMinuteur(bouton, icone, libelle) {
   bouton.title = libelle;
 }
 
+// Minuteur commun aux deux téléphones. m : le minuteur de la partie { cle, marche, fin, reste } (voir partie.js),
+// cle : la carte qu'on regarde, total : sa durée en secondes, maintenant : heure du serveur estimée (ms).
+// Renvoie ce qu'il faut afficher : { left (secondes restantes), running, done }.
+export function etatMinuteur(m, cle, total, maintenant) {
+  if (!m || m.cle !== cle) return { left: total, running: false, done: false };
+  if (m.marche) {
+    const left = Math.max(0, Math.ceil((m.fin - maintenant) / 1000));
+    return { left: Math.min(total, left), running: left > 0, done: left === 0 };
+  }
+  return { left: Math.min(total, typeof m.reste === 'number' ? m.reste : total), running: false, done: false };
+}
+// Ordre envoyé par le bouton rond : pause s'il tourne, sinon lancer (ou relancer depuis le début s'il était fini).
+export function ordreMinuteur(m, cle, total, maintenant) {
+  const t = etatMinuteur(m, cle, total, maintenant);
+  if (t.running) return { set: ['minuteur'], valeur: { cle, marche: false, reste: t.left, fin: null } };
+  const reste = t.done || t.left <= 0 ? total : t.left;
+  return { set: ['minuteur'], valeur: { cle, marche: true, fin: maintenant + reste * 1000, reste } };
+}
+
 // Texte long → police un peu plus petite sur la carte
 export function lenClass(t) { return t.length > 220 ? ' xlong' : (t.length > 140 ? ' long' : ''); }
 

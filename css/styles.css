@@ -78,6 +78,8 @@ h1 .knot{width:76px;height:auto;color:var(--blue);--knot-edge:#C9A646}
 .detail{margin:-4px 0 0;align-self:stretch;font-family:var(--f-card);font-size:.92rem;line-height:1.35;color:var(--muted);text-wrap:pretty}
 .meta{align-self:stretch;display:flex;flex-direction:column;gap:4px;font-family:var(--f-mono);font-size:.68rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
 .meta .src{color:var(--blue)}
+/* « Tirée par [prénom] », discret, dans l’historique */
+.hlist li div .par{display:block;padding-top:2px;font-size:.62rem;text-transform:none;letter-spacing:0}
 
 /* Minuteur : le temps centré, puis dessous les boutons ronds, centrés et toujours sur une seule ligne */
 .timer{display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -203,10 +205,8 @@ details.guide .rule{margin-top:10px}
 .bigrow{display:flex;flex-direction:column;gap:2px}
 .bigrow label{display:flex;gap:6px;align-items:center;font-size:.92rem}
 .bigrow .muted{font-size:.82rem}
-.distrow{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
 .disttxt{display:flex;flex-direction:column;gap:2px;min-width:0}
-#distlabel{font-weight:600;font-size:.98rem}
-#disthint{font-size:.8rem}
+.disttxt span{font-weight:600;font-size:.98rem}
 .switch{flex-shrink:0;width:51px;height:31px;border-radius:999px;border:0;padding:2px;cursor:pointer;background:var(--line);position:relative;transition:background .2s}
 .switch span{display:block;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25),0 0 1px rgba(0,0,0,.2);transition:transform .2s}
 .switch[aria-checked="true"]{background:var(--ok)}
@@ -235,3 +235,5 @@ details.guide .rule{margin-top:10px}
 .reglage .etiquette{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
 .reglage .btn{align-self:flex-start}
 .reglage-corps{display:flex;flex-direction:column;gap:10px}
+/* Réglage sur une ligne : le nom à gauche, l’interrupteur à droite */
+.reglage.ligne{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px 10px 16px}

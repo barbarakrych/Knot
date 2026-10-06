@@ -65,11 +65,16 @@ Prompt :
 Test : chacun ouvre l'app, l'un tire une carte, elle apparaît chez l'autre.
 
 À inclure dans cette étape :
-- Chacun son tour : l'app indique à qui c'est le tour de tirer, et sous chaque carte qui l'a tirée.
+- ~~Chacun son tour~~ : essayé puis abandonné. Chacun tire quand il veut ; seul l'historique « Déjà tirées » indique qui a tiré chaque carte.
 - Minuteur partagé : une fois lancé, il s'écoule sur les deux téléphones (si l'app est ouverte sur les deux en même temps).
 - Défi en cours partagé : le défi en cours s'affiche sur les deux téléphones, et « C'est fait ! » ou « Remettre dans la pile » sur l'un le retire aussi chez l'autre.
 - Interrupteur « À distance » partagé : il est le même sur les deux téléphones, comme les cartes tirées. Le changer sur l'un le change aussi chez l'autre.
 - Reprise de la progression : quand le partage s'active, la progression déjà faite sur un téléphone (cartes tirées, paquets « Pour plus tard ») devient celle du couple, au lieu de repartir de zéro.
+
+✅ Fait (détails dans CLAUDE.md, « Règles du jeu » et « Couple ») :
+- Table `parties` (une ligne par couple) et fonction `jouer()` dans `supabase/schema.sql`, tests dans `supabase/test-rls.sql`. Nouveau fichier `js/partie.js` : file d'attente hors ligne et temps réel.
+- Cartes tirées, carte affichée, défi en cours, remélange, minuteur, cartes ajoutées et paquets « Pour plus tard » partagés en direct.
+- « À distance » déplacé dans les Réglages (au-dessus de « Relier le téléphone de [l'autre] »). « Tirée par [prénom] » discret dans l'historique « Déjà tirées », pas sur la carte.
 
 ---
 
@@ -100,7 +105,8 @@ Prompt :
 Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
 - Mode sombre et réglages
-  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). Y ajouter : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut), le son de fin du minuteur (activé ou non), et l'interrupteur À distance, qui quitte l'écran de jeu. Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
+  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). « À distance » y est depuis l'étape 4. Y ajouter : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut) et le son de fin du minuteur (activé ou non). Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
+  - Quand À distance est activé, afficher la distance entre nous (par exemple « ✈ 5 500 km entre vous »). À décider : localisation automatique (arrondie à la ville, jamais la position exacte) ou ville choisie une fois dans les Réglages.
   - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
 - Pouvoir balayer la carte du doigt pour en tirer une nouvelle.
 - Bandeau « Nouvelle version disponible, toucher pour l'afficher » : aujourd'hui, une mise à jour n'apparaît qu'à la 2ᵉ ouverture de l'app (le service worker montre d'abord la copie en réserve). Le bandeau proposerait la nouveauté dès la 1ʳᵉ ouverture, sans couper une partie en cours.

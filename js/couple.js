@@ -25,8 +25,8 @@ function erreur(code) { const e = new Error(code); e.code_knot = code; return e;
 
 let client = null;
 
-// Charge js/vendor/supabase.js (une seule fois) et prépare le client.
-async function obtenirClient() {
+// Charge js/vendor/supabase.js (une seule fois) et prépare le client. Aussi utilisé par partie.js.
+export async function obtenirClient() {
   if (client) return client;
   if (!SUPABASE_URL || !SUPABASE_CLE) throw erreur('pas_configure');
   if (!window.supabase) {

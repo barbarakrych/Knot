@@ -1,11 +1,12 @@
--- Knot · étape 3 : le couple.
+-- Knot · étapes 3 et 4 : le couple et la partie partagée.
 -- À coller dans Supabase → SQL Editor → Run. Peut être relancé sans danger (rien n'est effacé).
 --
 -- Principe de sécurité :
 --   • Chaque téléphone a un compte invisible (connexion anonyme). auth.uid() = l'identifiant de ce compte.
 --   • RLS (Row Level Security) : à chaque lecture, la base ne renvoie que les lignes du couple de la personne.
 --   • Aucune écriture directe n'est permise (pas de règle « insert / update / delete ») :
---     tout passe par les 4 fonctions en bas du fichier, qui vérifient chaque cas.
+--     tout passe par les fonctions du fichier (creer_couple, apercu_code, utiliser_code, code_relier, jouer),
+--     qui vérifient chaque cas.
 
 create extension if not exists pgcrypto with schema extensions;
 
@@ -45,6 +46,16 @@ create table if not exists public.essais_codes (   -- codes faux tapés, pour bl
 );
 create index if not exists essais_codes_par_compte on public.essais_codes (user_id, essaye_le);
 
+-- Étape 4 : la partie du couple, une ligne par couple. « etat » contient tout le jeu partagé (cartes tirées,
+-- carte affichée, défi en cours, interrupteurs, cartes ajoutées, paquets « Pour plus tard », minuteur).
+-- « version » augmente à chaque changement : un téléphone sait ainsi si ce qu'il reçoit est plus récent que ce qu'il a.
+create table if not exists public.parties (
+  couple_id uuid primary key references public.couples(id) on delete cascade,
+  etat jsonb not null default '{}'::jsonb,
+  version bigint not null default 0,
+  modifiee_le timestamptz not null default now()
+);
+
 -- ───────────── Règles de sécurité (RLS) ─────────────
 
 -- Le couple de la personne connectée (ou rien). « security definer » : la fonction lit la table membres
@@ -58,6 +69,11 @@ alter table public.couples enable row level security;
 alter table public.membres enable row level security;
 alter table public.codes_relier enable row level security;
 alter table public.essais_codes enable row level security;   -- aucune règle : personne ne la lit
+alter table public.parties enable row level security;
+
+drop policy if exists "voir la partie de mon couple" on public.parties;
+create policy "voir la partie de mon couple" on public.parties
+  for select to authenticated using (couple_id = public.mon_couple_id());
 
 drop policy if exists "voir mon couple" on public.couples;
 create policy "voir mon couple" on public.couples
@@ -147,6 +163,7 @@ begin
   insert into public.couples (code, prenom_1, prenom_2)
     values (public.nouveau_code(p1, p2), p1, p2) returning * into nouveau;
   insert into public.membres (user_id, couple_id, place) values (auth.uid(), nouveau.id, 1);
+  insert into public.parties (couple_id, etat) values (nouveau.id, public.etat_vide());
   return nouveau.code;
 end $$;
 
@@ -239,6 +256,8 @@ begin
       prenom_2 = case when la_place = 2 then nouveau_prenom else prenom_2 end
     where id = le_couple;
   end if;
+  -- La partie change de version : l'autre téléphone, s'il est ouvert, est prévenu en direct que le couple est au complet.
+  update public.parties set version = version + 1, modifiee_le = now() where couple_id = le_couple;
   return jsonb_build_object('ok', true);
 end $$;
 
@@ -276,28 +295,109 @@ begin
   return nouveau;
 end $$;
 
+-- ───────────── Étape 4 : la partie partagée ─────────────
+
+-- Partie neuve : rien de tiré, « À distance » activé.
+create or replace function public.etat_vide() returns jsonb
+language sql immutable set search_path = '' as $$
+  select '{"tirees": {}, "perso": {}, "paquets": {}, "distance": true}'::jsonb
+$$;
+
+-- Les couples créés avant l'étape 4 reçoivent leur partie.
+insert into public.parties (couple_id, etat) select id, public.etat_vide() from public.couples on conflict do nothing;
+
+-- 5. Jouer : applique une liste de petits ordres à la partie de MON couple, puis renvoie
+--    {"etat": …, "version": …, "maintenant": heure du serveur en millisecondes}.
+--    Un ordre : {"set": ["tirees", "v12"], "valeur": {…}} (écrire) ou {"suppr": ["tirees", "v12"]} (effacer).
+--    Seules quelques clés sont permises :
+--      • tirees, perso, paquets : des listes « identifiant → valeur », chemin de 2 éléments ;
+--      • affichee, defi, distance, minuteur : une seule valeur, chemin de 1 élément.
+--    Une liste vide ne change rien : elle sert à lire la partie et l'heure du serveur.
+create or replace function public.jouer(ordres jsonb) returns jsonb
+language plpgsql volatile security definer set search_path = '' as $$
+declare
+  le_couple uuid := public.mon_couple_id();
+  e jsonb;
+  v bigint;
+  o jsonb;
+  chemin text[];
+  cle text;
+begin
+  if auth.uid() is null then raise exception 'non_connecte'; end if;
+  if le_couple is null then raise exception 'pas_de_couple'; end if;
+  if jsonb_typeof(ordres) is distinct from 'array' or jsonb_array_length(ordres) > 300 then
+    raise exception 'ordres_invalides';
+  end if;
+
+  insert into public.parties (couple_id, etat) values (le_couple, public.etat_vide()) on conflict do nothing;
+  -- « for update » : si les deux téléphones jouent au même instant, le second attend le premier
+  select etat, version into e, v from public.parties where couple_id = le_couple for update;
+
+  if jsonb_array_length(ordres) > 0 then
+    for o in select * from jsonb_array_elements(ordres) loop
+      if jsonb_typeof(o->'set') = 'array' then
+        chemin := array(select jsonb_array_elements_text(o->'set'));
+      elsif jsonb_typeof(o->'suppr') = 'array' then
+        chemin := array(select jsonb_array_elements_text(o->'suppr'));
+      else
+        raise exception 'ordres_invalides';
+      end if;
+      cle := chemin[1];
+      if cle in ('tirees', 'perso', 'paquets') then
+        if cardinality(chemin) <> 2 or coalesce(char_length(chemin[2]), 0) not between 1 and 80 then
+          raise exception 'ordres_invalides';
+        end if;
+        if jsonb_typeof(e->cle) is distinct from 'object' then e := jsonb_set(e, array[cle], '{}'::jsonb); end if;
+      elsif cle in ('affichee', 'defi', 'distance', 'minuteur') then
+        if cardinality(chemin) <> 1 then raise exception 'ordres_invalides'; end if;
+      else
+        raise exception 'ordres_invalides';
+      end if;
+      if o ? 'set' then e := jsonb_set(e, chemin, coalesce(o->'valeur', 'null'::jsonb), true);
+      else e := e #- chemin;
+      end if;
+    end loop;
+    if octet_length(e::text) > 500000 then raise exception 'partie_trop_grande'; end if;
+    update public.parties set etat = e, version = version + 1, modifiee_le = now()
+      where couple_id = le_couple returning version into v;
+  end if;
+
+  return jsonb_build_object('etat', e, 'version', v,
+    'maintenant', floor(extract(epoch from clock_timestamp()) * 1000));
+end $$;
+
+-- Temps réel : Supabase prévient les téléphones dès qu'une partie change (seulement ceux qui ont le droit de la voir).
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+     and not exists (select 1 from pg_publication_tables
+                     where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'parties') then
+    alter publication supabase_realtime add table public.parties;
+  end if;
+end $$;
+
 -- ───────────── Qui peut lire quoi ─────────────
 -- Le projet n'ouvre rien automatiquement (« Automatically expose new tables » décoché) : on ouvre à la main
 -- la lecture seule aux téléphones connectés. Les règles RLS plus haut choisissent ensuite les lignes visibles.
 -- Aucune permission d'écrire : double verrou avec les règles RLS.
 
-revoke all on public.couples, public.membres, public.codes_relier, public.essais_codes from anon, authenticated;
+revoke all on public.couples, public.membres, public.codes_relier, public.essais_codes, public.parties from anon, authenticated;
 grant usage on schema public to anon, authenticated;
-grant select on public.couples, public.membres, public.codes_relier to authenticated;
+grant select on public.couples, public.membres, public.codes_relier, public.parties to authenticated;
 
 -- ───────────── Qui peut appeler quoi ─────────────
 -- Les visiteurs non connectés (rôle « anon ») ne peuvent rien appeler.
 -- Les outils internes ne sont appelables par personne de l'extérieur.
 
 revoke all on function public.initiale(text), public.prenom_propre(text), public.code_propre(text),
-  public.nouveau_code(text, text), public.trop_d_essais()
+  public.nouveau_code(text, text), public.trop_d_essais(), public.etat_vide()
   from public, anon, authenticated;
 
 revoke all on function public.mon_couple_id(), public.creer_couple(text, text), public.apercu_code(text),
-  public.utiliser_code(text, text), public.code_relier()
+  public.utiliser_code(text, text), public.code_relier(), public.jouer(jsonb)
   from public, anon;
 grant execute on function public.mon_couple_id(), public.creer_couple(text, text), public.apercu_code(text),
-  public.utiliser_code(text, text), public.code_relier()
+  public.utiliser_code(text, text), public.code_relier(), public.jouer(jsonb)
   to authenticated;
 
 -- ───────────── Réveil ─────────────

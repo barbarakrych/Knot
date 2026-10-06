@@ -9,7 +9,7 @@ const RESERVE = 'knot';
 const OSSATURE = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/app.js', 'js/commun.js', 'js/stockage.js', 'js/contenu.js', 'js/action-verite.js', 'js/pour-plus-tard.js',
-  'js/config.js', 'js/couple.js', 'js/accueil.js', 'js/reglages.js', 'js/vendor/supabase.js',
+  'js/config.js', 'js/couple.js', 'js/partie.js', 'js/accueil.js', 'js/reglages.js', 'js/vendor/supabase.js',
   'contenu/verites.json', 'contenu/actions.json', 'contenu/pour-plus-tard.json', 'contenu/sources.json', 'contenu/themes.json',
   'design/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png', 'icones/apple-touch-icon.png'
 ];

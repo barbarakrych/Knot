@@ -1,7 +1,10 @@
 /* Onglet « Action ou Vérité » : tirage, Passer, remélange, minuteur,
-   interrupteur « À distance », défi en cours, historique, cartes ajoutées, sources. */
-import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur } from './commun.js';
-import { CLES, lire, ecrire } from './stockage.js';
+   défi en cours, historique, cartes ajoutées, sources.
+   La partie est partagée par les deux téléphones (partie.js) : chaque geste envoie des ordres avec agir(),
+   et l'écran se redessine à chaque changement, d'ici ou de l'autre téléphone. */
+import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur, etatMinuteur, ordreMinuteur } from './commun.js';
+import { coupleLocal } from './couple.js';
+import { etat, agir, ecouter, maintenant } from './partie.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
 const PILE_IDS = Object.keys(PILES);
@@ -9,24 +12,27 @@ const PILE_IDS = Object.keys(PILES);
 export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   const BY_ID = new Map(BASE.map(c => [c.id, c]));
 
-  // État du jeu. drawn : cartes déjà tirées { id: {pile, at} } ; custom : cartes ajoutées ; current : carte affichée ;
-  // defi : identifiant du défi en cours (une action « grande »), ou null.
+  // Copie de la partie partagée, sous les noms utilisés dans ce fichier. drawn : cartes déjà tirées
+  // { id: {pile, at, par} } ; custom : cartes ajoutées ; current : carte affichée ; defi : défi en cours, ou null.
+  // confirming (remélange à confirmer) reste propre à ce téléphone.
   const S = { drawn: {}, custom: {}, current: null, defi: null, confirming: null };
   let noteTimer = null, confirmDel = null, editing = null;
-  let timer = { end: 0, left: 0, running: false, done: false, id: null, cardId: null };
-  let DIST = lire(CLES.distance, true) !== false;
+  let DIST = true, MINUTEUR = null;
 
   function charger() {
-    const r = lire(CLES.pioche, null);
-    if (r && typeof r === 'object') {
-      S.drawn = r.drawn || {};
-      S.custom = r.custom || {};
-      S.current = r.current || null;
-      S.defi = r.defi || null;
-      if (!cardById(S.defi)) S.defi = null; // carte disparue du contenu
-    }
+    const e = etat();
+    S.drawn = e.tirees; S.custom = e.perso; S.current = e.affichee; S.defi = e.defi;
+    DIST = e.distance !== false; MINUTEUR = e.minuteur;
   }
-  function sauver() { ecrire(CLES.pioche, { drawn: S.drawn, custom: S.custom, current: S.current, defi: S.defi }); }
+
+  /* ---------- Qui a tiré ---------- */
+  // Chacun tire quand il veut. On retient seulement qui a tiré chaque carte, pour l'historique.
+  function maPlace() { const c = coupleLocal(); return c ? c.place : null; }
+  // Prénom de la personne à cette place (1 ou 2), ou '' si inconnu
+  function prenom(place) {
+    const c = coupleLocal(); if (!c || !place) return '';
+    return place === c.place ? c.prenomMoi : c.prenomAutre;
+  }
 
   function allCards(pile) {
     const custom = Object.values(S.custom).filter(c => c.pile === pile).sort((a, b) => (a.at || 0) - (b.at || 0));
@@ -39,7 +45,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     return DIST ? c.mode !== 'ensemble' : c.mode !== 'distance';
   }
   // Tant qu'un défi est en cours, aucun autre défi ne peut sortir.
-  function remaining(pile) { return allCards(pile).filter(c => !S.drawn[c.id] && modeOk(c) && !(S.defi && c.big)); }
+  function remaining(pile) { const defi = cardById(S.defi); return allCards(pile).filter(c => !S.drawn[c.id] && modeOk(c) && !(defi && c.big)); }
 
   function note(msg, ok) {
     const n = $('note'); n.textContent = msg; n.className = 'note' + (ok ? ' ok' : ''); n.hidden = false;
@@ -61,20 +67,12 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   function duree(c) { return c ? (c.sec || (c.min || 0) * 60) : 0; }
   // Pour l'étiquette de la carte : « 30 s » ou « 5 min ».
   function dureeTxt(c) { return c.sec ? c.sec + ' s' : c.min + ' min'; }
-  function resetTimer(c) {
-    clearInterval(timer.id);
-    timer = { end: 0, left: duree(c), running: false, done: false, id: null, cardId: c ? c.id : null };
-  }
-  function tick() {
-    timer.left = Math.max(0, Math.round((timer.end - Date.now()) / 1000));
-    if (timer.left === 0) { clearInterval(timer.id); timer.running = false; timer.done = true; }
-    renderTimer();
-  }
+  // Le minuteur est dans la partie partagée : lancé ici, il s'écoule aussi chez l'autre.
   function renderTimer() {
     const c = cardById(S.current);
     const show = !!(c && c.pile === 'action' && duree(c));
     $('timer').hidden = !show; if (!show) return;
-    if (timer.cardId !== c.id) resetTimer(c);
+    const timer = etatMinuteur(MINUTEUR, c.id, duree(c), maintenant());
     const clock = $('clock');
     if (timer.done && !timer.running) { clock.textContent = 'Temps écoulé'; clock.className = 'clock done'; }
     else { clock.textContent = fmt(timer.left); clock.className = 'clock'; }
@@ -85,12 +83,11 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
   $('timerbtn').onclick = () => {
     const c = cardById(S.current); if (!c || !duree(c)) return;
-    if (timer.running) { clearInterval(timer.id); timer.running = false; tick(); return; }
-    if (timer.done || timer.left <= 0) { timer.left = duree(c); timer.done = false; }
-    timer.end = Date.now() + timer.left * 1000; timer.running = true;
-    clearInterval(timer.id); timer.id = setInterval(tick, 500); renderTimer();
+    agir([ordreMinuteur(MINUTEUR, c.id, duree(c), maintenant())]);
   };
-  $('timerreset').onclick = () => { resetTimer(cardById(S.current)); renderTimer(); };
+  $('timerreset').onclick = () => agir([{ suppr: ['minuteur'] }]);
+  // Le cadran se met à jour deux fois par seconde quand le minuteur tourne
+  setInterval(() => { if (MINUTEUR && MINUTEUR.marche) renderTimer(); }, 500);
 
   /* ---------- Affichage ---------- */
   function setCorners(letter, num) {
@@ -103,7 +100,6 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       $('count-' + p).textContent = left + ' / ' + allCards(p).filter(modeOk).length + ' cartes';
       $('pile-' + p).disabled = left === 0;
     }
-    $('distsw').setAttribute('aria-checked', String(DIST));
 
     const cur = cardById(S.current);
     const card = $('card'), q = $('q'), meta = $('meta');
@@ -146,7 +142,10 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (!drawn.length) hl.append(el('li', 'empty', 'Aucune carte tirée pour l’instant.'));
     drawn.slice(0, 60).forEach(([id]) => {
       const c = cardById(id); const li = el('li');
-      li.append(el('span', c.pile === 'action' ? 'a' : 'v', PILES[c.pile].name), el('div', null, c.text));
+      const txt = el('div', null, c.text);
+      const par = tireePar(id);
+      if (par) txt.append(el('span', 'par', par));
+      li.append(el('span', c.pile === 'action' ? 'a' : 'v', PILES[c.pile].name), txt);
       hl.append(li);
     });
 
@@ -166,87 +165,95 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     }
   }
 
+  // « Tirée par [prénom] », ou '' si on ne sait pas (cartes tirées avant le partage)
+  function tireePar(id) {
+    const t = S.drawn[id];
+    const p = t && prenom(t.par);
+    return p ? 'Tirée par ' + p : '';
+  }
+
   /* ---------- Tirer, passer, remélanger ---------- */
   // Une carte tirée ne ressort pas tant qu'on ne remélange pas.
-  // sens du swipe : vers la droite quand on pioche, vers la gauche quand on passe.
-  function draw(pile, excludeId, sens = 'droite') {
-    const p = remaining(pile).filter(c => c.id !== excludeId);
-    if (!p.length) return false;
-    const c = p[Math.floor(Math.random() * p.length)];
-    S.drawn = { ...S.drawn, [c.id]: { pile, at: Date.now() } };
-    balayer($('card'), undefined, sens); // l'ancienne carte part, la nouvelle est dessous
-    S.current = c.id;
-    if (c.big) S.defi = c.id; // un défi tiré devient le défi en cours
-    render(); sauver();
-    return true;
+  // Ordres pour tirer la carte c : elle devient la carte affichée (par = qui l'a tirée, pour l'historique).
+  function ordresTirer(c) {
+    const moi = maPlace();
+    const o = [
+      { set: ['tirees', c.id], valeur: { pile: c.pile, at: Date.now(), par: moi } },
+      { set: ['affichee'], valeur: c.id },
+      { suppr: ['minuteur'] }
+    ];
+    if (c.big) o.push({ set: ['defi'], valeur: c.id }); // un défi tiré devient le défi en cours
+    return o;
+  }
+  const auHasard = liste => liste[Math.floor(Math.random() * liste.length)];
+
+  function draw(pile) {
+    const p = remaining(pile);
+    if (!p.length) return;
+    balayer($('card'), undefined, 'droite'); // l'ancienne carte part vers la droite, la nouvelle est dessous
+    agir(ordresTirer(auHasard(p)));
   }
   // Passer : on tire une autre carte, et celle passée retourne dans la pile.
   function skip() {
     const old = S.current; const c = cardById(old); if (!c) return;
-    const wasDefi = S.defi === old;
-    if (wasDefi) S.defi = null; // passer un défi l'annule
-    if (!remaining(c.pile).some(x => x.id !== old)) {
-      if (wasDefi) S.defi = old;
-      note('Il n’y a plus d’autre carte dans cette pile.'); return;
-    }
-    if (!draw(c.pile, old, 'gauche')) return;
-    const d = { ...S.drawn }; delete d[old]; S.drawn = d;
-    render(); sauver();
+    const wasDefi = S.defi === old; // passer un défi l'annule : les autres défis peuvent alors sortir
+    const defi = wasDefi ? null : cardById(S.defi);
+    const p = allCards(c.pile).filter(x => x.id !== old && !S.drawn[x.id] && modeOk(x) && !(defi && x.big));
+    if (!p.length) { note('Il n’y a plus d’autre carte dans cette pile.'); return; }
+    balayer($('card'), undefined, 'gauche');
+    const o = [{ suppr: ['tirees', old] }];
+    if (wasDefi) o.push({ suppr: ['defi'] });
+    agir(o.concat(ordresTirer(auHasard(p))));
   }
   // Défi en cours : « C'est fait ! » le termine (la carte reste tirée) ;
   // « Remettre dans la pile » l'annule et la carte peut ressortir.
   function defiDone() {
-    S.defi = null;
-    render(); sauver();
+    agir([{ suppr: ['defi'] }]);
     note('Bravo ! Les défis peuvent de nouveau sortir.', true);
   }
   function defiBack() {
     const id = S.defi; if (!id) return;
-    S.defi = null;
-    const d = { ...S.drawn }; delete d[id]; S.drawn = d;
-    if (S.current === id) S.current = null;
-    render(); sauver();
+    const o = [{ suppr: ['defi'] }, { suppr: ['tirees', id] }];
+    if (S.current === id) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
+    agir(o);
     note('Le défi est retourné dans la pile.', true);
   }
 
-  // pile = 'verite', 'action' ou 'tout' (les deux piles). Le défi en cours n'est pas touché.
+  // pile = 'verite', 'action' ou 'tout' (les deux piles). Le défi en cours et le tour ne sont pas touchés.
   function reshuffle(pile) {
     S.confirming = null;
-    const d = { ...S.drawn };
-    Object.keys(d).forEach(id => { if (d[id] && (pile === 'tout' || d[id].pile === pile)) delete d[id]; });
-    S.drawn = d;
+    const o = [];
+    Object.keys(S.drawn).forEach(id => { const d = S.drawn[id]; if (d && (pile === 'tout' || d.pile === pile)) o.push({ suppr: ['tirees', id] }); });
     const cur = cardById(S.current);
-    if (cur && (pile === 'tout' || cur.pile === pile)) S.current = null;
-    render(); sauver();
+    if (cur && (pile === 'tout' || cur.pile === pile)) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
+    if (o.length) agir(o); else render();
   }
 
-  /* ---------- Cartes ajoutées ---------- */
+  /* ---------- Cartes ajoutées (partagées par les deux pour l'instant ; privées à l'étape 5) ---------- */
   function addCard(pile, text, min, big) {
     const id = 'perso-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     min = pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
     big = pile === 'action' && !!big;
-    S.custom = { ...S.custom, [id]: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, detail: '', at: Date.now() } };
-    render(); sauver();
+    agir([{ set: ['perso', id], valeur: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, detail: '', at: Date.now() } }]);
     note('Carte ajoutée à la pile « ' + PILES[pile].name + ' ».', true);
   }
   function editCard(id, text, min, big) {
     const c = S.custom[id]; if (!c) return;
     min = c.pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
     big = c.pile === 'action' && !!big;
-    const upd = { ...c, text, min, big };
-    if (S.defi === id && !big) S.defi = null; // ce n'est plus un défi
-    editing = null; S.custom = { ...S.custom, [id]: upd };
-    if (S.current === id) resetTimer(upd);
-    render(); sauver();
+    editing = null;
+    const o = [{ set: ['perso', id], valeur: { ...c, text, min, big } }];
+    if (S.defi === id && !big) o.push({ suppr: ['defi'] }); // ce n'est plus un défi
+    if (S.current === id) o.push({ suppr: ['minuteur'] });
+    agir(o);
     note('Carte modifiée.', true);
   }
   function deleteCard(id) {
     confirmDel = null;
-    const x = { ...S.custom }; delete x[id]; S.custom = x;
-    if (S.drawn[id]) { const d = { ...S.drawn }; delete d[id]; S.drawn = d; }
-    if (S.current === id) S.current = null;
-    if (S.defi === id) S.defi = null;
-    render(); sauver();
+    const o = [{ suppr: ['perso', id] }, { suppr: ['tirees', id] }];
+    if (S.current === id) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
+    if (S.defi === id) o.push({ suppr: ['defi'] });
+    agir(o);
     note('Carte supprimée.', true);
   }
 
@@ -352,7 +359,6 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('addtext').addEventListener('input', () => { clearTimeout(dupTimer); dupTimer = setTimeout(checkDup, 250); });
   $('add-action').addEventListener('change', syncAddMin);
   $('add-verite').addEventListener('change', syncAddMin);
-  $('distsw').onclick = () => { DIST = !DIST; ecrire(CLES.distance, DIST); render(); };
   $('pile-verite').onclick = () => draw('verite');
   $('pile-action').onclick = () => draw('action');
   $('skip').onclick = skip;
@@ -368,6 +374,15 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const t = $('addtext').value.trim(); if (!t) return;
     addCard($('add-action').checked ? 'action' : 'verite', t.slice(0, 300), Math.round(+$('addmin').value) || 0, $('addbig').checked);
     $('addtext').value = ''; $('addmin').value = ''; $('addbig').checked = false; checkDup();
+  });
+
+  // Chaque changement de la partie (geste fait ici, ou reçu de l'autre téléphone) redessine l'écran.
+  // Si c'est l'autre qui a tiré une nouvelle carte, elle arrive avec le même swipe que chez lui.
+  ecouter((e, origine) => {
+    const avant = S.current;
+    charger();
+    if (origine === 'serveur' && S.current !== avant && S.current) balayer($('card'), undefined, 'droite');
+    render();
   });
 
   charger();

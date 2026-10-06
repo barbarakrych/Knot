@@ -6,6 +6,7 @@ import { chargerContenu } from './contenu.js';
 import { demarrerActionVerite } from './action-verite.js';
 import { demarrerPourPlusTard } from './pour-plus-tard.js';
 import { coupleLocal, actualiser, nomsDuCouple } from './couple.js';
+import * as partie from './partie.js';
 import { preparerAccueil } from './accueil.js';
 import { preparerReglages } from './reglages.js';
 
@@ -66,15 +67,24 @@ async function demarrer() {
     if (c) $('couple-noms').textContent = nomsDuCouple(c);
   }
 
-  // Ce téléphone n'a pas (ou plus) de couple → accueil
+  // Ce téléphone n'a pas (ou plus) de couple → accueil, et la partie de l'ancien couple est oubliée
   function versAccueil() {
     effacer(CLES.couple);
+    partie.oublier();
     afficherCouple(null);
     accueil.ouvrir();
     setView('accueil');
   }
 
-  const accueil = preparerAccueil(c => { afficherCouple(c); setView(ongletDuJeu()); });
+  // La partie partagée démarre dès que le couple est connu.
+  // Si la base dit que ce téléphone n'a plus de place dans le couple, on vérifie puis on revient à l'accueil.
+  function jouerAvec(c) {
+    partie.demarrer(c, {
+      detache: () => actualiser().then(c2 => { if (!c2) versAccueil(); }).catch(() => {})
+    });
+  }
+
+  const accueil = preparerAccueil(c => { afficherCouple(c); jouerAvec(c); setView(ongletDuJeu()); });
   const reglages = preparerReglages(versAccueil);
 
   $('tab-av').onclick = () => setView('av');
@@ -90,6 +100,7 @@ async function demarrer() {
   const couple = coupleLocal();
   if (couple) {
     afficherCouple(couple);
+    jouerAvec(couple);
     setView(ongletDuJeu());
     actualiser().then(c => { if (c) afficherCouple(c); else versAccueil(); })
       .catch(e => console.info('Couple non vérifié (hors ligne ?) :', e.message));

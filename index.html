@@ -95,7 +95,12 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       <h2>Réglages</h2>
       <button class="link" id="fermer-reglages" type="button">Retour au jeu</button>
     </div>
-    <!-- Un bloc par réglage. Thème, son et À distance viendront s'ajouter ici (étape 6). -->
+    <!-- Un bloc par réglage, l'un sous l'autre. Thème et son viendront s'ajouter ici (étape 6).
+         « À distance » est partagé : le changer ici le change aussi chez l'autre. -->
+    <section class="reglage ligne">
+      <div class="disttxt"><span id="distlabel">À distance</span></div>
+      <button class="switch" id="distsw" type="button" role="switch" aria-checked="true" aria-labelledby="distlabel"><span></span></button>
+    </section>
     <section class="reglage" id="reglage-couple">
       <h3>Notre couple</h3>
       <div class="reglage-corps" id="reglage-couple-contenu"></div>
@@ -120,10 +125,6 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
     <button class="link" id="defiback" type="button">Remettre dans la pile</button>
   </div>
 
-  <div class="distrow">
-    <div class="disttxt"><span id="distlabel">À distance</span></div>
-    <button class="switch" id="distsw" type="button" role="switch" aria-checked="true" aria-labelledby="distlabel"><span></span></button>
-  </div>
   <div class="piles">
     <button class="pile" data-pile="verite" id="pile-verite" type="button"><span class="pile-in"><b>Vérité</b><em>Pour se découvrir encore</em><span id="count-verite"></span></span></button>
     <button class="pile" data-pile="action" id="pile-action" type="button"><span class="pile-in"><b>Action</b><em>Pour s’amuser à deux</em><span id="count-action"></span></span></button>
