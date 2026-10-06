@@ -150,8 +150,12 @@ textarea{font:inherit;font-family:var(--f-card);font-size:1.05rem;color:var(--in
 .pourquoi{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
 .pourquoi p{margin:0}
 .pourquoi-titre{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.pourquoi p:last-child{font-family:var(--f-card);font-style:italic;font-size:.9rem;line-height:1.5;color:var(--muted);max-width:44ch;
+.pourquoi-texte{font-family:var(--f-card);font-style:italic;font-size:.9rem;line-height:1.5;color:var(--muted);max-width:44ch;
   text-align:justify;text-align-last:center;hyphens:auto}  /* bloc justifié, centré dans la page ; la dernière ligne, plus courte, reste au centre */
+/* Mention discrète : Knot n'est affilié à aucune source citée (sous « Pourquoi Knot ? » et dans « Pour plus tard ») */
+.affiliation{font-family:var(--f-mono);font-size:.66rem;line-height:1.55;color:var(--muted);max-width:44ch}
+.pourquoi .affiliation{margin-top:6px}
+.panel .affiliation{margin:10px 0 0}
 .confirm{background:var(--chip);border-radius:10px;padding:12px;font-size:.9rem;display:flex;flex-direction:column;gap:10px}
 footer{font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px}
 

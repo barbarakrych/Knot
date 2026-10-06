@@ -78,7 +78,7 @@ Test : chacun ouvre l'app, l'un tire une carte, elle apparaît chez l'autre.
 
 ---
 
-## Idée après l'étape 4 · Carte interactive « Nos valeurs »
+## Idée après l'étape 4 · Carte interactive « Nos valeurs » (à essayer, pas sûr)
 
 Objectif : la première carte du paquet Nos valeurs devient interactive. Chacun écrit ses 5 valeurs sur son téléphone ; quand les deux ont fini, la carte se retourne et on voit les valeurs de l'autre.
 
@@ -92,7 +92,7 @@ Objectif : les cartes que j'ajoute, moi seule les vois dans ma liste ; pareil po
 
 Décidé :
 - Une carte ajoutée par une personne entre dans le paquet commun et peut sortir au tirage chez les deux.
-- Au tirage, elle affiche « Carte ajoutée » à la place de la source (« D'après… »), sans jamais indiquer qui l'a écrite.
+- Au tirage, elle affiche « Carte ajoutée » à la place de la source (« Inspiré de … »), sans jamais indiquer qui l'a écrite.
 - Elle n'apparaît que dans la liste « Vos cartes » de la personne qui l'a créée : elle seule peut la modifier ou la supprimer, et c'est garanti par les règles de sécurité (RLS) de Supabase.
 - « Passer » reste toujours possible, sans justification.
 - Choix de simplicité : le texte des cartes de l'autre arrive sur le téléphone, mais n'est affiché qu'au tirage (pas de délai, le tirage marche hors ligne). La base garantit qui peut modifier ou supprimer une carte ; c'est l'app qui la cache de la liste « Vos cartes » de l'autre.
@@ -111,10 +111,12 @@ Prompt :
 
 Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
-- Mode sombre et réglages
-  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). « À distance » y est depuis l'étape 4. Y ajouter : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut) et le son de fin du minuteur (activé ou non). Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
-  - Quand À distance est activé, afficher la distance entre nous (par exemple « ✈ 5 500 km entre vous »). À décider : localisation automatique (arrondie à la ville, jamais la position exacte) ou ville choisie une fois dans les Réglages.
-  - Un son doux quand le minuteur se termine (à faire avec l'écran Réglages, qui permet de le couper). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
+- Mode sombre et thème dans les Réglages
+  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). « À distance » y est depuis l'étape 4. Y ajouter : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut) et les sons (activés ou non). Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
+- Sons : au tirage d'une carte et à la fin du minuteur (doux, et qu'on peut couper dans les Réglages). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
+- Carte « Nos valeurs » qui se retourne : à essayer, pas sûr (voir « Idée après l'étape 4 » plus haut).
+- Polices : l'app ressemble trop aux pages typiques faites par IA. Proposer 3 combinaisons de polices moins courantes (Google Fonts), avec captures, avant de choisir. Le site de présentation utilise Young Serif et Instrument Sans : à considérer.
+- Distance entre nous quand À distance est activé : plutôt pour une distribution plus large. Idée visuelle inspirée des widgets Instagram : un cœur, deux points et une ligne avec « 5 500 km ». À décider : localisation automatique (arrondie à la ville, jamais la position exacte) ou ville choisie une fois dans les Réglages.
 - Pouvoir balayer la carte du doigt pour en tirer une nouvelle.
 - ✅ Fait autrement : mises à jour automatiques dès la 1ʳᵉ ouverture, sans bandeau. La nouvelle version s'installe toute seule et l'app se recharge une fois, à un moment calme (jamais pendant un minuteur ou une saisie). Détails dans CLAUDE.md, « Choix techniques ».
 - Démarrage sur Android : entre l'écran de démarrage (le logo) et l'app, il y a encore comme un saut d'environ une seconde.
@@ -126,9 +128,41 @@ Idées à piocher, une par session :
   > Les Grecs l'appelaient Hêraklêotikon hamma, le nœud d'Héraclès : deux cordes passées l'une dans l'autre, qui ne font plus qu'un. Il porte le nom de celui qui a traversé douze épreuves sans lâcher. On ne le défait pas en tirant, seulement en prenant le temps de le comprendre, boucle après boucle. Knot, c'est ce nœud-là : deux fils qui se découvrent sans masque et choisissent de tenir ensemble, même quand ça tire.
 - Faire relire le projet : « Utilise un sous-agent pour relire tout le code et me dire ce qui pourrait poser problème. Ne signale que ce qui compte vraiment. »
 
-## Plus tard · Des cartes infinies
+## Avant de distribuer
 
-Générer de nouvelles cartes avec une IA, à partir de sources.json, pour qu'on ne fasse jamais le tour du jeu. À faire une fois tout le reste solide.
+Pour réduire les risques de droits d'auteur et de marques.
+
+- ✅ Fait : sur toutes les cartes et dans les paquets « Pour plus tard », « Inspiré de … » à la place de « D'après … ».
+- ✅ Fait : mention discrète sous « Pourquoi Knot ? » et dans la présentation de « Pour plus tard » : « Knot n'est affilié à aucun des chercheurs, auteurs ou organismes cités. Les cartes sont des créations originales inspirées de leurs travaux. »
+- Relire les cartes trop proches d'un texte original protégé (Aron, Frisch, Pivot, Gottman, Sue Johnson, New York Times, PREPARE/ENRICH ; Proust est dans le domaine public) : tableau carte / source / problème / reformulation, à valider par moi.
+- Renommer les paquets qui reprennent un titre de livre (« Huit rendez-vous », « Tiens-moi fort ») : 2 ou 3 propositions chacun.
+- Faire valider le contenu par un juriste (via l'incubateur de mon école).
+- Rédiger une politique de confidentialité (prénoms et données de jeu stockés dans Supabase).
+- Nom de domaine pour le site et l'app (par exemple knot-app.com), plus tard.
+
+---
+
+## Tests et retours
+
+- Questionnaire n° 1, avant l'anglais : besoins des couples, bilingue, partagé à l'université. Profils variés : jeunes couples à distance, jeunes couples ensemble, couples plus engagés, couples à distance de tous âges. Questions de profil (âge, durée du couple, distance).
+- Faire tester par 4 couples d'amis et des couples de ma famille, avec le lien de l'app.
+- Questionnaire n° 2 après le test : avis sur l'app.
+- Pendant le test, un faux paquet payant « Bientôt disponible » pour mesurer l'intérêt.
+
+---
+
+## Plusieurs langues
+
+- Ajouter l'anglais à Knot (une seule app, choix de la langue dans les Réglages), après les finitions et selon les réponses au questionnaire.
+- Préparer l'app pour plusieurs langues, traduire l'interface puis le contenu. Adapter les cartes qui ne se traduisent pas (ex. « Je te tiens par la barbichette »), avec une relecture par une personne anglophone.
+
+---
+
+## Plus tard
+
+- Modèle de revenus à étudier : base gratuite + paquets thématiques payants (2 à 4 €), ou achat unique. Pas de publicité.
+- Vidéo tuto pour les amis (enregistrement de l'app avec sous-titres, ou vidéo filmée avec script).
+- Des cartes infinies : générer de nouvelles cartes avec une IA, à partir de sources.json, pour qu'on ne fasse jamais le tour du jeu. À faire une fois tout le reste solide.
 
 ---
 

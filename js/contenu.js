@@ -12,7 +12,7 @@ export async function chargerContenu() {
     ['verites', 'actions', 'pour-plus-tard', 'sources', 'themes'].map(lireJSON)
   );
 
-  // Sources : clé → { label (« D'après … »), name, what, url }
+  // Sources : clé → { label (« Inspiré de … »), name, what, url }
   const SOURCES = {};
   for (const [cle, s] of Object.entries(sources)) {
     SOURCES[cle] = { label: s.etiquette, name: s.nom, what: s.resume, url: s.lien || '' };

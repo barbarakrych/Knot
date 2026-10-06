@@ -100,8 +100,8 @@ export function copier(texte, bouton) {
   else fini(false);
 }
 
-// « D'après … » à partir d'une liste de clés de sources.json
+// « Inspiré de … » à partir d'une liste de clés de sources.json
 export function srcLine(SOURCES, keys) {
   const labels = keys.map(k => SOURCES[k] && SOURCES[k].label).filter(Boolean);
-  return el('p', 'srcline', 'D’après ' + labels.join(' · '));
+  return el('p', 'srcline', 'Inspiré de ' + labels.join(' · '));
 }

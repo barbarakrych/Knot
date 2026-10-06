@@ -118,7 +118,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       q.textContent = cur.text; q.className = 'q' + lenClass(cur.text);
       $('detail').textContent = cur.detail || ''; $('detail').hidden = !cur.detail;
       const src = SOURCES[cur.src]; const s = el('span');
-      if (src) { s.className = 'src'; s.textContent = 'D’après ' + src.label; }
+      if (src) { s.className = 'src'; s.textContent = 'Inspiré de ' + src.label; }
       else if (S.custom[cur.id]) { s.className = 'src'; s.textContent = 'Carte ajoutée'; } // jamais par qui
       if (s.textContent) meta.append(s);
       meta.hidden = !meta.childNodes.length;
