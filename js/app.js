@@ -115,7 +115,7 @@ async function demarrer() {
   // puis on vérifie discrètement auprès de Supabase (prénoms changés, téléphone détaché…).
   const couple = coupleLocal();
   if (estDemo()) {
-    // Adresse …/?demo=1, ou démo déjà en cours dans cet onglet : on y va directement, sans l'accueil
+    // Démo déjà lancée dans cet onglet (rechargement…) : on y retourne directement
     ouvrirDemo();
   } else if (couple) {
     afficherCouple(couple);
