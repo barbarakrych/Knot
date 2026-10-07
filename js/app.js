@@ -11,6 +11,7 @@ import { surveillerMisesAJour } from './mise-a-jour.js';
 import { preparerAccueil } from './accueil.js';
 import { preparerReglages } from './reglages.js';
 import { appliquerTheme } from './theme.js';
+import { estDemo, entrerDemo, quitterDemo } from './demo.js';
 
 const FOOTER = {
   av: '',
@@ -87,7 +88,19 @@ async function demarrer() {
     });
   }
 
-  const accueil = preparerAccueil(c => { afficherCouple(c); jouerAvec(c); setView(ongletDuJeu()); });
+  // Mode démo (voir demo.js) : tout le jeu, sans couple ni Supabase. Pas de prénoms sous le titre,
+  // mais l'engrenage reste (À distance, thème). Le bandeau en haut permet d'en sortir.
+  function ouvrirDemo() {
+    entrerDemo();
+    afficherCouple(null);
+    $('ouvrir-reglages').hidden = false;
+    $('bandeau-demo').hidden = false;
+    partie.demarrerDemo();
+    setView('av'); // la démo s'ouvre toujours sur Action ou Vérité
+  }
+  $('quitter-demo').onclick = quitterDemo;
+
+  const accueil = preparerAccueil(c => { afficherCouple(c); jouerAvec(c); setView(ongletDuJeu()); }, ouvrirDemo);
   const reglages = preparerReglages(versAccueil);
 
   $('tab-av').onclick = () => setView('av');
@@ -101,7 +114,10 @@ async function demarrer() {
   // Démarrage : le couple gardé sur l'appareil s'affiche tout de suite (même hors ligne),
   // puis on vérifie discrètement auprès de Supabase (prénoms changés, téléphone détaché…).
   const couple = coupleLocal();
-  if (couple) {
+  if (estDemo()) {
+    // Adresse …/?demo=1, ou démo déjà en cours dans cet onglet : on y va directement, sans l'accueil
+    ouvrirDemo();
+  } else if (couple) {
     afficherCouple(couple);
     jouerAvec(couple);
     setView(ongletDuJeu());

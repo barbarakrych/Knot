@@ -5,6 +5,7 @@
    pour afficher les prénoms tout de suite, même hors ligne. */
 import { CLES, lire, ecrire, effacer } from './stockage.js';
 import { SUPABASE_URL, SUPABASE_CLE } from './config.js';
+import { estDemo, COUPLE_DEMO } from './demo.js';
 
 // Erreurs connues → message pour l'écran. Les autres (réseau…) donnent ERREUR_RESEAU.
 export const MESSAGES = {
@@ -62,9 +63,10 @@ async function appeler(sb, fonction, params) {
   return data;
 }
 
-// Le couple gardé sur l'appareil, ou null.
+// Le couple gardé sur l'appareil, ou null. En démo : le couple interne de la démo (sans prénoms).
 // { place, prenomMoi, prenomAutre, complet, codeCouple, codeRelier }
 export function coupleLocal() {
+  if (estDemo()) return COUPLE_DEMO;
   return lire(CLES.couple, null);
 }
 

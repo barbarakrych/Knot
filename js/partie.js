@@ -21,6 +21,7 @@
      minuteur { cle, marche, fin, reste } le minuteur commun (fin en heure du serveur) */
 import { CLES, lire, ecrire, effacer } from './stockage.js';
 import { obtenirClient, coupleLocal, actualiser } from './couple.js';
+import { CLE_PARTIE } from './demo.js';
 
 const VIDE = { tirees: {}, perso: {}, paquets: {}, distance: true, affichee: null, defi: null, minuteur: null };
 const LOT = 300; // au plus 300 ordres par envoi (limite de jouer())
@@ -35,6 +36,7 @@ const auditeurs = new Set();
 
 let options = {};      // { detache } donné par app.js
 let canal = null;      // abonnement temps réel
+let demo = false;      // mode démo : la partie reste dans l'onglet, rien n'est envoyé (voir demo.js)
 let envoiEnCours = false, relectureEnCours = false, relireEncore = false, reessai = null;
 
 /* ---------- Appliquer un ordre (la même règle que jouer() dans la base) ---------- */
@@ -68,6 +70,7 @@ function prevenir(origine) {
 }
 
 function sauver() {
+  if (demo) { try { sessionStorage.setItem(CLE_PARTIE, JSON.stringify(base)); } catch (e) {} return; }
   if (base) ecrire(CLES.partie, base); else effacer(CLES.partie);
   ecrire(CLES.attente, attente);
 }
@@ -141,7 +144,7 @@ function gererErreur(e) {
 
 // Envoie la file d'attente, par lots.
 async function envoyer() {
-  if (envoiEnCours || !base || !attente.length || !navigator.onLine) return;
+  if (demo || envoiEnCours || !base || !attente.length || !navigator.onLine) return;
   envoiEnCours = true;
   try {
     while (attente.length && base) {
@@ -166,7 +169,7 @@ async function envoyer() {
 
 // Relit la partie (jouer avec une liste vide ne change rien et renvoie la partie et l'heure du serveur).
 async function relire() {
-  if (!base) return;
+  if (demo || !base) return;
   if (relectureEnCours) { relireEncore = true; return; }
   relectureEnCours = true;
   try {
@@ -212,6 +215,13 @@ export function etat() { if (!courant) calculer(); return courant; }
 // Applique des ordres tout de suite, puis les envoie à Supabase.
 export function agir(ordres) {
   if (!ordres || !ordres.length) return;
+  if (demo) {
+    // Démo : pas de file d'attente ni d'envoi, les ordres changent directement la partie de l'onglet
+    for (const o of ordres) base.etat = appliquer(base.etat, o);
+    sauver();
+    prevenir('moi');
+    return;
+  }
   attente = attente.concat(ordres);
   sauver();
   prevenir('moi');
@@ -237,6 +247,19 @@ export function demarrer(couple, opts = {}) {
   }
   relire();
   ecouterSupabase();
+}
+
+// Mode démo : une partie toute neuve (ou celle de la démo en cours, après un rechargement), gardée dans l'onglet.
+// Pas de Supabase, pas de temps réel. La partie et la file d'attente du vrai couple restent intactes sur l'appareil.
+export function demarrerDemo() {
+  demo = true;
+  reprise = null;
+  attente = [];
+  let gardee = null;
+  try { gardee = JSON.parse(sessionStorage.getItem(CLE_PARTIE)); } catch (e) {}
+  base = gardee && gardee.etat ? gardee : { couple: 'demo', etat: {}, version: 0, decalage: 0 };
+  sauver();
+  prevenir('serveur');
 }
 
 // Ce téléphone n'a pas (ou plus) de couple : on oublie la partie. Un jeu d'avant le partage (reprise), s'il y en a un,

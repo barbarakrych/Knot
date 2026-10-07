@@ -6,7 +6,8 @@ import { creerCouple, apercuCode, utiliserCode, messageErreur } from './couple.j
 const ETAPES = ['acc-choix', 'acc-form-creer', 'acc-code-cree', 'acc-form-code', 'acc-confirmer'];
 
 // entrer(couple) : appelée quand le couple est prêt, pour ouvrir le jeu.
-export function preparerAccueil(entrer) {
+// demo() : appelée par « Découvrir en mode démo ».
+export function preparerAccueil(entrer, demo) {
   let couple = null;     // couple qui vient d'être créé
   let codeTape = '';     // code tapé à l'étape « J'ai un code »
 
@@ -34,6 +35,7 @@ export function preparerAccueil(entrer) {
 
   $('acc-creer').onclick = () => montrer('acc-form-creer');
   $('acc-jai-code').onclick = () => montrer('acc-form-code');
+  $('acc-demo').onclick = () => demo();
   document.querySelectorAll('.accueil [data-retour]').forEach(b => { b.onclick = () => montrer('acc-choix'); });
 
   // Créer notre couple → affiche le code à donner à l'autre

@@ -226,6 +226,12 @@ details.guide .rule{margin-top:10px}
 .accroche{font-family:var(--f-card);font-size:1.25rem;line-height:1.35;text-wrap:balance}
 .accueil .link{align-self:center;margin-top:4px}
 .accueil .etape>.btn.small{align-self:center}
+.accueil .acc-demo{margin-top:10px;font-size:.85rem}
+
+/* Mode démo : petit bandeau en haut, discret */
+.bandeau-demo{margin:-8px 0 -6px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 12px;
+  border:1px dashed var(--line);border-radius:10px;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bandeau-demo .link{font-family:var(--f-display);font-size:.8rem;letter-spacing:0;text-transform:none}
 .champ{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.95rem}
 .champ input{font:inherit;font-weight:400;font-size:1.05rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;box-sizing:border-box}
 .champ input.saisie-code{font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.06em}

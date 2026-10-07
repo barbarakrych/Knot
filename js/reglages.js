@@ -6,6 +6,7 @@ import { $, el, copier } from './commun.js';
 import { actualiser, demanderCodeRelier, messageErreur } from './couple.js';
 import { etat, agir, ecouter } from './partie.js';
 import { themeChoisi, themeSuivant, choisirTheme } from './theme.js';
+import { estDemo } from './demo.js';
 
 // Icônes du bouton Thème, en trait simple comme l'engrenage (pas de caractère : l'iPhone en ferait des émojis)
 const ICONES_THEME = {
@@ -93,8 +94,11 @@ export function preparerReglages(detache) {
 
   return {
     // Affiche tout de suite la copie de l'appareil, puis la version à jour de Supabase (ex. code relier déjà utilisé).
+    // En démo : pas de bloc « Notre couple » (pas de couple, pas de Supabase).
     ouvrir(c) {
       ouvert = true;
+      $('reglage-couple').hidden = estDemo();
+      if (estDemo()) return;
       rendre(c);
       actualiser().then(c2 => {
         if (!ouvert) return;
