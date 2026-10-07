@@ -111,9 +111,10 @@ Prompt :
 
 Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
-- Mode sombre et thème dans les Réglages
-  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). « À distance » y est depuis l'étape 4. Y ajouter : le thème (Clair, Sombre ou Comme le téléphone, Clair par défaut) et les sons (activés ou non). Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
-- Sons : au tirage d'une carte et à la fin du minuteur (doux, et qu'on peut couper dans les Réglages). La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
+- ✅ Fait : thème dans les Réglages (Clair par défaut, Sombre, Auto qui suit le téléphone), gardé sur chaque téléphone.
+- Réglages, la suite
+  - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). « À distance » y est depuis l'étape 4, le thème depuis l'étape 6. Y ajouter : les sons (activés ou non). Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
+- Sons : au tirage d'une carte et à la fin du minuteur (doux, et qu'on peut couper dans les Réglages). ✅ Fait : le son de fin du minuteur des cartes Action (`js/son.js`). Reste : le son au tirage, et l'interrupteur pour couper les sons. La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.
 - Carte « Nos valeurs » qui se retourne : à essayer, pas sûr (voir « Idée après l'étape 4 » plus haut).
 - Polices : l'app ressemble trop aux pages typiques faites par IA. Proposer 3 combinaisons de polices moins courantes (Google Fonts), avec captures, avant de choisir. Le site de présentation utilise Young Serif et Instrument Sans : à considérer.
 - Distance entre nous quand À distance est activé : plutôt pour une distribution plus large. Idée visuelle inspirée des widgets Instagram : un cœur, deux points et une ligne avec « 5 500 km ». À décider : localisation automatique (arrondie à la ville, jamais la position exacte) ou ville choisie une fois dans les Réglages.

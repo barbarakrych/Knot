@@ -21,13 +21,13 @@ for (const f of fichiers) {
   const chemin = path.join(RACINE, f);
   if (!fs.existsSync(chemin)) { console.error('version-sw : fichier introuvable : ' + f); process.exit(1); }
   let contenu = fs.readFileSync(chemin);
-  if (!/\.(png|ico)$/.test(f)) contenu = Buffer.from(contenu.toString('utf8').replace(/\r\n/g, '\n'));
+  if (!/\.(png|ico|wav)$/.test(f)) contenu = Buffer.from(contenu.toString('utf8').replace(/\r\n/g, '\n'));
   empreinte.update(f + '\0').update(contenu);
 }
 const version = empreinte.digest('hex').slice(0, 12);
 
 // Fichiers de l'app oubliés dans la liste (ils marcheraient hors ligne seulement après une première utilisation)
-const dossiers = { js: /\.js$/, 'js/vendor': /\.js$/, css: /\.css$/, contenu: /\.json$/, icones: /\.png$/ };
+const dossiers = { js: /\.js$/, 'js/vendor': /\.js$/, css: /\.css$/, contenu: /\.json$/, icones: /\.png$/, sons: /\.wav$/ };
 for (const [dossier, motif] of Object.entries(dossiers)) {
   for (const nom of fs.readdirSync(path.join(RACINE, dossier))) {
     const f = dossier + '/' + nom;

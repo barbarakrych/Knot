@@ -5,6 +5,7 @@
 import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur, etatMinuteur, ordreMinuteur } from './commun.js';
 import { coupleLocal } from './couple.js';
 import { etat, agir, ecouter, maintenant } from './partie.js';
+import { sonnerALaFinDuMinuteur } from './son.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
 const PILE_IDS = Object.keys(PILES);
@@ -91,6 +92,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('timerreset').onclick = () => agir([{ suppr: ['minuteur'] }]);
   // Le cadran se met à jour deux fois par seconde quand le minuteur tourne
   setInterval(() => { if (MINUTEUR && MINUTEUR.marche) renderTimer(); }, 500);
+  // Un son doux quand le minuteur d'une carte Action atteint 0 (une seule fois, quel que soit l'écran affiché)
+  sonnerALaFinDuMinuteur(cle => { const c = cardById(cle); return !!(c && c.pile === 'action'); });
 
   /* ---------- Affichage ---------- */
   function setCorners(letter, num) {

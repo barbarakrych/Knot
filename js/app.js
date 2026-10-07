@@ -10,6 +10,7 @@ import * as partie from './partie.js';
 import { surveillerMisesAJour } from './mise-a-jour.js';
 import { preparerAccueil } from './accueil.js';
 import { preparerReglages } from './reglages.js';
+import { appliquerTheme } from './theme.js';
 
 const FOOTER = {
   av: '',
@@ -26,6 +27,7 @@ async function montrerPage() {
 }
 
 async function demarrer() {
+  appliquerTheme(); // déjà posé par le petit script d'index.html ; on le confirme ici, même si le contenu ne charge pas
   let contenu;
   try {
     contenu = await chargerContenu();

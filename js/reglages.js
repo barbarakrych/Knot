@@ -1,10 +1,11 @@
 /* Écran Réglages (l'engrenage en haut à droite).
-   Un bloc <section class="reglage"> par réglage dans index.html : thème et son s'ajouteront à côté (étape 6).
-   Pour l'instant, de haut en bas : « À distance » (partagé avec l'autre téléphone),
-   puis le couple (code à donner à l'autre, ou « Relier le téléphone de [l'autre] »). */
+   Un bloc <section class="reglage"> par réglage dans index.html. De haut en bas : « À distance » (partagé avec l'autre
+   téléphone), le thème (propre à ce téléphone, voir theme.js), puis le couple (code à donner à l'autre,
+   ou « Relier le téléphone de [l'autre] »). */
 import { $, el, copier } from './commun.js';
 import { actualiser, demanderCodeRelier, messageErreur } from './couple.js';
 import { etat, agir, ecouter } from './partie.js';
+import { themeChoisi, choisirTheme } from './theme.js';
 
 // detache() : appelée si la base dit que ce téléphone ne fait plus partie du couple.
 export function preparerReglages(detache) {
@@ -22,6 +23,15 @@ export function preparerReglages(detache) {
   }
   ecouter(afficherInterrupteurs);
   afficherInterrupteurs();
+
+  // Thème : Clair, Sombre ou Auto. Appliqué tout de suite à toute l'app, et gardé sur l'appareil.
+  const boutonsTheme = [...document.querySelectorAll('[data-theme-choix]')];
+  function afficherTheme() {
+    const t = themeChoisi();
+    boutonsTheme.forEach(b => b.setAttribute('aria-checked', String(b.dataset.themeChoix === t)));
+  }
+  boutonsTheme.forEach(b => { b.onclick = () => { choisirTheme(b.dataset.themeChoix); afficherTheme(); }; });
+  afficherTheme();
 
   // Code bien visible + bouton Copier + petite phrase d'aide
   function blocCode(etiquette, code, aide) {

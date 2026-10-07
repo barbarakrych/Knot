@@ -8,6 +8,7 @@ export const CLES = {
   attente: 'knot-attente',    // gestes faits sur ce téléphone, pas encore envoyés à Supabase
   ecran: 'knot-ecran',        // onglet et paquet ouverts (propres à ce téléphone)
   couple: 'knot-couple',      // prénoms, place de ce téléphone et codes, copiés depuis Supabase
+  theme: 'knot-theme',        // thème choisi sur ce téléphone : 'clair', 'sombre' ou 'auto' (voir theme.js)
   // Avant l'étape 4, la partie restait sur le téléphone. Ces clés ne sont plus que lues une fois,
   // pour que la progression déjà faite rejoigne la partie du couple (puis elles sont effacées).
   pioche: 'knot-pioche',      // cartes tirées, carte affichée, cartes ajoutées

@@ -240,4 +240,9 @@ details.guide .rule{margin-top:10px}
 .reglage .btn{align-self:flex-start}
 .reglage-corps{display:flex;flex-direction:column;gap:10px}
 /* Réglage sur une ligne : le nom à gauche, l’interrupteur à droite */
+.reglage-titre{font-weight:600;font-size:.98rem}  /* comme « À distance » */
+/* Choix entre quelques options (thème) : même allure que les onglets du jeu */
+.choix{display:grid;grid-template-columns:repeat(3,1fr);background:var(--chip);border-radius:12px;padding:4px;gap:4px}
+.choix button{font:inherit;font-weight:600;font-size:.92rem;border:0;border-radius:9px;padding:9px 6px;background:transparent;color:var(--muted);cursor:pointer}
+.choix button[aria-checked="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(20,30,60,.12)}
 .reglage.ligne{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px 10px 16px}
