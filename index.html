@@ -5,9 +5,9 @@
 <style>
 /* Avant tout le reste : le fond de la page a déjà la couleur de l'écran de démarrage, même si les styles ne sont pas encore chargés.
    « chargement » : la page reste invisible et sans animation tant que app.js ne l'a pas mise dans son bon état. */
-html{background:#EEF1F6}
-@media (prefers-color-scheme: dark){html:not([data-theme="light"]){background:#0F1420}}
-html[data-theme="dark"]{background:#0F1420}
+html{background:#0F1420}
+@media (prefers-color-scheme: light){html:not([data-theme]){background:#EEF1F6}}
+html[data-theme="light"]{background:#EEF1F6}
 .chargement .app{visibility:hidden}
 .chargement *,.chargement *::before,.chargement *::after{transition:none!important;animation:none!important}
 </style>
@@ -21,8 +21,8 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
 <script>
 // Thème choisi dans les Réglages, posé avant le premier affichage (même règle que js/theme.js, qui prend ensuite le relais).
 (function () {
-  var t = 'clair';
-  try { t = JSON.parse(localStorage.getItem('knot-theme')) || 'clair'; } catch (e) {}
+  var t = 'sombre';
+  try { t = JSON.parse(localStorage.getItem('knot-theme')) || 'sombre'; } catch (e) {}
   if (t === 'auto') return;
   var sombre = t === 'sombre';
   document.documentElement.setAttribute('data-theme', sombre ? 'dark' : 'light');
@@ -114,14 +114,13 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       <div class="disttxt"><span id="distlabel">À distance</span></div>
       <button class="switch" id="distsw" type="button" role="switch" aria-checked="true" aria-labelledby="distlabel"><span></span></button>
     </section>
-    <section class="reglage">
-      <span class="reglage-titre" id="themelabel">Thème</span>
-      <div class="choix" id="themechoix" role="radiogroup" aria-labelledby="themelabel">
-        <button type="button" role="radio" data-theme-choix="clair" aria-checked="false">Clair</button>
-        <button type="button" role="radio" data-theme-choix="sombre" aria-checked="false">Sombre</button>
-        <button type="button" role="radio" data-theme-choix="auto" aria-checked="false">Auto</button>
+    <!-- Thème : un seul bouton, qui passe au mode suivant à chaque appui (icône et libellé posés par reglages.js) -->
+    <section class="reglage theme">
+      <div class="reglage-ligne">
+        <span class="reglage-titre" aria-hidden="true">Thème</span>
+        <button class="theme-bouton" id="themebtn" type="button"></button>
       </div>
-      <p class="muted">Auto suit le thème du téléphone, même s’il change.</p>
+      <p class="muted" id="themeauto" hidden>Auto suit le thème du téléphone, même s’il change.</p>
     </section>
     <section class="reglage" id="reglage-couple">
       <h3>Notre couple</h3>

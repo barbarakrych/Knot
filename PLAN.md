@@ -111,7 +111,7 @@ Prompt :
 
 Idées à piocher, une par session :
 - Écran d'accueil et explication du jeu à la première ouverture
-- ✅ Fait : thème dans les Réglages (Clair par défaut, Sombre, Auto qui suit le téléphone), gardé sur chaque téléphone.
+- ✅ Fait : thème dans les Réglages, un seul bouton qui passe de Sombre (par défaut) à Clair puis à Auto (qui suit le téléphone), gardé sur chaque téléphone.
 - Réglages, la suite
   - L'écran Réglages existe depuis l'étape 3 (engrenage en haut à droite, un bloc `<section class="reglage">` par réglage dans index.html). « À distance » y est depuis l'étape 4, le thème depuis l'étape 6. Y ajouter : les sons (activés ou non). Quand À distance est activé, afficher une petite mention « À distance » sur la pile Action. D'autres réglages viendront plus tard : prévoir un écran facile à compléter.
 - Sons : au tirage d'une carte et à la fin du minuteur (doux, et qu'on peut couper dans les Réglages). ✅ Fait : le son de fin du minuteur des cartes Action (`js/son.js`). Reste : le son au tirage, et l'interrupteur pour couper les sons. La vibration a été essayée et retirée : elle ne marchait pas sur Android et n'est pas possible sur iPhone. À revoir avec le son.

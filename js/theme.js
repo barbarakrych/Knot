@@ -1,4 +1,4 @@
-/* Thème de l'app : Clair, Sombre ou Auto (comme le téléphone). Propre à chaque téléphone, gardé sur l'appareil.
+/* Thème de l'app : Sombre (par défaut), Clair ou Auto (comme le téléphone). Propre à chaque téléphone, gardé sur l'appareil.
 
    Les couleurs sont dans css/styles.css (variables --paper, --ink…). Ce fichier ne fait que poser
    data-theme sur <html> :
@@ -7,8 +7,11 @@
    Le petit script en haut d'index.html fait la même chose avant le premier affichage (pas d'éclair de la mauvaise couleur). */
 import { CLES, lire, ecrire } from './stockage.js';
 
-export const THEMES = ['clair', 'sombre', 'auto'];
-const DEFAUT = 'clair'; // décidé dans PLAN.md
+// Dans l'ordre du bouton des Réglages : chaque appui passe au suivant (sombre → clair → auto → sombre…)
+export const THEMES = ['sombre', 'clair', 'auto'];
+const DEFAUT = 'sombre'; // rien d'enregistré sur le téléphone → sombre
+
+export function themeSuivant(t = themeChoisi()) { return THEMES[(THEMES.indexOf(t) + 1) % THEMES.length]; }
 const FOND = { clair: '#EEF1F6', sombre: '#0F1420' }; // couleur de la barre du téléphone (comme --paper)
 
 export function themeChoisi() {

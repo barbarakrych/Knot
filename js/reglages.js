@@ -5,7 +5,15 @@
 import { $, el, copier } from './commun.js';
 import { actualiser, demanderCodeRelier, messageErreur } from './couple.js';
 import { etat, agir, ecouter } from './partie.js';
-import { themeChoisi, choisirTheme } from './theme.js';
+import { themeChoisi, themeSuivant, choisirTheme } from './theme.js';
+
+// Icônes du bouton Thème, en trait simple comme l'engrenage (pas de caractère : l'iPhone en ferait des émojis)
+const ICONES_THEME = {
+  sombre: '<path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6Z"/>',
+  clair: '<circle cx="12" cy="12" r="4"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/>',
+  auto: '<path d="M6.4 19.5 12 4.5l5.6 15M8.5 14h7"/>'
+};
+const NOMS_THEME = { sombre: 'sombre', clair: 'clair', auto: 'auto, comme le téléphone' };
 
 // detache() : appelée si la base dit que ce téléphone ne fait plus partie du couple.
 export function preparerReglages(detache) {
@@ -24,13 +32,18 @@ export function preparerReglages(detache) {
   ecouter(afficherInterrupteurs);
   afficherInterrupteurs();
 
-  // Thème : Clair, Sombre ou Auto. Appliqué tout de suite à toute l'app, et gardé sur l'appareil.
-  const boutonsTheme = [...document.querySelectorAll('[data-theme-choix]')];
+  // Thème : un seul bouton. Chaque appui passe au mode suivant (sombre → clair → auto), appliqué tout de suite
+  // à toute l'app et gardé sur l'appareil. La phrase sur Auto ne s'affiche qu'en mode Auto.
   function afficherTheme() {
     const t = themeChoisi();
-    boutonsTheme.forEach(b => b.setAttribute('aria-checked', String(b.dataset.themeChoix === t)));
+    const b = $('themebtn');
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONES_THEME[t] + '</svg>';
+    const libelle = 'Thème : ' + NOMS_THEME[t] + '. Toucher pour changer';
+    b.setAttribute('aria-label', libelle);
+    b.title = libelle;
+    $('themeauto').hidden = t !== 'auto';
   }
-  boutonsTheme.forEach(b => { b.onclick = () => { choisirTheme(b.dataset.themeChoix); afficherTheme(); }; });
+  $('themebtn').onclick = () => { choisirTheme(themeSuivant()); afficherTheme(); };
   afficherTheme();
 
   // Code bien visible + bouton Copier + petite phrase d'aide
