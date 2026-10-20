@@ -30,6 +30,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('defireponses').append(reponsesDefi.element);
   function renderDefiReponses() {
     const sousLaCarte = !!S.current && S.current === S.defi;
+    if (!peutRepondre(cardById(S.defi))) { $('defireponses').hidden = true; $('defirep').hidden = true; return; }
     $('defireponses').hidden = !defiOuvert || sousLaCarte;
     $('defirep').hidden = defiOuvert || sousLaCarte;
     $('defirep').setAttribute('aria-expanded', String(defiOuvert));
@@ -58,6 +59,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const custom = Object.values(S.custom).filter(c => c.pile === pile).sort((a, b) => (a.at || 0) - (b.at || 0));
     return BASE.filter(c => c.pile === pile).concat(custom);
   }
+  // « Répondre » : toujours pour une vérité ; pour une action, seulement si elle s'y prête (rep, voir contenu.js)
+  function peutRepondre(c) { return !!c && (c.pile === 'verite' || !!c.rep); }
   function cardById(id) { if (!id) return null; return BY_ID.get(id) || S.custom[id] || null; }
   // À distance : on retire les actions « ensemble ». Sinon : on retire les actions « distance ».
   function modeOk(c) {
@@ -153,7 +156,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     renderTimer();
     // La « fois » de la carte : l'heure où elle a été tirée. Retirée après un remélange, elle repart sans réponses.
     const fois = c => (S.drawn[c.id] && S.drawn[c.id].at) || 0;
-    reponses.montrer(cur ? { carte: cur.id, fois: fois(cur) } : null);
+    reponses.montrer(peutRepondre(cur) ? { carte: cur.id, fois: fois(cur) } : null);
 
     const defi = cardById(S.defi);
     $('defi').hidden = !defi;
@@ -161,7 +164,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if ((defi && defi.id) !== defiAffiche) { defiAffiche = defi ? defi.id : null; defiOuvert = false; } // nouveau défi : encadré refermé
     renderDefiReponses();
     // Défi affiché sur la carte : ses réponses sont sous la carte, pas en double dans l'encadré
-    reponsesDefi.montrer(defi && defi.id !== S.current ? { carte: defi.id, fois: fois(defi) } : null);
+    reponsesDefi.montrer(peutRepondre(defi) && defi.id !== S.current ? { carte: defi.id, fois: fois(defi) } : null);
 
     $('skip').disabled = !cur;
 
@@ -267,19 +270,21 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   /* ---------- Cartes ajoutées ----------
      Elles entrent dans le paquet commun et peuvent sortir chez les deux (avec « Carte ajoutée », jamais par qui).
      Seul leur auteur les voit dans « Vos cartes » et peut les modifier ou les supprimer (garanti par jouer()). */
-  function addCard(pile, text, min, big) {
+  function addCard(pile, text, min, big, rep) {
     const id = 'perso-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     min = pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
     big = pile === 'action' && !!big;
-    agir([{ set: ['perso', id], valeur: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, detail: '', at: Date.now(), place: maPlace() } }]);
+    rep = pile === 'verite' || !!rep;
+    agir([{ set: ['perso', id], valeur: { id, pile, theme: '', src: '', text, min, when: '', mode: '', big, rep, detail: '', at: Date.now(), place: maPlace() } }]);
     note('Carte ajoutée à la pile « ' + PILES[pile].name + ' ».', true);
   }
-  function editCard(id, text, min, big) {
+  function editCard(id, text, min, big, rep) {
     const c = S.custom[id]; if (!c || !aMoi(c)) return;
     min = c.pile === 'action' ? Math.max(0, Math.min(120, min | 0)) : 0;
     big = c.pile === 'action' && !!big;
     editing = null;
-    const o = [{ set: ['perso', id], valeur: { ...c, text, min, big } }];
+    rep = c.pile === 'verite' || !!rep;
+    const o = [{ set: ['perso', id], valeur: { ...c, text, min, big, rep } }];
     if (S.defi === id && !big) o.push({ suppr: ['defi'] }); // ce n'est plus un défi
     if (S.current === id) o.push({ suppr: ['minuteur'] });
     agir(o);
@@ -313,7 +318,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
         li.className = 'editing';
         const ta = el('textarea'); ta.id = 'edit-' + c.id; ta.maxLength = 300; ta.value = c.text;
         const wrap = el('div', 'editbox'); wrap.append(ta);
-        let sel = null, big = null;
+        let sel = null, big = null, rep = null;
         if (c.pile === 'action') {
           sel = el('input', 'editmin'); sel.type = 'number'; sel.min = '1'; sel.max = '120'; sel.step = '1'; sel.inputMode = 'numeric'; sel.placeholder = '—';
           sel.id = 'editmin-' + c.id; sel.value = c.min ? String(c.min) : '';
@@ -323,13 +328,16 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
           const bl = el('label'); bl.append(big, document.createTextNode(' C’est un défi'));
           const br = el('div', 'bigrow');
           br.append(bl, el('span', 'muted', 'À organiser ou à faire dans les jours qui viennent. Un seul défi à la fois.'));
+          rep = el('input'); rep.type = 'checkbox'; rep.checked = !!c.rep;
+          const rl = el('label'); rl.append(rep, document.createTextNode(' On peut y répondre dans l’app'));
+          br.append(rl);
           wrap.append(br);
         }
         const acts = el('div', 'del');
         const save = el('button', 'btn primary', 'Enregistrer'); save.type = 'button';
         save.onclick = () => {
           const t = ta.value.trim(); if (!t) { note('La carte ne peut pas être vide.'); return; }
-          editCard(c.id, t.slice(0, 300), sel ? Math.round(+sel.value) || 0 : 0, big && big.checked);
+          editCard(c.id, t.slice(0, 300), sel ? Math.round(+sel.value) || 0 : 0, big && big.checked, rep && rep.checked);
         };
         const cancel = el('button', 'btn', 'Annuler'); cancel.type = 'button';
         cancel.onclick = () => { editing = null; renderMine(); };
@@ -410,8 +418,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   $('addform').addEventListener('submit', e => {
     e.preventDefault();
     const t = $('addtext').value.trim(); if (!t) return;
-    addCard($('add-action').checked ? 'action' : 'verite', t.slice(0, 300), Math.round(+$('addmin').value) || 0, $('addbig').checked);
-    $('addtext').value = ''; $('addmin').value = ''; $('addbig').checked = false; checkDup();
+    addCard($('add-action').checked ? 'action' : 'verite', t.slice(0, 300), Math.round(+$('addmin').value) || 0, $('addbig').checked, $('addrep').checked);
+    $('addtext').value = ''; $('addmin').value = ''; $('addbig').checked = false; $('addrep').checked = false; checkDup();
   });
 
   // Chaque changement de la partie (geste fait ici, ou reçu de l'autre téléphone) redessine l'écran.

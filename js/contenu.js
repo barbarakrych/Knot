@@ -24,20 +24,21 @@ export async function chargerContenu() {
   // Les deux à 0 = pas de minuteur.
   // big : true pour les actions « grande », appelées « défis » dans l'interface.
   // detail : thèmes ou idées affichés en petit sous le texte (souvent vide).
+  // rep : on peut y répondre dans l'app (« Répondre ») : toutes les vérités, et les actions marquées « repondre ».
   const BASE = [];
   verites.forEach(v => BASE.push({
-    id: v.id, pile: 'verite', theme: v.theme || '', src: v.source || '', text: v.texte, min: 0, when: '', mode: '', big: false, detail: ''
+    id: v.id, pile: 'verite', theme: v.theme || '', src: v.source || '', text: v.texte, min: 0, when: '', mode: '', big: false, detail: '', rep: true
   }));
   actions.forEach(a => BASE.push({
     id: a.id, pile: 'action', theme: '', src: a.source || '', text: a.texte,
     min: a.minutes == null ? 0 : a.minutes, sec: a.secondes == null ? 0 : a.secondes, when: a.quand === 'semaine' ? 'week' : '', mode: a.mode || 'les-deux',
-    big: a.taille === 'grande', detail: a.detail || ''
+    big: a.taille === 'grande', detail: a.detail || '', rep: a.repondre === true
   }));
 
-  // Paquets « Pour plus tard ».
+  // Paquets « Pour plus tard ». voix : paquet qui se fait plutôt de vive voix (une phrase le dit en haut du paquet).
   const PAQUETS = paquets.map(p => ({
     id: p.id, name: p.nom, study: p.etude, dur: p.duree, src: p.sources || [], url: p.lien || '',
-    intro: p.intro, how: p.conseil,
+    intro: p.intro, how: p.conseil, voix: p.vive_voix === true,
     cards: p.cartes.map(c => ({ partie: c.partie, ex: c.type === 'exercice', texte: c.texte, min: c.minutes || 0 }))
   }));
 

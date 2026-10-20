@@ -270,3 +270,8 @@ details.guide .rule{margin-top:10px}
 .defi-boutons{display:flex;gap:8px;flex-wrap:wrap}
 .defi-reponses{align-self:stretch}
 .defi-reponses .reponses{max-width:none}
+/* Ligne sous la carte : « Passer cette carte » et « Répondre », centrés et de la même largeur */
+#view-av > .actions{justify-content:center}
+#view-av > .actions .btn{flex:1 1 0;max-width:200px;justify-content:center;text-align:center}
+/* « Ce paquet se fait plutôt de vive voix. » en haut de certains paquets */
+.vive-voix{margin:0;font-family:var(--f-mono);font-size:.72rem;color:var(--blue)}

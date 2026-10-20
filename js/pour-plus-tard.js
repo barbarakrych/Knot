@@ -87,7 +87,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       det.append(el('summary', null, 'À propos de cette étude'), el('p', null, pq.intro));
       head.append(det);
     }
-    head.append(el('p', 'muted', pq.how), srcLine(SOURCES, pq.src));
+    head.append(el('p', 'muted', pq.how));
+    if (pq.voix) head.append(el('p', 'vive-voix', 'Ce paquet se fait plutôt de vive voix.'));
+    head.append(srcLine(SOURCES, pq.src));
     if (pq.url) { const a = el('a', 'srclink', 'Voir l’étude'); a.href = pq.url; a.target = '_blank'; a.rel = 'noopener'; head.append(a); }
     root.append(head);
 

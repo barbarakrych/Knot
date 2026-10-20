@@ -197,7 +197,8 @@
     "texte": "Regardez-vous dans les yeux, sans parler (en visio si vous êtes loin), pendant 4 minutes. Puis dites ce que vous avez ressenti.",
     "minutes": 4
    }
-  ]
+  ],
+  "vive_voix": true
  },
  {
   "id": "histoire",
@@ -331,7 +332,8 @@
     "texte": "Donnez ensemble un titre à chaque chapitre de votre histoire jusqu’ici, puis au chapitre qui commence.",
     "minutes": 10
    }
-  ]
+  ],
+  "vive_voix": true
  },
  {
   "id": "huit",
@@ -489,7 +491,8 @@
     "texte": "Comment puis-je t’aider à réaliser tes rêves ?",
     "minutes": null
    }
-  ]
+  ],
+  "vive_voix": true
  },
  {
   "id": "johnson",
@@ -605,7 +608,8 @@
     "texte": "Racontez ensemble l’histoire de votre couple dans cinq ans, comme si elle s’était très bien passée.",
     "minutes": 10
    }
-  ]
+  ],
+  "vive_voix": true
  },
  {
   "id": "recit",
@@ -733,7 +737,8 @@
     "texte": "À l’écoute : qu’est-ce qui t’a le plus touché·e ou surpris·e dans l’histoire de l’autre ?",
     "minutes": null
    }
-  ]
+  ],
+  "vive_voix": true
  },
  {
   "id": "valeurs",

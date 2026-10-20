@@ -51,7 +51,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Dites chacun trois choses que vous avez appréciées chez l’autre cette semaine."
+  "texte": "Dites chacun trois choses que vous avez appréciées chez l’autre cette semaine.",
+  "repondre": true
  },
  {
   "id": "a-1qno26g",
@@ -60,7 +61,8 @@
   "minutes": 3,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun écrit en 3 minutes 10 choses qu’il aime chez l’autre, puis les lit à voix haute."
+  "texte": "Chacun écrit en 3 minutes 10 choses qu’il aime chez l’autre, puis les lit à voix haute.",
+  "repondre": true
  },
  {
   "id": "a-1pcszwy",
@@ -78,7 +80,8 @@
   "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez chacun une mini lettre d’amour en 5 minutes, puis lisez-la à voix haute."
+  "texte": "Écrivez chacun une mini lettre d’amour en 5 minutes, puis lisez-la à voix haute.",
+  "repondre": true
  },
  {
   "id": "a-shg9qz",
@@ -87,7 +90,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun raconte une bonne nouvelle de sa semaine. L’autre pose trois questions dessus et s’en réjouit franchement."
+  "texte": "Chacun raconte une bonne nouvelle de sa semaine. L’autre pose trois questions dessus et s’en réjouit franchement.",
+  "repondre": true
  },
  {
   "id": "a-qmme1g",
@@ -96,7 +100,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun dit une chose dont il est fier cette semaine. L’autre le félicite comme s’il avait gagné un prix."
+  "texte": "Chacun dit une chose dont il est fier cette semaine. L’autre le félicite comme s’il avait gagné un prix.",
+  "repondre": true
  },
  {
   "id": "a-r6t46n",
@@ -159,7 +164,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Portrait chinois : si l’autre était un animal, une couleur, une saison, un plat, une ville…"
+  "texte": "Portrait chinois : si l’autre était un animal, une couleur, une saison, un plat, une ville…",
+  "repondre": true
  },
  {
   "id": "a-p720pw",
@@ -168,7 +174,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Racontez votre rencontre du point de vue de l’autre."
+  "texte": "Racontez votre rencontre du point de vue de l’autre.",
+  "repondre": true
  },
  {
   "id": "a-25eyjl",
@@ -195,7 +202,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Imaginez chacun votre journée idéale à deux, heure par heure, puis comparez."
+  "texte": "Imaginez chacun votre journée idéale à deux, heure par heure, puis comparez.",
+  "repondre": true
  },
  {
   "id": "a-1i1aery",
@@ -231,7 +239,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez chacun cinq rêves de vie, puis comparez vos listes."
+  "texte": "Écrivez chacun cinq rêves de vie, puis comparez vos listes.",
+  "repondre": true
  },
  {
   "id": "a-ze8d7f",
@@ -285,7 +294,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Bilan de la semaine : un moment fort, un moment dur, et une envie pour la semaine prochaine."
+  "texte": "Bilan de la semaine : un moment fort, un moment dur, et une envie pour la semaine prochaine.",
+  "repondre": true
  },
  {
   "id": "a-18wrzwu",
@@ -585,7 +595,8 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Écris cinq choses que j’ai faites pour toi cette année et pour lesquelles tu me remercies."
+  "texte": "Écris cinq choses que j’ai faites pour toi cette année et pour lesquelles tu me remercies.",
+  "repondre": true
  },
  {
   "id": "a-u8g62u",
@@ -594,7 +605,8 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Choisis une photo de nous et écris trois lignes sur ce jour-là."
+  "texte": "Choisis une photo de nous et écris trois lignes sur ce jour-là.",
+  "repondre": true
  },
  {
   "id": "a-11cnqe7",
@@ -603,7 +615,8 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Prépare trois questions que tu ne m’as jamais posées, pour notre prochain moment à deux."
+  "texte": "Prépare trois questions que tu ne m’as jamais posées, pour notre prochain moment à deux.",
+  "repondre": true
  },
  {
   "id": "a-1y5fo8m",
@@ -630,7 +643,8 @@
   "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Lettre de gratitude : écris en 5 minutes un merci précis pour une chose que l’autre a faite, puis lis-le à voix haute. Ensuite c’est son tour."
+  "texte": "Lettre de gratitude : écris en 5 minutes un merci précis pour une chose que l’autre a faite, puis lis-le à voix haute. Ensuite c’est son tour.",
+  "repondre": true
  },
  {
   "id": "a-1j9kt2p",
@@ -639,7 +653,8 @@
   "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Meilleur soi possible : écrivez chacun 5 minutes sur votre vie dans dix ans si tout se passait au mieux, puis lisez-vous vos textes."
+  "texte": "Meilleur soi possible : écrivez chacun 5 minutes sur votre vie dans dix ans si tout se passait au mieux, puis lisez-vous vos textes.",
+  "repondre": true
  },
  {
   "id": "a-d7y4h",
@@ -702,7 +717,8 @@
   "minutes": 10,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez-vous chacun un petit mot doux de quatre lignes, sans utiliser la lettre e."
+  "texte": "Écrivez-vous chacun un petit mot doux de quatre lignes, sans utiliser la lettre e.",
+  "repondre": true
  },
  {
   "id": "a-4o765k",
@@ -711,7 +727,8 @@
   "minutes": 10,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez chacun un poème dont chaque vers commence par une lettre du prénom de l’autre."
+  "texte": "Écrivez chacun un poème dont chaque vers commence par une lettre du prénom de l’autre.",
+  "repondre": true
  },
  {
   "id": "a-o0rnio",
@@ -738,7 +755,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Racontez chacun votre vie en chapitres, avec un titre pour chaque chapitre."
+  "texte": "Racontez chacun votre vie en chapitres, avec un titre pour chaque chapitre.",
+  "repondre": true
  },
  {
   "id": "a-xbo3ga",
@@ -765,7 +783,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun décrit la personne qu’il voudrait devenir. L’autre propose une chose concrète pour l’aider."
+  "texte": "Chacun décrit la personne qu’il voudrait devenir. L’autre propose une chose concrète pour l’aider.",
+  "repondre": true
  },
  {
   "id": "a-1d5488j",
@@ -774,7 +793,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun nomme trois forces de l’autre, avec un exemple précis à chaque fois."
+  "texte": "Chacun nomme trois forces de l’autre, avec un exemple précis à chaque fois.",
+  "repondre": true
  },
  {
   "id": "a-12hqjv6",
@@ -801,7 +821,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Faites chacun la liste des « cristaux » : 5 qualités que vous avez prêtées à l’autre au début. Lesquelles se sont révélées vraies ?"
+  "texte": "Faites chacun la liste des « cristaux » : 5 qualités que vous avez prêtées à l’autre au début. Lesquelles se sont révélées vraies ?",
+  "repondre": true
  },
  {
   "id": "a-1lo3wgd",
@@ -819,7 +840,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Classez chacun ces valeurs : liberté, sécurité, aventure, tradition, réussite, plaisir, bienveillance, justice, spiritualité, reconnaissance. Comparez vos trois premières."
+  "texte": "Classez chacun ces valeurs : liberté, sécurité, aventure, tradition, réussite, plaisir, bienveillance, justice, spiritualité, reconnaissance. Comparez vos trois premières.",
+  "repondre": true
  },
  {
   "id": "a-19868td",
@@ -828,7 +850,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun dit une chose qu’il regretterait de ne pas avoir faite avec l’autre dans un an. Choisissez-en une à planifier."
+  "texte": "Chacun dit une chose qu’il regretterait de ne pas avoir faite avec l’autre dans un an. Choisissez-en une à planifier.",
+  "repondre": true
  },
  {
   "id": "a-1viit9x",
@@ -837,7 +860,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Finissez chacun trois fois la phrase : « Quand tu me manques, j’ai besoin que tu… »"
+  "texte": "Finissez chacun trois fois la phrase : « Quand tu me manques, j’ai besoin que tu… »",
+  "repondre": true
  },
  {
   "id": "a-1uq3f7d",
@@ -855,7 +879,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Communication non violente : chacun formule une petite frustration en quatre temps : ce que j’ai vu, ce que j’ai ressenti, mon besoin, ma demande."
+  "texte": "Communication non violente : chacun formule une petite frustration en quatre temps : ce que j’ai vu, ce que j’ai ressenti, mon besoin, ma demande.",
+  "repondre": true
  },
  {
   "id": "a-11085in",
@@ -882,7 +907,8 @@
   "minutes": 15,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez chacun votre « mode d’emploi » : ce qui me fait du bien, ce qui m’agace, comment me consoler. Échangez."
+  "texte": "Écrivez chacun votre « mode d’emploi » : ce qui me fait du bien, ce qui m’agace, comment me consoler. Échangez.",
+  "repondre": true
  },
  {
   "id": "a-1jpme77",
@@ -1147,7 +1173,8 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Écris trois souvenirs que tu veux qu’on crée ensemble l’année prochaine."
+  "texte": "Écris trois souvenirs que tu veux qu’on crée ensemble l’année prochaine.",
+  "repondre": true
  },
  {
   "id": "a-1j8ognc",
@@ -1193,7 +1220,8 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "les-deux",
-  "texte": "Écris une lettre à la personne que tu seras à 80 ans, sur nous deux."
+  "texte": "Écris une lettre à la personne que tu seras à 80 ans, sur nous deux.",
+  "repondre": true
  },
  {
   "id": "a-n5k3n6",
@@ -1446,7 +1474,8 @@
   "minutes": 3,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez chacun un haïku sur l’autre, en trois minutes."
+  "texte": "Écrivez chacun un haïku sur l’autre, en trois minutes.",
+  "repondre": true
  },
  {
   "id": "a-1aa551s",
@@ -1473,7 +1502,8 @@
   "minutes": 5,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Racontez votre histoire d’amour en six mots, pas un de plus."
+  "texte": "Racontez votre histoire d’amour en six mots, pas un de plus.",
+  "repondre": true
  },
  {
   "id": "a-194aeiq",
@@ -1608,7 +1638,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez une critique gastronomique très élogieuse du dernier plat que l’autre a cuisiné."
+  "texte": "Écrivez une critique gastronomique très élogieuse du dernier plat que l’autre a cuisiné.",
+  "repondre": true
  },
  {
   "id": "a-xi3xy6",
@@ -1664,7 +1695,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Écrivez une lettre à la personne que l’autre était à dix ans."
+  "texte": "Écrivez une lettre à la personne que l’autre était à dix ans.",
+  "repondre": true
  },
  {
   "id": "a-1hnw1in",
@@ -1700,7 +1732,8 @@
   "minutes": null,
   "quand": "maintenant",
   "mode": "les-deux",
-  "texte": "Chacun termine la phrase « Je t’aime parce que… » cinq fois, sans réfléchir."
+  "texte": "Chacun termine la phrase « Je t’aime parce que… » cinq fois, sans réfléchir.",
+  "repondre": true
  },
  {
   "id": "a-yhrdsf",
