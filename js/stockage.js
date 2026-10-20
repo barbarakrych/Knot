@@ -9,6 +9,7 @@ export const CLES = {
   ecran: 'knot-ecran',        // onglet et paquet ouverts (propres à ce téléphone)
   couple: 'knot-couple',      // prénoms, place de ce téléphone et codes, copiés depuis Supabase
   ancien: 'knot-ancien',      // { prenomMoi, prenomAutre } du couple que ce téléphone vient de perdre (écran de secours)
+  revelees: 'knot-revelees',  // cartes dont la révélation (la carte qui se retourne) a déjà été jouée ici (voir reponses.js)
   theme: 'knot-theme',        // thème choisi sur ce téléphone : 'clair', 'sombre' ou 'auto' (voir theme.js)
   // Avant l'étape 4, la partie restait sur le téléphone. Ces clés ne sont plus que lues une fois,
   // pour que la progression déjà faite rejoigne la partie du couple (puis elles sont effacées).

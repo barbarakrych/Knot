@@ -414,7 +414,8 @@ create table if not exists public.reponses (
 alter table public.reponses enable row level security;
 
 -- Où en sont les réponses de cette carte, vu de MON téléphone :
--- {"places": [1, 2], "moi": mon texte ou null, "autre": son texte, seulement si les deux ont répondu}.
+-- {"places": [1, 2], "moi": mon texte ou null, "autre": son texte, seulement si les deux ont répondu,
+--  "moi_le" / "autre_le": l'heure de chaque réponse (même règle)}.
 create or replace function public.lire_reponses(la_carte text, la_fois text) returns jsonb
 language plpgsql stable security definer set search_path = '' as $$
 declare
@@ -423,18 +424,22 @@ declare
   places jsonb;
   mien text;
   sien text;
+  mien_le timestamptz;
+  sien_le timestamptz;
 begin
   if auth.uid() is null then raise exception 'non_connecte'; end if;
   if le_couple is null then raise exception 'pas_de_couple'; end if;
   select coalesce(jsonb_agg(r.place order by r.place), '[]'::jsonb) into places
     from public.reponses r where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois;
-  select r.texte into mien from public.reponses r
+  select r.texte, r.ecrite_le into mien, mien_le from public.reponses r
     where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois and r.place = ma;
   if mien is not null then
-    select r.texte into sien from public.reponses r
+    select r.texte, r.ecrite_le into sien, sien_le from public.reponses r
       where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois and r.place <> ma;
   end if;
-  return jsonb_build_object('places', places, 'moi', mien, 'autre', sien);
+  -- moi_le / autre_le : l'heure de chaque réponse (affichée au verso de la carte)
+  return jsonb_build_object('places', places, 'moi', mien, 'autre', sien,
+    'moi_le', mien_le, 'autre_le', case when sien is not null then sien_le end);
 end $$;
 
 -- Prévient l'autre téléphone (outil interne) : un simple repère dans la partie, sans aucun texte.

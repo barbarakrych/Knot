@@ -8,7 +8,7 @@
    • Quand c'est prêt, l'app (js/mise-a-jour.js) choisit un moment calme, demande à la nouvelle version
      de prendre la place (message « installer »), puis se recharge une fois.
    • Sans réseau, rien ne change : l'app s'ouvre avec la dernière version gardée en réserve. */
-const VERSION = 'bf7c3bc65a8a';
+const VERSION = 'd4bc90f22171';
 const RESERVE = 'knot-' + VERSION;
 const RESERVE_POLICES = 'knot-polices'; // gardées d'une version à l'autre
 

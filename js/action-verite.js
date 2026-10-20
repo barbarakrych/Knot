@@ -24,6 +24,11 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   // Répondre chacun de son côté (reponses.js) : sous « Passer cette carte », pour garder les boutons habituels sous la carte
   const reponses = creerBlocReponses({ bouton: $('repondre') }); // « Répondre » sur la ligne de « Passer cette carte »
   $('skip').closest('.actions').after(reponses.element);
+  reponses.attacher($('card')); // la carte se retourne quand les deux ont répondu
+  // Au-dessus de la carte : la carte précédente, en petit, si vous y avez répondu tous les deux
+  const precedente = creerBlocReponses({ compact: true });
+  precedente.element.classList.add('precedente');
+  $('card').closest('.flip').before(precedente.element);
   // Le défi en cours a aussi ses réponses dans son encadré, quand une autre carte est affichée (sinon elles sont sous la carte) :
   // « Répondre » l'ouvre, et il s'ouvre tout seul dès que l'un de vous a répondu.
   let defiOuvert = false, defiAffiche = null;
@@ -158,6 +163,12 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     // La « fois » de la carte : l'heure où elle a été tirée. Retirée après un remélange, elle repart sans réponses.
     const fois = c => (S.drawn[c.id] && S.drawn[c.id].at) || 0;
     reponses.montrer(peutRepondre(cur) ? { carte: cur.id, fois: fois(cur) } : null);
+    // La carte précédente : la dernière tirée avant celle-ci (rien n'est montré tant que les deux n'y ont pas répondu)
+    const avant = Object.entries(S.drawn)
+      .filter(([id, v]) => v && id !== S.current && (!cur || (v.at || 0) < fois(cur)) && peutRepondre(cardById(id)))
+      .sort((a, b) => (b[1].at || 0) - (a[1].at || 0))[0];
+    const pc = avant && cardById(avant[0]);
+    precedente.montrer(pc ? { carte: pc.id, fois: fois(pc), texte: pc.text, titre: PILES[pc.pile].name } : null);
 
     const defi = cardById(S.defi);
     $('defi').hidden = !defi;

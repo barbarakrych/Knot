@@ -279,3 +279,30 @@ details.guide .rule{margin-top:10px}
 .anciennes{display:flex;flex-direction:column;gap:8px}
 .anciennes .anciennes-lien{align-self:flex-start;text-decoration:none;color:var(--blue)}
 .ancienne{display:flex;flex-direction:column;gap:6px;border:1px dashed var(--line);border-radius:12px;padding:10px}
+
+/* La carte qui se retourne (reponses.js) : recto = la question, verso = les deux réponses.
+   Les deux faces sont l'une sur l'autre (même case de grille) : la plus haute donne la hauteur, la carte grandit. */
+.flip{width:100%;max-width:340px;margin-inline:auto;display:flex;flex-direction:column;align-items:center;gap:6px;perspective:1400px}
+.flip-in{width:100%;display:grid;transform-style:preserve-3d;transition:transform .45s ease-out}
+.flip-in>.card{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-in>.card.verso{transform:rotateY(180deg)}
+.flip.retournee .flip-in{transform:rotateY(180deg)}
+.flip.revelee .flip-in{cursor:pointer}
+.card.verso .card-in{justify-content:center;text-align:left;gap:10px}
+.card.verso .kicker{align-self:center}
+.card.verso .reponse{align-self:stretch}
+.flip-label{min-height:44px;padding:0 14px;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.9rem;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer}
+.flip-icone{font-size:1.1rem;line-height:1}
+@media (prefers-reduced-motion: reduce){
+  .flip-in{transition:none}
+}
+
+/* La carte précédente, en petit au-dessus de la carte en attente (un appui la montre en entier) */
+.precedente{max-width:340px;gap:0}
+.precedente-in{font:inherit;text-align:left;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;width:100%}
+.precedente-in .kicker{padding:0}
+.precedente-q{font-family:var(--f-card);font-size:.95rem;color:var(--muted)}
+.precedente-in .reponse{border:none;padding:0;background:none}
+.precedente-in .reponse-texte{font-size:.95rem}
+.precedente:not(.deplie) .precedente-q,.precedente:not(.deplie) .reponse-texte{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}
+.precedente-plus{font-size:.8rem;font-weight:600;color:var(--blue);align-self:flex-end}

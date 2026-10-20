@@ -142,6 +142,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       tw.append(clock, boutons); inn.append(tw);
     }
     card.append(inn); root.append(card);
+    reponses.attacher(card); // la carte se retourne quand les deux ont répondu
 
     const row = el('div', 'actions pnav');
     const prev = el('button', 'btn', 'Précédente'); prev.type = 'button'; prev.disabled = d.i === 0;
