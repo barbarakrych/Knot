@@ -121,14 +121,6 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       <div class="disttxt"><span id="distlabel">À distance</span></div>
       <button class="switch" id="distsw" type="button" role="switch" aria-checked="true" aria-labelledby="distlabel"><span></span></button>
     </section>
-    <!-- Thème : un seul bouton, qui passe au mode suivant à chaque appui (icône et libellé posés par reglages.js) -->
-    <section class="reglage theme">
-      <div class="reglage-ligne">
-        <span class="reglage-titre" aria-hidden="true">Thème</span>
-        <button class="theme-bouton" id="themebtn" type="button"></button>
-      </div>
-      <p class="muted" id="themeauto" hidden>Auto suit le thème du téléphone, même s’il change.</p>
-    </section>
     <!-- Notifications : propres à ce téléphone (voir notifications.js) -->
     <section class="reglage theme" id="reglage-notifs" hidden>
       <div class="reglage-ligne">
@@ -136,6 +128,14 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
         <button class="switch" id="notifsw" type="button" role="switch" aria-checked="false" aria-labelledby="notiflabel"><span></span></button>
       </div>
       <p class="muted" id="notifaide" hidden></p>
+    </section>
+    <!-- Thème : un seul bouton, qui passe au mode suivant à chaque appui (icône et libellé posés par reglages.js) -->
+    <section class="reglage theme">
+      <div class="reglage-ligne">
+        <span class="reglage-titre" aria-hidden="true">Thème</span>
+        <button class="theme-bouton" id="themebtn" type="button"></button>
+      </div>
+      <p class="muted" id="themeauto" hidden>Auto suit le thème du téléphone, même s’il change.</p>
     </section>
     <section class="reglage" id="reglage-couple">
       <h3>Notre couple</h3>
