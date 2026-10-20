@@ -396,6 +396,102 @@ begin
     'maintenant', floor(extract(epoch from clock_timestamp()) * 1000));
 end $$;
 
+-- ───────────── Étape 6 : répondre chacun de son côté ─────────────
+-- Chacun écrit sa réponse à la carte affichée ; on ne voit celle de l'autre qu'une fois qu'on a répondu tous les deux.
+-- Les textes ne sont PAS dans la partie (que les deux téléphones lisent en entier) : ils sont dans cette table,
+-- que personne ne peut lire directement (aucun droit, aucune règle RLS). Seules les fonctions ci-dessous y touchent.
+-- « fois » : une sortie de la carte (l'heure du tirage, ou le début du paquet). Une carte qui ressort après un remélange
+-- repart avec des réponses vides ; les anciennes restent (pour un futur historique), jusqu'à ce que le couple les efface.
+create table if not exists public.reponses (
+  couple_id uuid not null references public.couples(id) on delete cascade,
+  carte text not null check (char_length(carte) between 1 and 80),
+  fois text not null check (char_length(fois) between 1 and 40),
+  place smallint not null check (place in (1, 2)),
+  texte text not null check (char_length(texte) between 1 and 1000),
+  ecrite_le timestamptz not null default now(),
+  primary key (couple_id, carte, fois, place)
+);
+alter table public.reponses enable row level security;
+
+-- Où en sont les réponses de cette carte, vu de MON téléphone :
+-- {"places": [1, 2], "moi": mon texte ou null, "autre": son texte, seulement si les deux ont répondu}.
+create or replace function public.lire_reponses(la_carte text, la_fois text) returns jsonb
+language plpgsql stable security definer set search_path = '' as $$
+declare
+  le_couple uuid := public.mon_couple_id();
+  ma smallint := public.ma_place();
+  places jsonb;
+  mien text;
+  sien text;
+begin
+  if auth.uid() is null then raise exception 'non_connecte'; end if;
+  if le_couple is null then raise exception 'pas_de_couple'; end if;
+  select coalesce(jsonb_agg(r.place order by r.place), '[]'::jsonb) into places
+    from public.reponses r where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois;
+  select r.texte into mien from public.reponses r
+    where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois and r.place = ma;
+  if mien is not null then
+    select r.texte into sien from public.reponses r
+      where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois and r.place <> ma;
+  end if;
+  return jsonb_build_object('places', places, 'moi', mien, 'autre', sien);
+end $$;
+
+-- Prévient l'autre téléphone (outil interne) : un simple repère dans la partie, sans aucun texte.
+-- Changer la partie déclenche le temps réel déjà en place ; l'autre téléphone relit alors lire_reponses().
+create or replace function public.signaler_reponses(le_couple uuid, la_carte text, la_fois text) returns void
+language sql volatile security definer set search_path = '' as $$
+  update public.parties set
+    etat = jsonb_set(etat, '{reponses}', jsonb_build_object('carte', la_carte, 'fois', la_fois,
+      'n', coalesce((etat->'reponses'->>'n')::bigint, 0) + 1)),
+    version = version + 1, modifiee_le = now()
+  where couple_id = le_couple
+$$;
+
+-- Écrire (ou corriger) ma réponse. Une fois que les deux ont répondu, on ne la change plus.
+create or replace function public.repondre(la_carte text, la_fois text, mon_texte text) returns jsonb
+language plpgsql volatile security definer set search_path = '' as $$
+declare
+  le_couple uuid := public.mon_couple_id();
+  ma smallint := public.ma_place();
+  t text := btrim(coalesce(mon_texte, ''));
+begin
+  if auth.uid() is null then raise exception 'non_connecte'; end if;
+  if le_couple is null then raise exception 'pas_de_couple'; end if;
+  if char_length(t) not between 1 and 1000 or coalesce(char_length(la_carte), 0) not between 1 and 80
+     or coalesce(char_length(la_fois), 0) not between 1 and 40 then
+    raise exception 'reponse_invalide';
+  end if;
+  if (select count(*) from public.reponses r
+      where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois) >= 2 then
+    raise exception 'deja_revele';
+  end if;
+  insert into public.reponses (couple_id, carte, fois, place, texte) values (le_couple, la_carte, la_fois, ma, t)
+    on conflict (couple_id, carte, fois, place) do update set texte = excluded.texte, ecrite_le = now();
+  perform public.signaler_reponses(le_couple, la_carte, la_fois);
+  return public.lire_reponses(la_carte, la_fois);
+end $$;
+
+-- Effacer les réponses de cette carte (les deux), chez les deux.
+create or replace function public.effacer_reponses(la_carte text, la_fois text) returns jsonb
+language plpgsql volatile security definer set search_path = '' as $$
+declare
+  le_couple uuid := public.mon_couple_id();
+begin
+  if auth.uid() is null then raise exception 'non_connecte'; end if;
+  if le_couple is null then raise exception 'pas_de_couple'; end if;
+  delete from public.reponses r where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois;
+  perform public.signaler_reponses(le_couple, la_carte, la_fois);
+  return public.lire_reponses(la_carte, la_fois);
+end $$;
+
+revoke all on public.reponses from anon, authenticated;
+revoke all on function public.signaler_reponses(uuid, text, text) from public, anon, authenticated;
+revoke all on function public.lire_reponses(text, text), public.repondre(text, text, text),
+  public.effacer_reponses(text, text) from public, anon;
+grant execute on function public.lire_reponses(text, text), public.repondre(text, text, text),
+  public.effacer_reponses(text, text) to authenticated;
+
 -- Temps réel : Supabase prévient les téléphones dès qu'une partie change (seulement ceux qui ont le droit de la voir).
 do $$
 begin

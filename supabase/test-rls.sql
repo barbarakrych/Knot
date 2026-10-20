@@ -217,6 +217,48 @@ begin
     r := r || (case when rep->'etat'->'perso' ? 'perso-a1' then '✅' else '❌' end
                || ' Le nouveau téléphone de B ne peut toujours pas supprimer la carte de A');
 
+    -- Étape 6 : réponses. E (téléphone de B) répond en premier à la carte v1
+    rep := public.repondre('v1', '100', 'Réponse de B');
+    r := r || (case when rep->>'moi' = 'Réponse de B' and rep->'autre' = 'null'::jsonb then '✅' else '❌' end
+               || ' B voit sa réponse, pas encore celle de A');
+    begin
+      select count(*) into nb from public.reponses;
+      r := r || '❌ Un téléphone peut lire la table des réponses directement'::text;
+    exception when others then
+      r := r || '✅ Personne ne peut lire la table des réponses directement'::text;
+    end;
+    select count(*) into nb from public.parties where position('Réponse de B' in etat::text) > 0;
+    r := r || (case when nb = 0 then '✅' else '❌' end || ' Le texte des réponses n''est jamais dans la partie');
+
+    -- A n'a pas répondu : il sait que B a répondu, sans voir le texte
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.lire_reponses('v1', '100');
+    r := r || (case when rep->'places' = '[2]'::jsonb and rep->'autre' = 'null'::jsonb then '✅' else '❌' end
+               || ' A voit que B a répondu, sans voir sa réponse');
+    rep := public.repondre('v1', '100', 'Réponse de A');
+    r := r || (case when rep->>'autre' = 'Réponse de B' then '✅' else '❌' end
+               || ' Une fois les deux réponses écrites, A voit celle de B');
+    begin
+      rep := public.repondre('v1', '100', 'A change d''avis');
+      r := r || '❌ On peut changer sa réponse après avoir vu celle de l''autre'::text;
+    exception when others then
+      r := r || '✅ On ne change plus sa réponse après avoir vu celle de l''autre'::text;
+    end;
+    rep := public.lire_reponses('v1', '200');
+    r := r || (case when rep->'places' = '[]'::jsonb then '✅' else '❌' end
+               || ' La même carte tirée une autre fois repart sans réponses');
+
+    -- C (autre couple) ne voit rien des réponses du couple 1
+    perform set_config('request.jwt.claims', json_build_object('sub', c, 'role', 'authenticated')::text, true);
+    rep := public.repondre('v1', '100', 'Réponse de C');
+    r := r || (case when rep->'autre' = 'null'::jsonb and rep->'places' = '[1]'::jsonb then '✅' else '❌' end
+               || ' Un autre couple ne voit jamais les réponses du couple 1');
+
+    -- A efface les réponses de la carte
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.effacer_reponses('v1', '100');
+    r := r || (case when rep->'places' = '[]'::jsonb then '✅' else '❌' end || ' A peut effacer vos réponses à une carte');
+
     -- L'ancien téléphone de B est détaché
     perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
     select count(*) into nb from public.couples;

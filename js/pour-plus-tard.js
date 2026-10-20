@@ -2,6 +2,7 @@
 import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer, iconeMinuteur, etatMinuteur, ordreMinuteur } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 import { etat, agir, ecouter, maintenant } from './partie.js';
+import { creerBlocReponses } from './reponses.js';
 
 const GUIDE = [
   'Celui qui parle parle de lui, avec des « je », en phrases courtes.',
@@ -20,7 +21,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
   let visible = false;
   let afficherMinuteur = null; // met à jour le minuteur de la carte affichée, s'il y en a un
 
-  function kSave(id, d) { agir([{ set: ['paquets', id], valeur: { i: d.i, max: d.max } }]); }
+  // t : quand le paquet a été commencé (la « fois » des réponses : recommencé, il repart sans réponses)
+  function kSave(id, d) { agir([{ set: ['paquets', id], valeur: d.t ? { i: d.i, max: d.max, t: d.t } : { i: d.i, max: d.max } }]); }
+  const reponses = creerBlocReponses(); // répondre chacun de son côté, sous la carte (reponses.js)
   function kGet(id) { return { ...(K[id] || { i: -1, max: -1 }) }; }
   function setOpen(id) { open = id; ecrire(CLES.ecran, { ...lire(CLES.ecran, {}), open: id }); }
 
@@ -34,14 +37,16 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
   }
 
   function render() {
-    if (!visible) return;
+    if (!visible) { reponses.montrer(null); return; }
     afficherMinuteur = null;
+    reponses.element.remove(); // remis sous la carte par renderPaquet (le même bloc : un texte en cours reste)
     const root = $('view-topics'); root.textContent = '';
     if (open) {
       const pq = PAQUETS.find(x => x.id === open);
       if (pq) { renderPaquet(root, pq); return; }
       setOpen(null);
     }
+    reponses.montrer(null);
 
     const intro = el('div', 'panel');
     intro.append(
@@ -88,8 +93,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
     if (d.i < 0) {
       const go = el('button', 'btn primary wide', 'Commencer le paquet'); go.type = 'button';
-      go.onclick = () => { d.i = 0; d.max = Math.max(d.max, 0); kSave(pq.id, d); render(); };
+      go.onclick = () => { d.i = 0; d.max = Math.max(d.max, 0); d.t = Date.now(); kSave(pq.id, d); render(); };
       root.append(go);
+      reponses.montrer(null);
       return;
     }
 
@@ -133,7 +139,8 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       boutons.append(tb, tr);
       tw.append(clock, boutons); inn.append(tw);
     }
-    card.append(inn); root.append(card);
+    card.append(inn); root.append(card, reponses.element);
+    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: d.t || 0 });
 
     const row = el('div', 'actions pnav');
     const prev = el('button', 'btn', 'Précédente'); prev.type = 'button'; prev.disabled = d.i === 0;

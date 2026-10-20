@@ -6,6 +6,7 @@ import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur, etatMinuteur
 import { coupleLocal } from './couple.js';
 import { etat, agir, ecouter, maintenant } from './partie.js';
 import { sonnerALaFinDuMinuteur } from './son.js';
+import { creerBlocReponses } from './reponses.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
 const PILE_IDS = Object.keys(PILES);
@@ -19,6 +20,9 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   const S = { drawn: {}, custom: {}, current: null, defi: null, confirming: null };
   let noteTimer = null, confirmDel = null, editing = null;
   let DIST = true, MINUTEUR = null;
+  // Répondre chacun de son côté, sous la carte (reponses.js)
+  const reponses = creerBlocReponses();
+  $('card').after(reponses.element);
 
   function charger() {
     const e = etat();
@@ -135,6 +139,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       meta.hidden = true;
     }
     renderTimer();
+    // La « fois » de la carte : l'heure où elle a été tirée. Retirée après un remélange, elle repart sans réponses.
+    reponses.montrer(cur ? { carte: cur.id, fois: (S.drawn[cur.id] && S.drawn[cur.id].at) || 0 } : null);
 
     const defi = cardById(S.defi);
     $('defi').hidden = !defi;

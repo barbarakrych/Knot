@@ -256,3 +256,13 @@ details.guide .rule{margin-top:10px}
 .theme-bouton{flex-shrink:0;width:44px;height:44px;border-radius:50%;padding:0;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;display:grid;place-items:center}
 .theme-bouton svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .reglage.ligne{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px 10px 16px}
+
+/* Répondre chacun de son côté (reponses.js) : sous la carte, même largeur qu'elle */
+.reponses{width:100%;max-width:340px;margin-inline:auto;box-sizing:border-box;display:flex;flex-direction:column;gap:10px}
+.reponses p{margin:0}
+.reponses .muted{font-size:.88rem;text-align:center}
+.reponses .link{align-self:center}
+.reponses-titre{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.reponse{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.reponse-nom{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);margin-bottom:4px!important}
+.reponse-texte{font-family:var(--f-card);font-size:1.05rem;line-height:1.4;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
