@@ -329,7 +329,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
           const br = el('div', 'bigrow');
           br.append(bl, el('span', 'muted', 'À organiser ou à faire dans les jours qui viennent. Un seul défi à la fois.'));
           rep = el('input'); rep.type = 'checkbox'; rep.checked = !!c.rep;
-          const rl = el('label'); rl.append(rep, document.createTextNode(' On peut y répondre dans l’app'));
+          const rl = el('label'); rl.append(rep, document.createTextNode(' Ajouter le bouton « Répondre »'));
           br.append(rl);
           wrap.append(br);
         }
