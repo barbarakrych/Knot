@@ -23,6 +23,17 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   // Répondre chacun de son côté, sous la carte (reponses.js)
   const reponses = creerBlocReponses();
   $('card').after(reponses.element);
+  // Le défi en cours a aussi ses réponses, dans son encadré : « Répondre » l'ouvre, et il s'ouvre tout seul
+  // dès que l'un de vous a répondu.
+  let defiOuvert = false, defiAffiche = null;
+  const reponsesDefi = creerBlocReponses(r => { if (r && r.places && r.places.length && !defiOuvert) { defiOuvert = true; renderDefiReponses(); } });
+  $('defireponses').append(reponsesDefi.element);
+  function renderDefiReponses() {
+    $('defireponses').hidden = !defiOuvert;
+    $('defirep').hidden = defiOuvert;
+    $('defirep').setAttribute('aria-expanded', String(defiOuvert));
+  }
+  $('defirep').onclick = () => { defiOuvert = true; renderDefiReponses(); reponsesDefi.ouvrir(); };
 
   function charger() {
     const e = etat();
@@ -140,11 +151,16 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     }
     renderTimer();
     // La « fois » de la carte : l'heure où elle a été tirée. Retirée après un remélange, elle repart sans réponses.
-    reponses.montrer(cur ? { carte: cur.id, fois: (S.drawn[cur.id] && S.drawn[cur.id].at) || 0 } : null);
+    // Le défi en cours a ses réponses dans son encadré : pas de second bloc sous la carte pour lui
+    const fois = c => (S.drawn[c.id] && S.drawn[c.id].at) || 0;
+    reponses.montrer(cur && cur.id !== S.defi ? { carte: cur.id, fois: fois(cur) } : null);
 
     const defi = cardById(S.defi);
     $('defi').hidden = !defi;
     if (defi) $('defitext').textContent = defi.text;
+    if ((defi && defi.id) !== defiAffiche) { defiAffiche = defi ? defi.id : null; defiOuvert = false; } // nouveau défi : encadré refermé
+    renderDefiReponses();
+    reponsesDefi.montrer(defi ? { carte: defi.id, fois: fois(defi) } : null);
 
     $('skip').disabled = !cur;
 

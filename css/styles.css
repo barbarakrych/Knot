@@ -266,3 +266,7 @@ details.guide .rule{margin-top:10px}
 .reponse{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .reponse-nom{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);margin-bottom:4px!important}
 .reponse-texte{font-family:var(--f-card);font-size:1.05rem;line-height:1.4;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+/* Défi en cours : « Répondre » à gauche de « C'est fait ! », et les réponses dans l'encadré */
+.defi-boutons{display:flex;gap:8px;flex-wrap:wrap}
+.defi-reponses{align-self:stretch}
+.defi-reponses .reponses{max-width:none}

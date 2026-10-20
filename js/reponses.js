@@ -43,7 +43,8 @@ async function appeler(fonction, params) {
 }
 
 // Crée le bloc (à placer une fois dans la page). montrer({ carte, fois }) le règle sur une carte, montrer(null) le cache.
-export function creerBlocReponses() {
+// quandRecu(r) : appelée chaque fois que les réponses de la carte sont relues (ex. ouvrir l'encadré du défi si quelqu'un a répondu).
+export function creerBlocReponses(quandRecu = () => {}) {
   const racine = el('section', 'reponses');
   racine.hidden = true;
   let cle = null;          // { carte, fois } de la carte affichée
@@ -64,7 +65,7 @@ export function creerBlocReponses() {
   async function relire() {
     if (!cle) return;
     const n = ++demande, c = cle;
-    if (estDemo()) { r = lireDemo(c); dessiner(); return; }
+    if (estDemo()) { r = lireDemo(c); dessiner(); quandRecu(r); return; }
     try {
       const data = await appeler('lire_reponses', { la_carte: c.carte, la_fois: c.fois });
       if (n !== demande) return;
@@ -74,6 +75,7 @@ export function creerBlocReponses() {
       console.info('Réponses non lues (hors ligne ?) :', e.message || e);
     }
     dessiner();
+    quandRecu(r);
   }
 
   function lireDemo(c) {
@@ -191,7 +193,9 @@ export function creerBlocReponses() {
       dessiner();
       relire();
     },
-    relire
+    relire,
+    // Ouvre tout de suite la zone de texte (si je n'ai pas encore répondu)
+    ouvrir() { if (cle && !(r && r.moi)) { ecrire = true; erreur = ''; dessiner(); } }
   };
   blocs.add(bloc);
   return bloc;
