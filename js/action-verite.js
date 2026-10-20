@@ -7,6 +7,7 @@ import { coupleLocal } from './couple.js';
 import { etat, agir, ecouter, maintenant } from './partie.js';
 import { sonnerALaFinDuMinuteur } from './son.js';
 import { creerBlocReponses } from './reponses.js';
+import { prevenir } from './notifications.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
 const PILE_IDS = Object.keys(PILES);
@@ -221,6 +222,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (!p.length) return;
     balayer($('card'), undefined, 'droite'); // l'ancienne carte part vers la droite, la nouvelle est dessous
     agir(ordresTirer(auHasard(p)));
+    prevenir('tirage'); // notification chez l'autre (ignorée si la carte précédente a été tirée il y a moins de 30 secondes, voir notifier)
   }
   // Passer (toujours possible) : on tire une autre carte, et celle passée retourne dans la pile.
   // S'il n'y a pas d'autre carte, elle retourne quand même dans la pile et on revient à « Prêts ? ».

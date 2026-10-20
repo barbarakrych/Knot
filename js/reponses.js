@@ -15,6 +15,7 @@ import { el } from './commun.js';
 import { coupleLocal, obtenirClient } from './couple.js';
 import { ecouter } from './partie.js';
 import { estDemo } from './demo.js';
+import { prevenir } from './notifications.js';
 
 const MAX = 1000;
 const MESSAGES = {
@@ -149,6 +150,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     envoi = true; dessiner();
     try {
       const data = await appeler('repondre', { la_carte: c.carte, la_fois: c.fois, mon_texte: texte });
+      prevenir('reponse'); // notification chez l'autre (s'il les a activées)
       if (memeCle(cle, c)) { r = data; ecrire = false; brouillon = ''; erreur = ''; }
       if (memeCle(cle, c) && r && r.moi && r.autre && anciennes === null) lireAnciennes(c, demande);
     } catch (e) {

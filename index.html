@@ -129,6 +129,14 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       </div>
       <p class="muted" id="themeauto" hidden>Auto suit le thème du téléphone, même s’il change.</p>
     </section>
+    <!-- Notifications : propres à ce téléphone (voir notifications.js) -->
+    <section class="reglage theme" id="reglage-notifs" hidden>
+      <div class="reglage-ligne">
+        <span class="reglage-titre" id="notiflabel">Notifications</span>
+        <button class="switch" id="notifsw" type="button" role="switch" aria-checked="false" aria-labelledby="notiflabel"><span></span></button>
+      </div>
+      <p class="muted" id="notifaide" hidden></p>
+    </section>
     <section class="reglage" id="reglage-couple">
       <h3>Notre couple</h3>
       <div class="reglage-corps" id="reglage-couple-contenu"></div>

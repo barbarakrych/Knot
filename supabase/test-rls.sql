@@ -269,6 +269,16 @@ begin
     r := r || (case when rep = '[]'::jsonb then '✅' else '❌' end
                || ' Un autre couple ne voit jamais les anciennes réponses du couple 1');
 
+    -- Étape 7 : notifications. C s'abonne, mais personne ne peut lire les abonnements directement
+    perform public.s_abonner('https://exemple.test/abonnement-c', 'cle-p256dh-de-test', 'cle-auth-test');
+    begin
+      select count(*) into nb from public.abonnements;
+      r := r || '❌ Un téléphone peut lire les abonnements aux notifications'::text;
+    exception when others then
+      r := r || '✅ Personne ne peut lire les abonnements aux notifications'::text;
+    end;
+    r := r || (case when public.se_desabonner() then '✅' else '❌' end || ' Un téléphone peut couper ses notifications');
+
     -- A efface les réponses de la carte
     perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
     rep := public.effacer_reponses('v1', '100');

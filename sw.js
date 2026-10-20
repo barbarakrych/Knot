@@ -8,7 +8,7 @@
    • Quand c'est prêt, l'app (js/mise-a-jour.js) choisit un moment calme, demande à la nouvelle version
      de prendre la place (message « installer »), puis se recharge une fois.
    • Sans réseau, rien ne change : l'app s'ouvre avec la dernière version gardée en réserve. */
-const VERSION = '72b75064b932';
+const VERSION = 'defbde254e70';
 const RESERVE = 'knot-' + VERSION;
 const RESERVE_POLICES = 'knot-polices'; // gardées d'une version à l'autre
 
@@ -17,7 +17,7 @@ const RESERVE_POLICES = 'knot-polices'; // gardées d'une version à l'autre
 const OSSATURE = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/app.js', 'js/commun.js', 'js/stockage.js', 'js/contenu.js', 'js/action-verite.js', 'js/pour-plus-tard.js',
-  'js/config.js', 'js/couple.js', 'js/partie.js', 'js/mise-a-jour.js', 'js/accueil.js', 'js/reglages.js', 'js/theme.js', 'js/son.js', 'js/demo.js', 'js/reponses.js',
+  'js/config.js', 'js/couple.js', 'js/partie.js', 'js/mise-a-jour.js', 'js/accueil.js', 'js/reglages.js', 'js/theme.js', 'js/son.js', 'js/demo.js', 'js/reponses.js', 'js/notifications.js',
   'js/vendor/supabase.js', 'sons/fin-minuteur.wav',
   'contenu/verites.json', 'contenu/actions.json', 'contenu/pour-plus-tard.json', 'contenu/sources.json', 'contenu/themes.json',
   'design/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png', 'icones/icone-maskable-512.png', 'icones/apple-touch-icon.png'
@@ -39,6 +39,23 @@ self.addEventListener('install', evenement => {
   evenement.waitUntil(
     caches.open(RESERVE).then(reserve => reserve.addAll(OSSATURE.map(f => new Request(f, { cache: 'reload' }))))
   );
+});
+
+// Notifications (étape 7) : la fonction en ligne « notifier » envoie { titre, texte, tag } ; on l'affiche.
+self.addEventListener('push', evenement => {
+  let m = {};
+  try { m = evenement.data ? evenement.data.json() : {}; } catch (e) {}
+  evenement.waitUntil(self.registration.showNotification(m.titre || 'Knot', {
+    body: m.texte || '', tag: m.tag || 'knot', icon: 'icones/icone-192.png', badge: 'icones/icone-192.png'
+  }));
+});
+// Un appui sur la notification ramène l'app (ou l'ouvre)
+self.addEventListener('notificationclick', evenement => {
+  evenement.notification.close();
+  evenement.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(fenetres => {
+    const f = fenetres.find(c => c.url.startsWith(self.registration.scope));
+    return f ? f.focus() : self.clients.openWindow(self.registration.scope);
+  }));
 });
 
 self.addEventListener('message', evenement => {

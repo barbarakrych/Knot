@@ -521,6 +521,57 @@ revoke all on function public.lire_reponses(text, text), public.repondre(text, t
 grant execute on function public.lire_reponses(text, text), public.repondre(text, text, text),
   public.effacer_reponses(text, text), public.anciennes_reponses(text, text) to authenticated;
 
+-- ───────────── Étape 7 : notifications ─────────────
+-- Chaque téléphone qui active les notifications donne une « adresse d'abonnement » (fournie par son navigateur).
+-- La fonction en ligne « notifier » (supabase/functions/notifier) l'utilise pour prévenir l'autre téléphone.
+-- Personne ne peut lire ces tables directement : seules les fonctions ci-dessous et « notifier » (côté serveur) y touchent.
+create table if not exists public.abonnements (
+  user_id uuid primary key references auth.users(id) on delete cascade,   -- un abonnement par téléphone
+  couple_id uuid not null references public.couples(id) on delete cascade,
+  place smallint not null check (place in (1, 2)),
+  endpoint text not null check (char_length(endpoint) between 10 and 1000),
+  p256dh text not null check (char_length(p256dh) between 10 and 200),
+  auth text not null check (char_length(auth) between 10 and 100),
+  cree_le timestamptz not null default now()
+);
+alter table public.abonnements enable row level security;
+
+-- Dernier envoi par type (pour les tirages : heure de la dernière carte tirée, notification envoyée ou non),
+-- pour ne pas en envoyer trop : un tirage moins de 30 secondes après le précédent ne prévient pas l'autre
+create table if not exists public.notifs_envoyees (
+  couple_id uuid not null references public.couples(id) on delete cascade,
+  type text not null check (type in ('reponse', 'tirage')),
+  le timestamptz not null default now(),
+  primary key (couple_id, type)
+);
+alter table public.notifs_envoyees enable row level security;
+
+-- Activer les notifications sur ce téléphone (ou mettre à jour son adresse)
+create or replace function public.s_abonner(adresse text, cle_p256dh text, cle_auth text) returns boolean
+language plpgsql volatile security definer set search_path = '' as $$
+declare
+  le_couple uuid := public.mon_couple_id();
+begin
+  if auth.uid() is null then raise exception 'non_connecte'; end if;
+  if le_couple is null then raise exception 'pas_de_couple'; end if;
+  insert into public.abonnements (user_id, couple_id, place, endpoint, p256dh, auth)
+    values (auth.uid(), le_couple, public.ma_place(), adresse, cle_p256dh, cle_auth)
+    on conflict (user_id) do update set couple_id = excluded.couple_id, place = excluded.place,
+      endpoint = excluded.endpoint, p256dh = excluded.p256dh, auth = excluded.auth, cree_le = now();
+  return true;
+end $$;
+
+-- Couper les notifications sur ce téléphone
+create or replace function public.se_desabonner() returns boolean
+language sql volatile security definer set search_path = '' as $$
+  delete from public.abonnements where user_id = auth.uid();
+  select true
+$$;
+
+revoke all on public.abonnements, public.notifs_envoyees from anon, authenticated;
+revoke all on function public.s_abonner(text, text, text), public.se_desabonner() from public, anon;
+grant execute on function public.s_abonner(text, text, text), public.se_desabonner() to authenticated;
+
 -- Temps réel : Supabase prévient les téléphones dès qu'une partie change (seulement ceux qui ont le droit de la voir).
 do $$
 begin

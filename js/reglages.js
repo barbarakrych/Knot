@@ -7,6 +7,7 @@ import { actualiser, demanderCodeRelier, messageErreur } from './couple.js';
 import { etat, agir, ecouter } from './partie.js';
 import { themeChoisi, themeSuivant, choisirTheme } from './theme.js';
 import { estDemo } from './demo.js';
+import * as notifs from './notifications.js';
 
 // Icônes du bouton Thème, en trait simple comme l'engrenage (pas de caractère : l'iPhone en ferait des émojis)
 const ICONES_THEME = {
@@ -46,6 +47,33 @@ export function preparerReglages(detache) {
   }
   $('themebtn').onclick = () => { choisirTheme(themeSuivant()); afficherTheme(); };
   afficherTheme();
+
+  // Notifications : propres à ce téléphone. Activer demande l'autorisation au téléphone.
+  const AIDES_NOTIFS = {
+    // Pour tous les téléphones qui ne peuvent pas les recevoir (le cas le plus courant : un iPhone)
+    non: 'Ce téléphone ne peut pas recevoir les notifications de Knot. Sur iPhone, il faut iOS 16.4 ou plus et ouvrir Knot depuis l’icône de l’écran d’accueil.',
+    refuse: 'Les notifications sont bloquées pour Knot. Autorise-les dans les réglages du téléphone, puis réessaie.',
+    erreur: 'Les notifications n’ont pas pu être activées. Vérifie ta connexion et réessaie.'
+  };
+  function aideNotifs(code) { $('notifaide').textContent = AIDES_NOTIFS[code] || ''; $('notifaide').hidden = !AIDES_NOTIFS[code]; }
+  async function afficherNotifs() {
+    const p = notifs.possible();
+    $('reglage-notifs').hidden = estDemo() || p === 'pas_configure';
+    $('notifsw').hidden = p !== 'oui';
+    aideNotifs(p === 'oui' ? (window.Notification && Notification.permission === 'denied' ? 'refuse' : '') : p);
+    if (p === 'oui') $('notifsw').setAttribute('aria-checked', String(await notifs.actives()));
+  }
+  $('notifsw').onclick = async () => {
+    const b = $('notifsw');
+    b.disabled = true;
+    if (b.getAttribute('aria-checked') === 'true') { await notifs.desactiver(); b.setAttribute('aria-checked', 'false'); aideNotifs(''); }
+    else {
+      const r = await notifs.activer();
+      b.setAttribute('aria-checked', String(r === true));
+      aideNotifs(r === true ? '' : r);
+    }
+    b.disabled = false;
+  };
 
   // Code bien visible + bouton Copier + petite phrase d'aide
   function blocCode(etiquette, code, aide) {
@@ -98,6 +126,7 @@ export function preparerReglages(detache) {
     // En démo : pas de bloc « Notre couple » (pas de couple, pas de Supabase).
     ouvrir(c) {
       ouvert = true;
+      afficherNotifs();
       $('reglage-couple').hidden = estDemo();
       if (estDemo()) return;
       rendre(c);
