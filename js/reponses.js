@@ -43,8 +43,10 @@ async function appeler(fonction, params) {
 }
 
 // Crée le bloc (à placer une fois dans la page). montrer({ carte, fois }) le règle sur une carte, montrer(null) le cache.
-// quandRecu(r) : appelée chaque fois que les réponses de la carte sont relues (ex. ouvrir l'encadré du défi si quelqu'un a répondu).
-export function creerBlocReponses(quandRecu = () => {}) {
+// Options : quandRecu(r), appelée chaque fois que les réponses de la carte sont relues (ex. ouvrir l'encadré du défi
+// si quelqu'un a répondu) ; bouton, un bouton « Répondre » placé ailleurs (ex. à côté de « Passer cette carte »),
+// que le bloc montre seulement quand il sert, à la place du sien.
+export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne = null } = {}) {
   const racine = el('section', 'reponses');
   racine.hidden = true;
   let cle = null;          // { carte, fois } de la carte affichée
@@ -124,6 +126,7 @@ export function creerBlocReponses(quandRecu = () => {}) {
     const c = couple();
     // Il faut être deux : rien tant que l'autre n'a pas rejoint le couple (sauf en démo)
     racine.hidden = !cle || !c || (!c.complet && !estDemo());
+    if (boutonExterne) boutonExterne.hidden = true; // montré plus bas, seulement s'il sert
     if (racine.hidden) return;
 
     const places = (r && r.places) || [];
@@ -163,6 +166,10 @@ export function creerBlocReponses(quandRecu = () => {}) {
     } else if (jAiRepondu) {
       racine.append(el('p', 'muted', 'Ta réponse est envoyée · en attente de ' + autre()), bulle(moi(), r.moi));
       racine.append(bouton('link', 'Modifier ma réponse', () => { ecrire = true; brouillon = r.moi; erreur = ''; dessiner(); }));
+    } else if (boutonExterne) {
+      // Le bouton « Répondre » est ailleurs : ici, seulement si l'autre a déjà répondu
+      boutonExterne.hidden = false;
+      if (autreARepondu) racine.append(el('p', 'muted', autre() + ' a répondu · à toi'));
     } else {
       racine.append(bouton('btn wide', 'Répondre', () => { ecrire = true; erreur = ''; dessiner(); }));
       racine.append(el('p', 'muted', autreARepondu
@@ -170,7 +177,10 @@ export function creerBlocReponses(quandRecu = () => {}) {
         : 'Chacun écrit sa réponse ; vous les découvrez ensemble.'));
     }
     if (erreur) racine.append(el('p', 'note', erreur));
+    racine.hidden = !racine.childNodes.length; // rien à montrer (le bouton est ailleurs)
   }
+
+  if (boutonExterne) boutonExterne.onclick = () => { ecrire = true; erreur = ''; dessiner(); };
 
   const bloc = {
     element: racine,

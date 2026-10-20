@@ -21,12 +21,12 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   let noteTimer = null, confirmDel = null, editing = null;
   let DIST = true, MINUTEUR = null;
   // Répondre chacun de son côté (reponses.js) : sous « Passer cette carte », pour garder les boutons habituels sous la carte
-  const reponses = creerBlocReponses();
+  const reponses = creerBlocReponses({ bouton: $('repondre') }); // « Répondre » sur la ligne de « Passer cette carte »
   $('skip').closest('.actions').after(reponses.element);
   // Le défi en cours a aussi ses réponses dans son encadré, quand une autre carte est affichée (sinon elles sont sous la carte) :
   // « Répondre » l'ouvre, et il s'ouvre tout seul dès que l'un de vous a répondu.
   let defiOuvert = false, defiAffiche = null;
-  const reponsesDefi = creerBlocReponses(r => { if (r && r.places && r.places.length && !defiOuvert) { defiOuvert = true; renderDefiReponses(); } });
+  const reponsesDefi = creerBlocReponses({ quandRecu: r => { if (r && r.places && r.places.length && !defiOuvert) { defiOuvert = true; renderDefiReponses(); } } });
   $('defireponses').append(reponsesDefi.element);
   function renderDefiReponses() {
     const sousLaCarte = !!S.current && S.current === S.defi;
