@@ -56,7 +56,9 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
   let erreur = '';
   let envoi = false;
   let demande = 0;         // pour ignorer une réponse de la base arrivée après un changement de carte
-  let saisie = { ta: el('textarea') }; // éléments de la zone de saisie ouverte (voir dessiner)
+  let saisie = { ta: el('textarea') };
+  let anciennes = null;    // « La dernière fois » : [{ date, moi, autre }] des fois précédentes, ou null tant qu'on ne sait pas
+  let anciennesOuvert = false; // éléments de la zone de saisie ouverte (voir dessiner)
 
   const memeCle = (a, b) => !!a && !!b && a.carte === b.carte && a.fois === b.fois;
   const couple = () => coupleLocal();
@@ -78,6 +80,48 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     }
     dessiner();
     quandRecu(r);
+    if (r && r.moi && r.autre && anciennes === null) lireAnciennes(c, n);
+  }
+
+  // Les réponses des fois précédentes où cette carte était sortie (seulement une fois qu'on a répondu tous les deux)
+  async function lireAnciennes(c, n) {
+    if (estDemo()) return;
+    anciennes = [];
+    try {
+      const data = await appeler('anciennes_reponses', { la_carte: c.carte, la_fois: c.fois });
+      if (n !== demande || !memeCle(cle, c)) return;
+      anciennes = Array.isArray(data) ? data : [];
+    } catch (e) {
+      anciennes = null; // on réessaiera à la prochaine relecture
+      return;
+    }
+    dessiner();
+  }
+
+  // 12 oct. (avec l'année si ce n'est pas l'année en cours)
+  function jour(d) {
+    const t = new Date(d);
+    if (isNaN(t)) return '';
+    const o = { day: 'numeric', month: 'short' };
+    if (t.getFullYear() !== new Date().getFullYear()) o.year = 'numeric';
+    return t.toLocaleDateString('fr-FR', o);
+  }
+
+  function blocAnciennes() {
+    const z = el('div', 'anciennes');
+    const titre = anciennes.length === 1 ? 'La dernière fois · ' + jour(anciennes[0].date) : 'Les fois précédentes (' + anciennes.length + ')';
+    const b = bouton('link anciennes-lien', (anciennesOuvert ? '▾ ' : '▸ ') + titre, () => { anciennesOuvert = !anciennesOuvert; dessiner(); });
+    b.setAttribute('aria-expanded', String(anciennesOuvert));
+    z.append(b);
+    if (anciennesOuvert) {
+      anciennes.forEach(f => {
+        const fois = el('div', 'ancienne');
+        if (anciennes.length > 1) fois.append(el('p', 'reponses-titre', jour(f.date)));
+        fois.append(bulle(autre(), f.autre || ''), bulle(moi(), f.moi || ''));
+        z.append(fois);
+      });
+    }
+    return z;
   }
 
   function lireDemo(c) {
@@ -106,6 +150,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     try {
       const data = await appeler('repondre', { la_carte: c.carte, la_fois: c.fois, mon_texte: texte });
       if (memeCle(cle, c)) { r = data; ecrire = false; brouillon = ''; erreur = ''; }
+      if (memeCle(cle, c) && r && r.moi && r.autre && anciennes === null) lireAnciennes(c, demande);
     } catch (e) {
       const code = String((e && e.message) || '');
       erreur = MESSAGES[code] || MESSAGES.hors_ligne;
@@ -147,6 +192,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       ecrire = false;
       // Les deux ont répondu : l'autre d'abord, comme partout dans l'app
       racine.append(el('p', 'reponses-titre', 'Vos réponses'), bulle(autre(), r.autre), bulle(moi(), r.moi));
+      if (anciennes && anciennes.length) racine.append(blocAnciennes());
     } else if (ecrire) {
       const ta = el('textarea'); ta.maxLength = MAX; ta.value = brouillon;
       ta.placeholder = 'Ta réponse… ' + autre() + ' ne la verra qu’après avoir répondu.';
@@ -189,6 +235,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       if (memeCle(nouvelle, cle) || (!nouvelle && !cle)) { dessiner(); return; }
       cle = nouvelle ? { carte: String(nouvelle.carte), fois: String(nouvelle.fois) } : null;
       r = null; ecrire = false; brouillon = ''; erreur = ''; demande++;
+      anciennes = null; anciennesOuvert = false;
       dessiner();
       relire();
     },

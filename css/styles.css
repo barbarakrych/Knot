@@ -275,3 +275,7 @@ details.guide .rule{margin-top:10px}
 #view-av > .actions .btn{flex:1 1 0;max-width:200px;justify-content:center;text-align:center}
 /* « Ce paquet se fait plutôt de vive voix. » en haut de certains paquets */
 .vive-voix{margin:0;font-family:var(--f-mono);font-size:.72rem;color:var(--blue)}
+/* « La dernière fois » : les réponses des fois précédentes, sous vos réponses */
+.anciennes{display:flex;flex-direction:column;gap:8px}
+.anciennes .anciennes-lien{align-self:flex-start;text-decoration:none;color:var(--blue)}
+.ancienne{display:flex;flex-direction:column;gap:6px;border:1px dashed var(--line);border-radius:12px;padding:10px}

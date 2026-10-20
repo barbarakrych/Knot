@@ -248,11 +248,26 @@ begin
     r := r || (case when rep->'places' = '[]'::jsonb then '✅' else '❌' end
                || ' La même carte tirée une autre fois repart sans réponses');
 
+    -- « La dernière fois » : la carte v1 ressort (fois 200)
+    rep := public.repondre('v1', '200', 'A, la 2e fois');
+    rep := public.anciennes_reponses('v1', '200');
+    r := r || (case when rep = '[]'::jsonb then '✅' else '❌' end
+               || ' Pas d''anciennes réponses tant que les deux n''ont pas répondu à la nouvelle fois');
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.repondre('v1', '200', 'B, la 2e fois');
+    rep := public.anciennes_reponses('v1', '200');
+    r := r || (case when jsonb_array_length(rep) = 1 and rep->0->>'moi' = 'Réponse de B' and rep->0->>'autre' = 'Réponse de A'
+               then '✅' else '❌' end || ' Ensuite, B retrouve les réponses de la fois précédente');
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+
     -- C (autre couple) ne voit rien des réponses du couple 1
     perform set_config('request.jwt.claims', json_build_object('sub', c, 'role', 'authenticated')::text, true);
     rep := public.repondre('v1', '100', 'Réponse de C');
     r := r || (case when rep->'autre' = 'null'::jsonb and rep->'places' = '[1]'::jsonb then '✅' else '❌' end
                || ' Un autre couple ne voit jamais les réponses du couple 1');
+    rep := public.anciennes_reponses('v1', '100');
+    r := r || (case when rep = '[]'::jsonb then '✅' else '❌' end
+               || ' Un autre couple ne voit jamais les anciennes réponses du couple 1');
 
     -- A efface les réponses de la carte
     perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);

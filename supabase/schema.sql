@@ -485,12 +485,41 @@ begin
   return public.lire_reponses(la_carte, la_fois);
 end $$;
 
+-- « La dernière fois » : une fois qu'on a répondu tous les deux à cette carte, ce qu'on avait répondu
+-- les fois précédentes où elle était sortie (seulement celles où les deux avaient répondu), la plus récente d'abord :
+-- [{"date": …, "moi": …, "autre": …}]. Avant d'avoir répondu tous les deux : [] (pour ne pas s'influencer).
+create or replace function public.anciennes_reponses(la_carte text, la_fois text) returns jsonb
+language plpgsql stable security definer set search_path = '' as $$
+declare
+  le_couple uuid := public.mon_couple_id();
+  ma smallint := public.ma_place();
+begin
+  if auth.uid() is null then raise exception 'non_connecte'; end if;
+  if le_couple is null then raise exception 'pas_de_couple'; end if;
+  if (select count(*) from public.reponses r
+      where r.couple_id = le_couple and r.carte = la_carte and r.fois = la_fois) < 2 then
+    return '[]'::jsonb;
+  end if;
+  return coalesce((
+    select jsonb_agg(jsonb_build_object('date', f.date, 'moi', f.moi, 'autre', f.autre) order by f.date desc)
+    from (
+      select max(r.ecrite_le) as date,
+             max(r.texte) filter (where r.place = ma) as moi,
+             max(r.texte) filter (where r.place <> ma) as autre
+      from public.reponses r
+      where r.couple_id = le_couple and r.carte = la_carte and r.fois <> la_fois
+      group by r.fois
+      having count(*) = 2
+    ) f
+  ), '[]'::jsonb);
+end $$;
+
 revoke all on public.reponses from anon, authenticated;
 revoke all on function public.signaler_reponses(uuid, text, text) from public, anon, authenticated;
 revoke all on function public.lire_reponses(text, text), public.repondre(text, text, text),
-  public.effacer_reponses(text, text) from public, anon;
+  public.effacer_reponses(text, text), public.anciennes_reponses(text, text) from public, anon;
 grant execute on function public.lire_reponses(text, text), public.repondre(text, text, text),
-  public.effacer_reponses(text, text) to authenticated;
+  public.effacer_reponses(text, text), public.anciennes_reponses(text, text) to authenticated;
 
 -- Temps réel : Supabase prévient les téléphones dès qu'une partie change (seulement ceux qui ont le droit de la voir).
 do $$
