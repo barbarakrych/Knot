@@ -139,8 +139,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       boutons.append(tb, tr);
       tw.append(clock, boutons); inn.append(tw);
     }
-    card.append(inn); root.append(card, reponses.element);
-    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: d.t || 0 });
+    card.append(inn); root.append(card);
 
     const row = el('div', 'actions pnav');
     const prev = el('button', 'btn', 'Précédente'); prev.type = 'button'; prev.disabled = d.i === 0;
@@ -154,6 +153,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       d.i++; d.max = Math.max(d.max, d.i); kSave(pq.id, d); render();
     };
     row.append(prev, next); root.append(row);
+    // Les réponses sous les boutons habituels (le même bloc à chaque fois : un texte en cours reste)
+    root.append(reponses.element);
+    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: d.t || 0 });
 
     root.append(guideBox(false));
 

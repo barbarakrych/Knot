@@ -111,16 +111,6 @@ export function creerBlocReponses(quandRecu = () => {}) {
     } finally { envoi = false; dessiner(); }
   }
 
-  async function effacerTout() {
-    const c = cle;
-    if (estDemo()) { demoReponses.delete(c.carte + '|' + c.fois); r = lireDemo(c); dessiner(); return; }
-    try {
-      const data = await appeler('effacer_reponses', { la_carte: c.carte, la_fois: c.fois });
-      if (memeCle(cle, c)) { r = data; erreur = ''; }
-    } catch (e) { erreur = MESSAGES.hors_ligne; }
-    dessiner();
-  }
-
   function bouton(cls, texte, action) {
     const b = el('button', cls, texte); b.type = 'button'; b.onclick = action; return b;
   }
@@ -154,7 +144,6 @@ export function creerBlocReponses(quandRecu = () => {}) {
       ecrire = false;
       // Les deux ont répondu : l'autre d'abord, comme partout dans l'app
       racine.append(el('p', 'reponses-titre', 'Vos réponses'), bulle(autre(), r.autre), bulle(moi(), r.moi));
-      racine.append(bouton('link', 'Effacer nos réponses', effacerTout));
     } else if (ecrire) {
       const ta = el('textarea'); ta.maxLength = MAX; ta.value = brouillon;
       ta.placeholder = 'Ta réponse… ' + autre() + ' ne la verra qu’après avoir répondu.';
