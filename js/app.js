@@ -65,18 +65,26 @@ async function demarrer() {
   const ongletDuJeu = () => (lire(CLES.ecran, {}).view === 'topics' ? 'topics' : 'av');
 
   // Sous le titre : « ♥ [l'autre] et [moi] », et l'engrenage. Rien tant que le couple n'existe pas.
+  let dernierCouple = null; // le dernier couple affiché, pour l'écran de secours s'il disparaît
   function afficherCouple(c) {
+    if (c) { dernierCouple = c; effacer(CLES.ancien); }
     $('couple').hidden = !c;
     $('ouvrir-reglages').hidden = !c;
     if (c) $('couple-noms').textContent = nomsDuCouple(c);
   }
 
   // Ce téléphone n'a pas (ou plus) de couple → accueil, et la partie de l'ancien couple est oubliée
+  // S'il y avait un couple, on garde ses prénoms (même après un rechargement) pour l'écran de secours.
   function versAccueil() {
+    const perdu = dernierCouple || coupleLocal();
+    if (perdu && perdu.prenomMoi && perdu.prenomAutre) {
+      ecrire(CLES.ancien, { prenomMoi: perdu.prenomMoi, prenomAutre: perdu.prenomAutre });
+    }
+    dernierCouple = null;
     effacer(CLES.couple);
     partie.oublier();
     afficherCouple(null);
-    accueil.ouvrir();
+    accueil.ouvrir(lire(CLES.ancien, null));
     setView('accueil');
   }
 

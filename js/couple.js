@@ -14,13 +14,27 @@ export const MESSAGES = {
   trop_d_essais: 'Trop de codes essayés. Réessaie dans une heure.',
   deja_en_couple: 'Ce téléphone fait déjà partie d’un couple.',
   prenom_invalide: 'Écris un prénom (30 caractères au plus).',
-  pas_configure: 'Le partage n’est pas encore configuré (Supabase).'
+  pas_configure: 'Le partage n’est pas encore configuré (Supabase).',
+  couple_incomplet: 'Ce couple n’a qu’un seul téléphone en ce moment : il n’y a personne à relier. Rouvre les Réglages : le code du couple s’affiche, l’autre peut le taper dans « J’ai un code ».',
+  pas_de_couple: 'Ce téléphone ne fait plus partie du couple. Ferme et rouvre Knot pour voir comment retrouver ta place.',
+  non_connecte: 'Ce téléphone n’est plus connecté à Knot. Ferme et rouvre l’app, puis réessaie.',
+  rejoindre: 'Le code a marché, mais Knot n’a pas pu ouvrir le couple. Ferme et rouvre l’app.'
 };
 const ERREUR_RESEAU = 'Impossible de joindre Knot. Il faut une connexion internet pour cette étape : vérifie-la et réessaie.';
 
+// Vrai souci de réseau (pas d'internet, Supabase injoignable, bibliothèque pas chargée) ?
+function estReseau(e) {
+  if (!navigator.onLine) return true;
+  const m = String((e && e.message) || '');
+  return m === 'bibliotheque' || /fetch|network|load failed|timeout/i.test(m);
+}
+
 export function messageErreur(e) {
   const code = e && (e.code_knot || (MESSAGES[e.message] ? e.message : null));
-  return code ? MESSAGES[code] : ERREUR_RESEAU;
+  if (code) return MESSAGES[code];
+  if (estReseau(e)) return ERREUR_RESEAU;
+  // Erreur imprévue : on montre son nom, pour pouvoir la signaler et la comprendre
+  return 'Quelque chose a bloqué. Réessaie ; si ça continue, envoie ce détail à l’équipe Knot : ' + ((e && e.message) || 'inconnu');
 }
 function erreur(code) { const e = new Error(code); e.code_knot = code; return e; }
 

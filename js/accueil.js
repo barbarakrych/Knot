@@ -92,5 +92,18 @@ export function preparerAccueil(entrer, demo) {
     rejoindre($('acc-form-prenom').querySelector('button'), $('acc-prenom').value);
   };
 
-  return { ouvrir: () => montrer('acc-choix') };
+  // Écran de secours : ce téléphone faisait partie d'un couple et l'a perdu (connexion perdue, app rouverte
+  // dans un autre navigateur, place reprise par un autre téléphone…). On explique comment revenir, sans rien créer.
+  function afficherSecours(ancien) {
+    const ok = !!(ancien && ancien.prenomMoi && ancien.prenomAutre);
+    $('acc-secours').hidden = !ok;
+    if (!ok) return;
+    const moi = ancien.prenomMoi, autre = ancien.prenomAutre;
+    $('acc-secours-titre').textContent = 'Ce téléphone n’est plus relié à ton couple avec ' + autre + '.';
+    $('acc-secours-texte').textContent = 'Votre partie n’est pas perdue. Demande à ' + autre
+      + ' d’ouvrir les Réglages (l’engrenage) et d’appuyer sur « Relier le téléphone de ' + moi
+      + ' », puis de t’envoyer le code. Tape-le ici avec « J’ai un code ». Ne crée pas un nouveau couple.';
+  }
+
+  return { ouvrir: ancien => { afficherSecours(ancien); montrer('acc-choix'); } };
 }

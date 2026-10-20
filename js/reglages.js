@@ -74,7 +74,8 @@ export function preparerReglages(detache) {
     box.append(bouton, el('p', 'muted', 'Si ' + autre + ' a supprimé l’app ou changé de téléphone.'), note);
     if (c.codeRelier) {
       box.append(...blocCode('Code en cours de validité · en attente de ' + autre, c.codeRelier,
-        'Sur son nouveau téléphone, ' + autre + ' ouvre Knot, choisit « J’ai un code » et tape ce code. Il ne sert qu’une fois.'));
+        'Envoie ce code à ' + autre + ' (message, appel…) : rien ne change tout seul sur son téléphone. '
+        + autre + ' ouvre Knot, choisit « J’ai un code » et le tape. Il ne sert qu’une fois.'));
     }
 
     bouton.onclick = async () => {
