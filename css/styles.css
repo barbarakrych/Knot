@@ -293,9 +293,17 @@ details.guide .rule{margin-top:10px}
 .card.verso .reponse{align-self:stretch}
 .flip-label{min-height:44px;padding:0 14px;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.9rem;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer}
 .flip-icone{font-size:1.1rem;line-height:1}
+/* Animations réduites sur le téléphone : pas de rotation, un fondu doux d'une face à l'autre */
 @media (prefers-reduced-motion: reduce){
-  .flip-in{transition:none}
+  .flip-in,.flip.retournee .flip-in{transition:none;transform:none}
+  .flip-in>.card,.flip-in>.card.verso{transform:none;transition:opacity .2s ease-out}
+  .flip-in>.card.verso{opacity:0;pointer-events:none}
+  .flip.retournee .flip-in>.card.verso{opacity:1;pointer-events:auto}
+  .flip.retournee .flip-in>.card:not(.verso){opacity:0;pointer-events:none}
 }
+/* En attente de l'autre : une ligne, et ma réponse seulement si on la déplie */
+.reponses-liens{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.ma-reponse{font-family:var(--f-card);font-size:1rem;line-height:1.4;color:var(--muted);text-align:center;white-space:pre-wrap;overflow-wrap:anywhere}
 
 /* La carte précédente, en petit au-dessus de la carte en attente (un appui la montre en entier) */
 .precedente{max-width:340px;gap:0}

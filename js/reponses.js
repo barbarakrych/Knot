@@ -73,6 +73,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
   let vueCle = null;       // carte dont on a déjà décidé si elle se retourne toute seule
   let infos = {};          // compact : { texte, titre } de la carte
   let deplie = false;      // compact : réponses en entier
+  let maReponseOuverte = false; // en attente de l'autre : ma réponse dépliée sous la ligne
 
   const memeCle = (a, b) => !!a && !!b && a.carte === b.carte && a.fois === b.fois;
   const couple = () => coupleLocal();
@@ -289,8 +290,14 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       setTimeout(() => { try { ta.focus(); } catch (e) {} }, 0);
       return;
     } else if (jAiRepondu) {
-      racine.append(el('p', 'muted', 'Ta réponse est envoyée · en attente de ' + autre()), bulle(moi(), r.moi));
-      racine.append(bouton('link', 'Modifier ma réponse', () => { ecrire = true; brouillon = r.moi; erreur = ''; dessiner(); }));
+      // Une ligne discrète (rien qui ressemble à une carte sous la carte) ; ma réponse se déplie si on veut la relire
+      racine.append(el('p', 'muted', 'Ta réponse est envoyée · en attente de ' + autre()));
+      const voir = bouton('link', maReponseOuverte ? 'Masquer ma réponse' : 'Voir ma réponse', () => { maReponseOuverte = !maReponseOuverte; dessiner(); });
+      voir.setAttribute('aria-expanded', String(maReponseOuverte));
+      const liens = el('div', 'reponses-liens');
+      liens.append(voir, bouton('link', 'Modifier ma réponse', () => { ecrire = true; brouillon = r.moi; erreur = ''; dessiner(); }));
+      racine.append(liens);
+      if (maReponseOuverte) racine.append(el('p', 'ma-reponse', r.moi));
     } else if (boutonExterne) {
       // Le bouton « Répondre » est ailleurs : ici, seulement si l'autre a déjà répondu
       boutonExterne.hidden = false;
@@ -315,7 +322,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       if (memeCle(nouvelle, cle) || (!nouvelle && !cle)) { dessiner(); return; }
       cle = nouvelle ? { carte: String(nouvelle.carte), fois: String(nouvelle.fois) } : null;
       r = null; ecrire = false; brouillon = ''; erreur = ''; demande++;
-      retournee = false; vueCle = null; deplie = false;
+      retournee = false; vueCle = null; deplie = false; maReponseOuverte = false;
       anciennes = null; anciennesOuvert = false;
       dessiner();
       relire();
