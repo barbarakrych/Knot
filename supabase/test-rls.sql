@@ -1,5 +1,6 @@
 -- Knot · test des règles de sécurité (RLS).
--- À coller dans Supabase → SQL Editor → Run, APRÈS schema.sql. Rien n'est gardé : tout est annulé à la fin.
+-- À coller dans Supabase → SQL Editor → Run, APRÈS schema.sql (ou, sur une base existante, après migration-partie3.sql).
+-- Rien n'est gardé : tout est annulé à la fin.
 --
 -- On fabrique de faux téléphones :
 --   A et B forment le couple 1 · C forme le couple 2 · D, E, F, G sont d'autres téléphones.
@@ -18,6 +19,7 @@ declare
   rep jsonb;
   nb int;
   txt text;
+  n_annul bigint;
   r text[] := '{}';
   ok boolean;
 begin
@@ -259,6 +261,92 @@ begin
     r := r || (case when jsonb_array_length(rep) = 1 and rep->0->>'moi' = 'Réponse de B' and rep->0->>'autre' = 'Réponse de A'
                then '✅' else '❌' end || ' Ensuite, B retrouve les réponses de la fois précédente');
     perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+
+    -- Partie 3 : minuteur. A tape « Répondre » sur une carte chronométrée (carte t1, fois 300, 60 s)
+    rep := public.commencer_reponse('t1', '300', 60);
+    r := r || (case when rep->>'mon_brouillon' = '' and rep->>'fin' is not null and rep->'places' = '[]'::jsonb then '✅' else '❌' end
+               || ' Le minuteur de A démarre avec un brouillon vide');
+    rep := public.sauver_brouillon('t1', '300', 'Brouillon de A');
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.lire_reponses('t1', '300');
+    r := r || (case when rep->'places' = '[]'::jsonb and position('Brouillon de A' in rep::text) = 0 then '✅' else '❌' end
+               || ' B ne voit rien du brouillon de A (ni le texte, ni « a répondu »)');
+    -- Le temps de A est écoulé depuis 10 s (on avance l'heure limite, avec les droits de l'administrateur)
+    perform set_config('role', 'postgres', true);
+    update public.reponses set fin = now() - interval '10 seconds' where carte = 't1' and fois = '300';
+    perform set_config('role', 'authenticated', true);
+    rep := public.lire_reponses('t1', '300');
+    r := r || (case when rep->'places' = '[1]'::jsonb then '✅' else '❌' end
+               || ' Temps écoulé : le brouillon de A est envoyé automatiquement');
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.repondre('t1', '300', 'Trop tard');
+    r := r || (case when rep->>'moi' = 'Brouillon de A' then '✅' else '❌' end
+               || ' Après le temps, c''est le brouillon sauvé qui compte : « ' || coalesce(rep->>'moi', '?') || ' »');
+
+    -- Brouillon vide à l'expiration : la carte t2 (tirée à 400) est annulée. B avait déjà répondu.
+    rep := public.jouer('[{"set": ["tirees", "t2"], "valeur": {"pile": "action", "at": 400}}, {"set": ["affichee"], "valeur": "t2"}]'::jsonb);
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.repondre('t2', '400', 'Réponse de B à t2');
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.commencer_reponse('t2', '400', 60);
+    perform set_config('role', 'postgres', true);
+    update public.reponses set fin = now() - interval '10 seconds' where carte = 't2' and fois = '400' and statut = 'brouillon';
+    perform set_config('role', 'authenticated', true);
+    rep := public.lire_reponses('t2', '400');
+    r := r || (case when rep->'places' = '[]'::jsonb and rep->'mon_brouillon' = 'null'::jsonb and rep->'rendue' = 'null'::jsonb
+                    and position('Réponse de B à t2' in rep::text) = 0 then '✅' else '❌' end
+               || ' Brouillon vide : la carte est annulée, A ne voit jamais la réponse de B');
+    select count(*) into nb from public.parties
+      where not (etat->'tirees' ? 't2') and etat->'affichee' = 'null'::jsonb and etat->'annulee'->>'carte' = 't2';
+    r := r || (case when nb = 1 then '✅' else '❌' end || ' La carte annulée retourne dans la pile, avec la mention pour les deux');
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.lire_reponses('t2', '400');
+    r := r || (case when rep->>'rendue' = 'Réponse de B à t2' and rep->'moi' = 'null'::jsonb then '✅' else '❌' end
+               || ' La réponse de B lui est rendue (pour plus tard), sans être révélée');
+
+    -- La mention reste tant que les deux ne l'ont pas vue
+    select (etat->'annulee'->>'n')::bigint into n_annul from public.parties;
+    perform public.annulee_vue(n_annul);
+    select count(*) into nb from public.parties where etat->'annulee'->'vu' = '[2]'::jsonb;
+    r := r || (case when nb = 1 then '✅' else '❌' end || ' B a vu la mention : elle reste pour A');
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    perform public.annulee_vue(n_annul);
+    select count(*) into nb from public.parties where etat ? 'annulee';
+    r := r || (case when nb = 0 then '✅' else '❌' end || ' Les deux ont vu la mention : elle disparaît');
+
+    -- Passer (annuler_carte) est symétrique : A avait envoyé, B avait un brouillon. Les deux textes sont rendus.
+    rep := public.repondre('t3', '500', 'A envoyée');
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.commencer_reponse('t3', '500', 60);
+    rep := public.sauver_brouillon('t3', '500', 'B en cours');
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.annuler_carte('t3', '500');
+    r := r || (case when rep->>'rendue' = 'A envoyée' and rep->'places' = '[]'::jsonb and position('B en cours' in rep::text) = 0
+               then '✅' else '❌' end || ' Passer : la réponse envoyée de A lui est rendue');
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.lire_reponses('t3', '500');
+    r := r || (case when rep->>'rendue' = 'B en cours' and position('A envoyée' in rep::text) = 0 then '✅' else '❌' end
+               || ' Passer : le brouillon de B lui est rendu aussi');
+
+    -- La carte ressort (fois 600) : A repart de son texte rendu ; annulée de nouveau, la plus récente gagne
+    perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+    rep := public.commencer_reponse('t3', '600', 60);
+    r := r || (case when rep->>'mon_brouillon' = 'A envoyée' then '✅' else '❌' end
+               || ' Quand la carte ressort, le brouillon de A reprend son texte rendu');
+    rep := public.sauver_brouillon('t3', '600', 'A, nouvelle version');
+    rep := public.annuler_carte('t3', '600');
+    rep := public.lire_reponses('t3', '700');
+    r := r || (case when rep->>'rendue' = 'A, nouvelle version' then '✅' else '❌' end
+               || ' Annulée deux fois : c''est le texte rendu le plus récent qui revient');
+    rep := public.repondre('t3', '700', 'A, réponse finale');
+    rep := public.lire_reponses('t3', '800');
+    r := r || (case when rep->'rendue' = 'null'::jsonb then '✅' else '❌' end
+               || ' Une fois une réponse envoyée, l''ancien texte rendu ne revient plus');
+    perform set_config('request.jwt.claims', json_build_object('sub', e, 'role', 'authenticated')::text, true);
+    rep := public.repondre('t3', '700', 'B, réponse finale');
+    rep := public.anciennes_reponses('t3', '700');
+    r := r || (case when rep = '[]'::jsonb then '✅' else '❌' end
+               || ' Les textes rendus et les brouillons ne sont jamais dans « La dernière fois »');
 
     -- C (autre couple) ne voit rien des réponses du couple 1
     perform set_config('request.jwt.claims', json_build_object('sub', c, 'role', 'authenticated')::text, true);

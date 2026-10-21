@@ -64,9 +64,9 @@ Deno.serve(async (req) => {
   const maintenant = Date.now();
 
   if (type === 'reponse') {
-    // On vérifie qu'une réponse vient vraiment d'être écrite par ce téléphone
+    // On vérifie qu'une réponse vient vraiment d'être envoyée par ce téléphone (pas un brouillon ni une réponse rendue)
     const { count } = await base.from('reponses').select('*', { count: 'exact', head: true })
-      .eq('couple_id', membre.couple_id).eq('place', membre.place)
+      .eq('couple_id', membre.couple_id).eq('place', membre.place).eq('statut', 'envoyee')
       .gt('ecrite_le', new Date(maintenant - DEUX_MINUTES).toISOString());
     if (!count) return repondre(200, { envoye: 0, raison: 'pas_de_reponse_recente' });
   } else {
