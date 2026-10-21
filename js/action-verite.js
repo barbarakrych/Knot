@@ -6,7 +6,8 @@ import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur, etatMinuteur
 import { coupleLocal } from './couple.js';
 import { etat, agir, ecouter, maintenant } from './partie.js';
 import { sonnerALaFinDuMinuteur } from './son.js';
-import { creerBlocReponses, annulerReponses } from './reponses.js';
+import { creerBlocReponses, annulerReponses, deuxReponses, revelationVue } from './reponses.js';
+import { CLES, lire, ecrire as garder } from './stockage.js';
 import { prevenir } from './notifications.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
@@ -26,10 +27,17 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   const reponses = creerBlocReponses({ bouton: $('repondre'), retirerEnDemo: retirer });
   $('skip').closest('.actions').after(reponses.element);
   reponses.attacher($('card')); // la carte se retourne quand les deux ont répondu
-  // Au-dessus de la carte : la carte précédente, en petit, si vous y avez répondu tous les deux
-  const precedente = creerBlocReponses({ compact: true });
-  precedente.element.classList.add('precedente');
-  $('card').closest('.flip').before(precedente.element);
+  // « J'ai lu · voir la carte tirée » : si l'autre a tiré une nouvelle carte alors que la carte d'avant venait d'être
+  // révélée (les deux ont répondu) et que ce téléphone n'a pas encore vu cette révélation, l'écran reste sur la carte
+  // d'avant, côté réponses, jusqu'à ce bouton. Propre à ce téléphone (gardé en mémoire) ; la partie commune avance.
+  let retenue = lire(CLES.retenue, null);        // { id, fois } de la carte gardée à l'écran, ou null
+  const verifiees = new Set();                   // cartes déjà vérifiées (une seule lecture de la base par carte)
+  function lacher() {
+    balayer($('card'), undefined, 'droite');
+    retenue = null; garder(CLES.retenue, null);
+    render();
+  }
+  $('jailu').onclick = lacher;
   // Le défi en cours a aussi ses réponses dans son encadré, quand une autre carte est affichée (sinon elles sont sous la carte) :
   // « Répondre » l'ouvre, et il s'ouvre tout seul dès que l'un de vous a répondu.
   let defiOuvert = false, defiAffiche = null;
@@ -99,7 +107,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   function dureeTxt(c) { return c.sec ? c.sec + ' s' : c.min + ' min'; }
   // Le minuteur est dans la partie partagée : lancé ici, il s'écoule aussi chez l'autre.
   function renderTimer() {
-    const c = cardById(S.current);
+    const c = retenue ? null : cardById(S.current); // carte retenue à l'écran : pas le minuteur de la carte commune
     // Carte avec « Répondre » : chacun a son propre minuteur, lancé par « Répondre » (reponses.js)
     const show = !!(c && c.pile === 'action' && duree(c) && !peutRepondre(c));
     $('timer').hidden = !show; if (!show) return;
@@ -134,7 +142,9 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
       $('pile-' + p).disabled = left === 0;
     }
 
-    const cur = cardById(S.current);
+    // La carte retenue (si elle existe encore) passe avant la carte commune
+    if (retenue && !cardById(retenue.id)) { retenue = null; garder(CLES.retenue, null); }
+    const cur = cardById(retenue ? retenue.id : S.current);
     const card = $('card'), q = $('q'), meta = $('meta');
     meta.textContent = '';
     if (cur) {
@@ -163,14 +173,11 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     }
     renderTimer();
     // La « fois » de la carte : l'heure où elle a été tirée. Retirée après un remélange, elle repart sans réponses.
-    const fois = c => (S.drawn[c.id] && S.drawn[c.id].at) || 0;
+    const fois = c => (retenue && c.id === retenue.id ? retenue.fois : (S.drawn[c.id] && S.drawn[c.id].at) || 0);
     reponses.montrer(peutRepondre(cur) ? { carte: cur.id, fois: fois(cur), secondes: duree(cur) } : null);
-    // La carte précédente : la dernière tirée avant celle-ci (rien n'est montré tant que les deux n'y ont pas répondu)
-    const avant = Object.entries(S.drawn)
-      .filter(([id, v]) => v && id !== S.current && (!cur || (v.at || 0) < fois(cur)) && peutRepondre(cardById(id)))
-      .sort((a, b) => (b[1].at || 0) - (a[1].at || 0))[0];
-    const pc = avant && cardById(avant[0]);
-    precedente.montrer(pc ? { carte: pc.id, fois: fois(pc), texte: pc.text, titre: PILES[pc.pile].name } : null);
+    $('jailu').hidden = !retenue;
+    $('skip').hidden = !!retenue;
+    verifierRetenue(fois);
 
     const defi = cardById(S.defi);
     $('defi').hidden = !defi;
@@ -208,6 +215,25 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     }
   }
 
+  // La carte tirée juste avant la carte commune vient-elle d'être révélée, sans que ce téléphone l'ait vu ?
+  // Alors on la retient à l'écran (voir « J'ai lu · voir la carte tirée » plus haut).
+  function verifierRetenue(fois) {
+    if (retenue) return;
+    const actuelle = cardById(S.current);
+    const avant = Object.entries(S.drawn)
+      .filter(([id, v]) => v && id !== S.current && (!actuelle || (v.at || 0) < fois(actuelle)) && peutRepondre(cardById(id)))
+      .sort((a, b) => (b[1].at || 0) - (a[1].at || 0))[0];
+    if (!avant) return;
+    const id = avant[0], f = avant[1].at || 0, k = id + '|' + f;
+    if (verifiees.has(k) || revelationVue(id, f)) return;
+    verifiees.add(k);
+    deuxReponses(id, f).then(revelee => {
+      if (!revelee || retenue || S.current === id || revelationVue(id, f)) return;
+      retenue = { id, fois: f }; garder(CLES.retenue, retenue);
+      render();
+    });
+  }
+
   // « Tirée par [prénom] », ou '' si on ne sait pas (cartes tirées avant le partage)
   function tireePar(id) {
     const t = S.drawn[id];
@@ -233,6 +259,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   function draw(pile) {
     const p = remaining(pile);
     if (!p.length) return;
+    if (retenue) { retenue = null; garder(CLES.retenue, null); } // tirer soi-même vaut « J'ai lu »
     balayer($('card'), undefined, 'droite'); // l'ancienne carte part vers la droite, la nouvelle est dessous
     agir(ordresTirer(auHasard(p)));
     prevenir('tirage'); // notification chez l'autre (ignorée si la carte précédente a été tirée il y a moins de 30 secondes, voir notifier)
@@ -454,7 +481,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   ecouter((e, origine) => {
     const avant = S.current;
     charger();
-    if (origine === 'serveur' && S.current !== avant && S.current) balayer($('card'), undefined, 'droite');
+    if (origine === 'serveur' && S.current !== avant && S.current && !retenue) balayer($('card'), undefined, 'droite');
     render();
   });
 

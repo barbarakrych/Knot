@@ -9,6 +9,7 @@ export const CLES = {
   ecran: 'knot-ecran',        // onglet et paquet ouverts (propres à ce téléphone)
   couple: 'knot-couple',      // prénoms, place de ce téléphone et codes, copiés depuis Supabase
   ancien: 'knot-ancien',      // { prenomMoi, prenomAutre } du couple que ce téléphone vient de perdre (écran de secours)
+  retenue: 'knot-retenue',    // carte révélée gardée à l'écran jusqu'à « J'ai lu · voir la carte tirée » (action-verite.js)
   son: 'knot-son',            // réglage « Son » de ce téléphone : false = coupé (voir son.js)
   brouillon: 'knot-brouillon', // copie du brouillon d'une carte chronométrée, en cas de coupure (effacée une fois envoyé)
   revelees: 'knot-revelees',  // cartes dont la révélation (la carte qui se retourne) a déjà été jouée ici (voir reponses.js)

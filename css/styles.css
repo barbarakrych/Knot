@@ -305,15 +305,6 @@ details.guide .rule{margin-top:10px}
 .reponses-liens{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
 .ma-reponse{font-family:var(--f-card);font-size:1rem;line-height:1.4;color:var(--muted);text-align:center;white-space:pre-wrap;overflow-wrap:anywhere}
 
-/* La carte précédente, en petit au-dessus de la carte en attente (un appui la montre en entier) */
-.precedente{max-width:340px;gap:0}
-.precedente-in{font:inherit;text-align:left;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;width:100%}
-.precedente-in .kicker{padding:0}
-.precedente-q{font-family:var(--f-card);font-size:.95rem;color:var(--muted)}
-.precedente-in .reponse{border:none;padding:0;background:none}
-.precedente-in .reponse-texte{font-size:.95rem}
-.precedente:not(.deplie) .precedente-q,.precedente:not(.deplie) .reponse-texte{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}
-.precedente-plus{font-size:.8rem;font-weight:600;color:var(--blue);align-self:flex-end}
 
 /* Réponses longues : au verso, chaque réponse coupée à 5 lignes, et « Lire la suite » ouvre le texte en entier */
 .verso.apercu .reponse-texte{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}

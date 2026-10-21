@@ -76,6 +76,24 @@ function annoncer(texte) {
   setTimeout(() => t.remove(), 5000);
 }
 
+// Où en sont les réponses d'une carte (« J'ai lu · voir la carte tirée », action-verite.js) : true si les deux
+// ont répondu. Hors ligne ou en cas d'erreur : false (on ne retient pas l'écran sur une carte sans en être sûr).
+export async function deuxReponses(carte, fois) {
+  if (estDemo()) {
+    const d = demoReponses.get(String(carte) + '|' + String(fois)) || {};
+    return !!(d.moi && d.autre);
+  }
+  try {
+    const r = await appeler('lire_reponses', { la_carte: String(carte), la_fois: String(fois) });
+    return !!(r && r.moi && r.autre);
+  } catch (e) { return false; }
+}
+// La révélation de cette carte (elle qui se retourne) a déjà été jouée sur ce téléphone ?
+export function revelationVue(carte, fois) {
+  const vues = lire(CLES.revelees, []);
+  return Array.isArray(vues) && vues.includes(String(carte) + '|' + String(fois));
+}
+
 // « Passer cette carte » (ou « Remettre dans la pile ») sur une carte avec « Répondre » : si l'un de nous avait commencé
 // (brouillon ou réponse), même résultat qu'une annulation. Sinon la base ne fait rien (pas de mention).
 export function annulerReponses(carte, fois) {
@@ -100,13 +118,11 @@ async function appeler(fonction, params) {
 }
 
 // Crée le bloc (à placer une fois dans la page). montrer({ carte, fois }) le règle sur une carte, montrer(null) le cache.
-// compact : version réduite (« Carte précédente »), visible seulement une fois les deux réponses révélées ;
-// montrer() reçoit alors aussi { texte, titre } de la carte.
 // Options : quandRecu(r), appelée chaque fois que les réponses de la carte sont relues (ex. ouvrir l'encadré du défi
 // si quelqu'un a répondu) ; bouton, un bouton « Répondre » placé ailleurs (ex. à côté de « Passer cette carte »),
 // que le bloc montre seulement quand il sert, à la place du sien ; retirerEnDemo(carte), en démo seulement, retire
 // de l'écran une carte annulée (en vrai, c'est la base qui le fait).
-export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne = null, compact = false, retirerEnDemo = () => {} } = {}) {
+export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne = null, retirerEnDemo = () => {} } = {}) {
   const racine = el('section', 'reponses');
   racine.hidden = true;
   let cle = null;          // { carte, fois } de la carte affichée
@@ -122,8 +138,6 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
   let flip = null;         // { el, recto, verso, label } : la carte qui se retourne (voir attacher)
   let retournee = false;   // côté réponses visible
   let vueCle = null;       // carte dont on a déjà décidé si elle se retourne toute seule
-  let infos = {};          // compact : { texte, titre } de la carte
-  let deplie = false;      // compact : réponses en entier
   let maReponseOuverte = false; // en attente de l'autre : ma réponse dépliée sous la ligne
   // Carte chronométrée (partie 3) : le minuteur démarre au tap sur « Répondre », compté depuis l'heure de la base.
   let secondes = 0;        // durée de la carte affichée (0 = pas de minuteur)
@@ -468,20 +482,6 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     retour.focus();
   }
 
-  // Compact : « Carte précédente », seulement quand les deux réponses sont révélées. Un appui montre tout.
-  function dessinerCompact() {
-    racine.hidden = !(r && r.moi && r.autre);
-    if (racine.hidden) return;
-    racine.textContent = '';
-    racine.classList.toggle('deplie', deplie);
-    const b = el('button', 'precedente-in'); b.type = 'button';
-    b.setAttribute('aria-expanded', String(deplie));
-    b.onclick = () => { deplie = !deplie; dessiner(); };
-    b.append(el('p', 'kicker', 'Carte précédente' + (infos.titre ? ' · ' + infos.titre : '')),
-      el('p', 'precedente-q', infos.texte || ''), bulle(autre(), r.autre, r.autre_le), bulle(moi(), r.moi, r.moi_le),
-      el('span', 'precedente-plus', deplie ? 'Réduire' : 'Tout lire'));
-    racine.append(b);
-  }
 
   function dessiner() {
     const c = couple();
@@ -489,7 +489,6 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     racine.hidden = !cle || !c || (!c.complet && !estDemo());
     if (boutonExterne) boutonExterne.hidden = true; // montré plus bas, seulement s'il sert
     if (racine.hidden) { majFlip(false); return; }
-    if (compact) { dessinerCompact(); return; }
 
     const places = (r && r.places) || [];
     const autreARepondu = places.includes(placeAutre());
@@ -567,14 +566,13 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     // Règle le bloc sur la carte affichée ({ carte, fois, secondes }), ou le cache (null). Rien ne change si c'est la même carte.
     // secondes : durée d'une carte chronométrée (son minuteur démarre au tap sur « Répondre »), sinon 0.
     montrer(nouvelle) {
-      if (compact) infos = nouvelle ? { texte: nouvelle.texte, titre: nouvelle.titre } : {};
       secondes = (nouvelle && nouvelle.secondes) || 0;
       if (memeCle(nouvelle, cle) || (!nouvelle && !cle)) { dessiner(); return; }
       if (enCours()) { derniereSauvegarde = 0; sauver(); } // on quitte une carte dont le minuteur tourne : le brouillon est gardé
       arreter(); expire = false;
       cle = nouvelle ? { carte: String(nouvelle.carte), fois: String(nouvelle.fois) } : null;
       r = null; ecrire = false; brouillon = ''; erreur = ''; demande++;
-      retournee = false; vueCle = null; deplie = false; maReponseOuverte = false;
+      retournee = false; vueCle = null; maReponseOuverte = false;
       anciennes = null; anciennesOuvert = false;
       dessiner();
       relire();
