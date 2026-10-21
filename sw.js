@@ -8,7 +8,7 @@
    • Quand c'est prêt, l'app (js/mise-a-jour.js) choisit un moment calme, demande à la nouvelle version
      de prendre la place (message « installer »), puis se recharge une fois.
    • Sans réseau, rien ne change : l'app s'ouvre avec la dernière version gardée en réserve. */
-const VERSION = '4f4fb07904bc';
+const VERSION = '58d64a8c6361';
 const RESERVE = 'knot-' + VERSION;
 const RESERVE_POLICES = 'knot-polices'; // gardées d'une version à l'autre
 
@@ -20,7 +20,8 @@ const OSSATURE = [
   'js/config.js', 'js/couple.js', 'js/partie.js', 'js/mise-a-jour.js', 'js/accueil.js', 'js/reglages.js', 'js/theme.js', 'js/son.js', 'js/demo.js', 'js/reponses.js', 'js/notifications.js',
   'js/vendor/supabase.js', 'sons/fin-minuteur.wav',
   'contenu/verites.json', 'contenu/actions.json', 'contenu/pour-plus-tard.json', 'contenu/sources.json', 'contenu/themes.json',
-  'design/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png', 'icones/icone-maskable-512.png', 'icones/apple-touch-icon.png'
+  'design/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png', 'icones/icone-maskable-512.png', 'icones/apple-touch-icon.png',
+  'icones/badge-96.png'
 ];
 
 // Seuls nos propres fichiers et les polices Google sont gardés. Les échanges avec Supabase (autre site) ne le sont jamais.
@@ -46,7 +47,10 @@ self.addEventListener('push', evenement => {
   let m = {};
   try { m = evenement.data ? evenement.data.json() : {}; } catch (e) {}
   evenement.waitUntil(self.registration.showNotification(m.titre || 'Knot', {
-    body: m.texte || '', tag: m.tag || 'knot', icon: 'icones/icone-192.png', badge: 'icones/icone-192.png'
+    body: m.texte || '', tag: m.tag || 'knot', icon: 'icones/icone-192.png',
+    // badge : la petite icône de la barre d'état Android, qui ne garde que la forme. Une image pleine y devient
+    // un carré blanc : on donne le nœud seul, blanc sur fond transparent (design/badge.svg).
+    badge: 'icones/badge-96.png'
   }));
 });
 // Un appui sur la notification ramène l'app (ou l'ouvre)

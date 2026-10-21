@@ -18,6 +18,8 @@ const CHROMES = [
 
 const normale = fs.readFileSync(path.join(RACINE, 'design/icone.svg'), 'utf8');
 const maskable = fs.readFileSync(path.join(RACINE, 'design/icone-maskable.svg'), 'utf8');
+// Petite icône des notifications Android : le nœud seul, blanc sur fond transparent (design/badge.svg)
+const badge = fs.readFileSync(path.join(RACINE, 'design/badge.svg'), 'utf8');
 
 const chrome = CHROMES.find(c => fs.existsSync(c));
 if (!chrome) { console.error('Chrome (ou Edge) introuvable : impossible de créer les PNG.'); process.exit(1); }
@@ -29,8 +31,9 @@ const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'knot-icones-'));
 
 function photographier(svg, taille, nom) {
   const page = path.join(temp, nom + '.html');
-  fs.writeFileSync(page, `<!doctype html><style>html,body{margin:0;overflow:hidden}svg{display:block;width:${taille}px;height:${taille}px}</style>${svg}`);
-  execFileSync(chrome, ['--headless', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1',
+  fs.writeFileSync(page, `<!doctype html><style>html,body{margin:0;overflow:hidden;background:transparent}svg{display:block;width:${taille}px;height:${taille}px}</style>${svg}`);
+  // Fond transparent (sinon Chrome met du blanc) : utile pour le badge, sans effet sur les icônes qui ont leur fond
+  execFileSync(chrome, ['--headless', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1', '--default-background-color=00000000',
     '--window-size=' + taille + ',' + taille, '--screenshot=' + path.join(sortie, nom), 'file:///' + page.replace(/\\/g, '/')], { stdio: 'ignore' });
   console.log(path.relative(RACINE, path.join(sortie, nom)));
 }
@@ -39,4 +42,5 @@ photographier(normale, 192, 'icone-192.png');
 photographier(normale, 512, 'icone-512.png');
 photographier(maskable, 512, 'icone-maskable-512.png');
 photographier(normale, 180, 'apple-touch-icon.png');
+photographier(badge, 96, 'badge-96.png');
 fs.rmSync(temp, { recursive: true, force: true });
