@@ -133,7 +133,9 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
   let dernierSauve = '';   // dernier texte sauvé dans la base
   let derniereSauvegarde = 0;
 
-  const memeCle = (a, b) => !!a && !!b && a.carte === b.carte && a.fois === b.fois;
+  // Comparées en texte : la « fois » arrive en nombre (heure du tirage) mais est rangée en texte dans cle.
+  // Sans ça, chaque changement de la partie passait pour une nouvelle carte et vidait la zone de texte.
+  const memeCle = (a, b) => !!a && !!b && String(a.carte) === String(b.carte) && String(a.fois) === String(b.fois);
   const couple = () => coupleLocal();
   const autre = () => (couple() && couple().prenomAutre) || 'l’autre';
   const moi = () => (couple() && couple().prenomMoi) || 'Toi';
