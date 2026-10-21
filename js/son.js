@@ -12,6 +12,11 @@
    Les navigateurs n'acceptent de jouer un son qu'après un geste de la personne : au premier appui dans l'app,
    on prépare le son, pour qu'il puisse sonner plus tard tout seul (même si c'est l'autre qui a lancé le minuteur). */
 import { etat, ecouter, maintenant } from './partie.js';
+import { CLES, lire, ecrire } from './stockage.js';
+
+// Réglage « Son » (propre à ce téléphone) : coupé, aucun minuteur ne sonne (la vibration reste)
+export function sonActif() { return lire(CLES.son, true) !== false; }
+export function choisirSon(actif) { ecrire(CLES.son, !!actif); }
 
 const FICHIER = 'sons/fin-minuteur.wav';
 const VOLUME = 0.7;
@@ -56,7 +61,7 @@ function preparer() {
 
 function jouer() {
   const c = contexte();
-  if (!c || !tampon) return;
+  if (!c || !tampon || !sonActif()) return;
   if (c.state !== 'running') c.resume().catch(() => {});
   const source = c.createBufferSource();
   const volume = c.createGain();
@@ -65,6 +70,27 @@ function jouer() {
   source.connect(volume);
   volume.connect(c.destination);
   source.start();
+}
+
+/* Minuteur personnel d'une carte chronométrée (reponses.js).
+   Au tap sur « Répondre » (un vrai geste) : on réveille le son et on joue un son muet d'un instant.
+   Sans ça, l'iPhone refuserait de sonner plus tard, à la fin du temps, quand plus personne ne touche l'écran. */
+export function debloquerSon() {
+  const c = contexte(); if (!c) return;
+  try {
+    if (c.state !== 'running') c.resume().catch(() => {});
+    const muet = c.createBufferSource();
+    muet.buffer = c.createBuffer(1, 1, 22050);
+    muet.connect(c.destination);
+    muet.start(0);
+  } catch (e) {}
+  charger();
+}
+
+// Fin du temps de mon minuteur : le son doux (si le réglage « Son » est activé) et une vibration courte (si possible)
+export function sonnerFinReponse() {
+  jouer();
+  try { if (navigator.vibrate) navigator.vibrate(200); } catch (e) {}
 }
 
 const course = m => m.cle + '@' + m.fin;

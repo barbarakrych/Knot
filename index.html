@@ -129,6 +129,11 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       </div>
       <p class="muted" id="notifaide" hidden></p>
     </section>
+    <!-- Son de fin des minuteurs : propre à ce téléphone (voir son.js) -->
+    <section class="reglage ligne">
+      <div class="disttxt"><span id="sonlabel">Son</span></div>
+      <button class="switch" id="sonsw" type="button" role="switch" aria-checked="true" aria-labelledby="sonlabel"><span></span></button>
+    </section>
     <!-- Thème : un seul bouton, qui passe au mode suivant à chaque appui (icône et libellé posés par reglages.js) -->
     <section class="reglage theme">
       <div class="reglage-ligne">

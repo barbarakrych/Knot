@@ -1,6 +1,6 @@
 /* Écran Réglages (l'engrenage en haut à droite).
    Un bloc <section class="reglage"> par réglage dans index.html. De haut en bas : « À distance » (partagé avec l'autre
-   téléphone), le thème (propre à ce téléphone, voir theme.js), puis le couple (code à donner à l'autre,
+   téléphone), les notifications et le son (propres à ce téléphone), le thème (propre à ce téléphone, voir theme.js), puis le couple (code à donner à l'autre,
    ou « Relier le téléphone de [l'autre] »). */
 import { $, el, copier } from './commun.js';
 import { actualiser, demanderCodeRelier, messageErreur } from './couple.js';
@@ -8,6 +8,7 @@ import { etat, agir, ecouter } from './partie.js';
 import { themeChoisi, themeSuivant, choisirTheme } from './theme.js';
 import { estDemo } from './demo.js';
 import * as notifs from './notifications.js';
+import { sonActif, choisirSon } from './son.js';
 
 // Icônes du bouton Thème, en trait simple comme l'engrenage (pas de caractère : l'iPhone en ferait des émojis)
 const ICONES_THEME = {
@@ -33,6 +34,11 @@ export function preparerReglages(detache) {
   }
   ecouter(afficherInterrupteurs);
   afficherInterrupteurs();
+
+  // Son : propre à ce téléphone. Coupé, la fin des minuteurs ne sonne plus (la vibration reste).
+  function afficherSon() { $('sonsw').setAttribute('aria-checked', String(sonActif())); }
+  $('sonsw').onclick = () => { choisirSon(!sonActif()); afficherSon(); };
+  afficherSon();
 
   // Thème : un seul bouton. Chaque appui passe au mode suivant (sombre → clair → auto), appliqué tout de suite
   // à toute l'app et gardé sur l'appareil. La phrase sur Auto ne s'affiche qu'en mode Auto.

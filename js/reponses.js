@@ -22,6 +22,7 @@ import { ecouter } from './partie.js';
 import { estDemo } from './demo.js';
 import { prevenir } from './notifications.js';
 import { CLES, lire, ecrire as garder } from './stockage.js';
+import { debloquerSon, sonnerFinReponse } from './son.js';
 
 const MAX = 1000;
 const MESSAGES = {
@@ -225,6 +226,8 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       if (!brouillon && r && r.rendue) brouillon = r.rendue; // texte rendu après une annulation : on repart de lui
       dessiner(); return;
     }
+    // Tout de suite, pendant le geste : sinon l'iPhone refuserait de sonner à la fin du temps
+    debloquerSon();
     if (enCours()) { ouvrirBrouillon(); return; }
     const c = cle;
     if (estDemo()) {
@@ -275,7 +278,8 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       saisie.compte.classList.toggle('dernieres', s <= 10);
     }
     if (Date.now() - derniereSauvegarde >= SAUVER_TOUTES) sauver();
-    if (ms <= 0) finDuTemps();
+    // Fin du temps. Si on la découvre longtemps après (app revenue au premier plan), pas de son en retard.
+    if (ms <= 0) finDuTemps(reste() < -5000);
   }
 
   // Sauve le brouillon (dans la base, et une copie sur le téléphone en cas de coupure)
@@ -300,8 +304,9 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
 
   // Temps écoulé : le champ passe en lecture seule et la réponse part telle quelle, sans confirmation.
   // Rien d'écrit : la base annule la carte (voir finaliser dans schema.sql).
-  async function finDuTemps() {
+  async function finDuTemps(enRetard = false) {
     if (expire) return;
+    if (!enRetard) sonnerFinReponse();
     if (saisie.ta && saisie.ta.isConnected) { brouillon = saisie.ta.value; saisie.ta.readOnly = true; }
     expire = true; arreter();
     const c = cle;
