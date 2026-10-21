@@ -314,3 +314,16 @@ details.guide .rule{margin-top:10px}
 .precedente-in .reponse-texte{font-size:.95rem}
 .precedente:not(.deplie) .precedente-q,.precedente:not(.deplie) .reponse-texte{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}
 .precedente-plus{font-size:.8rem;font-weight:600;color:var(--blue);align-self:flex-end}
+
+/* Réponses longues : au verso, chaque réponse coupée à 5 lignes, et « Lire la suite » ouvre le texte en entier */
+.verso.apercu .reponse-texte{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
+.lire-suite{align-self:center;min-height:44px}
+.lecture{position:fixed;inset:0;z-index:60;overflow-y:auto;background:var(--paper);padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:12px;box-sizing:border-box}
+.lecture>*{width:100%;max-width:560px;margin-inline:auto;box-sizing:border-box}
+.lecture p{margin:0}
+.lecture-retour{align-self:flex-start;width:auto;max-width:none;margin-inline:0 auto;min-height:44px}
+@media (min-width:600px){.lecture-retour{margin-inline:calc(50% - 280px) auto}}
+.lecture .kicker{padding:0;margin-top:8px}
+.lecture-q{font-family:var(--f-card);font-size:1.15rem;line-height:1.35;color:var(--muted)}
+html.lecture-ouverte body{overflow:hidden}

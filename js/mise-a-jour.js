@@ -19,7 +19,7 @@ function accueilEnCours() {
   const accueil = document.getElementById('view-accueil');
   return !!accueil && !accueil.hidden && document.getElementById('acc-choix').hidden;
 }
-function animationEnCours() { return !!document.querySelector('.swipe'); }
+function animationEnCours() { return !!document.querySelector('.swipe, .lecture'); } // .lecture : « Lire la suite » ouvert
 
 function calme() { return !minuteurEnCours() && !texteEnCours() && !accueilEnCours() && !animationEnCours(); }
 

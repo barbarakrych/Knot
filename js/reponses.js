@@ -196,7 +196,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
   function appliquer() {
     if (!flip) return;
     const r0 = flip.recto;
-    flip.verso.className = 'card verso' + ['action', 'verite', 'cover'].filter(k => r0.classList.contains(k)).map(k => ' ' + k).join('');
+    ['action', 'verite', 'cover'].forEach(k => flip.verso.classList.toggle(k, r0.classList.contains(k))); // couleurs du recto
     flip.el.classList.toggle('retournee', retournee);
     flip.label.textContent = '';
     flip.label.append(el('span', 'flip-icone', '↻'), retournee ? 'Voir la question' : 'Voir les réponses');
@@ -225,8 +225,48 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     }
     const inn = flip.verso.firstChild; inn.textContent = '';
     flip.recto.querySelectorAll('.corner').forEach(c => { const coin = c.cloneNode(true); coin.removeAttribute('id'); inn.append(coin); });
-    inn.append(el('p', 'kicker', 'Vos réponses'), bulle(autre(), r.autre, r.autre_le), bulle(moi(), r.moi, r.moi_le));
+    const suite = bouton('link lire-suite', 'Lire la suite', ouvrirLecture);
+    inn.append(el('p', 'kicker', 'Vos réponses'), bulle(autre(), r.autre, r.autre_le), bulle(moi(), r.moi, r.moi_le), suite);
+    flip.suite = suite;
+    mesurer();
     appliquer();
+  }
+
+  // Réponses longues : le verso ne défile jamais. On mesure sa hauteur rendue (version complète, sans la hauteur
+  // minimale de la carte) ; au-delà de 60 % de l'écran, chaque réponse est coupée (aperçu) et « Lire la suite » apparaît.
+  function mesurer() {
+    if (!flip || !flip.suite || !flip.el.classList.contains('revelee')) return;
+    const v = flip.verso;
+    v.classList.remove('apercu');
+    flip.suite.hidden = true; // le lien ne compte pas dans la hauteur des réponses
+    Object.assign(v.style, { alignSelf: 'start', minHeight: '0' });
+    const trop = v.offsetHeight > window.innerHeight * 0.6;
+    Object.assign(v.style, { alignSelf: '', minHeight: '' });
+    v.classList.toggle('apercu', trop);
+    flip.suite.hidden = !trop;
+  }
+
+  // « Lire la suite » : les deux réponses en entier, en plein écran. « ← Retour », Échap ou le bouton retour du téléphone ferment.
+  function ouvrirLecture() {
+    if (!r || !r.moi || !r.autre || document.querySelector('.lecture')) return;
+    const vue = el('section', 'lecture');
+    vue.setAttribute('role', 'dialog'); vue.setAttribute('aria-modal', 'true'); vue.setAttribute('aria-label', 'Vos réponses');
+    const retour = bouton('btn lecture-retour', '← Retour', () => history.back());
+    const q = flip && flip.recto.querySelector('.q');
+    vue.append(retour, el('p', 'kicker', 'Vos réponses'), el('p', 'lecture-q', q ? q.textContent : ''),
+      bulle(autre(), r.autre, r.autre_le), bulle(moi(), r.moi, r.moi_le));
+    document.body.append(vue);
+    document.documentElement.classList.add('lecture-ouverte');
+    history.pushState({ lecture: true }, ''); // le bouton retour du téléphone ferme la vue au lieu de quitter l'app
+    const echap = e => { if (e.key === 'Escape') history.back(); };
+    const fermer = () => {
+      vue.remove();
+      document.documentElement.classList.remove('lecture-ouverte');
+      removeEventListener('popstate', fermer); removeEventListener('keydown', echap);
+      if (flip && flip.suite && flip.suite.isConnected) flip.suite.focus();
+    };
+    addEventListener('popstate', fermer); addEventListener('keydown', echap);
+    retour.focus();
   }
 
   // Compact : « Carte précédente », seulement quand les deux réponses sont révélées. Un appui montre tout.
@@ -349,5 +389,8 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     ouvrir() { if (cle && !(r && r.moi)) { ecrire = true; erreur = ''; dessiner(); } }
   };
   blocs.add(bloc);
+  // Écran tourné ou redimensionné : on remesure (une seule fois, quand ça s'arrête de bouger)
+  let attente = 0;
+  addEventListener('resize', () => { clearTimeout(attente); attente = setTimeout(mesurer, 150); });
   return bloc;
 }
