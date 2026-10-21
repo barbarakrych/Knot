@@ -8,7 +8,7 @@ import { etat, agir, ecouter } from './partie.js';
 import { themeChoisi, themeSuivant, choisirTheme } from './theme.js';
 import { estDemo } from './demo.js';
 import * as notifs from './notifications.js';
-import { sonActif, choisirSon } from './son.js';
+import { volumeSon, choisirVolume, essayerSon } from './son.js';
 
 // Icônes du bouton Thème, en trait simple comme l'engrenage (pas de caractère : l'iPhone en ferait des émojis)
 const ICONES_THEME = {
@@ -35,10 +35,18 @@ export function preparerReglages(detache) {
   ecouter(afficherInterrupteurs);
   afficherInterrupteurs();
 
-  // Son : propre à ce téléphone. Coupé, la fin des minuteurs ne sonne plus (la vibration reste).
-  function afficherSon() { $('sonsw').setAttribute('aria-checked', String(sonActif())); }
-  $('sonsw').onclick = () => { choisirSon(!sonActif()); afficherSon(); };
-  afficherSon();
+  // Son du minuteur : un volume de 0 à 100, propre à ce téléphone. À 0, la fin des minuteurs ne sonne plus
+  // (la vibration reste). On le garde en glissant ; le son d'essai se joue quand on relâche.
+  function montrerVolume(v) {
+    const c = $('sonvol');
+    c.style.setProperty('--v', v + '%');
+    c.closest('.volume').classList.toggle('bas', v < 15); // la note n'est plus sur la partie remplie
+    c.setAttribute('aria-valuetext', v ? v + ' %' : 'Coupé');
+  }
+  $('sonvol').value = volumeSon();
+  montrerVolume(volumeSon());
+  $('sonvol').oninput = e => { choisirVolume(e.target.value); montrerVolume(volumeSon()); };
+  $('sonvol').onchange = () => { if (volumeSon() > 0) essayerSon(); };
 
   // Thème : un seul bouton. Chaque appui passe au mode suivant (sombre → clair → auto), appliqué tout de suite
   // à toute l'app et gardé sur l'appareil. La phrase sur Auto ne s'affiche qu'en mode Auto.

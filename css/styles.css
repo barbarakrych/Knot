@@ -340,3 +340,17 @@ html.lecture-ouverte body{overflow:hidden}
 .toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:70;margin:0;
   max-width:calc(100% - 32px);box-sizing:border-box;background:var(--ink);color:var(--paper);font-size:.92rem;font-weight:600;
   padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px -10px rgba(20,30,60,.45);text-align:center}
+
+/* Son du minuteur : une pilule horizontale qui se remplit selon le volume, la note de musique dedans, à gauche.
+   Le curseur lui-même est invisible : toute la pilule se glisse. --v (posée par reglages.js) = la part remplie. */
+.volume{position:relative;height:40px;margin-top:10px}
+.volume input{-webkit-appearance:none;appearance:none;display:block;width:100%;height:100%;margin:0;padding:0;border-radius:999px;cursor:pointer;
+  background:linear-gradient(to right,var(--ink) 0 var(--v,70%),var(--line) var(--v,70%) 100%);touch-action:pan-y}
+.volume input::-webkit-slider-runnable-track{height:100%;background:transparent;border:none}
+.volume input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:1px;height:40px;background:transparent;border:none}
+.volume input::-moz-range-track{height:100%;background:transparent;border:none}
+.volume input::-moz-range-thumb{width:1px;height:40px;background:transparent;border:none}
+.volume input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.volume svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;pointer-events:none;
+  fill:none;stroke:var(--paper);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.volume.bas svg{stroke:var(--muted)}

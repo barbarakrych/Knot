@@ -129,10 +129,16 @@ setTimeout(function () { document.documentElement.classList.remove('chargement')
       </div>
       <p class="muted" id="notifaide" hidden></p>
     </section>
-    <!-- Son de fin des minuteurs : propre à ce téléphone (voir son.js) -->
-    <section class="reglage ligne">
-      <div class="disttxt"><span id="sonlabel">Son</span></div>
-      <button class="switch" id="sonsw" type="button" role="switch" aria-checked="true" aria-labelledby="sonlabel"><span></span></button>
+    <!-- Son de fin des minuteurs : un volume de 0 à 100, propre à ce téléphone (voir son.js).
+         Une pilule qui se remplit, avec la note dedans ; le son d'essai se joue quand on relâche. -->
+    <section class="reglage theme">
+      <div class="reglage-ligne">
+        <span class="reglage-titre" id="sonlabel">Son du minuteur</span>
+      </div>
+      <div class="volume">
+        <input type="range" id="sonvol" min="0" max="100" step="5" value="70" aria-labelledby="sonlabel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5.5l11-2V16"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+      </div>
     </section>
     <!-- Thème : un seul bouton, qui passe au mode suivant à chaque appui (icône et libellé posés par reglages.js) -->
     <section class="reglage theme">

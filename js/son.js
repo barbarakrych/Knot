@@ -14,12 +14,19 @@
 import { etat, ecouter, maintenant } from './partie.js';
 import { CLES, lire, ecrire } from './stockage.js';
 
-// Réglage « Son » (propre à ce téléphone) : coupé, aucun minuteur ne sonne (la vibration reste)
-export function sonActif() { return lire(CLES.son, true) !== false; }
-export function choisirSon(actif) { ecrire(CLES.son, !!actif); }
+// Réglage « Son du minuteur » (propre à ce téléphone) : un volume de 0 à 100, 70 par défaut.
+// 0 = aucun minuteur ne sonne (la vibration reste). Ancien réglage oui/non : oui → 70, non → 0.
+export const VOLUME_DEFAUT = 70;
+export function volumeSon() {
+  const v = lire(CLES.son, VOLUME_DEFAUT);
+  if (v === true) return VOLUME_DEFAUT;
+  if (v === false) return 0;
+  const n = Number(v);
+  return Number.isFinite(n) ? Math.min(100, Math.max(0, Math.round(n))) : VOLUME_DEFAUT;
+}
+export function choisirVolume(v) { ecrire(CLES.son, Math.min(100, Math.max(0, Math.round(Number(v) || 0)))); }
 
 const FICHIER = 'sons/fin-minuteur.wav';
-const VOLUME = 0.7;
 // App en arrière-plan : le téléphone peut endormir les réveils. Si on revient plus de 5 s après la fin,
 // on ne sonne pas en retard (l'écran affiche déjà « Temps écoulé »).
 const RETARD_MAX = 5000;
@@ -61,12 +68,13 @@ function preparer() {
 
 function jouer() {
   const c = contexte();
-  if (!c || !tampon || !sonActif()) return;
+  const v = volumeSon();
+  if (!c || !tampon || !v) return;
   if (c.state !== 'running') c.resume().catch(() => {});
   const source = c.createBufferSource();
   const volume = c.createGain();
   source.buffer = tampon;
-  volume.gain.value = VOLUME;
+  volume.gain.value = v / 100; // ne peut que baisser le son : le maximum reste le volume du téléphone
   source.connect(volume);
   volume.connect(c.destination);
   source.start();
@@ -87,7 +95,13 @@ export function debloquerSon() {
   charger();
 }
 
-// Fin du temps de mon minuteur : le son doux (si le réglage « Son » est activé) et une vibration courte (si possible)
+// Son d'essai, quand on relâche le curseur du volume dans les Réglages (pour ne pas régler à l'aveugle)
+export function essayerSon() {
+  preparer();
+  charger().then(jouer);
+}
+
+// Fin du temps de mon minuteur : le son doux (au volume du réglage, rien à 0) et une vibration courte (si possible)
 export function sonnerFinReponse() {
   jouer();
   try { if (navigator.vibrate) navigator.vibrate(200); } catch (e) {}
