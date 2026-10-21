@@ -818,6 +818,11 @@ $$;
 revoke all on public.abonnements, public.notifs_envoyees from anon, authenticated;
 revoke all on function public.s_abonner(text, text, text), public.se_desabonner() from public, anon;
 grant execute on function public.s_abonner(text, text, text), public.se_desabonner() to authenticated;
+-- La fonction en ligne « notifier » lit ces tables avec la clé secrète (rôle service_role). Ce rôle ignore les règles RLS
+-- mais a besoin de droits sur chaque table : les projets récents ne les donnent plus tout seuls. Seulement ce qui sert.
+grant select on public.membres, public.couples, public.reponses to service_role;
+grant select, insert, update on public.notifs_envoyees to service_role;
+grant select, delete on public.abonnements to service_role;
 
 -- Temps réel : Supabase prévient les téléphones dès qu'une partie change (seulement ceux qui ont le droit de la voir).
 do $$

@@ -37,8 +37,27 @@ function preparerCles() {
   }
   return clesPretes;
 }
-const base = createClient(Deno.env.get('SUPABASE_URL') ?? '', Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '', {
-  auth: { persistSession: false }
+// Clé secrète du projet (lit toutes les tables, sans les règles RLS). Le projet utilise les nouvelles clés
+// (sb_publishable_… / sb_secret_…) : Supabase les donne dans SUPABASE_SECRET_KEYS (un objet JSON, clé « default »).
+// L'ancienne SUPABASE_SERVICE_ROLE_KEY ne sert plus que si la nouvelle manque.
+function cleSecrete() {
+  try {
+    const cles = JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS') ?? '{}');
+    if (cles && typeof cles.default === 'string' && cles.default) return cles.default;
+  } catch { /* pas de nouvelles clés */ }
+  return Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+}
+const CLE = cleSecrete();
+// supabase-js met la clé à la fois dans « apikey » et dans « Authorization: Bearer … ». Une nouvelle clé (sb_…) n'est pas
+// un jeton JWT : sur Authorization, elle serait refusée. On ne la laisse donc que dans « apikey ».
+function fetchSansBearer(url: RequestInfo | URL, init: RequestInit = {}) {
+  const entetes = new Headers(init.headers);
+  if (CLE.startsWith('sb_') && entetes.get('Authorization') === 'Bearer ' + CLE) entetes.delete('Authorization');
+  return fetch(url, { ...init, headers: entetes });
+}
+const base = createClient(Deno.env.get('SUPABASE_URL') ?? '', CLE, {
+  auth: { persistSession: false, autoRefreshToken: false },
+  global: { fetch: fetchSansBearer }
 });
 
 Deno.serve(async (req) => {
@@ -56,7 +75,12 @@ Deno.serve(async (req) => {
   try { type = (await req.json()).type; } catch { /* corps vide */ }
   if (type !== 'reponse' && type !== 'tirage') return repondre(400, { erreur: 'type' });
 
-  const { data: membre } = await base.from('membres').select('couple_id, place').eq('user_id', user.id).maybeSingle();
+  const { data: membre, error: erreurBase } = await base.from('membres').select('couple_id, place').eq('user_id', user.id).maybeSingle();
+  // Une erreur de la base (ex. clé secrète refusée) n'est pas « pas de couple » : on la dit clairement
+  if (erreurBase) {
+    console.error('Lecture des membres impossible :', erreurBase.message);
+    return repondre(500, { erreur: 'base', detail: erreurBase.message });
+  }
   if (!membre) return repondre(403, { erreur: 'pas_de_couple' });
   const { data: couple } = await base.from('couples').select('prenom_1, prenom_2').eq('id', membre.couple_id).single();
   const prenom = membre.place === 1 ? couple?.prenom_1 : couple?.prenom_2;
