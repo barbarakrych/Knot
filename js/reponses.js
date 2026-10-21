@@ -334,8 +334,21 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     r0.setAttribute('aria-hidden', String(retournee)); flip.verso.setAttribute('aria-hidden', String(!retournee));
   }
 
+  // Carte chronométrée, avant le tap sur « Répondre » : une ligne sur la carte dit la durée et quand le minuteur démarre
+  function majDureeInfo() {
+    if (!flip) return;
+    const inn = flip.recto.querySelector('.card-in');
+    let info = inn.querySelector('.duree-info');
+    const montrer = chrono() && !(r && (r.moi || r.mon_brouillon != null));
+    if (!montrer) { if (info) info.remove(); return; }
+    if (!info) { info = el('p', 'duree-info'); inn.insertBefore(info, inn.querySelector('.meta')); }
+    const duree = secondes % 60 ? secondes + ' s' : secondes / 60 + ' min';
+    info.textContent = '⏱ ' + duree + ' · démarre quand tu cliques sur Répondre';
+  }
+
   // Révélée (les deux ont répondu) ou pas. La toute première fois : la carte se retourne sous nos yeux.
   function majFlip(revele) {
+    majDureeInfo();
     if (!flip) return;
     flip.el.classList.toggle('revelee', revele);
     flip.label.hidden = !revele;
