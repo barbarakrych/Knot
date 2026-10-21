@@ -327,3 +327,11 @@ details.guide .rule{margin-top:10px}
 .lecture .kicker{padding:0;margin-top:8px}
 .lecture-q{font-family:var(--f-card);font-size:1.15rem;line-height:1.35;color:var(--muted)}
 html.lecture-ouverte body{overflow:hidden}
+
+/* Minuteur d'une carte chronométrée : compte à rebours discret en haut du champ.
+   Plus que 60 s : couleur d'accent ; plus que 10 s : rouge. Pas de clignotement. */
+.compte{align-self:flex-end;font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:3px 10px;transition:color .3s,border-color .3s}
+.compte.bientot{color:var(--blue);border-color:var(--blue)}
+.compte.dernieres{color:var(--red);border-color:var(--red)}
+.reponses textarea[readonly]{opacity:.7}

@@ -10,7 +10,8 @@ import { etat, maintenant } from './partie.js';
 
 function minuteurEnCours() {
   const m = etat().minuteur;
-  return !!(m && m.marche && m.fin > maintenant());
+  // .compte : le minuteur personnel d'une carte chronométrée (reponses.js) est affiché
+  return !!(m && m.marche && m.fin > maintenant()) || !!document.querySelector('.reponses .compte');
 }
 function texteEnCours() {
   return [...document.querySelectorAll('input[type="text"], textarea')].some(c => c.value.trim());

@@ -1,7 +1,7 @@
 /* Onglet « Pour plus tard » : les 8 paquets, carte par carte, dans l'ordre. */
-import { $, el, fmt, lenClass, cornerNodes, srcLine, balayer, iconeMinuteur, etatMinuteur, ordreMinuteur } from './commun.js';
+import { $, el, lenClass, cornerNodes, srcLine, balayer } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
-import { etat, agir, ecouter, maintenant } from './partie.js';
+import { etat, agir, ecouter } from './partie.js';
 import { creerBlocReponses } from './reponses.js';
 
 const GUIDE = [
@@ -15,11 +15,10 @@ const GUIDE = [
 export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
   // Progression par paquet : i = carte affichée (-1 = pas commencé), max = carte la plus loin atteinte.
   // Elle est partagée par les deux téléphones (partie.js) ; le paquet ouvert, lui, reste propre à ce téléphone.
-  let K = {}, MINUTEUR = null;
-  function charger() { const e = etat(); K = e.paquets; MINUTEUR = e.minuteur; }
+  let K = {};
+  function charger() { K = etat().paquets; }
   let open = lire(CLES.ecran, {}).open || null;
   let visible = false;
-  let afficherMinuteur = null; // met à jour le minuteur de la carte affichée, s'il y en a un
 
   // t : quand le paquet a été commencé (la « fois » des réponses : recommencé, il repart sans réponses)
   function kSave(id, d) { agir([{ set: ['paquets', id], valeur: d.t ? { i: d.i, max: d.max, t: d.t } : { i: d.i, max: d.max } }]); }
@@ -38,7 +37,6 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
   function render() {
     if (!visible) { reponses.montrer(null); return; }
-    afficherMinuteur = null;
     reponses.element.remove(); // remis sous la carte par renderPaquet (le même bloc : un texte en cours reste)
     const root = $('view-topics'); root.textContent = '';
     if (open) {
@@ -113,34 +111,10 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       co.append(...cornerNodes(String(PAQUETS.indexOf(pq) + 1), (d.i + 1) + '/' + tot));
       inn.append(co);
     });
-    inn.append(el('p', 'kicker', c.partie + (c.ex ? ' · Exercice' : '')), el('p', 'q' + lenClass(c.texte), c.texte));
+    inn.append(el('p', 'kicker', c.partie + (c.ex ? ' · Exercice' : '') + (c.ex && c.min ? ' · ' + c.min + ' min' : '')),
+      el('p', 'q' + lenClass(c.texte), c.texte));
 
-    // Minuteur pour les exercices qui ont une durée
-    // Le minuteur est celui de la partie, partagé avec l'autre téléphone (clé « paquet:id:numéro de carte »).
-    if (c.ex && c.min) {
-      const cle = 'paquet:' + pq.id + ':' + d.i, total = c.min * 60;
-      const tw = el('div', 'timer');
-      const clock = el('span', 'clock');
-      const tb = el('button', 'rond primary');
-      const tr = el('button', 'rond');
-      tb.type = tr.type = 'button';
-      // Met l'horloge et les deux boutons dans l'état du minuteur
-      afficherMinuteur = () => {
-        const t = etatMinuteur(MINUTEUR, cle, total, maintenant());
-        clock.textContent = t.done ? 'Temps écoulé' : fmt(t.left);
-        clock.className = 'clock' + (t.done ? ' done' : '');
-        if (t.running) iconeMinuteur(tb, 'pause', 'Pause');
-        else iconeMinuteur(tb, 'lancer', t.done ? 'Relancer' : (t.left < total ? 'Reprendre' : 'Lancer le minuteur'));
-        iconeMinuteur(tr, 'recommencer', 'Recommencer');
-        tr.hidden = !(t.running || t.done || t.left < total);
-      };
-      tb.onclick = () => agir([ordreMinuteur(MINUTEUR, cle, total, maintenant())]);
-      tr.onclick = () => agir([{ suppr: ['minuteur'] }]);
-      afficherMinuteur();
-      const boutons = el('div', 'timer-boutons');
-      boutons.append(tb, tr);
-      tw.append(clock, boutons); inn.append(tw);
-    }
+    // Exercices qui ont une durée : chacun a son propre minuteur, lancé par « Répondre » (reponses.js).
     card.append(inn); root.append(card);
     reponses.attacher(card); // la carte se retourne quand les deux ont répondu
 
@@ -158,7 +132,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     row.append(prev, next); root.append(row);
     // Les réponses sous les boutons habituels (le même bloc à chaque fois : un texte en cours reste)
     root.append(reponses.element);
-    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: d.t || 0 });
+    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: d.t || 0, secondes: c.ex && c.min ? c.min * 60 : 0 });
 
     root.append(guideBox(false));
 
@@ -188,9 +162,8 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
         balayer(card, () => document.querySelector('#view-topics .pcard'), b.i > a.i ? 'droite' : 'gauche');
       }
       render();
-    } else if (afficherMinuteur) afficherMinuteur();
+    }
   });
-  setInterval(() => { if (afficherMinuteur && MINUTEUR && MINUTEUR.marche) afficherMinuteur(); }, 500);
   charger();
 
   // app.js appelle ceci quand on change d'onglet

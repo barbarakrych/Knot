@@ -99,7 +99,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   // Le minuteur est dans la partie partagée : lancé ici, il s'écoule aussi chez l'autre.
   function renderTimer() {
     const c = cardById(S.current);
-    const show = !!(c && c.pile === 'action' && duree(c));
+    // Carte avec « Répondre » : chacun a son propre minuteur, lancé par « Répondre » (reponses.js)
+    const show = !!(c && c.pile === 'action' && duree(c) && !peutRepondre(c));
     $('timer').hidden = !show; if (!show) return;
     const timer = etatMinuteur(MINUTEUR, c.id, duree(c), maintenant());
     const clock = $('clock');
@@ -162,7 +163,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     renderTimer();
     // La « fois » de la carte : l'heure où elle a été tirée. Retirée après un remélange, elle repart sans réponses.
     const fois = c => (S.drawn[c.id] && S.drawn[c.id].at) || 0;
-    reponses.montrer(peutRepondre(cur) ? { carte: cur.id, fois: fois(cur) } : null);
+    reponses.montrer(peutRepondre(cur) ? { carte: cur.id, fois: fois(cur), secondes: duree(cur) } : null);
     // La carte précédente : la dernière tirée avant celle-ci (rien n'est montré tant que les deux n'y ont pas répondu)
     const avant = Object.entries(S.drawn)
       .filter(([id, v]) => v && id !== S.current && (!cur || (v.at || 0) < fois(cur)) && peutRepondre(cardById(id)))
@@ -176,7 +177,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if ((defi && defi.id) !== defiAffiche) { defiAffiche = defi ? defi.id : null; defiOuvert = false; } // nouveau défi : encadré refermé
     renderDefiReponses();
     // Défi affiché sur la carte : ses réponses sont sous la carte, pas en double dans l'encadré
-    reponsesDefi.montrer(peutRepondre(defi) && defi.id !== S.current ? { carte: defi.id, fois: fois(defi) } : null);
+    reponsesDefi.montrer(peutRepondre(defi) && defi.id !== S.current ? { carte: defi.id, fois: fois(defi), secondes: duree(defi) } : null);
 
     $('skip').disabled = !cur;
 
