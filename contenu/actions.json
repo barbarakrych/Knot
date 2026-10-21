@@ -1201,7 +1201,8 @@
   "minutes": null,
   "quand": "semaine",
   "mode": "distance",
-  "texte": "Écris dix choses que tu aimes chez toi, et envoie-les-moi."
+  "texte": "Écris dix choses que tu aimes chez toi, et envoie-les-moi.",
+  "repondre": true
  },
  {
   "id": "a-13a1l89",
