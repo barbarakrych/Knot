@@ -6,7 +6,7 @@ import { $, el, fmt, lenClass, cornerNodes, balayer, iconeMinuteur, etatMinuteur
 import { coupleLocal } from './couple.js';
 import { etat, agir, ecouter, maintenant } from './partie.js';
 import { sonnerALaFinDuMinuteur } from './son.js';
-import { creerBlocReponses } from './reponses.js';
+import { creerBlocReponses, annulerReponses } from './reponses.js';
 import { prevenir } from './notifications.js';
 
 const PILES = { verite: { name: 'Vérité' }, action: { name: 'Action' } };
@@ -22,7 +22,8 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   let noteTimer = null, confirmDel = null, editing = null;
   let DIST = true, MINUTEUR = null;
   // Répondre chacun de son côté (reponses.js) : sous « Passer cette carte », pour garder les boutons habituels sous la carte
-  const reponses = creerBlocReponses({ bouton: $('repondre') }); // « Répondre » sur la ligne de « Passer cette carte »
+  // « Répondre » sur la ligne de « Passer cette carte ». En démo, une carte annulée (brouillon vide) est retirée ici.
+  const reponses = creerBlocReponses({ bouton: $('repondre'), retirerEnDemo: retirer });
   $('skip').closest('.actions').after(reponses.element);
   reponses.attacher($('card')); // la carte se retourne quand les deux ont répondu
   // Au-dessus de la carte : la carte précédente, en petit, si vous y avez répondu tous les deux
@@ -32,7 +33,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   // Le défi en cours a aussi ses réponses dans son encadré, quand une autre carte est affichée (sinon elles sont sous la carte) :
   // « Répondre » l'ouvre, et il s'ouvre tout seul dès que l'un de vous a répondu.
   let defiOuvert = false, defiAffiche = null;
-  const reponsesDefi = creerBlocReponses({ quandRecu: r => { if (r && r.places && r.places.length && !defiOuvert) { defiOuvert = true; renderDefiReponses(); } } });
+  const reponsesDefi = creerBlocReponses({ retirerEnDemo: retirer, quandRecu: r => { if (r && r.places && r.places.length && !defiOuvert) { defiOuvert = true; renderDefiReponses(); } } });
   $('defireponses').append(reponsesDefi.element);
   function renderDefiReponses() {
     const sousLaCarte = !!S.current && S.current === S.defi;
@@ -244,10 +245,21 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     const defi = wasDefi ? null : cardById(S.defi);
     const p = allCards(c.pile).filter(x => x.id !== old && !S.drawn[x.id] && modeOk(x) && !(defi && x.big));
     balayer($('card'), undefined, 'gauche');
+    // Si l'un de nous avait commencé à répondre : la carte est annulée (réponses rendues à leurs auteurs, mention neutre)
+    if (peutRepondre(c)) annulerReponses(old, (S.drawn[old] && S.drawn[old].at) || 0);
     const o = [{ suppr: ['tirees', old] }];
     if (wasDefi) o.push({ suppr: ['defi'] });
     if (p.length) agir(o.concat(ordresTirer(auHasard(p))));
     else agir(o.concat({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] }));
+  }
+  // Démo seulement : une carte annulée (brouillon vide à la fin du temps) retourne dans la pile, sans autre carte tirée
+  // (en vrai, c'est la base qui le fait, voir annuler_interne dans schema.sql)
+  function retirer(id) {
+    if (!S.drawn[id]) return;
+    const o = [{ suppr: ['tirees', id] }];
+    if (S.current === id) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
+    if (S.defi === id) o.push({ suppr: ['defi'] });
+    agir(o);
   }
   // Défi en cours : « C'est fait ! » le termine (la carte reste tirée) ;
   // « Remettre dans la pile » l'annule et la carte peut ressortir.
@@ -257,6 +269,7 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
   }
   function defiBack() {
     const id = S.defi; if (!id) return;
+    if (peutRepondre(cardById(id))) annulerReponses(id, (S.drawn[id] && S.drawn[id].at) || 0);
     const o = [{ suppr: ['defi'] }, { suppr: ['tirees', id] }];
     if (S.current === id) o.push({ set: ['affichee'], valeur: null }, { suppr: ['minuteur'] });
     agir(o);

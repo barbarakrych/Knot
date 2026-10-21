@@ -336,3 +336,7 @@ html.lecture-ouverte body{overflow:hidden}
 .compte.dernieres{color:var(--red);border-color:var(--red)}
 .reponses textarea[readonly]{opacity:.7}
 .duree-info{margin:0;font-size:.85rem;font-weight:600;color:var(--muted);text-align:center}
+/* Petit message en bas de l'écran (ex. « Cette carte a été annulée. »), neutre, qui disparaît tout seul */
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:70;margin:0;
+  max-width:calc(100% - 32px);box-sizing:border-box;background:var(--ink);color:var(--paper);font-size:.92rem;font-weight:600;
+  padding:10px 16px;border-radius:12px;box-shadow:0 8px 24px -10px rgba(20,30,60,.45);text-align:center}

@@ -39,11 +39,57 @@ const blocs = new Set();
 let dernierRepere = null;
 // Quand l'autre téléphone répond, la partie change (repère etat.reponses) : chaque bloc relit sa carte.
 ecouter(e => {
+  verifierAnnulee(e);
   const repere = JSON.stringify(e.reponses || null);
   if (repere === dernierRepere) return;
   dernierRepere = repere;
   blocs.forEach(b => b.relire());
 });
+
+/* ---------- Carte annulée (partie 3) ----------
+   Brouillon vide à la fin du temps, ou « Passer cette carte » alors que l'un de nous avait commencé :
+   la base annule la carte et laisse un repère sans texte (etat.annulee = { carte, fois, n, vu }).
+   Chaque téléphone affiche une seule fois une mention neutre (sans dire qui), puis le dit à la base (annulee_vue) ;
+   le repère disparaît quand les deux l'ont vu. App en arrière-plan : on attend qu'elle revienne. */
+const MENTION_ANNULEE = 'Cette carte a été annulée.';
+let annuleeMontree = null; // n du dernier repère affiché ici
+let derniereAnnulee = null;
+function verifierAnnulee(e) {
+  derniereAnnulee = (e && e.annulee) || null;
+  const a = derniereAnnulee, c = coupleLocal();
+  if (!a || !c || a.n === annuleeMontree) return;
+  if ((Array.isArray(a.vu) ? a.vu : []).includes(c.place)) return;
+  if (document.visibilityState !== 'visible') return;
+  annuleeMontree = a.n;
+  annoncer(MENTION_ANNULEE);
+  if (!estDemo()) appeler('annulee_vue', { le_n: a.n }).catch(() => { annuleeMontree = null; });
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') verifierAnnulee({ annulee: derniereAnnulee }); });
+
+// Petit message en bas de l'écran, qui disparaît tout seul
+function annoncer(texte) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = el('p', 'toast', texte);
+  t.setAttribute('role', 'status');
+  document.body.append(t);
+  setTimeout(() => t.remove(), 5000);
+}
+
+// « Passer cette carte » (ou « Remettre dans la pile ») sur une carte avec « Répondre » : si l'un de nous avait commencé
+// (brouillon ou réponse), même résultat qu'une annulation. Sinon la base ne fait rien (pas de mention).
+export function annulerReponses(carte, fois) {
+  const k = String(carte) + '|' + String(fois);
+  // Déjà révélée (les deux ont envoyé) : passer la carte ne touche pas aux réponses
+  if ([...blocs].some(b => b.revelee(k))) return;
+  const local = lire(CLES.brouillon, null);
+  if (local && local.cle === k) garder(CLES.brouillon, null);
+  if (estDemo()) {
+    if (demoReponses.has(k)) { demoReponses.delete(k); annoncer(MENTION_ANNULEE); }
+    return;
+  }
+  appeler('annuler_carte', { la_carte: String(carte), la_fois: String(fois) })
+    .catch(e => console.info('Annulation non envoyée (hors ligne ?) :', e.message || e));
+}
 
 async function appeler(fonction, params) {
   const sb = await obtenirClient();
@@ -57,8 +103,9 @@ async function appeler(fonction, params) {
 // montrer() reçoit alors aussi { texte, titre } de la carte.
 // Options : quandRecu(r), appelée chaque fois que les réponses de la carte sont relues (ex. ouvrir l'encadré du défi
 // si quelqu'un a répondu) ; bouton, un bouton « Répondre » placé ailleurs (ex. à côté de « Passer cette carte »),
-// que le bloc montre seulement quand il sert, à la place du sien.
-export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne = null, compact = false } = {}) {
+// que le bloc montre seulement quand il sert, à la place du sien ; retirerEnDemo(carte), en démo seulement, retire
+// de l'écran une carte annulée (en vrai, c'est la base qui le fait).
+export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne = null, compact = false, retirerEnDemo = () => {} } = {}) {
   const racine = el('section', 'reponses');
   racine.hidden = true;
   let cle = null;          // { carte, fois } de la carte affichée
@@ -262,8 +309,11 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       await envoyer();
       if (erreur === MESSAGES.hors_ligne) { erreur = MESSAGES.fin_hors_ligne; dessiner(); }
     } else if (estDemo()) {
+      // En démo, pas de base : on fait ici ce qu'elle ferait (mention, carte retirée de l'écran)
       demoReponses.delete(c.carte + '|' + c.fois);
       ecrire = false; brouillon = ''; r = lireDemo(c); dessiner();
+      annoncer(MENTION_ANNULEE);
+      retirerEnDemo(c.carte);
     } else {
       ecrire = false; brouillon = ''; dessiner();
       setTimeout(() => { if (memeCle(cle, c)) relire(); }, 1500); // la base termine (ici : annule) dès qu'on relit
@@ -543,7 +593,9 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     // Ouvre tout de suite la zone de texte (si je n'ai pas encore répondu)
     ouvrir() { if (cle && !(r && r.moi)) commencer(); },
     // Le minuteur personnel de la carte affichée tourne (pour ne pas recharger l'app à ce moment-là)
-    minuteurEnCours: () => enCours()
+    minuteurEnCours: () => enCours(),
+    // Les deux réponses de cette carte (« carte|fois ») sont révélées
+    revelee: k => !!(cle && cleLocale() === k && r && r.moi && r.autre)
   };
   blocs.add(bloc);
   // Écran tourné ou redimensionné : on remesure (une seule fois, quand ça s'arrête de bouger)
