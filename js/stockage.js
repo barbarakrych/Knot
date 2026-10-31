@@ -12,6 +12,7 @@ export const CLES = {
   retenue: 'knot-retenue',    // carte révélée gardée à l'écran jusqu'à « J'ai lu · voir la carte tirée » (action-verite.js)
   son: 'knot-son',            // réglage « Son » de ce téléphone : false = coupé (voir son.js)
   brouillon: 'knot-brouillon', // copie du brouillon d'une carte chronométrée, en cas de coupure (effacée une fois envoyé)
+  saisie: 'knot-saisie',      // { carte, texte } : réponse en cours d'écriture (carte sans minuteur), effacée une fois envoyée
   revelees: 'knot-revelees',  // cartes dont la révélation (la carte qui se retourne) a déjà été jouée ici (voir reponses.js)
   theme: 'knot-theme',        // thème choisi sur ce téléphone : 'clair', 'sombre' ou 'auto' (voir theme.js)
   // Avant l'étape 4, la partie restait sur le téléphone. Ces clés ne sont plus que lues une fois,

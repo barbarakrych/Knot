@@ -232,6 +232,11 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
   const enCours = () => !!(cle && chrono() && r && r.fin && r.mon_brouillon != null && !r.moi && !expire);
   const reste = () => (r && r.fin ? r.fin - (Date.now() + decalage) : 0);
   const cleLocale = () => cle.carte + '|' + cle.fois;
+  // Carte sans minuteur : copie du texte en cours sur le téléphone, repérée par la carte seule (pas la fois)
+  function garderSaisie() {
+    if (!cle || chrono()) return;
+    garder(CLES.saisie, brouillon.trim() ? { carte: cle.carte, texte: brouillon } : null);
+  }
 
   // Tap sur « Répondre ». Carte chronométrée : la base note l'heure de départ et crée le brouillon.
   async function commencer() {
@@ -239,6 +244,9 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     if (!cle) return;
     if (!chrono()) {
       ecrire = true;
+      // Texte en cours gardé sur le téléphone (zone vidée par erreur, app rechargée) : on repart de lui
+      const copie = lire(CLES.saisie, null);
+      if (!brouillon && copie && copie.carte === cle.carte && typeof copie.texte === 'string') brouillon = copie.texte;
       if (!brouillon && r && r.rendue) brouillon = r.rendue; // texte rendu après une annulation : on repart de lui
       dessiner(); return;
     }
@@ -366,7 +374,7 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     try {
       const data = await appeler('repondre', { la_carte: c.carte, la_fois: c.fois, mon_texte: texte });
       prevenir('reponse'); // notification chez l'autre (s'il les a activées)
-      if (memeCle(cle, c)) { r = data; ecrire = false; brouillon = ''; erreur = ''; garder(CLES.brouillon, null); }
+      if (memeCle(cle, c)) { r = data; ecrire = false; brouillon = ''; erreur = ''; garder(CLES.brouillon, null); garder(CLES.saisie, null); }
       if (memeCle(cle, c) && r && r.moi && r.autre && anciennes === null) lireAnciennes(c, demande);
     } catch (e) {
       const code = String((e && e.message) || '');
@@ -516,14 +524,14 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
       const ta = el('textarea'); ta.maxLength = MAX; ta.value = brouillon;
       ta.placeholder = 'Ta réponse… ' + autre() + ' ne la verra qu’après avoir répondu.';
       ta.setAttribute('aria-label', 'Ta réponse');
-      ta.oninput = () => { brouillon = ta.value; };
+      ta.oninput = () => { brouillon = ta.value; garderSaisie(); };
       ta.readOnly = expire;
       const actions = el('div', 'actions');
       const ok = bouton('btn primary', envoi ? 'Envoi…' : 'Valider', () => { brouillon = ta.value; envoyer(); });
       ok.disabled = envoi || expire;
       actions.append(ok);
       // Carte chronométrée : pas d'« Annuler » (le minuteur tourne ; « Passer cette carte » reste possible)
-      if (!chrono()) actions.append(bouton('btn', 'Annuler', () => { ecrire = false; brouillon = ''; erreur = ''; dessiner(); }));
+      if (!chrono()) actions.append(bouton('btn', 'Annuler', () => { ecrire = false; brouillon = ''; erreur = ''; garder(CLES.saisie, null); dessiner(); }));
       const etat = el('p', 'muted', autreARepondu ? autre() + ' a répondu · à toi' : '');
       const err = el('p', 'note', erreur); err.hidden = !erreur;
       // Compte à rebours discret, en haut du champ
@@ -568,6 +576,14 @@ export function creerBlocReponses({ quandRecu = () => {}, bouton: boutonExterne 
     montrer(nouvelle) {
       secondes = (nouvelle && nouvelle.secondes) || 0;
       if (memeCle(nouvelle, cle) || (!nouvelle && !cle)) { dessiner(); return; }
+      // Même carte, seule la « fois » a changé (copie de la partie en retard sur ce téléphone, rattrapée d'un coup) :
+      // la zone de texte reste ouverte avec son texte, on relit simplement les réponses de cette fois-là.
+      if (nouvelle && cle && String(nouvelle.carte) === cle.carte && ecrire && !chrono() && brouillon.trim()) {
+        cle = { carte: cle.carte, fois: String(nouvelle.fois) };
+        r = null; demande++; anciennes = null; vueCle = null;
+        relire();
+        return;
+      }
       if (enCours()) { derniereSauvegarde = 0; sauver(); } // on quitte une carte dont le minuteur tourne : le brouillon est gardé
       arreter(); expire = false;
       cle = nouvelle ? { carte: String(nouvelle.carte), fois: String(nouvelle.fois) } : null;
