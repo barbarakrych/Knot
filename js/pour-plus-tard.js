@@ -15,13 +15,17 @@ const GUIDE = [
 export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
   // Progression par paquet : i = carte affichée (-1 = pas commencé), max = carte la plus loin atteinte.
   // Elle est partagée par les deux téléphones (partie.js) ; le paquet ouvert, lui, reste propre à ce téléphone.
-  let K = {};
-  function charger() { K = etat().paquets; }
+  let K = {}, D = {};
+  function charger() { K = etat().paquets; D = etat().debuts; }
   let open = lire(CLES.ecran, {}).open || null;
   let visible = false;
 
-  // t : quand le paquet a été commencé (la « fois » des réponses : recommencé, il repart sans réponses)
-  function kSave(id, d) { agir([{ set: ['paquets', id], valeur: d.t ? { i: d.i, max: d.max, t: d.t } : { i: d.i, max: d.max } }]); }
+  // La progression seule : chaque geste la réécrit en entier, avec la copie de ce téléphone.
+  function kSave(id, d) { agir([{ set: ['paquets', id], valeur: { i: d.i, max: d.max } }]); }
+  // Quand le paquet a été commencé : la « fois » des réponses (recommencé, il repart sans réponses).
+  // Rangée à part (debuts), écrite seulement par « Commencer » et « Recommencer » : une copie en retard sur l'autre
+  // téléphone ne peut plus la remettre à une ancienne valeur. Ancien emplacement (paquets.id.t) en secours.
+  function debut(id) { return D[id] || (K[id] && K[id].t) || 0; }
   const reponses = creerBlocReponses(); // répondre chacun de son côté, sous la carte (reponses.js)
   function kGet(id) { return { ...(K[id] || { i: -1, max: -1 }) }; }
   function setOpen(id) { open = id; ecrire(CLES.ecran, { ...lire(CLES.ecran, {}), open: id }); }
@@ -93,7 +97,11 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
 
     if (d.i < 0) {
       const go = el('button', 'btn primary wide', 'Commencer le paquet'); go.type = 'button';
-      go.onclick = () => { d.i = 0; d.max = Math.max(d.max, 0); d.t = Date.now(); kSave(pq.id, d); render(); };
+      go.onclick = () => {
+        d.i = 0; d.max = Math.max(d.max, 0);
+        agir([{ set: ['paquets', pq.id], valeur: { i: d.i, max: d.max } }, { set: ['debuts', pq.id], valeur: Date.now() }]);
+        render();
+      };
       root.append(go);
       reponses.montrer(null);
       return;
@@ -132,7 +140,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     row.append(prev, next); root.append(row);
     // Les réponses sous les boutons habituels (le même bloc à chaque fois : un texte en cours reste)
     root.append(reponses.element);
-    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: d.t || 0, secondes: c.ex && c.min ? c.min * 60 : 0 });
+    reponses.montrer({ carte: 'paquet:' + pq.id + ':' + d.i, fois: debut(pq.id), secondes: c.ex && c.min ? c.min * 60 : 0 });
 
     root.append(guideBox(false));
 
@@ -142,7 +150,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     const cr = el('div', 'actions');
     const y = el('button', 'btn small primary', 'Recommencer'); y.type = 'button';
     const n = el('button', 'btn small', 'Annuler'); n.type = 'button';
-    y.onclick = () => { kSave(pq.id, { i: -1, max: -1 }); render(); };
+    y.onclick = () => { agir([{ set: ['paquets', pq.id], valeur: { i: -1, max: -1 } }, { suppr: ['debuts', pq.id] }]); render(); };
     n.onclick = () => { conf.hidden = true; };
     cr.append(y, n); conf.append(cr);
     rs.onclick = () => { conf.hidden = false; };
@@ -153,9 +161,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
   // Reçu de l'autre téléphone : on redessine si la progression a changé (avec un swipe si la carte ouverte a changé),
   // sinon seulement le minuteur.
   ecouter((e, origine) => {
-    const avant = K;
+    const avant = K, avantD = D;
     charger();
-    if (origine === 'serveur' && visible && JSON.stringify(avant) !== JSON.stringify(K)) {
+    if (origine === 'serveur' && visible && (JSON.stringify(avant) !== JSON.stringify(K) || JSON.stringify(avantD) !== JSON.stringify(D))) {
       const a = open && avant[open], b = open && K[open];
       const card = document.querySelector('#view-topics .pcard');
       if (card && a && b && a.i !== b.i && b.i >= 0) {

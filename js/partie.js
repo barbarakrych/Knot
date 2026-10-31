@@ -18,12 +18,13 @@
      distance interrupteur « À distance »
      perso    { id: carte } cartes ajoutées (carte.place = place de son auteur, écrite par la base)
      paquets  { id: { i, max } } progression des paquets « Pour plus tard »
+     debuts   { id: heure }  début de chaque paquet (la « fois » de ses réponses), à part pour que la progression ne la change pas
      minuteur { cle, marche, fin, reste } le minuteur commun (fin en heure du serveur) */
 import { CLES, lire, ecrire, effacer } from './stockage.js';
 import { obtenirClient, coupleLocal, actualiser } from './couple.js';
 import { CLE_PARTIE } from './demo.js';
 
-const VIDE = { tirees: {}, perso: {}, paquets: {}, distance: true, affichee: null, defi: null, minuteur: null };
+const VIDE = { tirees: {}, perso: {}, paquets: {}, debuts: {}, distance: true, affichee: null, defi: null, minuteur: null };
 const LOT = 300; // au plus 300 ordres par envoi (limite de jouer())
 
 // base : { couple (code du couple), etat, version, decalage } · attente : ordres pas encore envoyés

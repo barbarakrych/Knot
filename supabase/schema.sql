@@ -321,11 +321,23 @@ update public.parties p set
 where jsonb_typeof(p.etat->'perso') = 'object'
   and exists (select 1 from jsonb_each(p.etat->'perso') as t(k, v) where jsonb_typeof(v) = 'object' and not v ? 'place');
 
+-- L'heure de début des paquets quitte la progression (paquets.id.t) pour sa propre liste (debuts.id).
+update public.parties p set
+  etat = jsonb_set(p.etat, '{debuts}', coalesce(p.etat->'debuts', '{}'::jsonb) || (
+    select jsonb_object_agg(k, v->'t') from jsonb_each(p.etat->'paquets') as t(k, v)
+    where jsonb_typeof(v) = 'object' and v ? 't' and not coalesce(p.etat->'debuts', '{}'::jsonb) ? k)),
+  version = p.version + 1, modifiee_le = now()
+where jsonb_typeof(p.etat->'paquets') = 'object'
+  and exists (select 1 from jsonb_each(p.etat->'paquets') as t(k, v)
+              where jsonb_typeof(v) = 'object' and v ? 't' and not coalesce(p.etat->'debuts', '{}'::jsonb) ? k);
+
 -- 5. Jouer : applique une liste de petits ordres à la partie de MON couple, puis renvoie
 --    {"etat": …, "version": …, "maintenant": heure du serveur en millisecondes}.
 --    Un ordre : {"set": ["tirees", "v12"], "valeur": {…}} (écrire) ou {"suppr": ["tirees", "v12"]} (effacer).
 --    Seules quelques clés sont permises :
---      • tirees, perso, paquets : des listes « identifiant → valeur », chemin de 2 éléments ;
+--      • tirees, perso, paquets, debuts : des listes « identifiant → valeur », chemin de 2 éléments
+--        (debuts : heure de début de chaque paquet « Pour plus tard », la « fois » de ses réponses ; à part de
+--        paquets pour que « Carte suivante », qui réécrit toute la progression, ne la change jamais) ;
 --      • affichee, defi, distance, minuteur : une seule valeur, chemin de 1 élément.
 --    Une liste vide ne change rien : elle sert à lire la partie et l'heure du serveur.
 --    Étape 5 : une carte ajoutée (perso) porte la place de son auteur, écrite ici par la base (jamais celle
@@ -362,7 +374,7 @@ begin
         raise exception 'ordres_invalides';
       end if;
       cle := chemin[1];
-      if cle in ('tirees', 'perso', 'paquets') then
+      if cle in ('tirees', 'perso', 'paquets', 'debuts') then
         if cardinality(chemin) <> 2 or coalesce(char_length(chemin[2]), 0) not between 1 and 80 then
           raise exception 'ordres_invalides';
         end if;
