@@ -115,7 +115,11 @@ Deno.serve(async (req) => {
   let envoye = 0;
   for (const a of abonnements ?? []) {
     try {
-      await webpush.sendNotification({ endpoint: a.endpoint, keys: { p256dh: a.p256dh, auth: a.auth } }, message, { TTL: 60 * 60 * 12 });
+      // urgency 'high' : sans elle, l'iPhone garde le message pour plus tard tant que l'app est fermée
+      const r = await webpush.sendNotification({ endpoint: a.endpoint, keys: { p256dh: a.p256dh, auth: a.auth } }, message,
+        { TTL: 60 * 60 * 12, urgency: 'high' });
+      // Réponse du service push (Apple ou Google) : le code et l'identifiant du message, pour comprendre un envoi perdu
+      console.log('Envoyé', new URL(a.endpoint).host, r.statusCode, r.headers?.['apns-id'] ?? '');
       envoye++;
     } catch (e) {
       // 404 / 410 : l'app a été supprimée ou les notifications coupées sur ce téléphone → on oublie l'abonnement
