@@ -3,6 +3,7 @@ import { $, el, lenClass, cornerNodes, srcLine, balayer } from './commun.js';
 import { CLES, lire, ecrire } from './stockage.js';
 import { etat, agir, ecouter } from './partie.js';
 import { creerBlocReponses } from './reponses.js';
+import { prevenir } from './notifications.js';
 
 const GUIDE = [
   'Celui qui parle parle de lui, avec des « je », en phrases courtes.',
@@ -100,6 +101,7 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
       go.onclick = () => {
         d.i = 0; d.max = Math.max(d.max, 0);
         agir([{ set: ['paquets', pq.id], valeur: { i: d.i, max: d.max } }, { set: ['debuts', pq.id], valeur: Date.now() }]);
+        prevenir('tirage', 'paquet:' + pq.id); // notification chez l'autre (au plus une toutes les 2 minutes, voir notifier)
         render();
       };
       root.append(go);
@@ -135,7 +137,9 @@ export function demarrerPourPlusTard({ SOURCES, PAQUETS }) {
     next.onclick = () => {
       if (last) { d.max = tot - 1; d.i = tot - 1; kSave(pq.id, d); setOpen(null); render(); window.scrollTo(0, 0); return; }
       balayer(card, () => root.querySelector('.pcard'), 'droite'); // l'ancienne carte part, la suivante est dessous
-      d.i++; d.max = Math.max(d.max, d.i); kSave(pq.id, d); render();
+      d.i++; d.max = Math.max(d.max, d.i); kSave(pq.id, d);
+      prevenir('tirage', 'paquet:' + pq.id);
+      render();
     };
     row.append(prev, next); root.append(row);
     // Les réponses sous les boutons habituels (le même bloc à chaque fois : un texte en cours reste)

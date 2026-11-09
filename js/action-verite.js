@@ -261,8 +261,10 @@ export function demarrerActionVerite({ SOURCES, THEMES, BASE }) {
     if (!p.length) return;
     if (retenue) { retenue = null; garder(CLES.retenue, null); } // tirer soi-même vaut « J'ai lu »
     balayer($('card'), undefined, 'droite'); // l'ancienne carte part vers la droite, la nouvelle est dessous
-    agir(ordresTirer(auHasard(p)));
-    prevenir('tirage'); // notification chez l'autre (ignorée si la carte précédente a été tirée il y a moins de 30 secondes, voir notifier)
+    const c = auHasard(p);
+    agir(ordresTirer(c));
+    // notification chez l'autre (ignorée si la carte précédente a été tirée il y a moins de 30 secondes, voir notifier)
+    prevenir('tirage', c.pile === 'verite' ? 'verite' : c.big ? 'defi' : 'action');
   }
   // Passer (toujours possible) : on tire une autre carte, et celle passée retourne dans la pile.
   // S'il n'y a pas d'autre carte, elle retourne quand même dans la pile et on revient à « Prêts ? ».

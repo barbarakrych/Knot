@@ -799,7 +799,7 @@ alter table public.abonnements enable row level security;
 -- pour ne pas en envoyer trop : un tirage moins de 30 secondes après le précédent ne prévient pas l'autre
 create table if not exists public.notifs_envoyees (
   couple_id uuid not null references public.couples(id) on delete cascade,
-  type text not null check (type in ('reponse', 'tirage')),
+  type text not null check (type in ('reponse', 'tirage', 'tirage-paquet')),
   le timestamptz not null default now(),
   primary key (couple_id, type)
 );

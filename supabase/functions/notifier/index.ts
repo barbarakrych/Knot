@@ -1,7 +1,11 @@
 // Knot · fonction en ligne « notifier » (Supabase Edge Function).
 // L'app l'appelle juste après un geste, avec le compte invisible du téléphone :
 //   { type: 'reponse' }  → « [prénom] a répondu à une carte. »
-//   { type: 'tirage' }   → « [prénom] a tiré une carte. » (ignorée si la carte précédente a été tirée il y a moins de 30 secondes)
+//   { type: 'tirage', quoi: 'verite' | 'action' | 'defi' } → « [prénom] a tiré une Vérité / une Action / un défi. »
+//       (ignorée si la carte précédente a été tirée il y a moins de 30 secondes)
+//   { type: 'tirage', quoi: 'paquet:<id>' } → « [prénom] a tiré une carte du paquet « … ». »
+//       (« Commencer le paquet » et « Carte suivante » ; ignorée si la précédente date de moins de 2 minutes)
+//   quoi est vérifié dans une liste fixe : le téléphone ne peut pas faire afficher un texte libre chez l'autre.
 // Elle prévient seulement les téléphones de L'AUTRE personne du couple qui ont activé les notifications.
 //
 // Secrets à créer dans Supabase → Edge Functions → Secrets (jamais dans le code) :
@@ -20,6 +24,23 @@ const repondre = (statut: number, corps: unknown) =>
 
 const TRENTE_SECONDES = 30 * 1000;
 const DEUX_MINUTES = 2 * 60 * 1000;
+
+// Ce qui a été tiré → fin de la phrase. Noms des paquets : ceux de contenu/pour-plus-tard.json.
+const TIRAGES: Record<string, string> = {
+  verite: ' a tiré une Vérité.',
+  action: ' a tiré une Action.',
+  defi: ' a tiré un défi.'
+};
+const PAQUETS: Record<string, string> = {
+  aron: 'Les 36 questions',
+  histoire: 'Notre histoire',
+  huit: 'Huit rendez-vous',
+  johnson: 'Tiens-moi fort',
+  recit: 'Le récit de vie',
+  valeurs: 'Nos valeurs',
+  engager: 'Avant de s’engager',
+  ecrivains: 'Questionnaires d’écrivains'
+};
 
 // Les clés sont chargées au premier appel (et pas au démarrage) : une clé mal collée donne un message clair au lieu d'un plantage.
 let clesPretes = '';
@@ -71,8 +92,10 @@ Deno.serve(async (req) => {
   const { data: { user } } = await base.auth.getUser(jeton);
   if (!user) return repondre(401, { erreur: 'non_connecte' });
 
-  let type = '';
-  try { type = (await req.json()).type; } catch { /* corps vide */ }
+  let type = '', quoi = '';
+  try { const corps = await req.json(); type = corps.type; quoi = typeof corps.quoi === 'string' ? corps.quoi : ''; } catch { /* corps vide */ }
+  const paquet = quoi.startsWith('paquet:') ? quoi.slice(7) : '';
+  const nomPaquet = Object.hasOwn(PAQUETS, paquet) ? PAQUETS[paquet] : '';
   if (type !== 'reponse' && type !== 'tirage') return repondre(400, { erreur: 'type' });
 
   const { data: membre, error: erreurBase } = await base.from('membres').select('couple_id, place').eq('user_id', user.id).maybeSingle();
@@ -94,19 +117,24 @@ Deno.serve(async (req) => {
       .gt('ecrite_le', new Date(maintenant - DEUX_MINUTES).toISOString());
     if (!count) return repondre(200, { envoye: 0, raison: 'pas_de_reponse_recente' });
   } else {
-    // Tirages : si la carte précédente a été tirée il y a moins de 30 secondes, on ignore celle-ci.
-    // L'heure de chaque tirage est notée, même ignoré : les 30 secondes comptent depuis la dernière carte tirée.
+    // Tirages : si la carte précédente a été tirée il y a peu (30 s ; 2 min dans un paquet), on ignore celle-ci.
+    // L'heure de chaque tirage est notée, même ignoré : le délai compte depuis la dernière carte tirée.
+    // Compteurs séparés : une Vérité tirée ne fait pas taire un paquet, et inversement.
+    const compteur = nomPaquet ? 'tirage-paquet' : 'tirage';
+    const delai = nomPaquet ? DEUX_MINUTES : TRENTE_SECONDES;
     const { data: dernier } = await base.from('notifs_envoyees').select('le')
-      .eq('couple_id', membre.couple_id).eq('type', 'tirage').maybeSingle();
-    await base.from('notifs_envoyees').upsert({ couple_id: membre.couple_id, type, le: new Date(maintenant).toISOString() });
-    if (dernier && maintenant - new Date(dernier.le).getTime() < TRENTE_SECONDES) {
+      .eq('couple_id', membre.couple_id).eq('type', compteur).maybeSingle();
+    await base.from('notifs_envoyees').upsert({ couple_id: membre.couple_id, type: compteur, le: new Date(maintenant).toISOString() });
+    if (dernier && maintenant - new Date(dernier.le).getTime() < delai) {
       return repondre(200, { envoye: 0, raison: 'trop_tot' });
     }
   }
 
   const message = JSON.stringify({
     titre: 'Knot',
-    texte: (prenom ?? 'L’autre') + (type === 'reponse' ? ' a répondu à une carte.' : ' a tiré une carte.'),
+    texte: (prenom ?? 'L’autre') + (type === 'reponse' ? ' a répondu à une carte.'
+      : nomPaquet ? ' a tiré une carte du paquet « ' + nomPaquet + ' ».'
+      : TIRAGES[quoi] ?? ' a tiré une carte.'),
     tag: 'knot-' + type
   });
 

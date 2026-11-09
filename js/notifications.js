@@ -60,9 +60,10 @@ export async function desactiver() {
 
 // Après un geste ici : prévient l'autre téléphone (s'il a activé les notifications). Jamais en démo ni hors ligne.
 // Si ça échoue, tant pis : la notification n'est qu'un plus, le jeu continue.
-export function prevenir(type) {
+// quoi (tirages) : 'verite', 'action', 'defi' ou 'paquet:<id>' ; la fonction en ligne le vérifie dans une liste fixe.
+export function prevenir(type, quoi) {
   if (estDemo() || !navigator.onLine || !VAPID_PUBLIQUE) return;
   obtenirClient()
-    .then(sb => sb.functions.invoke('notifier', { body: { type } }))
+    .then(sb => sb.functions.invoke('notifier', { body: { type, quoi } }))
     .catch(e => console.info('Notification non envoyée :', e.message || e));
 }
